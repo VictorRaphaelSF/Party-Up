@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, Text, TextInput, Platform } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function Cadastro({ navigation }) {
   const [email, setEmail] = useState('');
@@ -9,6 +10,12 @@ export default function Cadastro({ navigation }) {
   const [yearOfBirth, setYearOfBirth] = useState('');
   const [telefone, setTelefone] = useState('');
   const [erro, setErro] = useState('');
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [senhaVisivel, setSenhaVisivel] = useState(false);
+  const [confirmarSenhaVisivel, setConfirmarSenhaVisivel] = useState(false);
+  const [senhaIcon, setSenhaIcon] = useState(require('./img/icons/eye.png'));
+  const [confirmarSenhaIcon, setConfirmarSenhaIcon] = useState(require('./img/icons/eye.png'));
 
   const Avançar = () => {
     if (!email || !senha || !confirmarSenha || !cpfCnpj || !yearOfBirth || !telefone) {
@@ -19,21 +26,27 @@ export default function Cadastro({ navigation }) {
     }
   };
 
-  const nascformatacao = (text) => {
-    // Isso só deixa que o usuário digite somente números
-    const numericOnly = text.replace(/\D/g, '');
-    
-    if (numericOnly.length > 4) {
-      const day = numericOnly.substring(0, 2);
-      const month = numericOnly.substring(2, 4);
-      const year = numericOnly.substring(4, 8);
-
-      setYearOfBirth(`${day}/${month}/${year}`);
-    } else {
-      setYearOfBirth(numericOnly);
+  const handleDateChange = (event, selected) => {
+    setShowDatePicker(false);
+    if (selected) {
+      if (isUnderage(selected)) {
+        setYearOfBirth('');
+        setErro('Você deve ter pelo menos 18 anos de idade.');
+      } else {
+        setSelectedDate(selected);
+        const formattedDate = `${selected.getDate()}/${selected.getMonth() + 1}/${selected.getFullYear()}`;
+        setYearOfBirth(formattedDate);
+        setErro('');
+      }
     }
   };
 
+  const isUnderage = (date) => {
+    const today = new Date();
+    const ageLimit = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+    return date > ageLimit;
+  };
+  
   return (
     <View style={styles.container}>
       <View style={styles.bottomImageContainer}>
@@ -65,11 +78,19 @@ export default function Cadastro({ navigation }) {
             placeholder="Senha"
             placeholderTextColor="rgba(255, 255, 255, 0.5)"
             underlineColorAndroid="transparent"
-            secureTextEntry={true}
+            secureTextEntry={!senhaVisivel}
             maxLength={24} // Caixa de texto "Senha".
             value={senha}
             onChangeText={setSenha}
           />
+          <TouchableOpacity
+            onPress={() => {
+              setSenhaVisivel(!senhaVisivel);
+              setSenhaIcon(senhaVisivel ? require('./img/icons/eye.png') : require('./img/icons/eyeclosed.png'));
+            }}
+          >
+            <Image source={senhaIcon} style={styles.rightIcon} />
+          </TouchableOpacity>
         </View>
 
         <View style={styles.textInputContainer}>
@@ -79,15 +100,23 @@ export default function Cadastro({ navigation }) {
             placeholder="Confirmar Senha"
             placeholderTextColor="rgba(255, 255, 255, 0.5)"
             underlineColorAndroid="transparent"
-            secureTextEntry={true}
+            secureTextEntry={!confirmarSenhaVisivel}
             maxLength={24} // Caixa de texto "Confirmar Senha".
             value={confirmarSenha}
             onChangeText={setConfirmarSenha}
           />
+          <TouchableOpacity
+            onPress={() => {
+              setConfirmarSenhaVisivel(!confirmarSenhaVisivel);
+              setConfirmarSenhaIcon(confirmarSenhaVisivel ? require('./img/icons/eye.png') : require('./img/icons/eyeclosed.png'));
+            }}
+          >
+            <Image source={confirmarSenhaIcon} style={styles.rightIcon} />
+          </TouchableOpacity>
         </View>
 
         <View style={styles.textInputContainer}>
-          <Image source={require('./img/icons/cadeadoicon.png')} style={styles.lockIcon} />
+          <Image source={require('./img/icons/Group.png')} style={styles.lockIcon} />
           <TextInput
             style={styles.textInput}
             placeholder="CPF ou CNPJ"
@@ -100,20 +129,29 @@ export default function Cadastro({ navigation }) {
         </View>
 
         <View style={styles.textInputContainer}>
-          <Image source={require('./img/icons/cadeadoicon.png')} style={styles.lockIcon} />
-          <TextInput
+          <Image source={require('./img/icons/Vector.png')} style={styles.lockIcon} />
+          <TouchableOpacity
             style={styles.textInput}
-            placeholder="DD/MM/AAAA"
-            placeholderTextColor="rgba(255, 255, 255, 0.5)"
-            underlineColorAndroid="transparent"
-            maxLength={10} // Caixa de texto "Ano de nascimento"
-            value={yearOfBirth}
-            onChangeText={nascformatacao} // Adicionando formatação
-          />
+            onPress={() => setShowDatePicker(true)}
+          >
+        <Text style={[styles.placeholderText, yearOfBirth ? {} : styles.activePlaceholder]}>
+            {yearOfBirth || 'DD/MM/AAAA'}
+          </Text>
+          </TouchableOpacity>
         </View>
 
+        {showDatePicker && (
+          <DateTimePicker
+            value={selectedDate}
+            mode="date"
+            display="default"
+            maximumDate={new Date()}
+            onChange={handleDateChange}
+          />
+        )}
+
         <View style={styles.textInputContainer}>
-          <Image source={require('./img/icons/cadeadoicon.png')} style={styles.lockIcon} />
+          <Image source={require('./img/icons/uil_padlock.png')} style={styles.lockIcon} />
           <TextInput
             style={styles.textInput}
             placeholder="Telefone(Cel)"
@@ -215,5 +253,19 @@ const styles = StyleSheet.create({
     color: '#FF0000',
     fontSize: 12,
     marginTop: -16,
+  },
+
+  rightIcon: {
+    width: 28,
+    height: 21,
+    marginLeft: 12,
+  },
+
+  placeholderText: {
+    color: '#FFFFFF',
+  },
+
+  activePlaceholder: {
+    color: 'rgba(255, 255, 255, 0.5)',
   },
 });

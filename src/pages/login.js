@@ -17,6 +17,7 @@ export default function Login({ navigation }) {
       } else {
         setEmptyFieldError('');
         setErro('Email ou senha incorretos. Por favor, tente novamente.');
+        setSenha(''); // Isto limpa a caixa de texto após o usuario digitar errrado
       }
     }
   };
