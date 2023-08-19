@@ -10,13 +10,14 @@ import  Login from './src/pages/login';
 import Cadastro from './src/pages/cadastro';
 import Cadastropart2 from './src/pages/cadastropart2';
 import Logado from './src/pages/logado';
+import Notificação from './src/pages/notificações'
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Index'>
+      <Stack.Navigator initialRouteName='index'>
         <Stack.Screen 
           options={{
             headerShown: false

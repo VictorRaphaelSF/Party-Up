@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, Text, TextInput, Platform } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function Cadastro({ navigation }) {
@@ -17,9 +18,17 @@ export default function Cadastro({ navigation }) {
   const [senhaIcon, setSenhaIcon] = useState(require('./img/icons/eye.png'));
   const [confirmarSenhaIcon, setConfirmarSenhaIcon] = useState(require('./img/icons/eye.png'));
 
+  const handleNumericInputChange = (value, setter) => {
+    const numericValue = value.replace(/[^0-9]/g, '');
+    setter(numericValue);
+  };
+
   const Avançar = () => {
     if (!email || !senha || !confirmarSenha || !cpfCnpj || !yearOfBirth || !telefone) {
       setErro('Preencha todos os campos obrigatórios.');
+      setTimeout(() => {
+        setErro('');
+      }, 4000);
     } else {
       setErro('');
       navigation.navigate('cadastropart2');
@@ -46,18 +55,35 @@ export default function Cadastro({ navigation }) {
     const ageLimit = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
     return date > ageLimit;
   };
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.bottomImageContainer}>
-        
         <Image
           source={require('./img/img_borda_inicio.png')}
-          style={styles.bottomImage} // Imagem de fundo
+          style={styles.bottomImage}
         />
       </View>
 
-      <View style={styles.content}> 
+      {erro !== '' && (
+        <Animatable.View
+          style={[
+            styles.errorBanner,
+            {
+              display: erro ? 'flex' : 'none',
+              borderRadius: 10,
+              marginTop: erro ? 20 : 0,
+            },
+          ]}
+          animation="shake"
+          iterationCount={1}
+          duration={800}
+        >
+          <Text style={styles.errorMessage}>{erro}</Text>
+        </Animatable.View>
+      )}
+
+      <View style={styles.content}>
         <View style={styles.textInputContainer}>
           <Image source={require('./img/icons/mailicon.png')} style={styles.icon} />
           <TextInput
@@ -65,7 +91,7 @@ export default function Cadastro({ navigation }) {
             placeholder="E-mail"
             placeholderTextColor="rgba(255, 255, 255, 0.5)"
             underlineColorAndroid="transparent"
-            maxLength={50} // Caixa de texto "E-mail".
+            maxLength={255}
             value={email}
             onChangeText={setEmail}
           />
@@ -79,7 +105,7 @@ export default function Cadastro({ navigation }) {
             placeholderTextColor="rgba(255, 255, 255, 0.5)"
             underlineColorAndroid="transparent"
             secureTextEntry={!senhaVisivel}
-            maxLength={24} // Caixa de texto "Senha".
+            maxLength={24}
             value={senha}
             onChangeText={setSenha}
           />
@@ -101,7 +127,7 @@ export default function Cadastro({ navigation }) {
             placeholderTextColor="rgba(255, 255, 255, 0.5)"
             underlineColorAndroid="transparent"
             secureTextEntry={!confirmarSenhaVisivel}
-            maxLength={24} // Caixa de texto "Confirmar Senha".
+            maxLength={24}
             value={confirmarSenha}
             onChangeText={setConfirmarSenha}
           />
@@ -122,9 +148,9 @@ export default function Cadastro({ navigation }) {
             placeholder="CPF ou CNPJ"
             placeholderTextColor="rgba(255, 255, 255, 0.5)"
             underlineColorAndroid="transparent"
-            maxLength={18} // Caixa de texto "CPF ou CNPJ".
+            maxLength={14}
             value={cpfCnpj}
-            onChangeText={setCpfCnpj}
+            onChangeText={(text) => handleNumericInputChange(text, setCpfCnpj)}
           />
         </View>
 
@@ -134,9 +160,9 @@ export default function Cadastro({ navigation }) {
             style={styles.textInput}
             onPress={() => setShowDatePicker(true)}
           >
-        <Text style={[styles.placeholderText, yearOfBirth ? {} : styles.activePlaceholder]}>
-            {yearOfBirth || 'DD/MM/AAAA'}
-          </Text>
+            <Text style={[styles.placeholderText, yearOfBirth ? {} : styles.activePlaceholder]}>
+              {yearOfBirth || 'DD/MM/AAAA'}
+            </Text>
           </TouchableOpacity>
         </View>
 
@@ -157,16 +183,14 @@ export default function Cadastro({ navigation }) {
             placeholder="Telefone(Cel)"
             placeholderTextColor="rgba(255, 255, 255, 0.5)"
             underlineColorAndroid="transparent"
-            maxLength={15} // Não esquecer de baixar os ícones das caixas de texto
+            maxLength={15}
             value={telefone}
-            onChangeText={setTelefone}
+            onChangeText={(text) => handleNumericInputChange(text, setTelefone)}
           />
         </View>
-
-        {erro !== '' && <Text style={styles.errorMessage}>{erro}</Text>}
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={Avançar}> 
+      <TouchableOpacity style={styles.button} onPress={Avançar}>
         <Text style={styles.buttonText}>Avançar</Text>
       </TouchableOpacity>
     </View>
@@ -187,8 +211,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  button: { // Design do botão
-    backgroundColor: 'rgba(255, 1, 108, 0.4)', 
+  button: {
+    backgroundColor: 'rgba(255, 1, 108, 0.4)',
     paddingVertical: 14,
     paddingHorizontal: Platform.OS === 'web' ? 100 : 100,
     justifyContent: 'center',
@@ -220,8 +244,8 @@ const styles = StyleSheet.create({
   },
 
   textInputContainer: {
-    flexDirection: 'row', 
-    alignItems: 'center', 
+    flexDirection: 'row',
+    alignItems: 'center',
     maxWidth: Platform.OS === 'web' ? '100%' : '85%',
     height: Platform.OS === 'web' ? 50 : 55,
     borderBottomWidth: 1,
@@ -249,10 +273,20 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
 
+  errorBanner: {
+    backgroundColor: '#FF0000',
+    padding: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    top: 12,
+    left: 0,
+    right: 0,
+  },
+
   errorMessage: {
-    color: '#FF0000',
-    fontSize: 12,
-    marginTop: -16,
+    color: '#FFFFFF',
+    fontSize: 16,
   },
 
   rightIcon: {

@@ -1,13 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image, Platform, Dimensions } from 'react-native';
 
-export default function Index({ navigation }) {
-  const entrar = () => {
-    navigation.navigate('login');
-  };
+import * as Animatable from 'react-native-animatable';
 
+export default function Index({ navigation }) {
   const VamosLa = () => {
-    navigation.navigate('cadastro');
+    navigation.navigate('login');
   };
 
   return (
@@ -19,20 +17,19 @@ export default function Index({ navigation }) {
         />
       </View>
 
-      <TouchableOpacity style={styles.titleButton} onPress={entrar}>
-        <Text style={styles.titleButtonText}>Entrar</Text>
-      </TouchableOpacity>
-
       <View style={styles.content}>
-        <Image
+        <Animatable.Image
+          animation="fadeInUp"
           source={require('./img/logo_partyup.png')}
           style={styles.logo} // Logo "Party-Up"
         />
       </View>
 
+      <Animatable.View delay={600} animation="fadeInUp" style={styles.vamosLaButton}>
       <TouchableOpacity style={styles.button} onPress={VamosLa}>
         <Text style={styles.buttonText}>Vamos lá</Text>
       </TouchableOpacity>
+      </Animatable.View>
     </View>
   );
 }
@@ -63,7 +60,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    zIndex: 1, // Para ficar acima da imagem
+    zIndex: 1,
   },
 
   titleButtonText: {
@@ -71,7 +68,7 @@ const styles = StyleSheet.create({
     color: 'rgba(255, 1, 108, 0.4)',
   },
 
-  button: { // Design do botão
+  button: { 
     backgroundColor: 'rgba(255, 1, 108, 0.4)', 
     paddingVertical: 14,
     paddingHorizontal: 100,
@@ -79,7 +76,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
     position: 'absolute',
-    bottom: windowHeight * 0.04, // Posição responsiva
+    bottom: windowHeight * 0.04,
   },
 
   buttonText: {
@@ -107,5 +104,13 @@ const styles = StyleSheet.create({
   bottomImage: {
     width: Platform.OS === 'web' ? '100%' : '108%',
     height: '100%',
+  },
+
+  vamosLaButton: {
+    position: 'absolute',
+    bottom: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
   },
 });

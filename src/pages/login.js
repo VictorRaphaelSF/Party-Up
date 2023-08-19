@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, Text, TextInput, Platform } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
@@ -7,19 +8,37 @@ export default function Login({ navigation }) {
   const [erro, setErro] = useState('');
   const [emptyFieldError, setEmptyFieldError] = useState('');
 
+  // Ref para a animação de erro
+  const errorRef = useRef(null);
+
   const Entrar = () => {
-    if (email === 'admin@partyup.com' && senha === 'admin') { // Email e senha de acesso
+    if (!email || !senha) {
+      setEmptyFieldError('Preencha todos os campos.');
+      setTimeout(() => {
+        setEmptyFieldError('');
+      }, 4000);
+      setErro('');
+  
+      if (errorRef.current) {
+        errorRef.current.shake(800);
+      }
+    } else if (email === 'admin@partyup.com' && senha === 'admin') {
       navigation.navigate('logado');
     } else {
-      if (!email || !senha) {
-        setEmptyFieldError('Preencha todos os campos.');
-        setErro(''); // Limpa a mensagem de erro principal
-      } else {
-        setEmptyFieldError('');
-        setErro('Email ou senha incorretos. Por favor, tente novamente.');
-        setSenha(''); // Isto limpa a caixa de texto após o usuario digitar errrado
+      setEmptyFieldError('');
+      setErro('Email ou senha incorretos. Por favor, tente novamente.');
+      setSenha('');
+      if (errorRef.current) {
+        errorRef.current.shake(800);
       }
+      setTimeout(() => {
+        setErro('');
+      }, 4000);
     }
+  };
+
+  const bttnvconta = () => {
+    navigation.navigate('cadastro');
   };
 
   return (
@@ -29,7 +48,24 @@ export default function Login({ navigation }) {
           source={require('./img/img_borda_inicio.png')}
           style={styles.bottomImage}
         />
-      </View> 
+      </View>
+
+      <Animatable.View
+        ref={errorRef}
+        style={[
+          styles.errorBanner,
+          { 
+            display: erro || emptyFieldError ? 'flex' : 'none',
+            borderRadius: 10, // Adiciona bordas arredondadas
+            marginTop: erro || emptyFieldError ? 20 : 0, // Ajusta a margem superior quando há erro
+          }
+        ]}
+        animation="shake"
+        iterationCount={1}
+        duration={800}
+      >
+        <Text style={styles.errorMessage}>{erro || emptyFieldError}</Text>
+      </Animatable.View>
 
       <View style={styles.content}>
         <View style={styles.textInputContainer}>
@@ -39,7 +75,7 @@ export default function Login({ navigation }) {
             placeholder="E-mail"
             placeholderTextColor="rgba(255, 255, 255, 0.5)"
             underlineColorAndroid="transparent"
-            maxLength={40} // limita a quantidade de caracteres do usuario.
+            maxLength={40}
             value={email}
             onChangeText={setEmail}
           />
@@ -53,19 +89,20 @@ export default function Login({ navigation }) {
             placeholderTextColor="rgba(255, 255, 255, 0.5)"
             underlineColorAndroid="transparent"
             secureTextEntry={true}
-            maxLength={24} // limita a quantidade de caracteres do usuario.
+            maxLength={24}
             value={senha}
             onChangeText={setSenha}
           />
         </View>
 
-        {emptyFieldError !== '' && <Text style={styles.errorMessage}>{emptyFieldError}</Text>}
-        {erro !== '' && !emptyFieldError && <Text style={styles.errorMessage}>{erro}</Text>}
-
-        <TouchableOpacity style={styles.button} onPress={Entrar}>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={Entrar}>
           <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
-
+          <TouchableOpacity style={styles.smallButton} onPress={bttnvconta}>
+          <Text style={styles.smallButtonText}>Criar nova conta</Text>
+        </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -85,7 +122,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  button: { // Botão "Entrar"
+  buttonContainer: {
+    alignItems: 'center',
+  },
+
+  button: {
     backgroundColor: 'rgba(255, 1, 108, 0.4)',
     maxWidth: '80%',
     paddingVertical: 14,
@@ -96,7 +137,18 @@ const styles = StyleSheet.create({
     bottom: -32,
   },
 
-  buttonText: { // Texto que esta dentro do botão
+  buttonText: {
+    fontSize: 18,
+    color: '#FFFFFF',
+    opacity: 0.7,
+  },
+
+  smallButton: {
+    backgroundColor: 'transparent', 
+    marginTop: 55,
+  },
+
+  smallButtonText: {
     fontSize: 18,
     color: '#FFFFFF',
     opacity: 0.7,
@@ -118,8 +170,8 @@ const styles = StyleSheet.create({
   },
 
   textInputContainer: {
-    flexDirection: 'row', 
-    alignItems: 'center', 
+    flexDirection: 'row',
+    alignItems: 'center',
     width: '80%',
     height: 50,
     borderBottomWidth: 1,
@@ -133,21 +185,31 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  icon: { // icone que esta dentro do TextInput(caixa de texto)
+  icon: {
     width: 23,
     height: 23,
     marginRight: 10,
   },
 
-  lockIcon: { //icone que esta dentro do TextInput(caixa de texto)
+  lockIcon: {
     width: 19,
     height: 19,
     marginRight: 10,
   },
 
+  errorBanner: {
+    backgroundColor: '#FF0000',
+    padding: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    top: 12,
+    left: 0,
+    right: 0,
+  },
+
   errorMessage: {
-    color: '#FF0000',
-    fontSize: 12,
-    marginTop: 7,
+    color: '#FFFFFF',
+    fontSize: 16,
   },
 });
