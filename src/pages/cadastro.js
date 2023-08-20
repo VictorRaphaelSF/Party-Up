@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, Text, TextInput, Platform } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -17,14 +17,15 @@ export default function Cadastro({ navigation }) {
   const [confirmarSenhaVisivel, setConfirmarSenhaVisivel] = useState(false);
   const [senhaIcon, setSenhaIcon] = useState(require('./img/icons/eye.png'));
   const [confirmarSenhaIcon, setConfirmarSenhaIcon] = useState(require('./img/icons/eye.png'));
+  const [confirmarSenhaErro, setConfirmarSenhaErro] = useState(false);
 
-  const handleNumericInputChange = (value, setter) => {
+  const InputNum = (value, setter) => {
     const numericValue = value.replace(/[^0-9]/g, '');
     setter(numericValue);
   };
 
   const Avançar = () => {
-    if (!email || !senha || !confirmarSenha || !cpfCnpj || !yearOfBirth || !telefone) {
+    if (!email || !senha || !confirmarSenha || !cpfCnpj || !yearOfBirth || !telefone || confirmarSenhaErro) {
       setErro('Preencha todos os campos obrigatórios.');
       setTimeout(() => {
         setErro('');
@@ -56,14 +57,21 @@ export default function Cadastro({ navigation }) {
     return date > ageLimit;
   };
 
+  const validarSenha = (senhaConfirmacao) => {
+    if (senha !== senhaConfirmacao) {
+      setConfirmarSenhaErro(true);
+    } else {
+      setConfirmarSenhaErro(false);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.bottomImageContainer}>
-        <Image
-          source={require('./img/img_borda_inicio.png')}
-          style={styles.bottomImage}
-        />
-      </View>
+      <Image
+        source={require('./img/telap.png')}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      />
 
       {erro !== '' && (
         <Animatable.View
@@ -122,14 +130,21 @@ export default function Cadastro({ navigation }) {
         <View style={styles.textInputContainer}>
           <Image source={require('./img/icons/cadeadoicon.png')} style={styles.lockIcon} />
           <TextInput
-            style={styles.textInput}
+            style={[
+              styles.textInput,
+              confirmarSenhaErro ? styles.inputError : null,
+            ]}
             placeholder="Confirmar Senha"
             placeholderTextColor="rgba(255, 255, 255, 0.5)"
             underlineColorAndroid="transparent"
             secureTextEntry={!confirmarSenhaVisivel}
             maxLength={24}
             value={confirmarSenha}
-            onChangeText={setConfirmarSenha}
+            onChangeText={(text) => {
+              setConfirmarSenha(text);
+              validarSenha(text);
+            }}
+            onBlur={() => validarSenha(confirmarSenha)}
           />
           <TouchableOpacity
             onPress={() => {
@@ -141,6 +156,10 @@ export default function Cadastro({ navigation }) {
           </TouchableOpacity>
         </View>
 
+        {confirmarSenhaErro && (
+          <Text style={styles.errorText}>As senhas não coincidem.</Text>
+        )}
+
         <View style={styles.textInputContainer}>
           <Image source={require('./img/icons/Group.png')} style={styles.lockIcon} />
           <TextInput
@@ -150,7 +169,7 @@ export default function Cadastro({ navigation }) {
             underlineColorAndroid="transparent"
             maxLength={14}
             value={cpfCnpj}
-            onChangeText={(text) => handleNumericInputChange(text, setCpfCnpj)}
+            onChangeText={(text) => InputNum(text, setCpfCnpj)}
           />
         </View>
 
@@ -185,7 +204,7 @@ export default function Cadastro({ navigation }) {
             underlineColorAndroid="transparent"
             maxLength={15}
             value={telefone}
-            onChangeText={(text) => handleNumericInputChange(text, setTelefone)}
+            onChangeText={(text) => InputNum(text, setTelefone)}
           />
         </View>
       </View>
@@ -204,6 +223,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
+  },
+
+  backgroundImage: {
+    flex: 1,
+    width: '109%',
+    height: '108%',
+    position: 'absolute',
   },
 
   content: {
@@ -226,21 +252,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#FFFFFF',
     opacity: 0.7,
-  },
-
-  bottomImageContainer: {
-    position: 'absolute',
-    bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    height: '52%',
-    backgroundColor: 'transparent',
-  },
-
-  bottomImage: {
-    width: Platform.OS === 'web' ? '100%' : '108%',
-    height: '100%',
   },
 
   textInputContainer: {
@@ -273,6 +284,10 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
 
+  inputError: {
+    borderBottomColor: 'red',
+  },
+
   errorBanner: {
     backgroundColor: '#FF0000',
     padding: 12,
@@ -301,5 +316,12 @@ const styles = StyleSheet.create({
 
   activePlaceholder: {
     color: 'rgba(255, 255, 255, 0.5)',
+  },
+
+  errorText: {
+    color: 'red',
+    fontSize: 14,
+    marginTop: -20,
+    bottom: -200,
   },
 });

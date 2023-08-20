@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { StyleSheet, View, Image, TouchableOpacity, Text, TextInput, Platform } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity, Text, TextInput, Platform, Dimensions } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
 export default function Login({ navigation }) {
@@ -43,12 +43,11 @@ export default function Login({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.bottomImageContainer}>
-        <Image
-          source={require('./img/img_borda_inicio.png')}
-          style={styles.bottomImage}
-        />
-      </View>
+      <Image
+        source={require('./img/telap.png')}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      />
 
       <Animatable.View
         ref={errorRef}
@@ -56,8 +55,8 @@ export default function Login({ navigation }) {
           styles.errorBanner,
           { 
             display: erro || emptyFieldError ? 'flex' : 'none',
-            borderRadius: 10, // Adiciona bordas arredondadas
-            marginTop: erro || emptyFieldError ? 20 : 0, // Ajusta a margem superior quando há erro
+            borderRadius: 10,
+            marginTop: erro || emptyFieldError ? 20 : 0,
           }
         ]}
         animation="shake"
@@ -97,29 +96,36 @@ export default function Login({ navigation }) {
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={Entrar}>
-          <Text style={styles.buttonText}>Entrar</Text>
-        </TouchableOpacity>
+            <Text style={styles.buttonText}>Entrar</Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.smallButton} onPress={bttnvconta}>
-          <Text style={styles.smallButtonText}>Criar nova conta</Text>
-        </TouchableOpacity>
+            <Text style={styles.smallButtonText}>Criar nova conta</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
   );
 }
 
+const windowHeight = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#260038',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 16,
+  },
+
+  backgroundImage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
   },
 
   content: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 16,
   },
 
   buttonContainer: {
@@ -152,21 +158,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#FFFFFF',
     opacity: 0.7,
-  },
-
-  bottomImageContainer: {
-    position: 'absolute',
-    bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    height: '52%',
-    backgroundColor: 'transparent',
-  },
-
-  bottomImage: {
-    width: Platform.OS === 'web' ? '100%' : '108%',
-    height: '100%',
   },
 
   textInputContainer: {
