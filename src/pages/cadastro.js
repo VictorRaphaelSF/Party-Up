@@ -19,7 +19,7 @@ export default function Cadastro({ navigation }) {
 
   const Avançar = () => {
     if (!email || !senha || !confirmarSenha || !cpfCnpj || !yearOfBirth || !telefone) {
-      setErro('Preencha todos os campos obrigatórios02.');
+      setErro('Preencha todos os campos obrigatórios.');
     } else {
       setErro('');
       navigation.navigate('cadastropart2');
