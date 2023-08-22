@@ -40,7 +40,7 @@ export default function App() {
         options={{
           headerShown: false
         }}
-        name="cadastropart2" component={Cadastropart2}
+        name="cadastropart2" component={Cadastropart2} 
         />
         <Stack.Screen
         options={{

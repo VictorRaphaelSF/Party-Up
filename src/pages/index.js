@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, Platform, Dimensions, ImageBackground } from 'react-native'; // Importe o ImageBackground
+import { StyleSheet, View, Text, TouchableOpacity, Dimensions, ImageBackground } from 'react-native'; // Importe o ImageBackground
 import * as Animatable from 'react-native-animatable';
 
 export default function Index({ navigation }) {
@@ -11,14 +11,14 @@ export default function Index({ navigation }) {
     <ImageBackground
       source={require('./img/telap.png')}
       style={styles.container}
-      resizeMode="cover" // Defina resizeMode como "cover"
+      resizeMode="cover"
     >
       <View style={styles.overlay}>
         <View style={styles.content}>
           <Animatable.Image
             animation="fadeInUp"
             source={require('./img/logonv.png')}
-            style={styles.logo} // Logo "Party-Up"
+            style={styles.logo}
           />
         </View>
 

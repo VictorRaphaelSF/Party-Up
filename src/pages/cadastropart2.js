@@ -1,11 +1,26 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, Platform, Dimensions, TextInput, ImageBackground } from 'react-native'; // Importe o ImageBackground
+import { StyleSheet, View, Text, TouchableOpacity, Image, Platform, Dimensions, TextInput, ImageBackground } from 'react-native';
+
 import * as Animatable from 'react-native-animatable';
+import * as ImagePicker from 'expo-image-picker';
 
 export default function Logado({ navigation }) {
   const [nmusuario, setNmusuario] = useState('');
   const [descrição, setDescrição] = useState('');
   const [erro, setErro] = useState('');
+  const [image, setImage] = useState(null);
+
+  const handleImagePicker = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      aspect: [4, 4],
+      allowsEditing: true,
+      base64: true,
+      quality: 1,
+    });
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
 
   const handleVamosLaPress = () => {
     if (!nmusuario || !descrição) {
@@ -19,13 +34,65 @@ export default function Logado({ navigation }) {
     }
   };
 
+  const renderCaracteresRestantes = () => {
+    const caracteresRestantes = 255 - descrição.length;
+    const corCaracteres = caracteresRestantes === 0 ? '#FF0000' : 'rgba(255, 255, 255, 0.5)';
+    return (
+      <Text style={{ color: corCaracteres }}>
+        {caracteresRestantes}
+      </Text>
+    );
+  };
+
   return (
     <ImageBackground
-      source={require('./img/telap.png')}
+      source={require('./img/telap2.png')}
       style={styles.container}
-      resizeMode="cover" // Defina resizeMode como "cover"
+      resizeMode="cover"
     >
       <View style={styles.overlay}>
+        <View style={styles.content}>
+          <View style={styles.textInputContainer}>
+            <Image source={require('./img/icons/Group.png')} style={styles.iconuser} />
+            <TextInput
+              style={styles.textInput}
+              placeholder="Nome de usuario"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              underlineColorAndroid="transparent"
+              maxLength={100}
+              value={nmusuario}
+              onChangeText={setNmusuario}
+            />
+          </View>
+
+          <View style={styles.textInputContainer}>
+            <Image source={require('./img/icons/page.png')} style={styles.icon} />
+            <TextInput
+              style={styles.textInput}
+              placeholder="Descrição"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              underlineColorAndroid="transparent"
+              maxLength={255}
+              value={descrição}
+              onChangeText={setDescrição}
+            />
+            <Text style={styles.caracteresRestantes}>
+              {renderCaracteresRestantes()}
+            </Text>
+          </View>
+        </View>
+
+        <TouchableOpacity onPress={handleImagePicker} style={{ top: -400 }}>
+          <Image
+            source={image ? { uri: image } : require('./img/icons/layer1.png')}
+            style={{ width: 200, height: 200, borderRadius: 100, top: 100 }}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button} onPress={handleVamosLaPress}>
+          <Text style={styles.buttonText}>Cadastrar</Text>
+        </TouchableOpacity>
+        
         {erro !== '' && (
           <Animatable.View
             style={[
@@ -43,37 +110,6 @@ export default function Logado({ navigation }) {
             <Text style={styles.errorMessage}>{erro}</Text>
           </Animatable.View>
         )}
-
-        <View style={styles.content}>
-          <View style={styles.textInputContainer}>
-            <Image source={require('./img/icons/Group.png')} style={styles.iconuser} />
-            <TextInput
-              style={styles.textInput}
-              placeholder="Nome de usuario"
-              placeholderTextColor="rgba(255, 255, 255, 0.5)"
-              underlineColorAndroid="transparent"
-              maxLength={100}
-              value={nmusuario}
-              onChangeText={setNmusuario}
-            />
-          </View>
-          <View style={styles.textInputContainer}>
-            <Image source={require('./img/icons/page.png')} style={styles.icon} />
-            <TextInput
-              style={styles.textInput}
-              placeholder="Descrição"
-              placeholderTextColor="rgba(255, 255, 255, 0.5)"
-              underlineColorAndroid="transparent"
-              maxLength={255}
-              value={descrição}
-              onChangeText={setDescrição}
-            />
-          </View>
-        </View>
-
-        <TouchableOpacity style={styles.button} onPress={handleVamosLaPress}>
-          <Text style={styles.buttonText}>Cadastrar</Text>
-        </TouchableOpacity>
       </View>
     </ImageBackground>
   );
@@ -99,6 +135,7 @@ const styles = StyleSheet.create({
   content: {
     justifyContent: 'center',
     alignItems: 'center',
+    top: 120,
   },
 
   button: {
@@ -108,8 +145,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    position: 'absolute',
-    bottom: windowHeight * 0.04,
+    top: 190,
   },
 
   buttonText: {
@@ -140,12 +176,14 @@ const styles = StyleSheet.create({
     width: 19,
     height: 24,
     marginRight: 14,
+    left: 3,
   },
 
   iconuser: {
     width: 23,
     height: 23,
     marginRight: 10,
+    
   },
 
   errorBanner: {
@@ -162,5 +200,10 @@ const styles = StyleSheet.create({
   errorMessage: {
     color: '#FFFFFF',
     fontSize: 16,
+  },
+
+  caracteresRestantes: {
+    fontSize: 12,
+    marginLeft: 10,
   },
 });

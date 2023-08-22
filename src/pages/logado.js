@@ -3,12 +3,25 @@ import { StyleSheet, View, Text, TouchableOpacity, Image, Platform, Dimensions }
 
 export default function Logado({ navigation }) {
 
+  const handleVamosLaPress = () => {
+    if (!nmusuario || !descrição) {
+      setErro('Preencha todos os campos obrigatórios.');
+      setTimeout(() => {
+        setErro('');
+      }, 4000);
+    } else {
+      setErro('');
+      navigation.navigate('cadastropart2');
+    }
+  };
+  
+
   return (
     <View style={styles.container}>
       <View style={styles.bottomImageContainer}>
         <Image
           source={require('./img/img_borda_inicio.png')}
-          style={styles.bottomImage} // Imagem de fundo
+          style={styles.bottomImage}
         />
       </View>
     </View>
