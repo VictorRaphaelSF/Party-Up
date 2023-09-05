@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Image, TouchableOpacity, Text, TextInput, Platform } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity, Text, TextInput, Platform, KeyboardAvoidingView } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
@@ -57,6 +57,11 @@ export default function Cadastro({ navigation }) {
     return date > ageLimit;
   };
 
+  const backbutton = () => {
+    navigation.goBack();
+  };
+
+
   const validarSenha = (senhaConfirmacao) => {
     if (senha !== senhaConfirmacao) {
       setConfirmarSenhaErro(true);
@@ -72,6 +77,10 @@ export default function Cadastro({ navigation }) {
         style={styles.backgroundImage}
         resizeMode="cover"
       />
+
+        <TouchableOpacity style={styles.backButton} onPress={backbutton}>
+          <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
+        </TouchableOpacity>
 
       {erro !== '' && (
         <Animatable.View
@@ -223,6 +232,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
+    
   },
 
   backgroundImage: {
@@ -237,6 +247,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
+  backButton: {
+    position: 'absolute',
+    top: 50,
+    left: 27,
+    zIndex: 1,
+  },
+
+  backIcon: {
+    width: 30,
+    height: 24,
+  },
+
   button: {
     backgroundColor: 'rgba(255, 1, 108, 0.4)',
     paddingVertical: 14,
@@ -244,8 +266,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    position: 'absolute',
-    bottom: 32,
+    top: 150,
   },
 
   buttonText: {
@@ -254,17 +275,18 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
 
-  textInputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    maxWidth: Platform.OS === 'web' ? '100%' : '85%',
-    height: Platform.OS === 'web' ? 50 : 55,
-    borderBottomWidth: 1,
-    borderBottomColor: '#FFFFFF',
-    marginBottom: 13,
-    justifyContent: 'center',
-    bottom: 35,
-  },
+    textInputContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      maxWidth: Platform.OS === 'web' ? '100%' : '85%',
+      height: Platform.OS === 'web' ? 50 : 55,
+      borderBottomWidth: 1,
+      borderBottomColor: '#FFFFFF',
+      marginBottom: 13,
+      justifyContent: 'center',
+      bottom: 35,
+      position: 'static',
+    },
 
   textInput: {
     color: '#FFFFFF',

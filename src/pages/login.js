@@ -23,7 +23,7 @@ export default function Login({ navigation }) {
         errorRef.current.shake(800);
       }
     } else if (email === 'admin@partyup.com' && senha === 'admin') {
-      navigation.navigate('logado');
+      navigation.navigate('telaprincipal');
     } else {
       setEmptyFieldError('');
       setErro('Email ou senha incorretos. Por favor, tente novamente.');

@@ -3,12 +3,14 @@ import { StyleSheet, View, Text, TouchableOpacity, Image, Platform, Dimensions, 
 
 import * as Animatable from 'react-native-animatable';
 import * as ImagePicker from 'expo-image-picker';
+import { useNavigation } from '@react-navigation/native';
 
-export default function Logado({ navigation }) {
+export default function Logado() {
   const [nmusuario, setNmusuario] = useState('');
   const [descrição, setDescrição] = useState('');
   const [erro, setErro] = useState('');
   const [image, setImage] = useState(null);
+  const navigation = useNavigation();
 
   const handleImagePicker = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -30,7 +32,7 @@ export default function Logado({ navigation }) {
       }, 4000);
     } else {
       setErro('');
-      navigation.navigate('cadastropart2');
+      navigation.navigate('termos', { userImage: image });
     }
   };
 
@@ -83,16 +85,18 @@ export default function Logado({ navigation }) {
         </View>
 
         <TouchableOpacity onPress={handleImagePicker} style={{ top: -400 }}>
-          <Image
-            source={image ? { uri: image } : require('./img/icons/layer1.png')}
-            style={{ width: 200, height: 200, borderRadius: 100, top: 100 }}
-          />
+          <View style={styles.imageContainer}>
+            <Image
+              source={image ? { uri: image } : require('./img/icons/layer1.png')}
+              style={styles.image}
+            />
+          </View>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button} onPress={handleVamosLaPress}>
           <Text style={styles.buttonText}>Cadastrar</Text>
         </TouchableOpacity>
-        
+
         {erro !== '' && (
           <Animatable.View
             style={[
@@ -182,8 +186,7 @@ const styles = StyleSheet.create({
   iconuser: {
     width: 23,
     height: 23,
-    marginRight: 10,
-    
+    marginRight: 20,
   },
 
   errorBanner: {
@@ -205,5 +208,18 @@ const styles = StyleSheet.create({
   caracteresRestantes: {
     fontSize: 12,
     marginLeft: 10,
+  },
+
+  imageContainer: {
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+    borderRadius: 100,
+    overflow: 'hidden',
+    top: 102,
+  },
+
+  image: {
+    width: 200,
+    height: 200,
   },
 });
