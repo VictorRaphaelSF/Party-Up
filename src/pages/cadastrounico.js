@@ -18,7 +18,7 @@ export default function Cadastro({ navigation }) {
   const [confirmarSenhaVisivel, setConfirmarSenhaVisivel] = useState(false);
   const [senhaIcon, setSenhaIcon] = useState(require('./img/icons/eye.png'));
   const [confirmarSenhaIcon, setConfirmarSenhaIcon] = useState(require('./img/icons/eye.png'));
-  const [confirmarSenhaErro, setConfirmarSenhaErro] = useState(false);
+  const [confirmarSenhaErro, setConfirmarSenhaErro] = useState(true);
 
   const InputNum = (value, setter) => {
     const numericValue = value.replace(/[^0-9]/g, '');
