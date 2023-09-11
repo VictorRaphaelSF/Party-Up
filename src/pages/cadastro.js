@@ -19,9 +19,6 @@ export default function Cadastro({ navigation }) {
   const [confirmarSenhaIcon, setConfirmarSenhaIcon] = useState(require('./img/icons/eye.png'));
   const [confirmarSenhaErro, setConfirmarSenhaErro] = useState(false);
 
-
-  axios.post('')
-
   const InputNum = (value, setter) => {
     const numericValue = value.replace(/[^0-9]/g, '');
     setter(numericValue);
