@@ -10,6 +10,10 @@ import  Login from './src/pages/login';
 import Cadastro from './src/pages/cadastro';
 import Cadastropart2 from './src/pages/cadastropart2';
 import Cadastropart3 from './src/pages/cadastropart3';
+import Cadevento from './src/pages/cadevento';
+import Cadevento2 from './src/pages/cadevento2';
+import Historicoevent from './src/pages/historicoevent';
+import Search from './src/pages/search'
 import Notificação from './src/pages/notificações'
 import Termos from './src/pages/termos';
 import Telaprincipal from './src/pages/telaprincipal';
@@ -67,6 +71,30 @@ export default function App() {
           headerShown: false
         }}
         name='telaprincipal' component={Telaprincipal}
+        />
+        <Stack.Screen
+        options={{
+          headerShown: false
+        }}
+        name='cadevento' component={Cadevento}
+        />
+        <Stack.Screen
+        options={{
+          headerShown: false
+        }}
+        name='cadevento2' component={Cadevento2}
+        />
+        <Stack.Screen
+        options={{
+          headerShown: false
+        }}
+        name='historicoevent' component={Historicoevent}
+        />
+        <Stack.Screen
+        options={{
+          headerShown: false
+        }}
+        name='search' component={Search}
         />
       </Stack.Navigator>
     </NavigationContainer>
