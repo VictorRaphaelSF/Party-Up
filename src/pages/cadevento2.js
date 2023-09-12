@@ -5,7 +5,7 @@ import * as Animatable from 'react-native-animatable';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
 
-export default function Logado() {
+export default function Cadevento2() {
   const [nmtelefone, setNmTelefone] = useState('');
   const [sitectt, setSitectt] = useState('');
   const [erro, setErro] = useState('');

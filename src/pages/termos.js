@@ -5,7 +5,7 @@ import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
 
-export default function Logado() {
+export default function Termos() {
   const navigation = useNavigation();
   const route = useRoute();
 
