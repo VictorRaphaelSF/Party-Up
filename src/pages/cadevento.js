@@ -10,9 +10,9 @@ export default function Cadevento() {
   const [descrição, setDescrição] = useState('');
   const [erro, setErro] = useState('');
   const [image, setImage] = useState(null);
+  const [cep, setEndereco] = useState('')
+  const [numero, setCep] = useState('')
   const navigation = useNavigation();
-  const [setendereco, setEndereco] = useState('')
-  const [setcep, setCep] = useState('')
 
   const handleImagePicker = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -30,18 +30,7 @@ export default function Cadevento() {
     navigation.goBack();
   };
 
-  const bttCriarEvento = () => {
-    if (!setnmevento || !descrição) {
-      setErro('Preencha todos os campos obrigatórios.');
-      setTimeout(() => {
-        setErro('');
-      }, 4000);
-    } else {
-      setErro('');
-      navigation.navigate('termos', { userImage: image });
-    }
-  };
-
+  
   const renderCaracteresRestantes = () => {
     const caracteresRestantes = 255 - descrição.length;
     const corCaracteres = caracteresRestantes === 0 ? '#FF0000' : 'rgba(255, 255, 255, 0.5)';
@@ -50,6 +39,36 @@ export default function Cadevento() {
         {caracteresRestantes}
       </Text>
     );
+  };
+  
+  const eventData = {
+    nmEvent : setnmevento,
+    descricao : descrição,
+    cep: cep,
+    numero: numero,
+    uri : "imagem.png"
+  }
+
+  const bttCriarEvento = () => {
+    if (!setnmevento || !descrição || !image || !cep || !numero) {
+      setErro('Preencha todos os campos obrigatórios.');
+      setTimeout(() => {
+        setErro('');
+      }, 4000);
+    } else {
+        setErro('');
+        axios.post('http://localhost:3003/cadEvent', eventData)
+        .then(response => {
+        // Lidar com a resposta do servidor, se necessário
+    
+        console.log(response);
+        navigation.navigate('telaprincipal', { userImage: image });
+    })
+    .catch(error => {
+    // Lidar com erros, se houver algum
+      console.error('Erro ao enviar os dados para o backend:', error);
+    });
+    }
   };
 
   return (
@@ -98,7 +117,7 @@ export default function Cadevento() {
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               underlineColorAndroid="transparent"
               maxLength={100}
-              value={setendereco}
+              value={cep}
               onChangeText={setEndereco}
             />
           </View>
@@ -107,11 +126,11 @@ export default function Cadevento() {
             <Image source={require('./img/icons/home.png')} style={styles.iconhome} />
             <TextInput
               style={styles.textInput}
-              placeholder="Numero e Complemento"
+              placeholder="Numero"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               underlineColorAndroid="transparent"
               maxLength={100}
-              value={setcep}
+              value={numero}
               onChangeText={setCep}
             />
           </View>

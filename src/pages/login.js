@@ -22,39 +22,55 @@ export default function Login({ navigation }) {
         errorRef.current.shake(800);
       }
     } else {
-      try {
-        const data = {
+      //try {
+        const dataLogin = {
           email: email,
           senha: senha,
         };
-        const response = await axios.post('http://localhost:3003/loginUser', data);
+
+        axios.get('http://localhost:3003/loginUser', dataLogin)
+        .then(response => {
+          // Lidar com a resposta do servidor, se necessário
+          
+            console.log(response);
+            navigation.navigate('telaprincipal', { userImage: route.params.userImage });
+          })
+          .catch(error => {
+          // Lidar com erros, se houver algum
+            console.error('Erro ao enviar os dados para o backend:', error);
+          });
+      
   
-        if (response.status === 200 && response.data.validateLogin) {
-          console.log(response.data.message);
-          navigation.navigate('telaprincipal');
-        } else {
-          setEmptyFieldError('');
-          setErro('Email ou senha incorretos, tente novamente.');
-          setSenha('');
-          if (errorRef.current) {
-            errorRef.current.shake(800);
-          }
-          setTimeout(() => {
-            setErro('');
-          }, 4000);
-        }
-      } catch (error) {
-        console.error('Erro ao enviar os dados para o backend:', error);
-        setEmptyFieldError('');
-        setErro('Erro ao enviar os dados para o backend:');
-        setSenha('');
-        if (errorRef.current) {
-          errorRef.current.shake(800);
-        }
-        setTimeout(() => {
-          setErro('');
-        }, 4000);
-      }
+
+
+
+
+      //   if (response.status === 200 && response.data.validateLogin) {
+      //     console.log(response.data.message);
+      //     navigation.navigate('telaprincipal');
+      //   } else {
+      //     setEmptyFieldError('');
+      //     setErro('Email ou senha incorretos, tente novamente.');
+      //     setSenha('');
+      //     if (errorRef.current) {
+      //       errorRef.current.shake(800);
+      //     }
+      //     setTimeout(() => {
+      //       setErro('');
+      //     }, 4000);
+      //   }
+      // } catch (error) {
+      //   console.error('Erro ao enviar os dados para o backend:', error);
+      //   setEmptyFieldError('');
+      //   setErro('Erro ao enviar os dados para o backend:');
+      //   setSenha('');
+      //   if (errorRef.current) {
+      //     errorRef.current.shake(800);
+      //   }
+      //   setTimeout(() => {
+      //     setErro('');
+      //   }, 4000);
+      //}
     }
   };
 
