@@ -4,11 +4,12 @@ import { StyleSheet, View, Text, TouchableOpacity, Image, Platform, Dimensions, 
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
+import axios from 'axios';
+
 
 export default function Termos() {
   const navigation = useNavigation();
   const route = useRoute();
-
   const [scrollPosition, setScrollPosition] = useState(0);
   const scrollViewRef = useRef(null);
 
@@ -24,9 +25,35 @@ export default function Termos() {
     setScrollPosition(scrollPercentage);
   };
 
+  console.log(route.params.userData);
+  
+  const userData = route.params && route.params.userData ? route.params.userData : {};
+  console.log(userData)
+
+
+  
+  //const userData = route.params.userData;
+
+
   const acceptTerms = () => {
-    navigation.navigate('telaprincipal', { userImage: route.params.userImage });
+    axios.post('http://localhost:3003/cadUser', userData)
+    .then(response => {
+    // Lidar com a resposta do servidor, se necessário
+    
+      console.log(response);
+      navigation.navigate('telaprincipal', { userImage: route.params.userImage });
+    })
+    .catch(error => {
+    // Lidar com erros, se houver algum
+      console.error('Erro ao enviar os dados para o backend:', error);
+    });
+
+
+    
   };
+
+
+
 
   return (
     <ImageBackground
