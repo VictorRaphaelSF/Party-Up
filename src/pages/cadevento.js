@@ -12,6 +12,7 @@ export default function Cadevento() {
   const [image, setImage] = useState(null);
   const navigation = useNavigation();
   const [setendereco, setEndereco] = useState('')
+  const [setcep, setCep] = useState('')
 
   const handleImagePicker = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -58,8 +59,6 @@ export default function Cadevento() {
       resizeMode="cover"
     >
 
-        
-        
       <View style={styles.overlay}>
         <View style={styles.content}>
           <View style={styles.textInputContainer}>
@@ -95,12 +94,25 @@ export default function Cadevento() {
             <Image source={require('./img/icons/location.png')} style={styles.iconlocation} />
             <TextInput
               style={styles.textInput}
-              placeholder="Endereço"
+              placeholder="CEP"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               underlineColorAndroid="transparent"
               maxLength={100}
               value={setendereco}
               onChangeText={setEndereco}
+            />
+          </View>
+
+          <View style={styles.textInputContainer}>
+            <Image source={require('./img/icons/home.png')} style={styles.iconhome} />
+            <TextInput
+              style={styles.textInput}
+              placeholder="Numero e Complemento"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              underlineColorAndroid="transparent"
+              maxLength={100}
+              value={setcep}
+              onChangeText={setCep}
             />
           </View>
         </View>
@@ -109,7 +121,7 @@ export default function Cadevento() {
           <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={handleImagePicker} style={{ top: -415 }}>
+        <TouchableOpacity onPress={handleImagePicker} style={{ top: -455 }}>
           <View style={styles.imageContainer}>
             <Image
               source={image ? { uri: image } : require('./img/icons/layer1.png')}
@@ -203,7 +215,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    bottom: 0,
     left: '50%',
     marginLeft: -20,
   },
@@ -220,7 +231,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    top: 100,
+    top: 80,
   },
 
   buttonText: {
@@ -230,7 +241,7 @@ const styles = StyleSheet.create({
   },
 
   backButton: {
-    bottom: 300,
+    bottom: 335,
     right: 144,
   },
 
@@ -274,10 +285,17 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
 
+  iconhome: {
+    width: 22,
+    height: 22,
+    marginRight: 14,
+    opacity: 0.8,
+  },
+
   textadd: {
     color: '#FFFFFF',
     fontSize: 22,
-    bottom: 285,
+    bottom: 325,
     opacity: 0.7,
   },
 

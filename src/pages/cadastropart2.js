@@ -4,7 +4,6 @@ import { StyleSheet, View, Text, TouchableOpacity, Image, Platform, Dimensions, 
 import * as Animatable from 'react-native-animatable';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
-import ImageResizer from 'react-native-image-resizer';
 
 export default function Logado() {
   const [nmusuario, setNmusuario] = useState('');
@@ -18,26 +17,10 @@ export default function Logado() {
       aspect: [4, 4],
       allowsEditing: true,
       base64: true,
-      quality: 0.5,
+      quality: 1,
     });
-
     if (!result.canceled) {
-      ImageResizer.createResizedImage(
-        result.assets[0].uri,
-        800,
-        800,
-        80,
-        0,
-        null,
-        false,
-        { mode: 'contain', onlyScaleDown: false }
-      )
-      .then((response) => {
-        setImage(response.uri);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      setImage(result.assets[0].uri);
     }
   };
 
@@ -196,8 +179,8 @@ const styles = StyleSheet.create({
   icon: {
     width: 19,
     height: 24,
-    marginRight: 21,
-    left: 3,
+    marginRight: 14,
+    left: 4
   },
 
   iconuser: {
