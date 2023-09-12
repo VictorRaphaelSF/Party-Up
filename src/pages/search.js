@@ -34,6 +34,11 @@ export default function Search() {
       style={{flex: 1}}
     >
     <View style={styles.container}>
+      <Image
+        source={require('./img/telap.png')}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      />
       <View style={styles.searchBarContainer}>
         <TextInput
         style={styles.searchInput}
@@ -80,6 +85,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
+  },
+
+  backgroundImage: {
+    flex: 1,
+    width: '110%',
+    height: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
   },
 
   navbar: {

@@ -23,12 +23,12 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='search'>
+      <Stack.Navigator initialRouteName='telaprincipal'>
         <Stack.Screen 
           options={{
             headerShown: false
           }}
-          name='index' component={Search}
+          name='index' component={Telaprincipal}
         />
         <Stack.Screen
         options={{
