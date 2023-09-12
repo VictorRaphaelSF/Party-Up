@@ -58,6 +58,10 @@ export default function Login({ navigation }) {
     }
   };
 
+  const backbutton = () => {
+    navigation.goBack();
+  };
+
   const bttnvconta = () => {
     navigation.navigate('cadastro');
   };
@@ -69,6 +73,10 @@ export default function Login({ navigation }) {
         style={styles.backgroundImage}
         resizeMode="cover"
       />
+
+        <TouchableOpacity style={styles.backButton} onPress={backbutton}>
+          <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
+        </TouchableOpacity>
 
       <Animatable.View
         ref={errorRef}
@@ -169,6 +177,19 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     opacity: 0.7,
   },
+  
+  backButton: {
+    position: 'absolute',
+    top: 50,
+    left: 27,
+    zIndex: 1,
+  },
+
+  backIcon: {
+    width: 30,
+    height: 24,
+  },
+
 
   smallButton: {
     backgroundColor: 'transparent', 
