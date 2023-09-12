@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, TouchableOpacity, Image, Dimensions } from 'react-native';
 
-import { useRoute, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Search(  ) {
   const [reload, setReload] = useState(0);
-  const { params } = useRoute();
   const navigation = useNavigation();
 
   const handleButtonHome = () => {
