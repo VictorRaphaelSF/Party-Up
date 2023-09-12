@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, Text, TextInput, Platform, KeyboardAvoidingView } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Cadastro({ navigation }) {
   const [email, setEmail] = useState('');
@@ -20,25 +21,13 @@ export default function Cadastro({ navigation }) {
   const [confirmarSenhaErro, setConfirmarSenhaErro] = useState(false);
 
 
-  axios.post('')
 
   const InputNum = (value, setter) => {
     const numericValue = value.replace(/[^0-9]/g, '');
     setter(numericValue);
   };
-
-  const Avançar = () => {
-    if (!email || !senha || !confirmarSenha || !cpfCnpj || !yearOfBirth || !telefone || confirmarSenhaErro) {
-      setErro('Preencha todos os campos obrigatórios.');
-      setTimeout(() => {
-        setErro('');
-      }, 4000);
-    } else {
-      setErro('');
-      navigation.navigate('cadastropart2');
-    }
-  };
-
+  
+  
   const handleDateChange = (event, selected) => {
     setShowDatePicker(false);
     if (selected) {
@@ -53,23 +42,51 @@ export default function Cadastro({ navigation }) {
       }
     }
   };
-
+  
   const isUnderage = (date) => {
     const today = new Date();
     const ageLimit = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
     return date > ageLimit;
   };
-
+  
   const backbutton = () => {
     navigation.goBack();
   };
-
-
+  
+  
   const validarSenha = (senhaConfirmacao) => {
     if (senha !== senhaConfirmacao) {
       setConfirmarSenhaErro(true);
     } else {
       setConfirmarSenhaErro(false);
+    }
+  };
+  
+  
+  let userData;
+
+  try {
+    userData = {
+      email: email,
+      senha: senha,
+      cpfCnpj: cpfCnpj,
+      dataNas: "2020-02-01",
+      telefone: telefone,
+    };
+  } catch (error) {
+    console.error('Ocorreu um erro ao criar o objeto userData:', error);
+    // Trate o erro conforme necessário.
+  }
+
+  const Avançar = () => {
+    if (!email || !senha || !confirmarSenha || !cpfCnpj  || !telefone || confirmarSenhaErro) {
+      setErro('Preencha todos os campos obrigatórios.');
+      setTimeout(() => {
+        setErro('');
+      }, 4000);
+    } else {
+      setErro('');
+      navigation.navigate('cadastropart2', {userData});
     }
   };
 

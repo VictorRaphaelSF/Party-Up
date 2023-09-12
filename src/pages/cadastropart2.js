@@ -5,13 +5,14 @@ import * as Animatable from 'react-native-animatable';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
 
-export default function Logado() {
+export default function Logado({route}) {
+
   const [nmusuario, setNmusuario] = useState('');
   const [descrição, setDescrição] = useState('');
   const [erro, setErro] = useState('');
   const [image, setImage] = useState(null);
   const navigation = useNavigation();
-
+  
   const handleImagePicker = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       aspect: [4, 4],
@@ -23,19 +24,8 @@ export default function Logado() {
       setImage(result.assets[0].uri);
     }
   };
-
-  const handleVamosLaPress = () => {
-    if (!nmusuario || !descrição) {
-      setErro('Preencha todos os campos obrigatórios.');
-      setTimeout(() => {
-        setErro('');
-      }, 4000);
-    } else {
-      setErro('');
-      navigation.navigate('termos', { userImage: image });
-    }
-  };
-
+  
+  
   const renderCaracteresRestantes = () => {
     const caracteresRestantes = 255 - descrição.length;
     const corCaracteres = caracteresRestantes === 0 ? '#FF0000' : 'rgba(255, 255, 255, 0.5)';
@@ -45,12 +35,39 @@ export default function Logado() {
       </Text>
     );
   };
+  
+  
+  const userData = route.params.userData;
+  
+  // adicionando mais dados no objeto do cliente
+  userData["nmUser"] = nmusuario;
+  console.log("pegou",userData)
+  
+  userData["descricao"] = descrição;
+  
+  
+  userData["uri"] = "image";
 
+  console.log(userData);
+  
+  const handleVamosLaPress = () => {
+    if (!nmusuario || !descrição) {
+      setErro('Preencha todos os campos obrigatórios.');
+      setTimeout(() => {
+        setErro('');
+      }, 4000);
+    } else {
+      setErro('');
+      navigation.navigate('termos', { userImage: image, userData: userData });
+    }
+  };
+  // verificando pra ver se ta certo
+  
   return (
     <ImageBackground
-      source={require('./img/telap2.png')}
-      style={styles.container}
-      resizeMode="cover"
+    source={require('./img/telap2.png')}
+    style={styles.container}
+    resizeMode="cover"
     >
       <View style={styles.overlay}>
         <View style={styles.content}>
