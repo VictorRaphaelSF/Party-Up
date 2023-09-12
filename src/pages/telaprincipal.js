@@ -13,7 +13,7 @@ export default function Telaprincipal(  ) {
   };
 
   const handleButtonSearch = () => {
-    console.log('Botão pesquisa pressionado');
+    navigation.navigate('search');
   };
 
   const handleButtonCenter = () => {
