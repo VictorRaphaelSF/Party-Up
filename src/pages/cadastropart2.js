@@ -18,7 +18,7 @@ export default function Logado() {
       aspect: [4, 4],
       allowsEditing: true,
       base64: true,
-      quality: 1,
+      quality: 0.5,
     });
 
     if (!result.canceled) {
