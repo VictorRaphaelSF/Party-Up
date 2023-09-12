@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Image, Dimensions, Text } from 'react-native';
 
 import { useRoute, useNavigation } from '@react-navigation/native';
 
@@ -13,11 +13,11 @@ export default function Telaprincipal(  ) {
   };
 
   const handleButtonSearch = () => {
-    console.log('Botão pesquisa pressionado');
+    navigation.navigate('search');
   };
 
   const handleButtonCenter = () => {
-    console.log('Botão do meio pressionado');
+    navigation.navigate('cadevento');
   };
 
   const handleButtonNotification = () => {
@@ -34,6 +34,14 @@ export default function Telaprincipal(  ) {
 
   return (
     <View style={styles.container}>
+      
+      <View style={styles.topBar}>
+        <Image source={require('./img/icons/sol.png')} style={styles.topIconSol} />
+        <Image source={require('./img/icons/partyuplg.png')} style={styles.topIconPartyup}/>
+      </View>
+
+      <Text style={styles.highlightsText}>Destaques</Text>
+
       <View style={styles.navbar}>
         <TouchableOpacity style={styles.navButton} onPress={handleButtonHome}>
           <Image source={require('./img/icons/home(g).png')} style={styles.navButtonImage} />
@@ -76,6 +84,41 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
+  },
+
+  topBar: {
+    flexDirection: 'row',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    paddingHorizontal: 16,
+    paddingTop: 8,
+    justifyContent: 'space-between',
+  },
+
+  topIconSol: {
+    width: 45,
+    height: 45,
+    left: 5,
+    top: 24,
+    opacity: 0.8,
+  },
+
+  topIconPartyup: {
+    width: 145,
+    height: 25,
+    right: 155,
+    top: 35,
+    opacity: 0.7,
+  },
+
+  highlightsText: {
+    color: '#FFFFFF',
+    fontSize: 26,
+    fontWeight: 'bold',
+    bottom: 270,
+    right: 115,
   },
 
   navbar: {
@@ -122,7 +165,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     position: 'absolute',
-    top: -395,
+    bottom: 325,
     right: 0,
     left: 115,
     borderRadius: 25,

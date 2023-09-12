@@ -1,17 +1,16 @@
 import React, { useState, useRef } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, Text, TextInput, Platform, Dimensions } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import axios from 'axios';
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [erro, setErro] = useState('');
   const [emptyFieldError, setEmptyFieldError] = useState('');
-
-  // Ref para a animação de erro
   const errorRef = useRef(null);
 
-  const Entrar = () => {
+  const Entrar = async () => {
     if (!email || !senha) {
       setEmptyFieldError('Preencha todos os campos.');
       setTimeout(() => {
@@ -22,19 +21,45 @@ export default function Login({ navigation }) {
       if (errorRef.current) {
         errorRef.current.shake(800);
       }
-    } else if (email === 'admin@partyup.com' && senha === 'admin') {
-      navigation.navigate('telaprincipal');
     } else {
-      setEmptyFieldError('');
-      setErro('Email ou senha incorretos. Por favor, tente novamente.');
-      setSenha('');
-      if (errorRef.current) {
-        errorRef.current.shake(800);
+      try {
+        const data = {
+          email: email,
+          senha: senha,
+        };
+        const response = await axios.post('http://localhost:3003/loginUser', data);
+  
+        if (response.status === 200 && response.data.validateLogin) {
+          console.log(response.data.message);
+          navigation.navigate('telaprincipal');
+        } else {
+          setEmptyFieldError('');
+          setErro('Email ou senha incorretos, tente novamente.');
+          setSenha('');
+          if (errorRef.current) {
+            errorRef.current.shake(800);
+          }
+          setTimeout(() => {
+            setErro('');
+          }, 4000);
+        }
+      } catch (error) {
+        console.error('Erro ao enviar os dados para o backend:', error);
+        setEmptyFieldError('');
+        setErro('Erro ao enviar os dados para o backend:');
+        setSenha('');
+        if (errorRef.current) {
+          errorRef.current.shake(800);
+        }
+        setTimeout(() => {
+          setErro('');
+        }, 4000);
       }
-      setTimeout(() => {
-        setErro('');
-      }, 4000);
     }
+  };
+
+  const backbutton = () => {
+    navigation.goBack();
   };
 
   const bttnvconta = () => {
@@ -48,6 +73,10 @@ export default function Login({ navigation }) {
         style={styles.backgroundImage}
         resizeMode="cover"
       />
+
+        <TouchableOpacity style={styles.backButton} onPress={backbutton}>
+          <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
+        </TouchableOpacity>
 
       <Animatable.View
         ref={errorRef}
@@ -148,6 +177,19 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     opacity: 0.7,
   },
+  
+  backButton: {
+    position: 'absolute',
+    top: 50,
+    left: 27,
+    zIndex: 1,
+  },
+
+  backIcon: {
+    width: 30,
+    height: 24,
+  },
+
 
   smallButton: {
     backgroundColor: 'transparent', 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Dimensions, ImageBackground } from 'react-native'; // Importe o ImageBackground
+import { StyleSheet, View, Text, TouchableOpacity, Dimensions, ImageBackground } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
 export default function Index({ navigation }) {

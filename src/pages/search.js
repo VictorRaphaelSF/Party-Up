@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Image, Dimensions, TextInput, KeyboardAvoidingView } from 'react-native';
 
-import { useRoute, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
-export default function Search(  ) {
+export default function Search() {
   const [reload, setReload] = useState(0);
-  const { params } = useRoute();
   const navigation = useNavigation();
+  const [searchTerm, setSearchTerm] = useState('');
 
   const handleButtonHome = () => {
-    setReload(reload + 1);
+    navigation.navigate('telaprincipal');
   };
 
   const handleButtonSearch = () => {
-    console.log('Botão pesquisa pressionado');
+    setReload(reload + 1);
   };
 
   const handleButtonCenter = () => {
@@ -29,7 +29,27 @@ export default function Search(  ) {
   };
 
   return (
+    <KeyboardAvoidingView 
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{flex: 1}}
+    >
     <View style={styles.container}>
+      <Image
+        source={require('./img/telap.png')}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      />
+      <View style={styles.searchBarContainer}>
+        <TextInput
+        style={styles.searchInput}
+        placeholder="Pesquisar"
+        placeholderTextColor="rgba(255, 255, 255, 0.5)"
+        underlineColorAndroid="transparent"
+        value={searchTerm}
+        onChangeText={setSearchTerm}
+        />
+      </View>
+
       <View style={styles.navbar}>
         <TouchableOpacity style={styles.navButton} onPress={handleButtonHome}>
           <Image source={require('./img/icons/home(g).png')} style={styles.navButtonImage} />
@@ -43,7 +63,7 @@ export default function Search(  ) {
           <Image source={require('./img/icons/add(g).png')} style={styles.circleButtonImage} />
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.navButton, { left: 15 }]} onPress={handleButtonNotification}>
+        <TouchableOpacity style={styles.navButton} onPress={handleButtonNotification}>
           <Image source={require('./img/icons/notification(g).png')} style={styles.navButtonImage} />
         </TouchableOpacity>
 
@@ -52,6 +72,7 @@ export default function Search(  ) {
         </TouchableOpacity>
       </View>
     </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -64,6 +85,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
+  },
+
+  backgroundImage: {
+    flex: 1,
+    width: '110%',
+    height: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
   },
 
   navbar: {
@@ -99,5 +129,37 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: '50%',
     marginLeft: -20,
+  },
+
+  circleButtonImage: {
+    width: 70,
+    height: 75,
+  },
+
+  searchBarContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#582C74',
+    padding: 10,
+    position: 'absolute',
+    top: 24,
+    left: 5,
+    right: 5,
+    zIndex: 1,
+    borderRadius: 20,
+  },
+
+  searchInput: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    flex: 1,
+    paddingLeft: 10,
+    borderRadius: 5,
+  },
+
+  searchIcon: {
+    width: 20,
+    height: 20,
+    marginLeft: 10,
   },
 });

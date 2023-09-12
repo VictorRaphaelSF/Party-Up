@@ -6,7 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
 import axios from 'axios';
 
-export default function Logado({}) {
+
+export default function Termos() {
   const navigation = useNavigation();
   const route = useRoute();
   const [scrollPosition, setScrollPosition] = useState(0);

@@ -5,7 +5,7 @@ import * as Animatable from 'react-native-animatable';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
 
-export default function Logado() {
+export default function Cadevento() {
   const [setnmevento, setNmEvento] = useState('');
   const [descrição, setDescrição] = useState('');
   const [erro, setErro] = useState('');
@@ -51,30 +51,6 @@ export default function Logado() {
     );
   };
 
-  const handleButtonHome = () => {
-    navigation.navigate('telaprincipal');
-  };
-
-  const handleButtonSearch = () => {
-    console.log('Botão pesquisa pressionado');
-  };
-
-  const handleButtonCenter = () => {
-    navigation.navigate('cadevento');
-  };
-
-  const handleButtonNotification = () => {
-    navigation.navigate('notificação');
-  };
-
-  const handleButtonPeople = () => {
-    console.log('Botão perfil pressionado');
-  };
-
-  const handleUserImagePress = () => {
-   console.log('Foto de perfil presionada')
-  };
-
   return (
     <ImageBackground
       source={require('./img/telap2.png')}
@@ -82,9 +58,7 @@ export default function Logado() {
       resizeMode="cover"
     >
 
-        <TouchableOpacity style={styles.backButton} onPress={backbutton}>
-          <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
-        </TouchableOpacity>
+        
         
       <View style={styles.overlay}>
         <View style={styles.content}>
@@ -131,6 +105,10 @@ export default function Logado() {
           </View>
         </View>
 
+        <TouchableOpacity style={styles.backButton} onPress={backbutton}>
+          <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
+        </TouchableOpacity>
+
         <TouchableOpacity onPress={handleImagePicker} style={{ top: -415 }}>
           <View style={styles.imageContainer}>
             <Image
@@ -147,6 +125,8 @@ export default function Logado() {
         <TouchableOpacity style={styles.button} onPress={bttCriarEvento}>
           <Text style={styles.buttonText}>Avançar</Text>
         </TouchableOpacity>
+
+        
 
         {erro !== '' && (
           <Animatable.View
@@ -165,28 +145,6 @@ export default function Logado() {
             <Text style={styles.errorMessage}>{erro}</Text>
           </Animatable.View>
         )}
-        <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navButton} onPress={handleButtonHome}>
-          <Image source={require('./img/icons/home(g).png')} style={styles.navButtonImage} />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={[styles.navButton, { left: -15 }]} onPress={handleButtonSearch}>
-          <Image source={require('./img/icons/search(g).png')} style={styles.navButtonImage} />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={[styles.circleButton, { bottom: 30 }]} onPress={handleButtonCenter}>
-          <Image source={require('./img/icons/add(g).png')} style={styles.circleButtonImage} />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={[styles.navButton, { left: 15 }]} onPress={handleButtonNotification}>
-          <Image source={require('./img/icons/notification(g).png')} style={styles.navButtonImage} />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.navButton} onPress={handleButtonPeople}>
-          <Image source={require('./img/icons/people(g).png')} style={styles.navButtonImage} />
-        </TouchableOpacity>
-
-      </View>
     </View>
     </ImageBackground>
   );
@@ -272,9 +230,8 @@ const styles = StyleSheet.create({
   },
 
   backButton: {
-    marginRight: 16,
-    top: 30,
-    left: 20,
+    bottom: 300,
+    right: 144,
   },
 
   textInputContainer: {

@@ -4,7 +4,7 @@ import {StyleSheet, View, Text, TouchableOpacity, Image, Platform, Dimensions, M
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
 
-export default function Logado() {
+export default function Notificações() {
   const navigation = useNavigation();
 
   const backbutton = () => {
