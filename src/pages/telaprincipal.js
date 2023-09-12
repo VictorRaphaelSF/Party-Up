@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Image, Dimensions, Text } from 'react-native';
 
 import { useRoute, useNavigation } from '@react-navigation/native';
 
@@ -37,8 +37,10 @@ export default function Telaprincipal(  ) {
       
       <View style={styles.topBar}>
         <Image source={require('./img/icons/sol.png')} style={styles.topIconSol} />
-        <Image source={require('./img/icons/partyuplg.png')} style={styles.topIconPartyup} />
+        <Image source={require('./img/icons/partyuplg.png')} style={styles.topIconPartyup}/>
       </View>
+
+      <Text style={styles.highlightsText}>Destaques</Text>
 
       <View style={styles.navbar}>
         <TouchableOpacity style={styles.navButton} onPress={handleButtonHome}>
@@ -98,6 +100,7 @@ const styles = StyleSheet.create({
   topIconSol: {
     width: 45,
     height: 45,
+    left: 5,
     top: 24,
     opacity: 0.8,
   },
@@ -108,6 +111,14 @@ const styles = StyleSheet.create({
     right: 155,
     top: 35,
     opacity: 0.7,
+  },
+
+  highlightsText: {
+    color: '#FFFFFF',
+    fontSize: 26,
+    fontWeight: 'bold',
+    bottom: 270,
+    right: 115,
   },
 
   navbar: {
@@ -154,7 +165,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     position: 'absolute',
-    bottom: 310,
+    bottom: 325,
     right: 0,
     left: 115,
     borderRadius: 25,
