@@ -19,26 +19,10 @@ export default function Logado({route}) {
       aspect: [4, 4],
       allowsEditing: true,
       base64: true,
-      quality: 0.5,
+      quality: 1,
     });
-
     if (!result.canceled) {
-      ImageResizer.createResizedImage(
-        result.assets[0].uri,
-        800,
-        800,
-        80,
-        0,
-        null,
-        false,
-        { mode: 'contain', onlyScaleDown: false }
-      )
-      .then((response) => {
-        setImage(response.uri);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      setImage(result.assets[0].uri);
     }
   };
   
