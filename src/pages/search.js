@@ -9,11 +9,11 @@ export default function Search() {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleButtonHome = () => {
-    setReload(reload + 1);
+    navigation.navigate('telaprincipal');
   };
 
   const handleButtonSearch = () => {
-    console.log('Botão pesquisa pressionado');
+    setReload(reload + 1);
   };
 
   const handleButtonCenter = () => {
