@@ -1,0 +1,244 @@
+import React, { useState } from 'react';
+import {StyleSheet, View, Text, TouchableOpacity, Image, Platform, Dimensions, Modal, TouchableWithoutFeedback,} from 'react-native';
+
+import * as Animatable from 'react-native-animatable';
+import { useNavigation } from '@react-navigation/native';
+
+export default function Notificações() {
+  const navigation = useNavigation();
+
+  const backbutton = () => {
+    navigation.goBack();
+  };
+
+  const [isMenuVisible, setMenuVisible] = useState(false);
+
+  const menu = () => {
+    setMenuVisible(true);
+  };
+
+  const closeMenu = () => {
+    setMenuVisible(false);
+  };
+
+  const handleButtonHome = () => {
+    navigation.navigate('telaprincipal');
+  };
+
+  const handleButtonSearch = () => {
+    navigation.navigate('search');
+  };
+
+  const handleButtonCenter = () => {
+    navigation.navigate('cadevento');
+  };
+
+  const handleButtonNotification = () => {
+    navigation.navigate('notificação');
+  };
+
+  const handleButtonPeople = () => {
+    console.log('Botão perfil pressionado');
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+
+        <TouchableOpacity style={styles.backButton} onPress={backbutton}>
+          <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button} onPress={menu}>
+          <View style={styles.bttbarra}></View>
+          <View style={styles.bttbarra}></View>
+          <View style={styles.bttbarra}></View>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.bottomImageContainer}>
+        <Image
+          source={require('./img/img_borda_inicio.png')}
+          style={styles.bottomImage} 
+        />
+      </View>
+
+      <Modal
+        transparent={true}
+        visible={isMenuVisible}
+        onRequestClose={closeMenu}
+      >
+        <TouchableWithoutFeedback onPress={closeMenu}>
+          <View style={styles.modalBackground}>
+            <Animatable.View
+              style={styles.menuContainer}
+              animation={isMenuVisible ? 'slideInUp' : 'slideInDown'}
+              duration={500}
+            >
+              {''}
+              <TouchableOpacity style={styles.menubtt} onPress={() => console.log('Item 1 clicado')}>
+                <Text style={styles.menubtttext}>Item 1</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.menubtt} onPress={() => console.log('Item 2 clicado')}>
+                <Text style={styles.menubtttext}>Item 2</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.menubtt} onPress={() => console.log('Item 3 clicado')}>
+                <Text style={styles.menubtttext}>Item 3</Text>
+              </TouchableOpacity>
+            </Animatable.View>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+      <View style={styles.navbar}>
+        <TouchableOpacity style={styles.navButton} onPress={handleButtonHome}>
+          <Image source={require('./img/icons/home(g).png')} style={styles.navButtonImage} />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.navButton, { left: -15 }]} onPress={handleButtonSearch}>
+          <Image source={require('./img/icons/search(g).png')} style={styles.navButtonImage} />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.circleButton, { bottom: 30 }]} onPress={handleButtonCenter}>
+          <Image source={require('./img/icons/add(g).png')} style={styles.circleButtonImage} />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.navButton, { left: 15 }]} onPress={handleButtonNotification}>
+          <Image source={require('./img/icons/notification(g).png')} style={styles.navButtonImage} />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.navButton} onPress={handleButtonPeople}>
+          <Image source={require('./img/icons/people(g).png')} style={styles.navButtonImage} />
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}
+
+const windowHeight = Dimensions.get('window').height;
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#260038',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+  },
+
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'absolute',
+    top: windowHeight * 0.06,
+    left: 30,
+    zIndex: 1,
+  },
+
+  backButton: {
+    marginRight: 10,
+  },
+
+  backIcon: {
+    width: 30,
+    height: 24,
+  },
+
+  button: {
+    backgroundColor: 'transparent',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 30,
+    height: 18,
+    marginLeft: 150,
+  },
+
+  bttbarra: {
+    width: 31,
+    height: 4,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 2,
+    marginVertical: 3.5,
+    left: 100,
+  },
+
+  bottomImageContainer: {
+    position: 'absolute',
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '52%',
+    backgroundColor: 'transparent',
+  },
+
+  bottomImage: {
+    width: Platform.OS === 'web' ? '100%' : '108%',
+    height: '100%',
+  },
+
+  modalBackground: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'flex-end',
+  },
+
+  menuContainer: {
+    backgroundColor: '#470F62',
+    padding: 16,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
+
+  menubtt: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+  },
+
+  navbar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#380053',
+    padding: 10,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+
+  navButton: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 10,
+  },
+
+  navButtonImage: {
+    width: 20,
+    height: 20,
+  },
+
+  circleButton: {
+    width: 60,
+    height: 60,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 0,
+    left: '50%',
+    marginLeft: -20,
+  },
+
+  circleButtonImage: {
+    width: 75,
+    height: 75,
+  },
+
+  menubtttext: {
+    color: '#FFFFFF',
+    fontSize: 18,
+  },
+});

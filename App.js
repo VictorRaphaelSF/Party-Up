@@ -17,18 +17,19 @@ import Search from './src/pages/search'
 import Notificação from './src/pages/notificações'
 import Termos from './src/pages/termos';
 import Telaprincipal from './src/pages/telaprincipal';
+import Telaprofile from './src/pages/telaprofile'
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='cadevento'>
+      <Stack.Navigator initialRouteName='telaprofile'>
         <Stack.Screen 
           options={{
             headerShown: false
           }}
-          name='index' component={Cadevento}
+          name='index' component={Telaprofile}
         />
         <Stack.Screen
         options={{
@@ -95,6 +96,12 @@ export default function App() {
           headerShown: false
         }}
         name='search' component={Search}
+        />
+        <Stack.Screen
+        options={{
+          headerShown: false
+        }}
+        name='telaprofile' component={Telaprofile}
         />
       </Stack.Navigator>
     </NavigationContainer>
