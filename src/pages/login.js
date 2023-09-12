@@ -17,7 +17,7 @@ export default function Login({ navigation }) {
         setEmptyFieldError('');
       }, 4000);
       setErro('');
-
+  
       if (errorRef.current) {
         errorRef.current.shake(800);
       }
@@ -28,14 +28,25 @@ export default function Login({ navigation }) {
           senha: senha,
         };
         const response = await axios.post('http://localhost:3003/loginUser', data);
-        if (response.status === 200) {
+  
+        if (response.status === 200 && response.data.validateLogin) {
           console.log(response.data.message);
           navigation.navigate('telaprincipal');
+        } else {
+          setEmptyFieldError('');
+          setErro('Email ou senha incorretos, tente novamente.');
+          setSenha('');
+          if (errorRef.current) {
+            errorRef.current.shake(800);
+          }
+          setTimeout(() => {
+            setErro('');
+          }, 4000);
         }
       } catch (error) {
         console.error('Erro ao enviar os dados para o backend:', error);
         setEmptyFieldError('');
-        setErro('Email ou senha incorretos, tene novamente.');
+        setErro('Erro ao enviar os dados para o backend:');
         setSenha('');
         if (errorRef.current) {
           errorRef.current.shake(800);
