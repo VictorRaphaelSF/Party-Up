@@ -17,7 +17,7 @@ export default function Telaprincipal(  ) {
   };
 
   const handleButtonCenter = () => {
-    console.log('Botão do meio pressionado');
+    navigation.navigate('cadevento');
   };
 
   const handleButtonNotification = () => {
