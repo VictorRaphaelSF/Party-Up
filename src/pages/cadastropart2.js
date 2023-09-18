@@ -44,14 +44,10 @@ export default function Logado({route}) {
   
   // adicionando mais dados no objeto do cliente
   userData["nmUser"] = nmusuario;
-  console.log("pegou",userData)
-  
   userData["descricao"] = descrição;
-  
-  
-  userData["uri"] = "image";
+  userData["uri"] = "imagem.png";
 
-  console.log(userData);
+  
   
   const handleVamosLaPress = () => {
     if (!nmusuario || !descrição) {
