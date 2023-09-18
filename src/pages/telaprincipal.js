@@ -49,18 +49,6 @@ export default function Telaprincipal() {
 
       <Text style={styles.highlightsText}>Destaques</Text>
 
-      <ScrollView
-        horizontal
-        contentContainerStyle={styles.carousel}
-      >
-        <Image source={require('./img/Eventos(Temporarios)/Evento(1).png')} style={styles.carouselImage} />
-        <Image source={require('./img/Eventos(Temporarios)/Evento(2).png')} style={styles.carouselImage} />
-        <Image source={require('./img/Eventos(Temporarios)/Evento(3).png')} style={styles.carouselImage} />
-        <Image source={require('./img/Eventos(Temporarios)/Evento(4).png')} style={styles.carouselImage} />
-        <Image source={require('./img/Eventos(Temporarios)/Evento(1).png')} style={styles.carouselImage} />
-        <Image source={require('./img/Eventos(Temporarios)/Evento(2).png')} style={styles.carouselImage} />
-      </ScrollView>
-
       <View style={styles.navbar}>
         <TouchableOpacity style={styles.navButton} onPress={handleButtonHome}>
           <Image source={require('./img/icons/home(g).png')} style={styles.navButtonImage} />

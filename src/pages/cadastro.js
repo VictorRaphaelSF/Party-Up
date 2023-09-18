@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Image, TouchableOpacity, Text, TextInput, Platform, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity, Text, TextInput, Platform } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
@@ -20,12 +20,23 @@ export default function Cadastro({ navigation }) {
   const [confirmarSenhaIcon, setConfirmarSenhaIcon] = useState(require('./img/icons/eye.png'));
   const [confirmarSenhaErro, setConfirmarSenhaErro] = useState(false);
 
+
   const InputNum = (value, setter) => {
     const numericValue = value.replace(/[^0-9]/g, '');
     setter(numericValue);
   };
+
+  const formatarData = (data) => {
+    const regex = /^(\d{2})(\d{2})(\d{4})$/;
+    const match = data.match(regex);
   
+    if (match) {
+      return `${match[1]}/${match[2]}/${match[3]}`;
+    }
   
+    return data;
+  };
+
   const handleDateChange = (event, selected) => {
     setShowDatePicker(false);
     if (selected) {
@@ -51,7 +62,6 @@ export default function Cadastro({ navigation }) {
     navigation.goBack();
   };
   
-  
   const validarSenha = (senhaConfirmacao) => {
     if (senha !== senhaConfirmacao) {
       setConfirmarSenhaErro(true);
@@ -59,7 +69,6 @@ export default function Cadastro({ navigation }) {
       setConfirmarSenhaErro(false);
     }
   };
-  
   
   let userData;
 
@@ -76,7 +85,7 @@ export default function Cadastro({ navigation }) {
     // Trate o erro conforme necessário.
   }
 
-  const Avançar = () => {
+  const Avancar = () => {
     if (!email || !senha || !confirmarSenha || !cpfCnpj  || !telefone || confirmarSenhaErro) {
       setErro('Preencha todos os campos obrigatórios.');
       setTimeout(() => {
@@ -132,10 +141,10 @@ export default function Cadastro({ navigation }) {
           />
         </View>
 
-        <View style={styles.textInputContainer}>
-          <Image source={require('./img/icons/cadeadoicon.png')} style={styles.lockIcon} />
+        <View style={styles.textInputContainerLock}>
+          <Image source={require('./img/icons/cadeadoicon.png')} style={styles.lockIconSenha} />
           <TextInput
-            style={styles.textInput}
+            style={styles.textInputSenha}
             placeholder="Senha"
             placeholderTextColor="rgba(255, 255, 255, 0.5)"
             underlineColorAndroid="transparent"
@@ -154,11 +163,11 @@ export default function Cadastro({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.textInputContainer}>
-          <Image source={require('./img/icons/cadeadoicon.png')} style={styles.lockIcon} />
+        <View style={styles.textInputContainerLock}>
+          <Image source={require('./img/icons/cadeadoicon.png')} style={styles.lockIconSenha} />
           <TextInput
             style={[
-              styles.textInput,
+              styles.textInputSenha,
               confirmarSenhaErro ? styles.inputError : null,
             ]}
             placeholder="Confirmar Senha"
@@ -200,17 +209,33 @@ export default function Cadastro({ navigation }) {
           />
         </View>
 
-        <View style={styles.textInputContainer}>
-          <Image source={require('./img/icons/Vector.png')} style={styles.lockIcon} />
-          <TouchableOpacity
-            style={styles.textInput}
-            onPress={() => setShowDatePicker(true)}
-          >
-            <Text style={[styles.placeholderText, yearOfBirth ? {} : styles.activePlaceholder]}>
-              {yearOfBirth || 'DD/MM/AAAA'}
-            </Text>
-          </TouchableOpacity>
-        </View>
+        {Platform.OS === 'web' ? (
+          <View style={styles.textInputContainer}>
+            <Image source={require('./img/icons/Vector.png')} style={styles.lockIcon} />
+            <TextInput
+              style={styles.textInput}
+              placeholder="DD/MM/AAAA"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              underlineColorAndroid="transparent"
+              maxLength={10}
+              value={yearOfBirth}
+              onChangeText={(text) => setYearOfBirth(text)}
+              onBlur={() => setYearOfBirth(formatarData(yearOfBirth))}
+            />
+          </View>
+        ) : (
+          <View style={styles.textInputContainer}>
+            <Image source={require('./img/icons/Vector.png')} style={styles.lockIcon} />
+            <TouchableOpacity
+              style={styles.textInput}
+              onPress={() => setShowDatePicker(true)}
+            >
+              <Text style={[styles.placeholderText, yearOfBirth ? {} : styles.activePlaceholder]}>
+                {yearOfBirth || 'DD/MM/AAAA'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
 
         {showDatePicker && (
           <DateTimePicker
@@ -236,7 +261,7 @@ export default function Cadastro({ navigation }) {
         </View>
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={Avançar}>
+      <TouchableOpacity style={styles.button} onPress={Avancar}>
         <Text style={styles.buttonText}>Avançar</Text>
       </TouchableOpacity>
     </View>
@@ -249,14 +274,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#260038',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 16,
-    
+    padding: Platform.OS === 'web' ? 0 : 16,
   },
 
   backgroundImage: {
     flex: 1,
-    width: '109%',
-    height: '108%',
+    width: Platform.OS === 'web' ? '100%' : '109%',
+    height: Platform.OS === 'web' ? '100%' : '108%',
     position: 'absolute',
   },
 
@@ -267,7 +291,7 @@ const styles = StyleSheet.create({
 
   backButton: {
     position: 'absolute',
-    top: 50,
+    top: Platform.OS === 'web' ? 55 : 50,
     left: 27,
     zIndex: 1,
   },
@@ -292,24 +316,44 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     opacity: 0.7,
   },
+  
+  textInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    maxWidth: Platform.OS === 'web' ? '100%' : '80%',
+    height: Platform.OS === 'web' ? 55 : 55,
+    borderBottomWidth: 1,
+    borderBottomColor: '#FFFFFF',
+    marginBottom: 13,
+    justifyContent: 'center',
+    bottom: 35,
+    position: 'static',
+  },
 
-    textInputContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      maxWidth: Platform.OS === 'web' ? '100%' : '85%',
-      height: Platform.OS === 'web' ? 50 : 55,
-      borderBottomWidth: 1,
-      borderBottomColor: '#FFFFFF',
-      marginBottom: 13,
-      justifyContent: 'center',
-      bottom: 35,
-      position: 'static',
-    },
-
+  textInputContainerLock: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    maxWidth: Platform.OS === 'web' ? 210 : '80%',
+    height: Platform.OS === 'web' ? 55 : 55,
+    borderBottomWidth: 1,
+    borderBottomColor: '#FFFFFF',
+    marginBottom: 13,
+    justifyContent: 'center',
+    bottom: 35,
+    position: 'static',
+  },
+  
   textInput: {
     color: '#FFFFFF',
     fontSize: 16,
     flex: 1,
+  },
+
+  textInputSenha: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    flex: 1,
+    left: Platform.OS === 'web' ? 0 : 0,
   },
 
   icon: {
@@ -322,6 +366,12 @@ const styles = StyleSheet.create({
     width: 19,
     height: 19,
     marginRight: 10,
+  },
+
+  lockIconSenha: {
+    width: 19,
+    height: 19,
+    marginRight: Platform.OS === 'web' ? 10 : 10,
   },
 
   inputError: {
@@ -347,7 +397,7 @@ const styles = StyleSheet.create({
   rightIcon: {
     width: 28,
     height: 21,
-    marginLeft: 12,
+    marginLeft: -28,
   },
 
   placeholderText: {

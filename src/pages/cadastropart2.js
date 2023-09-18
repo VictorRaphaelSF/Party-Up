@@ -25,6 +25,9 @@ export default function Logado({route}) {
     }
   };
   
+  const backbutton = () => {
+    navigation.goBack();
+  };
   
   const renderCaracteresRestantes = () => {
     const caracteresRestantes = 255 - descrição.length;
@@ -69,6 +72,11 @@ export default function Logado({route}) {
     style={styles.container}
     resizeMode="cover"
     >
+
+      <TouchableOpacity style={styles.backButton} onPress={backbutton}>
+        <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
+      </TouchableOpacity>
+
       <View style={styles.overlay}>
         <View style={styles.content}>
           <View style={styles.textInputContainer}>
@@ -87,7 +95,7 @@ export default function Logado({route}) {
           <View style={styles.textInputContainer}>
             <Image source={require('./img/icons/page.png')} style={styles.icon} />
             <TextInput
-              style={styles.textInput}
+              style={styles.textInput2}
               placeholder="Descrição"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               underlineColorAndroid="transparent"
@@ -166,7 +174,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    top: 190,
+    top: Platform.OS === 'web' ? 190 : 160,
+  },
+
+  backButton: {
+    position: 'absolute',
+    top: Platform.OS === 'web' ? 55 : 50,
+    left: 27,
+    zIndex: 1,
+  },
+
+  backIcon: {
+    width: 30,
+    height: 24,
   },
 
   buttonText: {
@@ -193,17 +213,24 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
+  textInput2: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    flex: 1,
+    left: Platform.OS === 'web' ? 33 : 10,
+  },
+
   icon: {
     width: 19,
     height: 24,
     marginRight: 14,
-    left: 4
+    left: 5,
   },
 
   iconuser: {
     width: 23,
     height: 23,
-    marginRight: 20,
+    marginRight: 14,
   },
 
   errorBanner: {
@@ -224,7 +251,7 @@ const styles = StyleSheet.create({
 
   caracteresRestantes: {
     fontSize: 12,
-    marginLeft: 10,
+    marginLeft: 0,
   },
 
   imageContainer: {
