@@ -150,6 +150,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 19,
     color: '#FFFFFF',
+    paddingHorizontal: Platform.OS === 'web' ? 10 : 10,
   },
 
   titleContainer: {

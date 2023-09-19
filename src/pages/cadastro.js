@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, Text, TextInput, Platform } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import MaskInput from 'react-native-mask-input';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Cadastro({ navigation }) {
@@ -75,7 +76,7 @@ export default function Cadastro({ navigation }) {
   
   const setForcaSenha = (senha) => {
     const pontuacao = calcularForcaSenha(senha);
-    setSenhaFraca(pontuacao < 3);
+    setSenhaFraca(pontuacao < 2);
   };
 
   const validarSenha = (senhaConfirmacao) => {
@@ -281,6 +282,7 @@ export default function Cadastro({ navigation }) {
           />
         </View>
 
+        <MaskInput/>
         {Platform.OS === 'web' ? (
           <View style={styles.textInputContainer}>
             <Image source={require('./img/icons/Vector.png')} style={styles.lockIcon} />
@@ -289,7 +291,7 @@ export default function Cadastro({ navigation }) {
               placeholder="DD/MM/AAAA"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               underlineColorAndroid="transparent"
-              maxLength={10}
+              maxLength={8}
               value={yearOfBirth}
               onChangeText={(text) => setYearOfBirth(text)}
               onBlur={() => setYearOfBirth(formatarData(yearOfBirth))}
@@ -301,6 +303,8 @@ export default function Cadastro({ navigation }) {
             <TouchableOpacity
               style={styles.textInput}
               onPress={() => setShowDatePicker(true)}
+              value={yearOfBirth}
+              maxLength={8}
             >
               <Text style={[styles.placeholderText, yearOfBirth ? {} : styles.activePlaceholder]}>
                 {yearOfBirth || 'DD/MM/AAAA'}
@@ -333,11 +337,13 @@ export default function Cadastro({ navigation }) {
         </View>
       </View>
 
-        {confirmarSenhaErro && (
+      <View style={styles.MessageSenhaError}>
+      {confirmarSenhaErro && (
           <Text style={styles.errorText}>As senhas não coincidem.</Text>
         )}
 
         {mostrarMensagemSenhaFraca && <Text style={styles.errorText}>A senha é fraca. Tente uma senha mais forte.</Text>}
+      </View>    
 
       <TouchableOpacity style={styles.button} onPress={Avancar}>
         <Text style={styles.buttonText}>Avançar</Text>
@@ -386,7 +392,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    top: Platform.OS === 'web' ? 150 : 120,
+    top: Platform.OS === 'web' ? 115 : 120,
   },
 
   buttonText: {
@@ -490,6 +496,13 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 14,
     marginTop: -20,
-    top: Platform.OS === 'web' ? 10 : 10,
+    top: Platform.OS === 'web' ? 30 : 10,
+  },
+
+  MessageSenhaError: {
+    color: 'red',
+    fontSize: 14,
+    marginTop: 0,
+    top: Platform.OS === 'web' ? 40 : 10,
   },
 });
