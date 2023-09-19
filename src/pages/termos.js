@@ -46,14 +46,8 @@ export default function Termos() {
     .catch(error => {
     // Lidar com erros, se houver algum
       console.error('Erro ao enviar os dados para o backend:', error);
-    });
-
-
-    
+    }); 
   };
-
-
-
 
   return (
     <ImageBackground

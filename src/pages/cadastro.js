@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, Text, TextInput, Platform } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -12,6 +12,8 @@ export default function Cadastro({ navigation }) {
   const [yearOfBirth, setYearOfBirth] = useState('');
   const [telefone, setTelefone] = useState('');
   const [erro, setErro] = useState('');
+  
+  //linhas abaixo até o "." não serão utilizados para banco(Servem apenas para funcionalidades e validações).
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [senhaVisivel, setSenhaVisivel] = useState(false);
@@ -19,7 +21,11 @@ export default function Cadastro({ navigation }) {
   const [senhaIcon, setSenhaIcon] = useState(require('./img/icons/eye.png'));
   const [confirmarSenhaIcon, setConfirmarSenhaIcon] = useState(require('./img/icons/eye.png'));
   const [confirmarSenhaErro, setConfirmarSenhaErro] = useState(false);
-
+  const [emailValido, setEmailValido] = useState(true);
+  const [emailInvalido, setEmailInvalido] = useState(false);
+  const [senhaFraca, setSenhaFraca] = useState(false);
+  const [mostrarMensagemSenhaFraca, setMostrarMensagemSenhaFraca] = useState(false);
+  //.
 
   const InputNum = (value, setter) => {
     const numericValue = value.replace(/[^0-9]/g, '');
@@ -52,6 +58,11 @@ export default function Cadastro({ navigation }) {
     }
   };
   
+  const validarEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
+
   const isUnderage = (date) => {
     const today = new Date();
     const ageLimit = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
@@ -62,11 +73,28 @@ export default function Cadastro({ navigation }) {
     navigation.goBack();
   };
   
+  const setForcaSenha = (senha) => {
+    const pontuacao = calcularForcaSenha(senha);
+    setSenhaFraca(pontuacao < 3);
+  };
+
   const validarSenha = (senhaConfirmacao) => {
     if (senha !== senhaConfirmacao) {
       setConfirmarSenhaErro(true);
     } else {
       setConfirmarSenhaErro(false);
+      const pontuacaoSenha = calcularForcaSenha(senhaConfirmacao);
+      if (pontuacaoSenha >= 3) {
+        setForcaSenha(2);
+        setSenhaFraca(false);
+      } else if (pontuacaoSenha === 2) {
+        setForcaSenha(1);
+        setSenhaFraca(false);
+      } else {
+        setForcaSenha(0);
+        setSenhaFraca(true);
+        setMostrarMensagemSenhaFraca(true);
+      }
     }
   };
   
@@ -85,15 +113,41 @@ export default function Cadastro({ navigation }) {
     // Trate o erro conforme necessário.
   }
 
+  const calcularForcaSenha = (senha) => {
+    let pontuacao = 0;
+  
+    if (senha.length >= 8) {
+      pontuacao += 1;
+    }
+  
+    if (/[0-9]/.test(senha)) {
+      pontuacao += 1;
+    }
+  
+    if (/[A-Z]/.test(senha)) {
+      pontuacao += 1;
+    }
+  
+    return pontuacao;
+  };
+  
   const Avancar = () => {
-    if (!email || !senha || !confirmarSenha || !cpfCnpj  || !telefone || confirmarSenhaErro) {
-      setErro('Preencha todos os campos obrigatórios.');
+    if (
+      !emailValido ||
+      !senha ||
+      !confirmarSenha ||
+      !cpfCnpj ||
+      !telefone ||
+      confirmarSenhaErro ||
+      calcularForcaSenha(senha) < 3
+    ) {
+      setErro('Preencha todos os campos obrigatórios');
       setTimeout(() => {
         setErro('');
       }, 4000);
     } else {
       setErro('');
-      navigation.navigate('cadastropart2', {userData});
+      navigation.navigate('cadastropart2', { userData });
     }
   };
 
@@ -127,6 +181,24 @@ export default function Cadastro({ navigation }) {
         </Animatable.View>
       )}
 
+      {emailInvalido && (
+        <Animatable.View
+          style={[
+            styles.errorBanner,
+            {
+              display: emailInvalido ? 'flex' : 'none',
+              borderRadius: 10,
+              marginTop: emailInvalido ? 20 : 0,
+            },
+          ]}
+          animation="shake"
+          iterationCount={1}
+          duration={800}
+        >
+          <Text style={styles.errorMessage}>O E-mail inserido não é válido.</Text>
+        </Animatable.View>
+      )}
+
       <View style={styles.content}>
         <View style={styles.textInputContainer}>
           <Image source={require('./img/icons/mailicon.png')} style={styles.icon} />
@@ -138,6 +210,10 @@ export default function Cadastro({ navigation }) {
             maxLength={255}
             value={email}
             onChangeText={setEmail}
+            onBlur={() => {
+              setEmailValido(validarEmail(email));
+              setEmailInvalido(!validarEmail(email));
+            }}
           />
         </View>
 
@@ -191,10 +267,6 @@ export default function Cadastro({ navigation }) {
             <Image source={confirmarSenhaIcon} style={styles.rightIcon} />
           </TouchableOpacity>
         </View>
-
-        {confirmarSenhaErro && (
-          <Text style={styles.errorText}>As senhas não coincidem.</Text>
-        )}
 
         <View style={styles.textInputContainer}>
           <Image source={require('./img/icons/Group.png')} style={styles.lockIcon} />
@@ -261,6 +333,12 @@ export default function Cadastro({ navigation }) {
         </View>
       </View>
 
+        {confirmarSenhaErro && (
+          <Text style={styles.errorText}>As senhas não coincidem.</Text>
+        )}
+
+        {mostrarMensagemSenhaFraca && <Text style={styles.errorText}>A senha é fraca. Tente uma senha mais forte.</Text>}
+
       <TouchableOpacity style={styles.button} onPress={Avancar}>
         <Text style={styles.buttonText}>Avançar</Text>
       </TouchableOpacity>
@@ -308,7 +386,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    top: 150,
+    top: Platform.OS === 'web' ? 150 : 120,
   },
 
   buttonText: {
@@ -412,6 +490,6 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 14,
     marginTop: -20,
-    bottom: -200,
+    top: Platform.OS === 'web' ? 10 : 10,
   },
 });
