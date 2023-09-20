@@ -32,7 +32,7 @@ export default function Termos() {
 
 
   
-  //const userData = route.params.userData;
+  // const userData = route.params.userData;
 
 
   const acceptTerms = () => {
@@ -126,7 +126,6 @@ const windowHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
   },
 
   header: {
@@ -150,7 +149,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 19,
     color: '#FFFFFF',
-    paddingHorizontal: Platform.OS === 'web' ? 10 : 10,
+    width: Platform.OS === 'web' ? 200 : 0,
+    left: Platform.OS === 'web' ? 80 : 0,
   },
 
   titleContainer: {
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
 
   termsContainer: {
     flex: 1,
-    paddingHorizontal: 16,
+    paddingHorizontal: 22,
     marginTop: windowHeight * 0.15,
   },
 
