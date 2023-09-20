@@ -282,7 +282,6 @@ export default function Cadastro({ navigation }) {
           />
         </View>
 
-        <MaskInput/>
         {Platform.OS === 'web' ? (
           <View style={styles.textInputContainer}>
             <Image source={require('./img/icons/Vector.png')} style={styles.lockIcon} />

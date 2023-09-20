@@ -24,16 +24,22 @@ export default function Login({ navigation }) {
     } else {
       //try {
         const dataLogin = {
-          email: email,
-          senha: senha,
+          emailUser: email,
+          senhaUser: senha
         };
+        console.log(dataLogin.emailUser,dataLogin.senhaUser)
 
-        axios.get('http://localhost:3003/loginUser', dataLogin)
+        axios.post('http://localhost:3003/loginUser', dataLogin)
         .then(response => {
           // Lidar com a resposta do servidor, se necessário
-          
+            if(!(response.ValidadeLogin)){
+              console.log('response.ValidadeLogin');
+              navigation.navigate('telaprincipal');
+            }
+            else{
+              console.log('Email ou senha inválido!')
+            }
             console.log(response);
-            navigation.navigate('telaprincipal', { userImage: route.params.userImage });
           })
           .catch(error => {
           // Lidar com erros, se houver algum
