@@ -1,39 +1,34 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, Platform, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Dimensions, ImageBackground } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
 export default function Index({ navigation }) {
-  const entrar = () => {
+  const VamosLa = () => {
     navigation.navigate('login');
   };
 
-  const VamosLa = () => {
-    navigation.navigate('cadastro');
-  };
-
   return (
-    <View style={styles.container}>
-      <View style={styles.bottomImageContainer}>
-        <Image
-          source={require('./img/img_borda_inicio.png')}
-          style={styles.bottomImage} // Imagem de fundo
-        />
+    <ImageBackground
+      source={require('./img/telap.png')}
+      style={styles.container}
+      resizeMode="cover"
+    >
+      <View style={styles.overlay}>
+        <View style={styles.content}>
+          <Animatable.Image
+            animation="fadeInUp"
+            source={require('./img/logonv.png')}
+            style={styles.logo}
+          />
+        </View>
+
+        <Animatable.View delay={700} animation="fadeInUp" style={styles.vamosLaButton}>
+          <TouchableOpacity style={styles.button} onPress={VamosLa}>
+            <Text style={styles.buttonText}>Vamos lá</Text>
+          </TouchableOpacity>
+        </Animatable.View>
       </View>
-
-      <TouchableOpacity style={styles.titleButton} onPress={entrar}>
-        <Text style={styles.titleButtonText}>Entrar</Text>
-      </TouchableOpacity>
-
-      <View style={styles.content}>
-        <Image
-          source={require('./img/logo_partyup.png')}
-          style={styles.logo} // Logo "Party-Up"
-        />
-      </View>
-
-      <TouchableOpacity style={styles.button} onPress={VamosLa}>
-        <Text style={styles.buttonText}>Vamos lá</Text>
-      </TouchableOpacity>
-    </View>
+    </ImageBackground>
   );
 }
 
@@ -42,7 +37,13 @@ const windowHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#260038',
+    width: '100%',
+    height: '100%',
+  },
+
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.01)',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
@@ -54,58 +55,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  titleButton: {
-    position: 'absolute',
-    top: 40,
-    right: 15,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-    zIndex: 1, // Para ficar acima da imagem
-  },
-
-  titleButtonText: {
-    fontSize: 22,
-    color: 'rgba(255, 1, 108, 0.4)',
-  },
-
-  button: { // Design do botão
-    backgroundColor: 'rgba(255, 1, 108, 0.4)', 
+  button: {
+    backgroundColor: 'rgba(255, 1, 108, 0.4)',
     paddingVertical: 14,
     paddingHorizontal: 100,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
     position: 'absolute',
-    bottom: windowHeight * 0.04, // Posição responsiva
+    bottom: windowHeight * 0.04,
   },
 
   buttonText: {
     fontSize: 18,
     color: '#FFFFFF',
-    opacity: 0.7,
+    opacity: 0.9,
   },
 
   logo: {
     width: 270,
     height: 270,
-    opacity: 0.7,
+    opacity: 0.5,
   },
 
-  bottomImageContainer: {
+  vamosLaButton: {
     position: 'absolute',
-    bottom: 0,
-    justifyContent: 'center',
+    bottom: 1,
     alignItems: 'center',
+    justifyContent: 'center',
     width: '100%',
-    height: '52%',
-    backgroundColor: 'transparent',
-  },
-
-  bottomImage: {
-    width: Platform.OS === 'web' ? '100%' : '108%',
-    height: '100%',
   },
 });
