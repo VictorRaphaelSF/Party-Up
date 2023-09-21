@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image, Platform, Dimensions, ScrollView, ImageBackground } from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
-import { useNavigation } from '@react-navigation/native';
+import { CurrentRenderContext, useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
 import axios from 'axios';
 
@@ -25,10 +25,10 @@ export default function Termos() {
     setScrollPosition(scrollPercentage);
   };
 
-  console.log(route.params.userData);
+  //console.log(route.params.userData);
   
-  const userData = route.params && route.params.userData ? route.params.userData : {};
-  console.log(userData)
+  //const userData = route.params && route.params.userData ? route.params.userData : {};
+  //console.log(userData)
 
 
   
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   },
 
   backButton: {
-    marginRight: 10,
+    marginRight: 0,
   },
 
   backIcon: {
@@ -150,12 +150,12 @@ const styles = StyleSheet.create({
     fontSize: 19,
     color: '#FFFFFF',
     width: Platform.OS === 'web' ? 200 : 0,
-    left: Platform.OS === 'web' ? 80 : 0,
+    textAlign: 'right',
   },
 
   titleContainer: {
-    flex: 0.9,
-    alignItems: 'center',
+    flex: 1,
+
   },
 
   linha: {
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
   termsContainer: {
     flex: 1,
     paddingHorizontal: 22,
-    marginTop: windowHeight * 0.15,
+    marginTop: windowHeight * 0.17,
   },
 
   termsText: {

@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
   textInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    maxWidth: Platform.OS === 'web' ? '100%' : '85%',
+    width: Platform.OS === 'web' ? '118%' : '85%',
     height: Platform.OS === 'web' ? 50 : 55,
     borderBottomWidth: 1,
     borderBottomColor: '#FFFFFF',
@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255, 255, 255, 0.5)',
     borderRadius: 100,
     overflow: 'hidden',
-    top: 102,
+    top: Platform.OS === 'web' ? 75 : 102,
   },
 
   image: {
@@ -269,7 +269,8 @@ const styles = StyleSheet.create({
 
   textTitle: {
     color: '#FFFFFF',
-    fontSize: 16,
-    top: 12,
+    fontSize: 22,
+    bottom: 250,
+    opacity: 0.6,
   },
 });
