@@ -105,7 +105,7 @@ export default function Logado({route}) {
           </View>
         </View>
 
-        <TouchableOpacity onPress={handleImagePicker} style={{ top: -400 }}>
+        <TouchableOpacity onPress={handleImagePicker} style={{ top: -350 }}>
           <View style={styles.imageContainer}>
             <Image
               source={image ? { uri: image } : require('./img/icons/layer1.png')}
@@ -113,6 +113,10 @@ export default function Logado({route}) {
             />
           </View>
         </TouchableOpacity>
+
+        <Text style={styles.textTitle}>
+          Adicionar Foto
+        </Text>
 
         <TouchableOpacity style={styles.button} onPress={handleVamosLaPress}>
           <Text style={styles.buttonText}>Cadastrar</Text>
@@ -170,7 +174,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    top: Platform.OS === 'web' ? 190 : 160,
+    top: Platform.OS === 'web' ? 140 : 160,
   },
 
   backButton: {
@@ -261,5 +265,11 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: 200,
+  },
+
+  textTitle: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    top: 12,
   },
 });
