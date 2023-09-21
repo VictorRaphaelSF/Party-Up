@@ -24,12 +24,12 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='cadastro'>
+      <Stack.Navigator initialRouteName='index'>
         <Stack.Screen 
           options={{
             headerShown: false
           }}
-          name='index' component={Cadastro}
+          name='index' component={Index}
         />
         <Stack.Screen
         options={{
