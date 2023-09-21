@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Image, TouchableOpacity, Text, TextInput, Platform } from 'react-native';
+import { StyleSheet, View, Image, Pressable, Text, TextInput, Platform } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { TextInputMask } from 'react-native-masked-text';
@@ -169,9 +169,9 @@ export default function Cadastro({ navigation }) {
         resizeMode="cover"
       />
 
-        <TouchableOpacity style={styles.backButton} onPress={backbutton}>
+        <Pressable style={styles.backButton} onPress={backbutton}>
           <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
-        </TouchableOpacity>
+        </Pressable>
 
       {erro !== '' && (
         <Animatable.View
@@ -239,14 +239,14 @@ export default function Cadastro({ navigation }) {
             value={senha}
             onChangeText={setSenha}
           />
-          <TouchableOpacity
+          <Pressable
             onPress={() => {
               setSenhaVisivel(!senhaVisivel);
               setSenhaIcon(senhaVisivel ? require('./img/icons/eye.png') : require('./img/icons/eyeclosed.png'));
             }}
           >
             <Image source={senhaIcon} style={styles.rightIcon} />
-          </TouchableOpacity>
+          </Pressable>
         </View>
 
         <View style={styles.textInputContainerLock}>
@@ -268,14 +268,14 @@ export default function Cadastro({ navigation }) {
             }}
             onBlur={() => validarSenha(confirmarSenha)}
           />
-          <TouchableOpacity
+          <Pressable
             onPress={() => {
               setConfirmarSenhaVisivel(!confirmarSenhaVisivel);
               setConfirmarSenhaIcon(confirmarSenhaVisivel ? require('./img/icons/eye.png') : require('./img/icons/eyeclosed.png'));
             }}
           >
             <Image source={confirmarSenhaIcon} style={styles.rightIcon} />
-          </TouchableOpacity>
+          </Pressable>
         </View>
 
         <View style={styles.textInputContainer}>
@@ -311,7 +311,7 @@ export default function Cadastro({ navigation }) {
         ) : (
           <View style={styles.textInputContainer}>
             <Image source={require('./img/icons/Vector.png')} style={styles.lockIcon} />
-            <TouchableOpacity
+            <Pressable
               style={styles.textInput}
               onPress={() => setShowDatePicker(true)}
               value={yearOfBirth}
@@ -320,7 +320,7 @@ export default function Cadastro({ navigation }) {
               <Text style={[styles.placeholderText, yearOfBirth ? {} : styles.activePlaceholder]}>
                 {yearOfBirth || 'DD/MM/AAAA'}
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         )}
         {showDatePicker && (
@@ -359,9 +359,9 @@ export default function Cadastro({ navigation }) {
         {mostrarMensagemSenhaFraca && <Text style={styles.errorText}>A senha é fraca. Tente uma senha mais forte.</Text>}
       </View>    
 
-      <TouchableOpacity style={styles.button} onPress={Avancar}>
+      <Pressable style={styles.button} onPress={Avancar}>
         <Text style={styles.buttonText}>Avançar</Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, Image, Platform, Dimensions, Modal, TouchableWithoutFeedback,} from 'react-native';
+import {StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, Modal, TouchableWithoutFeedback,} from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
@@ -25,17 +25,17 @@ export default function Historicoevent() {
     <View style={styles.container}>
       <View style={styles.header}>
 
-        <TouchableOpacity style={styles.backButton} onPress={backbutton}>
+        <Pressable style={styles.backButton} onPress={backbutton}>
           <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
-        </TouchableOpacity>
+        </Pressable>
 
         <Text style={styles.title}>Histórico</Text>
 
-        <TouchableOpacity style={styles.button} onPress={menu}>
+        <Pressable style={styles.button} onPress={menu}>
           <View style={styles.bttbarra}></View>
           <View style={styles.bttbarra}></View>
           <View style={styles.bttbarra}></View>
-        </TouchableOpacity>
+        </Pressable>
       </View>
 
       <View style={styles.linha}></View>
@@ -59,15 +59,15 @@ export default function Historicoevent() {
               duration={500}
             >
               {''}
-              <TouchableOpacity style={styles.menubtt} onPress={() => console.log('Item 1 clicado')}>
+              <Pressable style={styles.menubtt} onPress={() => console.log('Item 1 clicado')}>
                 <Text style={styles.menubtttext}>Item 1</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.menubtt} onPress={() => console.log('Item 2 clicado')}>
+              </Pressable>
+              <Pressable style={styles.menubtt} onPress={() => console.log('Item 2 clicado')}>
                 <Text style={styles.menubtttext}>Item 2</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.menubtt} onPress={() => console.log('Item 3 clicado')}>
+              </Pressable>
+              <Pressable style={styles.menubtt} onPress={() => console.log('Item 3 clicado')}>
                 <Text style={styles.menubtttext}>Item 3</Text>
-              </TouchableOpacity>
+              </Pressable>
             </Animatable.View>
           </View>
         </TouchableWithoutFeedback>

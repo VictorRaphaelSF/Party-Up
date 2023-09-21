@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, Platform, Dimensions, TextInput, ScrollView, ImageBackground } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, TextInput, ScrollView, ImageBackground } from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
 import * as ImagePicker from 'expo-image-picker';
@@ -34,9 +34,6 @@ export default function Cadevento2() {
       style={styles.container}
       resizeMode="cover"
     >
-
-        
-
       <View style={styles.overlay}>
         <View style={styles.content}>
           <View style={styles.textInputContainer}>
@@ -79,9 +76,9 @@ export default function Cadevento2() {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.button} onPress={bttCriarEvento}>
+        <Pressable style={styles.button} onPress={bttCriarEvento}>
           <Text style={styles.buttonText}>Criar Evento</Text>
-        </TouchableOpacity>
+        </Pressable>
 
         {erro !== '' && (
           <Animatable.View
@@ -101,9 +98,9 @@ export default function Cadevento2() {
           </Animatable.View>
         )}
 
-        <TouchableOpacity style={styles.backButton} onPress={backbutton}>
+        <Pressable style={styles.backButton} onPress={backbutton}>
           <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
-        </TouchableOpacity>
+        </Pressable>
     </View>
     </ImageBackground>
   );

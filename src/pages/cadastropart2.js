@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, Platform, Dimensions, TextInput, ImageBackground } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, TextInput, ImageBackground } from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
 import * as ImagePicker from 'expo-image-picker';
@@ -69,9 +69,9 @@ export default function Logado({route}) {
     resizeMode="cover"
     >
 
-      <TouchableOpacity style={styles.backButton} onPress={backbutton}>
+      <Pressable style={styles.backButton} onPress={backbutton}>
         <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
-      </TouchableOpacity>
+      </Pressable>
 
       <View style={styles.overlay}>
         <View style={styles.content}>
@@ -105,22 +105,22 @@ export default function Logado({route}) {
           </View>
         </View>
 
-        <TouchableOpacity onPress={handleImagePicker} style={{ top: -350 }}>
+        <Pressable onPress={handleImagePicker} style={{ top: -350 }}>
           <View style={styles.imageContainer}>
             <Image
               source={image ? { uri: image } : require('./img/icons/layer1.png')}
               style={styles.image}
             />
           </View>
-        </TouchableOpacity>
+        </Pressable>
 
         <Text style={styles.textTitle}>
           Adicionar Foto
         </Text>
 
-        <TouchableOpacity style={styles.button} onPress={handleVamosLaPress}>
+        <Pressable style={styles.button} onPress={handleVamosLaPress}>
           <Text style={styles.buttonText}>Cadastrar</Text>
-        </TouchableOpacity>
+        </Pressable>
 
         {erro !== '' && (
           <Animatable.View
