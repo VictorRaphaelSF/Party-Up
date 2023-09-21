@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, Platform, Dimensions, TextInput, ScrollView, ImageBackground } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, TextInput, ScrollView, ImageBackground } from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
 import * as ImagePicker from 'expo-image-picker';
@@ -136,26 +136,26 @@ export default function Cadevento() {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.backButton} onPress={backbutton}>
+        <Pressable style={styles.backButton} onPress={backbutton}>
           <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
-        </TouchableOpacity>
+        </Pressable>
 
-        <TouchableOpacity onPress={handleImagePicker} style={{ top: -455 }}>
+        <Pressable onPress={handleImagePicker} style={{ top: -455 }}>
           <View style={styles.imageContainer}>
             <Image
               source={image ? { uri: image } : require('./img/icons/layer1.png')}
               style={styles.image}
             />
           </View>
-        </TouchableOpacity>
+        </Pressable>
 
         <Text style={styles.textadd}>
             Adicionar Foto
         </Text>
 
-        <TouchableOpacity style={styles.button} onPress={bttCriarEvento}>
+        <Pressable style={styles.button} onPress={bttCriarEvento}>
           <Text style={styles.buttonText}>Avançar</Text>
-        </TouchableOpacity>
+        </Pressable>
 
         
 

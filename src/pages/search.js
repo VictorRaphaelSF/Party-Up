@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, Image, Dimensions, TextInput, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, View, Pressable, Image, Dimensions, TextInput, KeyboardAvoidingView } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -51,25 +51,25 @@ export default function Search() {
       </View>
 
       <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navButton} onPress={handleButtonHome}>
+        <Pressable style={styles.navButton} onPress={handleButtonHome}>
           <Image source={require('./img/icons/home(g).png')} style={styles.navButtonImage} />
-        </TouchableOpacity>
+        </Pressable>
 
-        <TouchableOpacity style={[styles.navButton, { left: -15 }]} onPress={handleButtonSearch}>
+        <Pressable style={[styles.navButton, { left: -15 }]} onPress={handleButtonSearch}>
           <Image source={require('./img/icons/search(g).png')} style={styles.navButtonImage} />
-        </TouchableOpacity>
+        </Pressable>
 
-        <TouchableOpacity style={[styles.circleButton, { bottom: 30 }]} onPress={handleButtonCenter}>
+        <Pressable style={[styles.circleButton, { bottom: 30 }]} onPress={handleButtonCenter}>
           <Image source={require('./img/icons/add(g).png')} style={styles.circleButtonImage} />
-        </TouchableOpacity>
+        </Pressable>
 
-        <TouchableOpacity style={styles.navButton} onPress={handleButtonNotification}>
+        <Pressable style={styles.navButton} onPress={handleButtonNotification}>
           <Image source={require('./img/icons/notification(g).png')} style={styles.navButtonImage} />
-        </TouchableOpacity>
+        </Pressable>
 
-        <TouchableOpacity style={styles.navButton} onPress={handleButtonPeople}>
+        <Pressable style={styles.navButton} onPress={handleButtonPeople}>
           <Image source={require('./img/icons/people(g).png')} style={styles.navButtonImage} />
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
     </KeyboardAvoidingView>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, Image, Dimensions, Text, ScrollView } from 'react-native';
+import { StyleSheet, View, Pressable, Image, Dimensions, Text, ScrollView } from 'react-native';
 
 import { useRoute, useNavigation } from '@react-navigation/native';
 
@@ -40,35 +40,35 @@ export default function Telaprincipal() {
         <Image source={require('./img/icons/partyuplg.png')} style={styles.topIconPartyup}/>
       </View>
 
-      <TouchableOpacity onPress={handleUserImagePress}>
+      <Pressable onPress={handleUserImagePress}>
         <Image
           source={params?.userImage ? { uri: params.userImage } : require('./img/icons/people(f).png')}
           style={styles.userImage}
         />
-      </TouchableOpacity>
+      </Pressable>
 
       <Text style={styles.highlightsText}>Destaques</Text>
 
       <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navButton} onPress={handleButtonHome}>
+        <Pressable style={styles.navButton} onPress={handleButtonHome}>
           <Image source={require('./img/icons/home(g).png')} style={styles.navButtonImage} />
-        </TouchableOpacity>
+        </Pressable>
 
-        <TouchableOpacity style={[styles.navButton, { left: -15 }]} onPress={handleButtonSearch}>
+        <Pressable style={[styles.navButton, { left: -15 }]} onPress={handleButtonSearch}>
           <Image source={require('./img/icons/search(g).png')} style={styles.navButtonImage} />
-        </TouchableOpacity>
+        </Pressable>
 
-        <TouchableOpacity style={[styles.circleButton, { bottom: 30 }]} onPress={handleButtonCenter}>
+        <Pressable style={[styles.circleButton, { bottom: 30 }]} onPress={handleButtonCenter}>
           <Image source={require('./img/icons/add(g).png')} style={styles.circleButtonImage} />
-        </TouchableOpacity>
+        </Pressable>
 
-        <TouchableOpacity style={[styles.navButton, { left: 15 }]} onPress={handleButtonNotification}>
+        <Pressable style={[styles.navButton, { left: 15 }]} onPress={handleButtonNotification}>
           <Image source={require('./img/icons/notification(g).png')} style={styles.navButtonImage} />
-        </TouchableOpacity>
+        </Pressable>
 
-        <TouchableOpacity style={styles.navButton} onPress={handleButtonPeople}>
+        <Pressable style={styles.navButton} onPress={handleButtonPeople}>
           <Image source={require('./img/icons/people(g).png')} style={styles.navButtonImage} />
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );

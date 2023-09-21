@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { StyleSheet, View, Image, TouchableOpacity, Text, TextInput, Platform, Dimensions } from 'react-native';
+import { StyleSheet, View, Image, Pressable, Text, TextInput, Platform, Dimensions } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import axios from 'axios';
 
@@ -104,9 +104,9 @@ export default function Login({ navigation }) {
 				resizeMode="cover"
 			/>
 
-			<TouchableOpacity style={styles.backButton} onPress={backbutton}>
+			<Pressable style={styles.backButton} onPress={backbutton}>
 				<Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
-			</TouchableOpacity>
+			</Pressable>
 
 			<Animatable.View
 				ref={errorRef}
@@ -155,23 +155,23 @@ export default function Login({ navigation }) {
 						value={senha}
 						onChangeText={setSenha}
 						/>
-						<TouchableOpacity
+						<Pressable
 						  onPress={() => {
 							setSenhaVisivel(!senhaVisivel);
 							setSenhaIcon(senhaVisivel ? require('./img/icons/eye.png') : require('./img/icons/eyeclosed.png'));
 						  }}
 						>
 						  <Image source={senhaIcon} style={styles.rightIcon} />
-						</TouchableOpacity>
+						</Pressable>
 				</View>
 
 				<View style={styles.buttonContainer}>
-					<TouchableOpacity style={styles.button} onPress={Entrar}>
+					<Pressable style={styles.button} onPress={Entrar}>
 						<Text style={styles.buttonText}>Entrar</Text>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.smallButton} onPress={bttnvconta}>
+					</Pressable>
+					<Pressable style={styles.smallButton} onPress={bttnvconta}>
 						<Text style={styles.smallButtonText}>Criar nova conta</Text>
-					</TouchableOpacity>
+					</Pressable>
 				</View>
 			</View>
 		</View>

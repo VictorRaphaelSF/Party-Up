@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Dimensions, ImageBackground } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Dimensions, ImageBackground } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
 export default function Index({ navigation }) {
@@ -23,9 +23,9 @@ export default function Index({ navigation }) {
         </View>
 
         <Animatable.View delay={700} animation="fadeInUp" style={styles.vamosLaButton}>
-          <TouchableOpacity style={styles.button} onPress={VamosLa}>
+          <Pressable style={styles.button} onPress={VamosLa}>
             <Text style={styles.buttonText}>Vamos lá</Text>
-          </TouchableOpacity>
+          </Pressable>
         </Animatable.View>
       </View>
     </ImageBackground>

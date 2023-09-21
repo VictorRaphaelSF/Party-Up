@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, Platform, Dimensions, ScrollView, ImageBackground } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, ScrollView, ImageBackground } from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
 import { CurrentRenderContext, useNavigation } from '@react-navigation/native';
@@ -56,9 +56,9 @@ export default function Termos() {
     >
       <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity style={styles.backButton} onPress={backbutton}>
+          <Pressable style={styles.backButton} onPress={backbutton}>
             <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
-          </TouchableOpacity>
+          </Pressable>
           <View style={styles.titleContainer}>
             <Text style={styles.title}>Termos de uso</Text>
           </View>
@@ -91,9 +91,9 @@ export default function Termos() {
           Lei Aplicável: Estes Termos de Uso são regidos e interpretados de acordo com as leis do Brasil. Qualquer disputa decorrente ou relacionada a estes Termos de Uso será submetida à jurisdição exclusiva dos tribunais competentes do Republica Federativa do Brasil.
           </Text>
 
-          <TouchableOpacity style={styles.acceptButton} onPress={acceptTerms}>
+          <Pressable style={styles.acceptButton} onPress={acceptTerms}>
             <Text style={styles.acceptButtonText}>Aceitar Termos</Text>
-          </TouchableOpacity>
+          </Pressable>
 
         </ScrollView>
         <Animatable.View
