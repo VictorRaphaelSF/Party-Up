@@ -9,10 +9,9 @@ export default function Login({ navigation }) {
 	const [erro, setErro] = useState('');
 	const [emptyFieldError, setEmptyFieldError] = useState('');
 	const errorRef = useRef(null);
-	const [msgError, setMsgError] = useState({
-		status: false,
-		msg: ""
-	})
+	const [msgError, setMsgError] = useState({status: false, msg: ""})
+	const [senhaVisivel, setSenhaVisivel] = useState(false);
+	const [senhaIcon, setSenhaIcon] = useState(require('./img/icons/eye.png'));
 
 	const Entrar = async () => {
 
@@ -151,11 +150,19 @@ export default function Login({ navigation }) {
 						placeholder="Senha"
 						placeholderTextColor="rgba(255, 255, 255, 0.5)"
 						underlineColorAndroid="transparent"
-						secureTextEntry={true}
+						secureTextEntry={!senhaVisivel}
 						maxLength={24}
 						value={senha}
 						onChangeText={setSenha}
-					/>
+						/>
+						<TouchableOpacity
+						  onPress={() => {
+							setSenhaVisivel(!senhaVisivel);
+							setSenhaIcon(senhaVisivel ? require('./img/icons/eye.png') : require('./img/icons/eyeclosed.png'));
+						  }}
+						>
+						  <Image source={senhaIcon} style={styles.rightIcon} />
+						</TouchableOpacity>
 				</View>
 
 				<View style={styles.buttonContainer}>
@@ -256,6 +263,12 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 		flex: 1,
 	},
+
+	rightIcon: {
+		width: 28,
+		height: 21,
+		marginLeft: -28,
+	  },
 
 	icon: {
 		width: 23,

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, Text, TextInput, Platform } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import MaskInput from 'react-native-mask-input';
+import { TextInputMask } from 'react-native-masked-text';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Cadastro({ navigation }) {
@@ -76,7 +76,7 @@ export default function Cadastro({ navigation }) {
   
   const setForcaSenha = (senha) => {
     const pontuacao = calcularForcaSenha(senha);
-    setSenhaFraca(pontuacao < 2);
+    setSenhaFraca(pontuacao < 1);
   };
 
   const validarSenha = (senhaConfirmacao) => {
@@ -96,6 +96,15 @@ export default function Cadastro({ navigation }) {
         setSenhaFraca(true);
         setMostrarMensagemSenhaFraca(true);
       }
+    }
+  };
+
+  const formatCpfCnpj = (value) => {
+    const numericValue = value.replace(/[^0-9]/g, '');
+    if (numericValue.length <= 11) {
+      return numericValue.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    } else {
+      return numericValue.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
     }
   };
   
@@ -270,32 +279,35 @@ export default function Cadastro({ navigation }) {
         </View>
 
         <View style={styles.textInputContainer}>
-          <Image source={require('./img/icons/Group.png')} style={styles.lockIcon} />
+        <Image source={require('./img/icons/Group.png')} style={styles.lockIcon} />
           <TextInput
             style={styles.textInput}
             placeholder="CPF ou CNPJ"
             placeholderTextColor="rgba(255, 255, 255, 0.5)"
             underlineColorAndroid="transparent"
-            maxLength={14}
-            value={cpfCnpj}
-            onChangeText={(text) => InputNum(text, setCpfCnpj)}
+            maxLength={18}
+            value={formatCpfCnpj(cpfCnpj)}
+            onChangeText={(text) => setCpfCnpj(text)}
           />
         </View>
 
         {Platform.OS === 'web' ? (
           <View style={styles.textInputContainer}>
-            <Image source={require('./img/icons/Vector.png')} style={styles.lockIcon} />
-            <TextInput
-              style={styles.textInput}
-              placeholder="DD/MM/AAAA"
-              placeholderTextColor="rgba(255, 255, 255, 0.5)"
-              underlineColorAndroid="transparent"
-              maxLength={8}
-              value={yearOfBirth}
-              onChangeText={(text) => setYearOfBirth(text)}
-              onBlur={() => setYearOfBirth(formatarData(yearOfBirth))}
-            />
-          </View>
+          <Image source={require('./img/icons/Vector.png')} style={styles.lockIcon} />
+          <TextInputMask
+            style={styles.textInput}
+            placeholder="DD/MM/AAAA"
+            placeholderTextColor="rgba(255, 255, 255, 0.5)"
+            underlineColorAndroid="transparent"
+            type={'datetime'}
+            options={{
+              format: 'DD/MM/YYYY'
+            }}
+            value={yearOfBirth}
+            onChangeText={(text) => setYearOfBirth(text)}
+          />
+        </View>
+        
         ) : (
           <View style={styles.textInputContainer}>
             <Image source={require('./img/icons/Vector.png')} style={styles.lockIcon} />
@@ -311,7 +323,6 @@ export default function Cadastro({ navigation }) {
             </TouchableOpacity>
           </View>
         )}
-
         {showDatePicker && (
           <DateTimePicker
             value={selectedDate}
@@ -322,18 +333,22 @@ export default function Cadastro({ navigation }) {
           />
         )}
 
-        <View style={styles.textInputContainer}>
-          <Image source={require('./img/icons/uil_padlock.png')} style={styles.lockIcon} />
-          <TextInput
-            style={styles.textInput}
-            placeholder="Telefone(Cel)"
-            placeholderTextColor="rgba(255, 255, 255, 0.5)"
-            underlineColorAndroid="transparent"
-            maxLength={15}
-            value={telefone}
-            onChangeText={(text) => InputNum(text, setTelefone)}
-          />
-        </View>
+          <View style={styles.textInputContainer}>
+            <Image source={require('./img/icons/uil_padlock.png')} style={styles.lockIcon} />
+            <TextInputMask
+              style={styles.textInput}
+              placeholder="Telefone(Cel)"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              underlineColorAndroid="transparent"
+              type={'cel-phone'}
+              options={{
+              maskType: 'BRL',
+              }}
+              maxLength={15}
+              value={telefone}
+              onChangeText={(text) => InputNum(text, setTelefone)}
+              />
+          </View>
       </View>
 
       <View style={styles.MessageSenhaError}>
@@ -403,7 +418,7 @@ const styles = StyleSheet.create({
   textInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    maxWidth: Platform.OS === 'web' ? '100%' : '80%',
+    width: Platform.OS === 'web' ? '147%' : '80%',
     height: Platform.OS === 'web' ? 55 : 55,
     borderBottomWidth: 1,
     borderBottomColor: '#FFFFFF',
@@ -416,7 +431,7 @@ const styles = StyleSheet.create({
   textInputContainerLock: {
     flexDirection: 'row',
     alignItems: 'center',
-    maxWidth: Platform.OS === 'web' ? 210 : '80%',
+    width: Platform.OS === 'web' ? '147%' : '80%',
     height: Platform.OS === 'web' ? 55 : 55,
     borderBottomWidth: 1,
     borderBottomColor: '#FFFFFF',
