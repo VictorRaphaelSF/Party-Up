@@ -12,6 +12,8 @@ export default function Termos() {
   const route = useRoute();
   const [scrollPosition, setScrollPosition] = useState(0);
   const scrollViewRef = useRef(null);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+
 
   const backbutton = () => {
     navigation.goBack();
@@ -36,18 +38,18 @@ export default function Termos() {
 
 
   const acceptTerms = () => {
-    axios.post('http://localhost:3003/cadUser', userData)
-    .then(response => {
-    // Lidar com a resposta do servidor, se necessário
-    
-      console.log(response);
-      navigation.navigate('telaprincipal', { userImage: route.params.userImage });
-    })
-    .catch(error => {
-    // Lidar com erros, se houver algum
-      console.error('Erro ao enviar os dados para o backend:', error);
-    }); 
+    axios
+      .post('http://localhost:3003/cadUser', userData)
+      .then((response) => {
+        console.log(response);
+        setTermsAccepted(true); // Marcando os termos como aceitos
+        navigation.navigate('telaprincipal', { userImage: route.params.userImage });
+      })
+      .catch((error) => {
+        console.error('Erro ao enviar os dados para o backend:', error);
+      });
   };
+  
 
   return (
     <ImageBackground
@@ -59,10 +61,11 @@ export default function Termos() {
           <Pressable style={styles.backButton} onPress={backbutton}>
             <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
           </Pressable>
-          <View style={styles.titleContainer}>
+          
+        </View>
+        <View style={styles.titleContainer}>
             <Text style={styles.title}>Termos de uso</Text>
           </View>
-        </View>
 
         <View style={styles.linha}></View>
 
@@ -90,11 +93,11 @@ export default function Termos() {
 
           Lei Aplicável: Estes Termos de Uso são regidos e interpretados de acordo com as leis do Brasil. Qualquer disputa decorrente ou relacionada a estes Termos de Uso será submetida à jurisdição exclusiva dos tribunais competentes do Republica Federativa do Brasil.
           </Text>
-
-          <Pressable style={styles.acceptButton} onPress={acceptTerms}>
+          <View style={styles.acceptButton}>
+          <Pressable onPress={acceptTerms}>
             <Text style={styles.acceptButtonText}>Aceitar Termos</Text>
           </Pressable>
-
+          </View>
         </ScrollView>
         <Animatable.View
           animation={scrollPosition < 100 ? 'fadeInUp' : 'fadeOut'}
@@ -150,12 +153,12 @@ const styles = StyleSheet.create({
     fontSize: 19,
     color: '#FFFFFF',
     width: Platform.OS === 'web' ? 200 : 0,
-    textAlign: 'right',
   },
 
   titleContainer: {
-    flex: 1,
-
+    alignItems: 'center',
+    left: 35,
+    top: 45,
   },
 
   linha: {
@@ -175,7 +178,7 @@ const styles = StyleSheet.create({
   termsContainer: {
     flex: 1,
     paddingHorizontal: 22,
-    marginTop: windowHeight * 0.17,
+    marginTop: windowHeight * 0.12,
   },
 
   termsText: {
@@ -200,7 +203,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: -95,
+    top: -127,
   },
 
   progressText: {
