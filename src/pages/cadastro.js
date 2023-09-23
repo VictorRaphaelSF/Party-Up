@@ -418,7 +418,7 @@ const styles = StyleSheet.create({
   textInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: Platform.OS === 'web' ? '147%' : '80%',
+    width: Platform.OS === 'web' ? '140%' : '80%',
     height: Platform.OS === 'web' ? 55 : 55,
     borderBottomWidth: 1,
     borderBottomColor: '#FFFFFF',
@@ -431,7 +431,7 @@ const styles = StyleSheet.create({
   textInputContainerLock: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: Platform.OS === 'web' ? '147%' : '80%',
+    width: Platform.OS === 'web' ? '140%' : '80%',
     height: Platform.OS === 'web' ? 55 : 55,
     borderBottomWidth: 1,
     borderBottomColor: '#FFFFFF',
