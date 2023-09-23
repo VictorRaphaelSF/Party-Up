@@ -5,7 +5,7 @@ import * as Animatable from 'react-native-animatable';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
 
-export default function cadevento({route}) {
+export default function Cadevento({route}) {
 
   const [nmuevento, setNmevento] = useState('');
   const [descrição, setDescrição] = useState('');
@@ -40,12 +40,12 @@ export default function cadevento({route}) {
   };
   
   
-  //const userData = route.params.userData;
+  const userData = route.params.userData;
   
   // adicionando mais dados no objeto do cliente
-  //userData["nmUser"] = nmusuario;
-  //userData["descricao"] = descrição;
-  //userData["uri"] = "imagem.png";
+  userData["nmUser"] = nmusuario;
+  userData["descricao"] = descrição;
+  userData["uri"] = "imagem.png";
 
   
   
