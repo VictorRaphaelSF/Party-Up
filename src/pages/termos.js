@@ -27,10 +27,10 @@ export default function Termos() {
     setScrollPosition(scrollPercentage);
   };
 
-  //console.log(route.params.userData);
+  console.log(route.params.userData);
   
-  //const userData = route.params && route.params.userData ? route.params.userData : {};
-  //console.log(userData)
+  const userData = route.params && route.params.userData ? route.params.userData : {};
+  console.log(userData)
 
 
   
