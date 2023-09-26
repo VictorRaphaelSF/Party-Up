@@ -18,18 +18,20 @@ import Notificação from './src/pages/notificações'
 import Termos from './src/pages/termos';
 import Telaprincipal from './src/pages/telaprincipal';
 import Telaprofile from './src/pages/telaprofile'
+import Searched from './src/pages/searched';
+import Report from './src/pages/report'
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='index'>
+      <Stack.Navigator initialRouteName='search'>
         <Stack.Screen 
           options={{
             headerShown: false
           }}
-          name='index' component={Index}
+          name='index' component={Search}
         />
         <Stack.Screen
         options={{
@@ -102,6 +104,18 @@ export default function App() {
           headerShown: false
         }}
         name='telaprofile' component={Telaprofile}
+        />
+        <Stack.Screen
+        options={{
+          headerShown: false
+        }}
+        name='searched' component={Searched}
+        />
+        <Stack.Screen
+        options={{
+          headerShown: false
+        }}
+        name='report' component={Report}
         />
       </Stack.Navigator>
     </NavigationContainer>
