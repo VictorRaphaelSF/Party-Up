@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Image, Pressable, Text, TextInput, Platform } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { TextInputMask } from 'react-native-masked-text';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 export default function Cadastro({ navigation }) {
   const [email, setEmail] = useState('');
@@ -107,6 +109,17 @@ export default function Cadastro({ navigation }) {
       return numericValue.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
     }
   };
+
+  const verificarCNPJ = async (cpfCnpj) => {
+    try {
+      const response = await axios.get(`https://brasilapi.com.br/api/cnpj/v1/${cpfCnpj}`);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao verificar CNPJ:', error);
+      throw error;
+    }
+  };
+  
   
   let userData;
 
@@ -141,7 +154,7 @@ export default function Cadastro({ navigation }) {
     return pontuacao;
   };
   
-  const Avancar = () => {
+  const Avancar = async () => {
     if (
       !emailValido ||
       !senha ||
@@ -156,10 +169,20 @@ export default function Cadastro({ navigation }) {
         setErro('');
       }, 4000);
     } else {
-      setErro('');
-      navigation.navigate('cadastropart2', { userData });
+      try {
+        const cnpjValido = await verificarCNPJ(cpfCnpj);
+        if (cnpjValido) {
+          setErro('');
+          navigation.navigate('cadastropart2', { userData });
+        } else {
+          setErro('O CNPJ inserido não é válido.');
+        }
+      } catch (error) {
+        setErro('Ocorreu um erro ao verificar o CNPJ.');
+      }
     }
   };
+  
 
   return (
     <View style={styles.container}>

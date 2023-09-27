@@ -6,12 +6,11 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function Notificações() {
   const navigation = useNavigation();
+  const [isMenuVisible, setMenuVisible] = useState(false);
 
   const backbutton = () => {
     navigation.goBack();
   };
-
-  const [isMenuVisible, setMenuVisible] = useState(false);
 
   const menu = () => {
     setMenuVisible(true);

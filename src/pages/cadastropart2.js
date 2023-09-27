@@ -105,6 +105,7 @@ export default function Logado({route}) {
           </View>
         </View>
 
+
         <Pressable onPress={handleImagePicker} style={{ top: -350 }}>
           <View style={styles.imageContainer}>
             <Image
