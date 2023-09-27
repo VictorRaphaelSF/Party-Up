@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, Modal, TouchableWithoutFeedback,} from 'react-native';
+import {StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, Modal} from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
@@ -29,13 +29,13 @@ export default function Notificações() {
         </Pressable>
 
         <Text style={styles.title}>Notificações</Text>
-
-        <Pressable style={styles.button} onPress={menu}>
-          <View style={styles.bttbarra}></View>
-          <View style={styles.bttbarra}></View>
-          <View style={styles.bttbarra}></View>
-        </Pressable>
       </View>
+
+      <Pressable style={styles.button} onPress={menu}>
+        <View style={styles.bttbarra}></View>
+        <View style={styles.bttbarra}></View>
+        <View style={styles.bttbarra}></View>
+      </Pressable>
 
       <View style={styles.linha}></View>
       <View style={styles.bottomImageContainer}>
@@ -50,26 +50,23 @@ export default function Notificações() {
         visible={isMenuVisible}
         onRequestClose={closeMenu}
       >
-        <TouchableWithoutFeedback onPress={closeMenu}>
-          <View style={styles.modalBackground}>
-            <Animatable.View
-              style={styles.menuContainer}
-              animation={isMenuVisible ? 'slideInUp' : 'slideInDown'}
-              duration={500}
-            >
-              {''}
-              <Pressable style={styles.menubtt} onPress={() => console.log('Item 1 clicado')}>
-                <Text style={styles.menubtttext}>Item 1</Text>
-              </Pressable>
-              <Pressable style={styles.menubtt} onPress={() => console.log('Item 2 clicado')}>
-                <Text style={styles.menubtttext}>Item 2</Text>
-              </Pressable>
-              <Pressable style={styles.menubtt} onPress={() => console.log('Item 3 clicado')}>
-                <Text style={styles.menubtttext}>Item 3</Text>
-              </Pressable>
-            </Animatable.View>
-          </View>
-        </TouchableWithoutFeedback>
+        <Pressable onPress={closeMenu} style={styles.modalBackground}>
+          <Animatable.View
+            style={styles.menuContainer}
+            animation={isMenuVisible ? 'slideInUp' : 'slideInDown'}
+            duration={500}
+          >
+            <Pressable style={styles.menubtt} onPress={() => console.log('Item 1 clicado')}>
+              <Text style={styles.menubtttext}>Item 1</Text>
+            </Pressable>
+            <Pressable style={styles.menubtt} onPress={() => console.log('Item 2 clicado')}>
+              <Text style={styles.menubtttext}>Item 2</Text>
+            </Pressable>
+            <Pressable style={styles.menubtt} onPress={() => console.log('Item 3 clicado')}>
+              <Text style={styles.menubtttext}>Item 3</Text>
+            </Pressable>
+          </Animatable.View>
+        </Pressable>
       </Modal>
     </View>
   );
@@ -93,6 +90,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: windowHeight * 0.06,
     left: 30,
+    zIndex: 1,
+  },
+
+
+  header1: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'absolute',
+    top: windowHeight * 0.06,
+    right: 30,
     zIndex: 1,
   },
 
@@ -120,13 +127,13 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: 'transparent',
-    flexDirection: 'column',
-    alignItems: 'center',
+    position: 'absolute',
     justifyContent: 'center',
+    backgroundColor: 'transparent',
     width: 30,
     height: 18,
-    marginLeft: 150,
+    right: 20,
+    top: 50,
   },
 
   bttbarra: {

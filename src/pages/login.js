@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { StyleSheet, View, Image, Pressable, Text, TextInput, Platform, Dimensions } from 'react-native';
+
 import * as Animatable from 'react-native-animatable';
 import axios from 'axios';
 
@@ -53,11 +54,6 @@ export default function Login({ navigation }) {
 					})
 					console.error('Erro ao enviar os dados para o backend:', error);
 				});
-
-
-
-
-
 
 			//   if (response.status === 200 && response.data.validateLogin) {
 			//     console.log(response.data.message);
