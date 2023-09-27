@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, TextInput, ImageBackground } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, TextInput, ImageBackground, ScrowView } from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default function Cadevento({route}) {
 
@@ -40,12 +41,12 @@ export default function Cadevento({route}) {
   };
   
   
-  const userData = route.params.userData;
+  //const userData = route.params.userData;
   
   // adicionando mais dados no objeto do cliente
-  userData["nmUser"] = nmusuario;
-  userData["descricao"] = descrição;
-  userData["uri"] = "imagem.png";
+  //userData["nmUser"] = nmusuario;
+  //userData["descricao"] = descrição;
+  //userData["uri"] = "imagem.png";
 
   
   
@@ -105,7 +106,7 @@ export default function Cadevento({route}) {
           </View>
         </View>
 
-        <Pressable onPress={handleImagePicker} style={{ top: -350 }}>
+        <Pressable onPress={handleImagePicker} style={{ top: -325 }}>
           <View style={styles.imageContainer}>
             <Image
               source={image ? { uri: image } : require('./img/icons/layer1.png')}
@@ -118,12 +119,9 @@ export default function Cadevento({route}) {
           Adicionar foto
         </Text>
 
-
         <Text style={styles.textTitle2}>
           Dados do endereço
         </Text>
-
-
 
         <Pressable style={styles.button} onPress={handleVamosLaPress}>
           <Text style={styles.buttonText}>Avançar</Text>
@@ -205,13 +203,13 @@ const styles = StyleSheet.create({
   textInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: Platform.OS === 'web' ? '140%' : '80%',
+    width: Platform.OS === 'web' ? '130%' : '80%',
     height: Platform.OS === 'web' ? 55 : 55,
     borderBottomWidth: 1,
     borderBottomColor: '#FFFFFF',
     marginBottom: 13,
     justifyContent: 'center',
-    top: 55,
+    top: 85,
   },
 
   textInput: {
