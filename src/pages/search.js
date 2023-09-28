@@ -1,19 +1,59 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, Image, Dimensions, TextInput, KeyboardAvoidingView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Pressable, Image, Dimensions, TextInput, KeyboardAvoidingView, Platform, Text, Modal, ScrollView } from 'react-native';
 
+import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function Search() {
   const [reload, setReload] = useState(0);
   const navigation = useNavigation();
   const [searchTerm, setSearchTerm] = useState('');
+  const [isMenuVisible, setMenuVisible] = useState(false);
+  const [searchHistory, setSearchHistory] = useState([]);
+
+  useEffect(() => {
+    const loadSearchHistory = async () => {
+      try {
+        const storedSearchHistory = await AsyncStorage.getItem('searchHistory');
+        if (storedSearchHistory !== null) {
+          setSearchHistory(JSON.parse(storedSearchHistory));
+        }
+      } catch (e) {
+        console.error('Erro ao carregar histórico de pesquisa:', e);
+      }
+    };
+
+    loadSearchHistory();
+  }, []);
+
+  const handleSearch = () => {
+    if (searchTerm.trim() !== '') {
+      setSearchHistory([...searchHistory, searchTerm]);
+
+      AsyncStorage.setItem('searchHistory', JSON.stringify([...searchHistory, searchTerm]));
+
+      setReload(reload + 1);
+    }
+  };
+
+  const handleClearHistory = async () => {
+    try {
+      await AsyncStorage.removeItem('searchHistory');
+      setSearchHistory([]);
+    } catch (e) {
+      console.error('Erro ao limpar histórico de pesquisa:', e);
+    }
+  };
+  
+
+  const handleButtonSearch = () => {
+    handleSearch();
+  };
 
   const handleButtonHome = () => {
     navigation.navigate('telaprincipal');
-  };
-
-  const handleButtonSearch = () => {
-    setReload(reload + 1);
   };
 
   const handleButtonCenter = () => {
@@ -28,50 +68,117 @@ export default function Search() {
     console.log('Botão perfil pressionado');
   };
 
+  const handleButtonSuge = () => {
+    console.log('Botão Sugestão Pressionado');
+  };
+
+  const handleButtonView = () => {
+    console.log('Botão View Pressionado.');
+  };
+
+  const menu = () => {
+    setMenuVisible(true);
+  };
+
+  const closeMenu = () => {
+    setMenuVisible(false);
+  };
+
   return (
     <KeyboardAvoidingView 
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{flex: 1}}
     >
-    <View style={styles.container}>
-      <Image
-        source={require('./img/telap.png')}
-        style={styles.backgroundImage}
-        resizeMode="cover"
-      />
-      <View style={styles.searchBarContainer}>
-        <TextInput
-        style={styles.searchInput}
-        placeholder="Pesquisar"
-        placeholderTextColor="rgba(255, 255, 255, 0.5)"
-        underlineColorAndroid="transparent"
-        value={searchTerm}
-        onChangeText={setSearchTerm}
+      <View style={styles.container}>
+        <Image
+          source={require('./img/telap.png')}
+          style={styles.backgroundImage}
+          resizeMode="cover"
         />
+        <View style={styles.searchBarContainer}>
+          <Image source={require('./img/icons/search(g).png')} style={styles.icon}/> 
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Pesquisar"
+            placeholderTextColor="rgba(255, 255, 255, 0.5)"
+            underlineColorAndroid="transparent"
+            value={searchTerm}
+            onChangeText={setSearchTerm}
+            onSubmitEditing={handleSearch}
+          />
+          <Pressable style={styles.button} onPress={menu}>
+            <View style={styles.bttbarra}></View>
+            <View style={styles.bttbarra}></View>
+            <View style={styles.bttbarra}></View>
+          </Pressable>
+        </View>
+
+
+        <Pressable style={styles.bttView} onPress={handleClearHistory}>
+          <Text style={styles.textView}>Apagar tudo</Text>
+        </Pressable>
+
+        <ScrollView
+        style={styles.termsContainer}
+        showsVerticalScrollIndicator={false}
+        >
+        {searchHistory.map((term, index) => (
+        <View style={styles.searchHistoryItemContainer} key={index}>
+        <Image source={require('./img/icons/search(g).png')} style={styles.searchHistoryIcon} />
+        <Pressable onPress={() => setSearchTerm(term)}>
+          <Text style={styles.searchHistoryItem}>{term}</Text>
+        </Pressable>
       </View>
+        ))}
+      </ScrollView>
 
-      <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navButton} onPress={handleButtonHome}>
-          <Image source={require('./img/icons/home(g).png')} style={styles.navButtonImage} />
-        </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.navButton, { left: -15 }]} onPress={handleButtonSearch}>
-          <Image source={require('./img/icons/search(g).png')} style={styles.navButtonImage} />
-        </TouchableOpacity>
+        <Modal
+          transparent={true}
+          visible={isMenuVisible}
+          onRequestClose={closeMenu}
+        >
+          <Pressable onPress={closeMenu} style={styles.modalBackground}>
+            <Animatable.View
+              style={styles.menuContainer}
+              animation={isMenuVisible ? 'slideInUp' : 'slideInDown'}
+              duration={500}
+            >
+              <Pressable style={styles.menubtt} onPress={() => console.log('Item 1 clicado')}>
+                <Text style={styles.menubtttext}>Item 1</Text>
+              </Pressable>
+              <Pressable style={styles.menubtt} onPress={() => console.log('Item 2 clicado')}>
+                <Text style={styles.menubtttext}>Item 2</Text>
+              </Pressable>
+              <Pressable style={styles.menubtt} onPress={() => console.log('Item 3 clicado')}>
+                <Text style={styles.menubtttext}>Item 3</Text>
+              </Pressable>
+            </Animatable.View>
+          </Pressable>
+        </Modal>
 
-        <TouchableOpacity style={[styles.circleButton, { bottom: 30 }]} onPress={handleButtonCenter}>
-          <Image source={require('./img/icons/add(g).png')} style={styles.circleButtonImage} />
-        </TouchableOpacity>
+        <View style={styles.navbar}>
+          <Pressable style={styles.navButton} onPress={handleButtonHome}>
+            <Image source={require('./img/icons/home(g).png')} style={styles.navButtonImage} />
+          </Pressable>
 
-        <TouchableOpacity style={styles.navButton} onPress={handleButtonNotification}>
-          <Image source={require('./img/icons/notification(g).png')} style={styles.navButtonImage} />
-        </TouchableOpacity>
+          <Pressable style={[styles.navButton, { left: -15 }]} onPress={handleButtonSearch}>
+            <Image source={require('./img/icons/search(g).png')} style={styles.navButtonImage} />
+          </Pressable>
 
-        <TouchableOpacity style={styles.navButton} onPress={handleButtonPeople}>
-          <Image source={require('./img/icons/people(g).png')} style={styles.navButtonImage} />
-        </TouchableOpacity>
+          <Pressable style={[styles.circleButton, { bottom: 30 }]} onPress={handleButtonCenter}>
+            <Image source={require('./img/icons/add(g).png')} style={styles.circleButtonImage} />
+          </Pressable>
+
+          <Pressable style={styles.navButton} onPress={handleButtonNotification}>
+            <Image source={require('./img/icons/notification(g).png')} style={styles.navButtonImage} />
+          </Pressable>
+
+          <Pressable style={styles.navButton} onPress={handleButtonPeople}>
+            <Image source={require('./img/icons/people(g).png')} style={styles.navButtonImage} />
+          </Pressable>
+        </View>
       </View>
-    </View>
     </KeyboardAvoidingView>
   );
 }
@@ -89,7 +196,7 @@ const styles = StyleSheet.create({
 
   backgroundImage: {
     flex: 1,
-    width: '110%',
+    width: '100%',
     height: '100%',
     position: 'absolute',
     top: 0,
@@ -128,7 +235,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     left: '50%',
-    marginLeft: -20,
+    marginLeft: -32,
   },
 
   circleButtonImage: {
@@ -140,12 +247,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#582C74',
-    padding: 10,
+    padding: 12,
     position: 'absolute',
     top: 24,
-    left: 5,
-    right: 5,
-    zIndex: 1,
+    left: 8,
+    right: 54,
     borderRadius: 20,
   },
 
@@ -161,5 +267,93 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     marginLeft: 10,
+  },
+
+  icon: {
+    width: 23,
+    height: 23,
+    marginRight: 12,
+    left: 2,
+  },
+
+  button: {
+    backgroundColor: 'transparent',
+    width: 30,
+    height: 18,
+    bottom: 7,
+    left: 50,
+  },
+
+  bttbarra: {
+    width: 31,
+    height: 4,
+    backgroundColor: '#7E3CA7',
+    borderRadius: 2,
+    marginVertical: 3.5,
+  },
+
+  bttView: {
+    top: 90,
+    right: 40,
+    position: 'absolute',
+  },
+
+  modalBackground: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'flex-end',
+  },
+
+  menuContainer: {
+    backgroundColor: '#470F62',
+    padding: 16,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
+
+  menubtt: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+  },
+
+  menubtttext: {
+    color: '#FFFFFF',
+    fontSize: 18,
+  },
+
+  textView: {
+    fontSize: 16,
+    color: '#FFFFFF',
+    opacity: 0.5,
+  },
+
+  searchHistoryContainer: {
+    position: 'absolute',
+    top: 120, // Ajuste a distância do topo conforme necessário
+    left: 24, // Ajuste a distância da esquerda conforme necessário
+  },
+
+  searchHistoryItemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 5, // Adicione margem vertical para espaçamento entre os itens
+  },
+
+  searchHistoryIcon: {
+    width: 23,
+    height: 23,
+    marginRight: 15,
+  },
+
+  searchHistoryItem: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    marginVertical: 5,
+  },
+
+  termsContainer: {
+    marginTop: windowHeight * 0.12,
+    right: 150,
   },
 });

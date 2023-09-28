@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, Image, Platform, Dimensions, Modal, TouchableWithoutFeedback,} from 'react-native';
+import {StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, Modal, TouchableWithoutFeedback,} from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
@@ -45,15 +45,15 @@ export default function Notificações() {
     <View style={styles.container}>
       <View style={styles.header}>
 
-        <TouchableOpacity style={styles.backButton} onPress={backbutton}>
+        <Pressable style={styles.backButton} onPress={backbutton}>
           <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
-        </TouchableOpacity>
+        </Pressable>
 
-        <TouchableOpacity style={styles.button} onPress={menu}>
+        <Pressable style={styles.button} onPress={menu}>
           <View style={styles.bttbarra}></View>
           <View style={styles.bttbarra}></View>
           <View style={styles.bttbarra}></View>
-        </TouchableOpacity>
+        </Pressable>
       </View>
 
       <View style={styles.bottomImageContainer}>
@@ -76,39 +76,39 @@ export default function Notificações() {
               duration={500}
             >
               {''}
-              <TouchableOpacity style={styles.menubtt} onPress={() => console.log('Item 1 clicado')}>
+              <Pressable style={styles.menubtt} onPress={() => console.log('Item 1 clicado')}>
                 <Text style={styles.menubtttext}>Item 1</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.menubtt} onPress={() => console.log('Item 2 clicado')}>
+              </Pressable>
+              <Pressable style={styles.menubtt} onPress={() => console.log('Item 2 clicado')}>
                 <Text style={styles.menubtttext}>Item 2</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.menubtt} onPress={() => console.log('Item 3 clicado')}>
+              </Pressable>
+              <Pressable style={styles.menubtt} onPress={() => console.log('Item 3 clicado')}>
                 <Text style={styles.menubtttext}>Item 3</Text>
-              </TouchableOpacity>
+              </Pressable>
             </Animatable.View>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
       <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navButton} onPress={handleButtonHome}>
+        <Pressable style={styles.navButton} onPress={handleButtonHome}>
           <Image source={require('./img/icons/home(g).png')} style={styles.navButtonImage} />
-        </TouchableOpacity>
+        </Pressable>
 
-        <TouchableOpacity style={[styles.navButton, { left: -15 }]} onPress={handleButtonSearch}>
+        <Pressable style={[styles.navButton, { left: -15 }]} onPress={handleButtonSearch}>
           <Image source={require('./img/icons/search(g).png')} style={styles.navButtonImage} />
-        </TouchableOpacity>
+        </Pressable>
 
-        <TouchableOpacity style={[styles.circleButton, { bottom: 30 }]} onPress={handleButtonCenter}>
+        <Pressable style={[styles.circleButton, { bottom: 30 }]} onPress={handleButtonCenter}>
           <Image source={require('./img/icons/add(g).png')} style={styles.circleButtonImage} />
-        </TouchableOpacity>
+        </Pressable>
 
-        <TouchableOpacity style={[styles.navButton, { left: 15 }]} onPress={handleButtonNotification}>
+        <Pressable style={[styles.navButton, { left: 15 }]} onPress={handleButtonNotification}>
           <Image source={require('./img/icons/notification(g).png')} style={styles.navButtonImage} />
-        </TouchableOpacity>
+        </Pressable>
 
-        <TouchableOpacity style={styles.navButton} onPress={handleButtonPeople}>
+        <Pressable style={styles.navButton} onPress={handleButtonPeople}>
           <Image source={require('./img/icons/people(g).png')} style={styles.navButtonImage} />
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );

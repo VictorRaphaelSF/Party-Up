@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { StyleSheet, View, Image, TouchableOpacity, Text, TextInput, Platform, Dimensions } from 'react-native';
+import { StyleSheet, View, Image, Pressable, Text, TextInput, Platform, Dimensions } from 'react-native';
+
 import * as Animatable from 'react-native-animatable';
 import axios from 'axios';
 
@@ -9,10 +10,9 @@ export default function Login({ navigation }) {
 	const [erro, setErro] = useState('');
 	const [emptyFieldError, setEmptyFieldError] = useState('');
 	const errorRef = useRef(null);
-	const [msgError, setMsgError] = useState({
-		status: false,
-		msg: ""
-	})
+	const [msgError, setMsgError] = useState({status: false, msg: ""})
+	const [senhaVisivel, setSenhaVisivel] = useState(false);
+	const [senhaIcon, setSenhaIcon] = useState(require('./img/icons/eye.png'));
 
 	const Entrar = async () => {
 
@@ -54,11 +54,6 @@ export default function Login({ navigation }) {
 					})
 					console.error('Erro ao enviar os dados para o backend:', error);
 				});
-
-
-
-
-
 
 			//   if (response.status === 200 && response.data.validateLogin) {
 			//     console.log(response.data.message);
@@ -105,9 +100,9 @@ export default function Login({ navigation }) {
 				resizeMode="cover"
 			/>
 
-			<TouchableOpacity style={styles.backButton} onPress={backbutton}>
+			<Pressable style={styles.backButton} onPress={backbutton}>
 				<Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
-			</TouchableOpacity>
+			</Pressable>
 
 			<Animatable.View
 				ref={errorRef}
@@ -151,20 +146,28 @@ export default function Login({ navigation }) {
 						placeholder="Senha"
 						placeholderTextColor="rgba(255, 255, 255, 0.5)"
 						underlineColorAndroid="transparent"
-						secureTextEntry={true}
+						secureTextEntry={!senhaVisivel}
 						maxLength={24}
 						value={senha}
 						onChangeText={setSenha}
-					/>
+						/>
+						<Pressable
+						  onPress={() => {
+							setSenhaVisivel(!senhaVisivel);
+							setSenhaIcon(senhaVisivel ? require('./img/icons/eye.png') : require('./img/icons/eyeclosed.png'));
+						  }}
+						>
+						  <Image source={senhaIcon} style={styles.rightIcon} />
+						</Pressable>
 				</View>
 
 				<View style={styles.buttonContainer}>
-					<TouchableOpacity style={styles.button} onPress={Entrar}>
+					<Pressable style={styles.button} onPress={Entrar}>
 						<Text style={styles.buttonText}>Entrar</Text>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.smallButton} onPress={bttnvconta}>
+					</Pressable>
+					<Pressable style={styles.smallButton} onPress={bttnvconta}>
 						<Text style={styles.smallButtonText}>Criar nova conta</Text>
-					</TouchableOpacity>
+					</Pressable>
 				</View>
 			</View>
 		</View>
@@ -256,6 +259,12 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 		flex: 1,
 	},
+
+	rightIcon: {
+		width: 28,
+		height: 21,
+		marginLeft: -28,
+	  },
 
 	icon: {
 		width: 23,

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Image, TouchableOpacity, Text, TextInput, Platform } from 'react-native';
+import { StyleSheet, View, Image, Pressable, Text, TextInput, Platform } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+
 import DateTimePicker from '@react-native-community/datetimepicker';
-import MaskInput from 'react-native-mask-input';
+import { TextInputMask } from 'react-native-masked-text';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 export default function Cadastro({ navigation }) {
   const [email, setEmail] = useState('');
@@ -76,7 +78,7 @@ export default function Cadastro({ navigation }) {
   
   const setForcaSenha = (senha) => {
     const pontuacao = calcularForcaSenha(senha);
-    setSenhaFraca(pontuacao < 2);
+    setSenhaFraca(pontuacao < 1);
   };
 
   const validarSenha = (senhaConfirmacao) => {
@@ -98,6 +100,26 @@ export default function Cadastro({ navigation }) {
       }
     }
   };
+
+  const formatCpfCnpj = (value) => {
+    const numericValue = value.replace(/[^0-9]/g, '');
+    if (numericValue.length <= 11) {
+      return numericValue.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    } else {
+      return numericValue.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+    }
+  };
+
+  const verificarCNPJ = async (cpfCnpj) => {
+    try {
+      const response = await axios.get(`https://brasilapi.com.br/api/cnpj/v1/${cpfCnpj}`);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao verificar CNPJ:', error);
+      throw error;
+    }
+  };
+  
   
   let userData;
 
@@ -132,7 +154,7 @@ export default function Cadastro({ navigation }) {
     return pontuacao;
   };
   
-  const Avancar = () => {
+  const Avancar = async () => {
     if (
       !emailValido ||
       !senha ||
@@ -147,10 +169,20 @@ export default function Cadastro({ navigation }) {
         setErro('');
       }, 4000);
     } else {
-      setErro('');
-      navigation.navigate('cadastropart2', { userData });
+      try {
+        const cnpjValido = await verificarCNPJ(cpfCnpj);
+        if (cnpjValido) {
+          setErro('');
+          navigation.navigate('cadastropart2', { userData });
+        } else {
+          setErro('O CNPJ inserido não é válido.');
+        }
+      } catch (error) {
+        setErro('Ocorreu um erro ao verificar o CNPJ.');
+      }
     }
   };
+  
 
   return (
     <View style={styles.container}>
@@ -160,9 +192,9 @@ export default function Cadastro({ navigation }) {
         resizeMode="cover"
       />
 
-        <TouchableOpacity style={styles.backButton} onPress={backbutton}>
+        <Pressable style={styles.backButton} onPress={backbutton}>
           <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
-        </TouchableOpacity>
+        </Pressable>
 
       {erro !== '' && (
         <Animatable.View
@@ -230,14 +262,14 @@ export default function Cadastro({ navigation }) {
             value={senha}
             onChangeText={setSenha}
           />
-          <TouchableOpacity
+          <Pressable
             onPress={() => {
               setSenhaVisivel(!senhaVisivel);
               setSenhaIcon(senhaVisivel ? require('./img/icons/eye.png') : require('./img/icons/eyeclosed.png'));
             }}
           >
             <Image source={senhaIcon} style={styles.rightIcon} />
-          </TouchableOpacity>
+          </Pressable>
         </View>
 
         <View style={styles.textInputContainerLock}>
@@ -259,47 +291,50 @@ export default function Cadastro({ navigation }) {
             }}
             onBlur={() => validarSenha(confirmarSenha)}
           />
-          <TouchableOpacity
+          <Pressable
             onPress={() => {
               setConfirmarSenhaVisivel(!confirmarSenhaVisivel);
               setConfirmarSenhaIcon(confirmarSenhaVisivel ? require('./img/icons/eye.png') : require('./img/icons/eyeclosed.png'));
             }}
           >
             <Image source={confirmarSenhaIcon} style={styles.rightIcon} />
-          </TouchableOpacity>
+          </Pressable>
         </View>
 
         <View style={styles.textInputContainer}>
-          <Image source={require('./img/icons/Group.png')} style={styles.lockIcon} />
+        <Image source={require('./img/icons/Group.png')} style={styles.lockIcon} />
           <TextInput
             style={styles.textInput}
             placeholder="CPF ou CNPJ"
             placeholderTextColor="rgba(255, 255, 255, 0.5)"
             underlineColorAndroid="transparent"
-            maxLength={14}
-            value={cpfCnpj}
-            onChangeText={(text) => InputNum(text, setCpfCnpj)}
+            maxLength={18}
+            value={formatCpfCnpj(cpfCnpj)}
+            onChangeText={(text) => setCpfCnpj(text)}
           />
         </View>
 
         {Platform.OS === 'web' ? (
           <View style={styles.textInputContainer}>
-            <Image source={require('./img/icons/Vector.png')} style={styles.lockIcon} />
-            <TextInput
-              style={styles.textInput}
-              placeholder="DD/MM/AAAA"
-              placeholderTextColor="rgba(255, 255, 255, 0.5)"
-              underlineColorAndroid="transparent"
-              maxLength={8}
-              value={yearOfBirth}
-              onChangeText={(text) => setYearOfBirth(text)}
-              onBlur={() => setYearOfBirth(formatarData(yearOfBirth))}
-            />
-          </View>
+          <Image source={require('./img/icons/Vector.png')} style={styles.lockIcon} />
+          <TextInputMask
+            style={styles.textInput}
+            placeholder="DD/MM/AAAA"
+            placeholderTextColor="rgba(255, 255, 255, 0.5)"
+            underlineColorAndroid="transparent"
+            type={'datetime'}
+            options={{
+              format: 'DD/MM/YYYY'
+            }}
+            value={yearOfBirth}
+            onChangeText={(text) => setYearOfBirth(text)}
+          />
+        </View>
+        
         ) : (
           <View style={styles.textInputContainer}>
             <Image source={require('./img/icons/Vector.png')} style={styles.lockIcon} />
-            <TouchableOpacity
+            <Pressable
               style={styles.textInput}
               onPress={() => setShowDatePicker(true)}
               value={yearOfBirth}
@@ -308,10 +343,9 @@ export default function Cadastro({ navigation }) {
               <Text style={[styles.placeholderText, yearOfBirth ? {} : styles.activePlaceholder]}>
                 {yearOfBirth || 'DD/MM/AAAA'}
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         )}
-
         {showDatePicker && (
           <DateTimePicker
             value={selectedDate}
@@ -322,18 +356,22 @@ export default function Cadastro({ navigation }) {
           />
         )}
 
-        <View style={styles.textInputContainer}>
-          <Image source={require('./img/icons/uil_padlock.png')} style={styles.lockIcon} />
-          <TextInput
-            style={styles.textInput}
-            placeholder="Telefone(Cel)"
-            placeholderTextColor="rgba(255, 255, 255, 0.5)"
-            underlineColorAndroid="transparent"
-            maxLength={15}
-            value={telefone}
-            onChangeText={(text) => InputNum(text, setTelefone)}
-          />
-        </View>
+          <View style={styles.textInputContainer}>
+            <Image source={require('./img/icons/uil_padlock.png')} style={styles.lockIcon} />
+            <TextInputMask
+              style={styles.textInput}
+              placeholder="Telefone(Cel)"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              underlineColorAndroid="transparent"
+              type={'cel-phone'}
+              options={{
+              maskType: 'BRL',
+              }}
+              maxLength={15}
+              value={telefone}
+              onChangeText={(text) => InputNum(text, setTelefone)}
+              />
+          </View>
       </View>
 
       <View style={styles.MessageSenhaError}>
@@ -344,9 +382,9 @@ export default function Cadastro({ navigation }) {
         {mostrarMensagemSenhaFraca && <Text style={styles.errorText}>A senha é fraca. Tente uma senha mais forte.</Text>}
       </View>    
 
-      <TouchableOpacity style={styles.button} onPress={Avancar}>
+      <Pressable style={styles.button} onPress={Avancar}>
         <Text style={styles.buttonText}>Avançar</Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 }
@@ -403,7 +441,7 @@ const styles = StyleSheet.create({
   textInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    maxWidth: Platform.OS === 'web' ? '100%' : '80%',
+    width: Platform.OS === 'web' ? '140%' : '80%',
     height: Platform.OS === 'web' ? 55 : 55,
     borderBottomWidth: 1,
     borderBottomColor: '#FFFFFF',
@@ -416,7 +454,7 @@ const styles = StyleSheet.create({
   textInputContainerLock: {
     flexDirection: 'row',
     alignItems: 'center',
-    maxWidth: Platform.OS === 'web' ? 210 : '80%',
+    width: Platform.OS === 'web' ? '140%' : '80%',
     height: Platform.OS === 'web' ? 55 : 55,
     borderBottomWidth: 1,
     borderBottomColor: '#FFFFFF',

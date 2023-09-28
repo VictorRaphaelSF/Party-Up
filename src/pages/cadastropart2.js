@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, Platform, Dimensions, TextInput, ImageBackground } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, TextInput, ImageBackground } from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
 import * as ImagePicker from 'expo-image-picker';
@@ -69,9 +69,9 @@ export default function Logado({route}) {
     resizeMode="cover"
     >
 
-      <TouchableOpacity style={styles.backButton} onPress={backbutton}>
+      <Pressable style={styles.backButton} onPress={backbutton}>
         <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
-      </TouchableOpacity>
+      </Pressable>
 
       <View style={styles.overlay}>
         <View style={styles.content}>
@@ -105,22 +105,23 @@ export default function Logado({route}) {
           </View>
         </View>
 
-        <TouchableOpacity onPress={handleImagePicker} style={{ top: -350 }}>
+
+        <Pressable onPress={handleImagePicker} style={{ top: -350 }}>
           <View style={styles.imageContainer}>
             <Image
               source={image ? { uri: image } : require('./img/icons/layer1.png')}
               style={styles.image}
             />
           </View>
-        </TouchableOpacity>
+        </Pressable>
 
         <Text style={styles.textTitle}>
           Adicionar Foto
         </Text>
 
-        <TouchableOpacity style={styles.button} onPress={handleVamosLaPress}>
+        <Pressable style={styles.button} onPress={handleVamosLaPress}>
           <Text style={styles.buttonText}>Cadastrar</Text>
-        </TouchableOpacity>
+        </Pressable>
 
         {erro !== '' && (
           <Animatable.View
@@ -198,7 +199,7 @@ const styles = StyleSheet.create({
   textInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    maxWidth: Platform.OS === 'web' ? '100%' : '85%',
+    width: Platform.OS === 'web' ? '118%' : '85%',
     height: Platform.OS === 'web' ? 50 : 55,
     borderBottomWidth: 1,
     borderBottomColor: '#FFFFFF',
@@ -259,7 +260,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255, 255, 255, 0.5)',
     borderRadius: 100,
     overflow: 'hidden',
-    top: 102,
+    top: Platform.OS === 'web' ? 75 : 102,
   },
 
   image: {
@@ -269,7 +270,8 @@ const styles = StyleSheet.create({
 
   textTitle: {
     color: '#FFFFFF',
-    fontSize: 16,
-    top: 12,
+    fontSize: 22,
+    bottom: 250,
+    opacity: 0.6,
   },
 });
