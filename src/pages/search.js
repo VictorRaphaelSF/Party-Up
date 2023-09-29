@@ -69,7 +69,7 @@ export default function Search() {
   };
 
   const handleButtonSuge = () => {
-    console.log('Botão Sugestão Pressionado');
+    console.log('Botão Sugestão Presionado');
   };
 
   const handleButtonView = () => {
