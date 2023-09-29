@@ -330,14 +330,14 @@ const styles = StyleSheet.create({
 
   searchHistoryContainer: {
     position: 'absolute',
-    top: 120, // Ajuste a distância do topo conforme necessário
-    left: 24, // Ajuste a distância da esquerda conforme necessário
+    top: 120,
+    left: 24, 
   },
 
   searchHistoryItemContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 5, // Adicione margem vertical para espaçamento entre os itens
+    marginVertical: 5,
   },
 
   searchHistoryIcon: {
