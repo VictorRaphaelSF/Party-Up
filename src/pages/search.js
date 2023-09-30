@@ -121,6 +121,7 @@ export default function Search() {
         <ScrollView
         style={styles.termsContainer}
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.termsContent}
         >
         {searchHistory.map((term, index) => (
         <View style={styles.searchHistoryItemContainer} key={index}>
@@ -353,7 +354,10 @@ const styles = StyleSheet.create({
   },
 
   termsContainer: {
+    position: 'absolute',
     marginTop: windowHeight * 0.12,
-    right: 150,
+    left: 15,
+    maxHeight: '80%',
+    top: 12,
   },
 });
