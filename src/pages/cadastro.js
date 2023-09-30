@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Image, Pressable, Text, TextInput, Platform } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { TextInputMask } from 'react-native-masked-text';
 import { useNavigation } from '@react-navigation/native';
@@ -15,8 +14,7 @@ export default function Cadastro({ navigation }) {
   const [yearOfBirth, setYearOfBirth] = useState('');
   const [telefone, setTelefone] = useState('');
   const [erro, setErro] = useState('');
-  
-  //linhas abaixo até o "." não serão utilizados para banco(Servem apenas para funcionalidades e validações).
+
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [senhaVisivel, setSenhaVisivel] = useState(false);
@@ -28,22 +26,10 @@ export default function Cadastro({ navigation }) {
   const [emailInvalido, setEmailInvalido] = useState(false);
   const [senhaFraca, setSenhaFraca] = useState(false);
   const [mostrarMensagemSenhaFraca, setMostrarMensagemSenhaFraca] = useState(false);
-  //.
 
   const InputNum = (value, setter) => {
     const numericValue = value.replace(/[^0-9]/g, '');
     setter(numericValue);
-  };
-
-  const formatarData = (data) => {
-    const regex = /^(\d{2})(\d{2})(\d{4})$/;
-    const match = data.match(regex);
-  
-    if (match) {
-      return `${match[1]}/${match[2]}/${match[3]}`;
-    }
-  
-    return data;
   };
 
   const handleDateChange = (event, selected) => {
@@ -60,7 +46,7 @@ export default function Cadastro({ navigation }) {
       }
     }
   };
-  
+
   const validarEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
@@ -71,11 +57,11 @@ export default function Cadastro({ navigation }) {
     const ageLimit = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
     return date > ageLimit;
   };
-  
+
   const backbutton = () => {
     navigation.goBack();
   };
-  
+
   const setForcaSenha = (senha) => {
     const pontuacao = calcularForcaSenha(senha);
     setSenhaFraca(pontuacao < 1);
@@ -110,17 +96,24 @@ export default function Cadastro({ navigation }) {
     }
   };
 
-  const verificarCNPJ = async (cpfCnpj) => {
-    try {
-      const response = await axios.get(`https://brasilapi.com.br/api/cnpj/v1/${cpfCnpj}`);
-      return response.data;
-    } catch (error) {
-      console.error('Erro ao verificar CNPJ:', error);
-      throw error;
+  const calcularForcaSenha = (senha) => {
+    let pontuacao = 0;
+
+    if (senha.length >= 8) {
+      pontuacao += 1;
     }
+
+    if (/[0-9]/.test(senha)) {
+      pontuacao += 1;
+    }
+
+    if (/[A-Z]/.test(senha)) {
+      pontuacao += 1;
+    }
+
+    return pontuacao;
   };
-  
-  
+
   let userData;
 
   try {
@@ -136,25 +129,7 @@ export default function Cadastro({ navigation }) {
     // Trate o erro conforme necessário.
   }
 
-  const calcularForcaSenha = (senha) => {
-    let pontuacao = 0;
-  
-    if (senha.length >= 8) {
-      pontuacao += 1;
-    }
-  
-    if (/[0-9]/.test(senha)) {
-      pontuacao += 1;
-    }
-  
-    if (/[A-Z]/.test(senha)) {
-      pontuacao += 1;
-    }
-  
-    return pontuacao;
-  };
-  
-  const Avancar = async () => {
+  const Avancar = () => {
     if (
       !emailValido ||
       !senha ||
@@ -162,27 +137,17 @@ export default function Cadastro({ navigation }) {
       !cpfCnpj ||
       !telefone ||
       confirmarSenhaErro ||
-      calcularForcaSenha(senha) < 3
+      calcularForcaSenha(senha) < 2
     ) {
       setErro('Preencha todos os campos obrigatórios');
       setTimeout(() => {
         setErro('');
       }, 4000);
     } else {
-      try {
-        const cnpjValido = await verificarCNPJ(cpfCnpj);
-        if (cnpjValido) {
-          setErro('');
-          navigation.navigate('cadastropart2', { userData });
-        } else {
-          setErro('O CNPJ inserido não é válido.');
-        }
-      } catch (error) {
-        setErro('Ocorreu um erro ao verificar o CNPJ.');
-      }
+      setErro('');
+      navigation.navigate('cadastropart2', { userData });
     }
   };
-  
 
   return (
     <View style={styles.container}>
@@ -191,10 +156,9 @@ export default function Cadastro({ navigation }) {
         style={styles.backgroundImage}
         resizeMode="cover"
       />
-
-        <Pressable style={styles.backButton} onPress={backbutton}>
-          <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
-        </Pressable>
+      <Pressable style={styles.backButton} onPress={backbutton}>
+        <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
+      </Pressable>
 
       {erro !== '' && (
         <Animatable.View
@@ -302,7 +266,7 @@ export default function Cadastro({ navigation }) {
         </View>
 
         <View style={styles.textInputContainer}>
-        <Image source={require('./img/icons/Group.png')} style={styles.lockIcon} />
+          <Image source={require('./img/icons/Group.png')} style={styles.lockIcon} />
           <TextInput
             style={styles.textInput}
             placeholder="CPF ou CNPJ"
@@ -316,21 +280,20 @@ export default function Cadastro({ navigation }) {
 
         {Platform.OS === 'web' ? (
           <View style={styles.textInputContainer}>
-          <Image source={require('./img/icons/Vector.png')} style={styles.lockIcon} />
-          <TextInputMask
-            style={styles.textInput}
-            placeholder="DD/MM/AAAA"
-            placeholderTextColor="rgba(255, 255, 255, 0.5)"
-            underlineColorAndroid="transparent"
-            type={'datetime'}
-            options={{
-              format: 'DD/MM/YYYY'
-            }}
-            value={yearOfBirth}
-            onChangeText={(text) => setYearOfBirth(text)}
-          />
-        </View>
-        
+            <Image source={require('./img/icons/Vector.png')} style={styles.lockIcon} />
+            <TextInputMask
+              style={styles.textInput}
+              placeholder="DD/MM/AAAA"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              underlineColorAndroid="transparent"
+              type={'datetime'}
+              options={{
+                format: 'DD/MM/YYYY'
+              }}
+              value={yearOfBirth}
+              onChangeText={(text) => setYearOfBirth(text)}
+            />
+          </View>
         ) : (
           <View style={styles.textInputContainer}>
             <Image source={require('./img/icons/Vector.png')} style={styles.lockIcon} />
@@ -356,31 +319,31 @@ export default function Cadastro({ navigation }) {
           />
         )}
 
-          <View style={styles.textInputContainer}>
-            <Image source={require('./img/icons/uil_padlock.png')} style={styles.lockIcon} />
-            <TextInputMask
-              style={styles.textInput}
-              placeholder="Telefone(Cel)"
-              placeholderTextColor="rgba(255, 255, 255, 0.5)"
-              underlineColorAndroid="transparent"
-              type={'cel-phone'}
-              options={{
+        <View style={styles.textInputContainer}>
+          <Image source={require('./img/icons/uil_padlock.png')} style={styles.lockIcon} />
+          <TextInputMask
+            style={styles.textInput}
+            placeholder="Telefone(Cel)"
+            placeholderTextColor="rgba(255, 255, 255, 0.5)"
+            underlineColorAndroid="transparent"
+            type={'cel-phone'}
+            options={{
               maskType: 'BRL',
-              }}
-              maxLength={15}
-              value={telefone}
-              onChangeText={(text) => InputNum(text, setTelefone)}
-              />
-          </View>
+            }}
+            maxLength={15}
+            value={telefone}
+            onChangeText={(text) => InputNum(text, setTelefone)}
+          />
+        </View>
       </View>
 
       <View style={styles.MessageSenhaError}>
-      {confirmarSenhaErro && (
+        {confirmarSenhaErro && (
           <Text style={styles.errorText}>As senhas não coincidem.</Text>
         )}
 
         {mostrarMensagemSenhaFraca && <Text style={styles.errorText}>A senha é fraca. Tente uma senha mais forte.</Text>}
-      </View>    
+      </View>
 
       <Pressable style={styles.button} onPress={Avancar}>
         <Text style={styles.buttonText}>Avançar</Text>
