@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { StyleSheet, View, Text, ImageBackground, Platform, Dimensions, Pressable } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
-export default function Searched() {
+export default function Evento() {
 
 
   return (

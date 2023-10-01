@@ -8,8 +8,10 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 export default function Cadevento({route}) {
 
-  const [nmuevento, setNmevento] = useState('');
+  const [nmevento, setNmevento] = useState('');
   const [descrição, setDescrição] = useState('');
+  const [cep, setCep] = useState('');
+  const [estado, setEstado] = useState('');
   const [erro, setErro] = useState('');
   const [image, setImage] = useState(null);
   const navigation = useNavigation();
@@ -84,7 +86,7 @@ export default function Cadevento({route}) {
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               underlineColorAndroid="transparent"
               maxLength={100}
-              value={nmuevento}
+              value={nmevento}
               onChangeText={setNmevento}
             />
           </View>
@@ -92,7 +94,7 @@ export default function Cadevento({route}) {
           <View style={styles.textInputContainer}>
             <Image source={require('./img/icons/page.png')} style={styles.icon} />
             <TextInput
-              style={styles.textInput2}
+              style={styles.textInput}
               placeholder="Descrição"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               underlineColorAndroid="transparent"
@@ -104,9 +106,33 @@ export default function Cadevento({route}) {
               {renderCaracteresRestantes()}
             </Text>
           </View>
+
+          <View style={styles.textInputContainerSmall}>
+            <TextInput
+              style={styles.textInput2}
+              placeholder="CEP"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              underlineColorAndroid="transparent"
+              maxLength={15}
+              value={cep}
+              onChangeText={setCep}
+            />
+          </View>
+
+          <View style={styles.textInputContainerSmall2}>
+            <TextInput
+              style={styles.textInput2}
+              placeholder="Estado"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              underlineColorAndroid="transparent"
+              maxLength={15}
+              value={estado}
+              onChangeText={setEstado}
+            />
+          </View>
         </View>
 
-        <Pressable onPress={handleImagePicker} style={{ top: -325 }}>
+        <Pressable onPress={handleImagePicker} style={{ top: -400 }}>
           <View style={styles.imageContainer}>
             <Image
               source={image ? { uri: image } : require('./img/icons/layer1.png')}
@@ -117,10 +143,6 @@ export default function Cadevento({route}) {
 
         <Text style={styles.textTitle}>
           Adicionar foto
-        </Text>
-
-        <Text style={styles.textTitle2}>
-          Dados do endereço
         </Text>
 
         <Pressable style={styles.button} onPress={handleVamosLaPress}>
@@ -209,7 +231,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#FFFFFF',
     marginBottom: 13,
     justifyContent: 'center',
-    top: 85,
+    top: 95,
   },
 
   textInput: {
@@ -222,7 +244,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     flex: 1,
-    left: Platform.OS === 'web' ? 33 : 10,
+    left: Platform.OS === 'web' ? 50 : 10,
   },
 
   icon: {
@@ -277,13 +299,32 @@ const styles = StyleSheet.create({
     fontSize: 22,
     bottom: 250,
     opacity: 0.6,
+    top  : -312,
   },
 
-  textTitle2: {
-    color: '#FFFFFF',
-    fontSize: 22,
-    bottom: 250,
-    opacity: 0.6,
-    top: -35,
+  textInputContainerSmall: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: Platform.OS === 'web' ? '25%' : '80%',
+    height: Platform.OS === 'web' ? 50 : 55,
+    borderBottomWidth: 1,
+    right: 54,  
+    borderBottomColor: '#FFFFFF',
+    marginBottom: 13,
+    justifyContent: 'center',
+    top: 85,
+  },
+
+  textInputContainerSmall2: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: Platform.OS === 'web' ? '25%' : '80%',
+    height: Platform.OS === 'web' ? 50 : 55,
+    borderBottomWidth: 1,
+    left: 54,  
+    borderBottomColor: '#FFFFFF',
+    marginBottom: 13,
+    justifyContent: 'center',
+    top:  22,
   },
 });

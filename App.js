@@ -12,14 +12,19 @@ import Cadastropart2 from './src/pages/cadastropart2';
 import Cadastropart3 from './src/pages/cadastropart3';
 import Cadevento from './src/pages/cadevento';
 import Cadevento2 from './src/pages/cadevento2';
+import Cadevento3 from './src/pages/cadevento3';
 import Historicoevent from './src/pages/historicoevent';
 import Search from './src/pages/search'
+import Searched from './src/pages/searched';
 import Notificação from './src/pages/notificações'
 import Termos from './src/pages/termos';
 import Telaprincipal from './src/pages/telaprincipal';
 import Telaprofile from './src/pages/telaprofile'
-import Searched from './src/pages/searched';
 import Report from './src/pages/report'
+import Report2 from './src/pages/report2'
+import Report3 from './src/pages/report3';
+import Evento from './src/pages/evento'
+import Tags from './src/pages/tags';
 
 const Stack = createNativeStackNavigator();
 
@@ -116,6 +121,36 @@ export default function App() {
           headerShown: false
         }}
         name='report' component={Report}
+        />
+        <Stack.Screen
+        options={{
+          headerShown: false
+        }}
+        name='evento' component={Evento}
+        />
+        <Stack.Screen
+        options={{
+          headerShown: false
+        }}
+        name='cadevento3' component={Cadevento3}
+        />
+        <Stack.Screen
+        options={{
+          headerShown: false
+        }}
+        name='tags' component={Tags}
+        />
+        <Stack.Screen
+        options={{
+          headerShown: false
+        }}
+        name='report2' component={Report2}
+        />
+        <Stack.Screen
+        options={{
+          headerShown: false
+        }}
+        name='report3' component={Report3}
         />
       </Stack.Navigator>
     </NavigationContainer>
