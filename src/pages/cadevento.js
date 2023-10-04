@@ -14,7 +14,7 @@ export default function Cadevento({route}) {
   const [estado, setEstado] = useState('');
   const [cidade, setCidade] = useState('');
   const [bairro, setBairro] = useState('');
-  const [complemento, setComplemento] = useState('');
+  const [nmrua, setNmrua] = useState('');
 
   /*Linha abaixo não sera enviada nada para o 'Banco'*/
   const [erro, setErro] = useState('');
@@ -159,9 +159,22 @@ export default function Cadevento({route}) {
               onChangeText={setBairro}
             />
           </View>
+
+          <View style={styles.textInputContainerLow}>
+            <Image source={require('./img/icons/location.png')} style={styles.iconlocation} />
+            <TextInput
+              style={styles.textInput}
+              placeholder="Nome da rua"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              underlineColorAndroid="transparent"
+              maxLength={100}
+              value={nmrua}
+              onChangeText={setNmrua}
+            />
+          </View>
         </View>
 
-        <Pressable onPress={handleImagePicker} style={{ top: -500 }}>
+        <Pressable onPress={handleImagePicker} style={{ top: -550 }}>
           <View style={styles.imageContainer}>
             <Image
               source={image ? { uri: image } : require('./img/icons/layer1.png')}
@@ -224,13 +237,14 @@ const styles = StyleSheet.create({
   },
 
   button: {
+    position: 'absolute',
     backgroundColor: 'rgba(255, 1, 108, 0.4)',
     paddingVertical: 14,
     paddingHorizontal: 100,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    top: Platform.OS === 'web' ? 75 : 160,
+    bottom: Platform.OS === 'web' ? 50 : 160,
   },
 
   backButton: {
@@ -260,7 +274,45 @@ const styles = StyleSheet.create({
     borderBottomColor: '#FFFFFF',
     marginBottom: 13,
     justifyContent: 'center',
-    top: 165,
+    top: 200,
+  },
+
+  textInputContainerSmall: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: Platform.OS === 'web' ? '45%' : '80%',
+    height: Platform.OS === 'web' ? 50 : 55,
+    borderBottomWidth: 1,
+    right: 84,  
+    borderBottomColor: '#FFFFFF',
+    marginBottom: 13,
+    justifyContent: 'center',
+    top: 194,
+  },
+
+  textInputContainerSmall2: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: Platform.OS === 'web' ? '45%' : '80%',
+    height: Platform.OS === 'web' ? 50 : 55,
+    borderBottomWidth: 1,
+    left: 84,  
+    borderBottomColor: '#FFFFFF',
+    marginBottom: 13,
+    justifyContent: 'center',
+    top: 68,
+  },
+
+  textInputContainerLow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: Platform.OS === 'web' ? '130%' : '80%',
+    height: Platform.OS === 'web' ? 55 : 55,
+    borderBottomWidth: 1,
+    borderBottomColor: '#FFFFFF',
+    marginBottom: 13,
+    justifyContent: 'center',
+    top: 65,
   },
 
   textInput: {
@@ -282,12 +334,21 @@ const styles = StyleSheet.create({
     height: 24,
     marginRight: 14,
     left: 5,
+    opacity: 0.8,
   },
 
   iconuser: {
     width: 23,
     height: 23,
     marginRight: 14,
+    opacity: 0.8,
+  },
+
+  iconlocation: {
+    width: 20,
+    height: 28,
+    marginRight: 14,
+    opacity: 0.8,
   },
 
   errorBanner: {
@@ -329,32 +390,8 @@ const styles = StyleSheet.create({
     fontSize: 22,
     bottom: 250,
     opacity: 0.6,
-    top  : -400,
+    top  : -450,
   },
 
-  textInputContainerSmall: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: Platform.OS === 'web' ? '25%' : '80%',
-    height: Platform.OS === 'web' ? 50 : 55,
-    borderBottomWidth: 1,
-    right: 54,  
-    borderBottomColor: '#FFFFFF',
-    marginBottom: 13,
-    justifyContent: 'center',
-    top: 150,
-  },
-
-  textInputContainerSmall2: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: Platform.OS === 'web' ? '25%' : '80%',
-    height: Platform.OS === 'web' ? 50 : 55,
-    borderBottomWidth: 1,
-    left: 54,  
-    borderBottomColor: '#FFFFFF',
-    marginBottom: 13,
-    justifyContent: 'center',
-    top:  24,
-  },
+  
 });
