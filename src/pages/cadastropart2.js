@@ -22,6 +22,8 @@ export default function Logado({route}) {
     });
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+      const nomeDoArquivo = result.uri.split('/').pop();
+      console.log(`Nome do arquivo: ${nomeDoArquivo}`);
     }
   };
   
@@ -39,13 +41,13 @@ export default function Logado({route}) {
     );
   };
   
-  
+  console.log(image)
   const userData = route.params.userData;
   
   // adicionando mais dados no objeto do cliente
   userData["nmUser"] = nmusuario;
   userData["descricao"] = descrição;
-  userData["uri"] = "imagem.png";
+  userData["uri"] = image;
 
   
   
