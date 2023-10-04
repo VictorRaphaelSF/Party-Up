@@ -13,8 +13,9 @@ export default function Cadastro({ navigation }) {
   const [cpfCnpj, setCpfCnpj] = useState('');
   const [yearOfBirth, setYearOfBirth] = useState('');
   const [telefone, setTelefone] = useState('');
-  const [erro, setErro] = useState('');
 
+  //Linha abaixo é somente para validações.
+  const [erro, setErro] = useState('');
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [senhaVisivel, setSenhaVisivel] = useState(false);
@@ -341,9 +342,11 @@ export default function Cadastro({ navigation }) {
         {confirmarSenhaErro && (
           <Text style={styles.errorText}>As senhas não coincidem.</Text>
         )}
-
-        {mostrarMensagemSenhaFraca && <Text style={styles.errorText}>A senha é fraca. Tente uma senha mais forte.</Text>}
       </View>
+
+      <View style={styles.MessageSenhaError2}>
+        {mostrarMensagemSenhaFraca && <Text style={styles.errorText}>A senha é fraca. Tente uma senha mais forte.</Text>}
+        </View>
 
       <Pressable style={styles.button} onPress={Avancar}>
         <Text style={styles.buttonText}>Avançar</Text>
@@ -375,7 +378,7 @@ const styles = StyleSheet.create({
 
   backButton: {
     position: 'absolute',
-    top: Platform.OS === 'web' ? 55 : 50,
+    top: Platform.OS === 'web' ? 50 : 50,
     left: 27,
     zIndex: 1,
   },
@@ -504,5 +507,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 0,
     top: Platform.OS === 'web' ? 40 : 10,
+  },
+
+  MessageSenhaError2: {
+    color: 'red',
+    fontSize: 14,
+    marginTop: 0,
+    top: Platform.OS === 'web' ? 60 : 50,
   },
 });

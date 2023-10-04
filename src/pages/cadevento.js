@@ -12,6 +12,11 @@ export default function Cadevento({route}) {
   const [descrição, setDescrição] = useState('');
   const [cep, setCep] = useState('');
   const [estado, setEstado] = useState('');
+  const [cidade, setCidade] = useState('');
+  const [bairro, setBairro] = useState('');
+  const [complemento, setComplemento] = useState('');
+
+  /*Linha abaixo não sera enviada nada para o 'Banco'*/
   const [erro, setErro] = useState('');
   const [image, setImage] = useState(null);
   const navigation = useNavigation();
@@ -41,7 +46,7 @@ export default function Cadevento({route}) {
       </Text>
     );
   };
-  
+
   
   //const userData = route.params.userData;
   
@@ -119,6 +124,18 @@ export default function Cadevento({route}) {
             />
           </View>
 
+          <View style={styles.textInputContainerSmall}>
+            <TextInput
+              style={styles.textInput2}
+              placeholder="Cidade"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              underlineColorAndroid="transparent"
+              maxLength={15}
+              value={cidade}
+              onChangeText={setCidade}
+            />
+          </View>
+
           <View style={styles.textInputContainerSmall2}>
             <TextInput
               style={styles.textInput2}
@@ -130,9 +147,21 @@ export default function Cadevento({route}) {
               onChangeText={setEstado}
             />
           </View>
+
+          <View style={styles.textInputContainerSmall2}>
+            <TextInput
+              style={styles.textInput2}
+              placeholder="Bairro"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              underlineColorAndroid="transparent"
+              maxLength={15}
+              value={bairro}
+              onChangeText={setBairro}
+            />
+          </View>
         </View>
 
-        <Pressable onPress={handleImagePicker} style={{ top: -400 }}>
+        <Pressable onPress={handleImagePicker} style={{ top: -500 }}>
           <View style={styles.imageContainer}>
             <Image
               source={image ? { uri: image } : require('./img/icons/layer1.png')}
@@ -201,7 +230,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    top: Platform.OS === 'web' ? 140 : 160,
+    top: Platform.OS === 'web' ? 75 : 160,
   },
 
   backButton: {
@@ -231,7 +260,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#FFFFFF',
     marginBottom: 13,
     justifyContent: 'center',
-    top: 95,
+    top: 165,
   },
 
   textInput: {
@@ -241,6 +270,7 @@ const styles = StyleSheet.create({
   },
 
   textInput2: {
+    maxWidth: '100%',
     color: '#FFFFFF',
     fontSize: 16,
     flex: 1,
@@ -299,7 +329,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     bottom: 250,
     opacity: 0.6,
-    top  : -312,
+    top  : -400,
   },
 
   textInputContainerSmall: {
@@ -312,7 +342,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#FFFFFF',
     marginBottom: 13,
     justifyContent: 'center',
-    top: 85,
+    top: 150,
   },
 
   textInputContainerSmall2: {
@@ -325,6 +355,6 @@ const styles = StyleSheet.create({
     borderBottomColor: '#FFFFFF',
     marginBottom: 13,
     justifyContent: 'center',
-    top:  22,
+    top:  24,
   },
 });

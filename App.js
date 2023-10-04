@@ -23,7 +23,8 @@ import Telaprofile from './src/pages/telaprofile'
 import Report from './src/pages/report'
 import Report2 from './src/pages/report2'
 import Report3 from './src/pages/report3';
-import Evento from './src/pages/evento'
+import Evento from './src/pages/evento';
+import Eventoedit from './src/pages/eventoedit';
 import Tags from './src/pages/tags';
 
 const Stack = createNativeStackNavigator();
@@ -31,7 +32,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='index'>
+      <Stack.Navigator initialRouteName='cadevento'>
         <Stack.Screen 
           options={{
             headerShown: false
@@ -127,6 +128,12 @@ export default function App() {
           headerShown: false
         }}
         name='evento' component={Evento}
+        />
+        <Stack.Screen
+        options={{
+          headerShown: false
+        }}
+        name='eventoedit' component={Eventoedit}
         />
         <Stack.Screen
         options={{

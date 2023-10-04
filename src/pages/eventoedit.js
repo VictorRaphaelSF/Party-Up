@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { StyleSheet, View, Text, ImageBackground, Platform, Dimensions, Pressable } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
-export default function Cadevento3() {
+export default function Eventoedit() {
 
 
   return (
@@ -11,7 +11,7 @@ export default function Cadevento3() {
       style={styles.container}
       resizeMode="cover">
       <View style={styles.overlay}>
-        
+
       </View>
     </ImageBackground>
   );
