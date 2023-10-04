@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Pressable, Image, Dimensions, Text, ScrollView } from 'react-native';
 
 import { useRoute, useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 export default function Telaprincipal() {
   const [reload, setReload] = useState(0);
@@ -31,6 +32,16 @@ export default function Telaprincipal() {
   const handleUserImagePress = () => {
    console.log('Foto de perfil pressionada')
   };
+
+  axios
+      .post('http://localhost:3003/viewEvent')
+      .then((response) => {
+        console.log(response);
+
+      })
+      .catch((error) => {
+        console.error('Erro ao enviar ou retono de dados para o backend:', error);
+      });
 
   return (
     <View style={styles.container}>

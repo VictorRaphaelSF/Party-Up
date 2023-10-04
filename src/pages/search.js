@@ -121,6 +121,7 @@ export default function Search() {
         <ScrollView
         style={styles.termsContainer}
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.termsContent}
         >
         {searchHistory.map((term, index) => (
         <View style={styles.searchHistoryItemContainer} key={index}>
@@ -330,14 +331,14 @@ const styles = StyleSheet.create({
 
   searchHistoryContainer: {
     position: 'absolute',
-    top: 120, // Ajuste a distância do topo conforme necessário
-    left: 24, // Ajuste a distância da esquerda conforme necessário
+    top: 120,
+    left: 24, 
   },
 
   searchHistoryItemContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 5, // Adicione margem vertical para espaçamento entre os itens
+    marginVertical: 5,
   },
 
   searchHistoryIcon: {
@@ -353,7 +354,10 @@ const styles = StyleSheet.create({
   },
 
   termsContainer: {
+    position: 'absolute',
     marginTop: windowHeight * 0.12,
-    right: 150,
+    left: 15,
+    maxHeight: '80%',
+    top: 12,
   },
 });

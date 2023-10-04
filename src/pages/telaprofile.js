@@ -4,7 +4,7 @@ import {StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, Modal, T
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
 
-export default function Notificações() {
+export default function Telaprofile() {
   const navigation = useNavigation();
 
   const backbutton = () => {
@@ -115,7 +115,6 @@ export default function Notificações() {
 }
 
 const windowHeight = Dimensions.get('window').height;
-
 
 const styles = StyleSheet.create({
   container: {
