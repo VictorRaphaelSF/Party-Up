@@ -145,17 +145,8 @@ export default function Cadastro({ navigation }) {
         setErro('');
       }, 4000);
     } else {
-      try {
-        const cnpjValido = await verificarCNPJ(cpfCnpj);
-        if (cnpjValido) {
-          setErro('');
-          navigation.navigate('cadastropart2', { userData });
-        } else {
-          setErro('O CNPJ inserido não é válido.');
-        }
-      } catch (error) {
-        setErro('Ocorreu um erro ao verificar o CNPJ.');
-      }
+      setErro('');
+      navigation.navigate('cadastropart2', { userData });
     }
   };
   
