@@ -121,7 +121,7 @@ export default function Cadastro({ navigation }) {
       email: email,
       senha: senha,
       cpfCnpj: cpfCnpj,
-      dataNas: "2020-02-01",
+      dataNas: yearOfBirth,
       telefone: telefone,
     };
   } catch (error) {
