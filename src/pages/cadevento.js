@@ -4,7 +4,7 @@ import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, TextInp
 import * as Animatable from 'react-native-animatable';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
-import { ScrollView } from 'react-native-gesture-handler';
+import axios from 'axios';
 
 export default function Cadevento({route}) {
 
@@ -16,7 +16,7 @@ export default function Cadevento({route}) {
   const [bairro, setBairro] = useState('');
   const [nmrua, setNmrua] = useState('');
 
-  /*Linha abaixo não sera enviada nada para o 'Banco'*/
+  //Linha abaixo somente para validações.
   const [erro, setErro] = useState('');
   const [image, setImage] = useState(null);
   const navigation = useNavigation();
@@ -47,7 +47,20 @@ export default function Cadevento({route}) {
     );
   };
 
+  const handleCepChange = async (newCep) => {
+    try {
+      const response = await axios.get(`https://viacep.com.br/ws/${newCep}/json/`);
+      const data = response.data;
   
+      setEstado(data.uf);
+      setCidade(data.localidade);
+      setBairro(data.bairro);
+      setNmrua(data.logradouro);
+    } catch (error) {
+      console.error('Erro ao consultar o CEP:', error);
+    }
+  };
+
   //const userData = route.params.userData;
   
   // adicionando mais dados no objeto do cliente
@@ -58,14 +71,14 @@ export default function Cadevento({route}) {
   
   
   const handleVamosLaPress = () => {
-    if (!nmusuario || !descrição) {
+    if (!nmevento || !descrição || !cep || !estado || !cidade || !bairro || !nmrua) {
       setErro('Preencha todos os campos obrigatórios.');
       setTimeout(() => {
         setErro('');
       }, 4000);
     } else {
       setErro('');
-      navigation.navigate('termos', { userImage: image, userData: userData });
+      navigation.navigate('cadevento2', { userImage: image   });
     }
   };
   // verificando pra ver se ta certo
@@ -113,15 +126,20 @@ export default function Cadevento({route}) {
           </View>
 
           <View style={styles.textInputContainerSmall}>
-            <TextInput
-              style={styles.textInput2}
-              placeholder="CEP"
-              placeholderTextColor="rgba(255, 255, 255, 0.5)"
-              underlineColorAndroid="transparent"
-              maxLength={15}
-              value={cep}
-              onChangeText={setCep}
-            />
+          <TextInput
+            style={styles.textInput2}
+            placeholder="CEP"
+            placeholderTextColor="rgba(255, 255, 255, 0.5)"
+            underlineColorAndroid="transparent"
+            maxLength={15}
+            value={cep}
+            onChangeText={(newCep) => {
+              setCep(newCep);
+              if (newCep.length === 8) {
+                handleCepChange(newCep);
+              }
+            }}
+          />
           </View>
 
           <View style={styles.textInputContainerSmall}>
@@ -130,7 +148,7 @@ export default function Cadevento({route}) {
               placeholder="Cidade"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               underlineColorAndroid="transparent"
-              maxLength={15}
+              maxLength={50}
               value={cidade}
               onChangeText={setCidade}
             />
@@ -142,7 +160,7 @@ export default function Cadevento({route}) {
               placeholder="Estado"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               underlineColorAndroid="transparent"
-              maxLength={15}
+              maxLength={2}
               value={estado}
               onChangeText={setEstado}
             />
@@ -154,7 +172,7 @@ export default function Cadevento({route}) {
               placeholder="Bairro"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               underlineColorAndroid="transparent"
-              maxLength={15}
+              maxLength={125}
               value={bairro}
               onChangeText={setBairro}
             />
@@ -164,10 +182,10 @@ export default function Cadevento({route}) {
             <Image source={require('./img/icons/location.png')} style={styles.iconlocation} />
             <TextInput
               style={styles.textInput}
-              placeholder="Nome da rua"
+              placeholder="Nome da ruae número"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               underlineColorAndroid="transparent"
-              maxLength={100}
+              maxLength={125}
               value={nmrua}
               onChangeText={setNmrua}
             />
@@ -392,6 +410,4 @@ const styles = StyleSheet.create({
     opacity: 0.6,
     top  : -450,
   },
-
-  
 });

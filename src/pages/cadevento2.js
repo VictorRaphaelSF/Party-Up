@@ -2,18 +2,27 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, TextInput, ScrollView, ImageBackground } from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
-import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
+import { TextInputMask } from 'react-native-masked-text';
+import axios from 'axios';
 
 export default function Cadevento2() {
-  const [nmtelefone, setNmTelefone] = useState('');
+  const [nmtelefone, setTelefone] = useState('');
   const [sitectt, setSitectt] = useState('');
+  const [instagram, setInstagram] = useState('');
+  const [infoctt, setInfoctt] = useState('');
+
+  //Linha abaixo somente para validações.
   const [erro, setErro] = useState('');
   const navigation = useNavigation();
-  const [setendereco, setEndereco] = useState('')
 
   const backbutton = () => {
     navigation.goBack();
+  };
+
+  const InputNum = (value, setter) => {
+    const numericValue = value.replace(/[^0-9]/g, '');
+    setter(numericValue);
   };
   
   const bttCriarEvento = () => {
@@ -34,20 +43,32 @@ export default function Cadevento2() {
       style={styles.container}
       resizeMode="cover"
     >
+
+      <Pressable style={styles.backButton} onPress={backbutton}>
+        <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
+      </Pressable>
       <View style={styles.overlay}>
         <View style={styles.content}>
+          <Text style={styles.textadd}>
+            Adicionar informações de contato
+          </Text>
+
           <View style={styles.textInputContainer}>
-            <Image source={require('./img/icons/uil_padlock.png')} style={styles.iconuser} />
-            <TextInput
-              style={styles.textInput}
-              placeholder="Numero de Telefone"
-              placeholderTextColor="rgba(255, 255, 255, 0.5)"
-              underlineColorAndroid="transparent"
-              maxLength={100}
-              value={nmtelefone}
-              onChangeText={setNmTelefone}
-            />
-          </View>
+          <Image source={require('./img/icons/uil_padlock.png')} style={styles.icon} />
+          <TextInputMask
+            style={styles.textInput}
+            placeholder="Telefone(Cel)"
+            placeholderTextColor="rgba(255, 255, 255, 0.5)"
+            underlineColorAndroid="transparent"
+            type={'cel-phone'}
+            options={{
+              maskType: 'BRL',
+            }}
+            maxLength={15}
+            value={nmtelefone}
+            onChangeText={(text) => InputNum(text, setTelefone)}
+          />
+        </View>
 
           <View style={styles.textInputContainer}>
             <Image source={require('./img/icons/globo.png')} style={styles.icon} />
@@ -63,15 +84,28 @@ export default function Cadevento2() {
           </View>
 
           <View style={styles.textInputContainer}>
-            <Image source={require('./img/icons/location.png')} style={styles.iconlocation} />
+            <Image source={require('./img/icons/instagramicon.png')} style={styles.icon} />
             <TextInput
               style={styles.textInput}
-              placeholder="Endereço"
+              placeholder="Instagram"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               underlineColorAndroid="transparent"
               maxLength={100}
-              value={setendereco}
-              onChangeText={setEndereco}
+              value={instagram}
+              onChangeText={setInstagram}
+            />
+          </View>
+
+          <View style={styles.textInputContainer}>
+            <Image source={require('./img/icons/info(g).png')} style={styles.icon} />
+            <TextInput
+              style={styles.textInput}
+              placeholder="Outras informações"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              underlineColorAndroid="transparent"
+              maxLength={100}
+              value={infoctt}
+              onChangeText={setInfoctt}
             />
           </View>
         </View>
@@ -101,7 +135,7 @@ export default function Cadevento2() {
         <Pressable style={styles.backButton} onPress={backbutton}>
           <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
         </Pressable>
-    </View>
+      </View>
     </ImageBackground>
   );
 }
@@ -130,13 +164,14 @@ const styles = StyleSheet.create({
   },
 
   button: {
+    position: 'absolute',
     backgroundColor: 'rgba(255, 1, 108, 0.4)',
     paddingVertical: 14,
     paddingHorizontal: 100,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    top: 230,
+    bottom: 50,
   },
 
   buttonText: {
@@ -146,26 +181,30 @@ const styles = StyleSheet.create({
   },
 
   backButton: {
-    marginRight: 16,
-    bottom: 480,
-    right: 150,
+    position: 'absolute',
+    top: Platform.OS === 'web' ? 40 : 50,
+    left: 27,
+    zIndex: 1,
+  },
+
+  backIcon: {
+    width: 30,
+    height: 24,
   },
 
   textInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    maxWidth: Platform.OS === 'web' ? '100%' : '85%',
-    height: Platform.OS === 'web' ? 50 : 55,
+    width: Platform.OS === 'web' ? '130%' : '80%',
+    height: Platform.OS === 'web' ? 55 : 55,
     borderBottomWidth: 1,
     borderBottomColor: '#FFFFFF',
     marginBottom: 13,
-    justifyContent: 'center',
-    bottom: 170,
-    position: 'static',
-
+    top: -300,
   },
 
   textInput: {
+    width: '100%',
     color: '#FFFFFF',
     fontSize: 16,
     flex: 1,
@@ -184,18 +223,15 @@ const styles = StyleSheet.create({
     marginRight: 14,
   },
 
-  iconlocation: {
-    width: 20,
-    height: 28,
-    marginRight: 14,
-    opacity: 0.8,
-  },
-
   textadd: {
     color: '#FFFFFF',
-    fontSize: 22,
-    bottom: 285,
-    opacity: 0.7,
+    fontSize: 16,
+    backgroundColor: '#380053',
+    padding: 10,
+    borderRadius: 24,
+    textAlign: 'center',
+    width: '125%',
+    top: -315,
   },
 
   errorBanner: {

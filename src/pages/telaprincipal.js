@@ -45,7 +45,6 @@ export default function Telaprincipal() {
 
   return (
     <View style={styles.container}>
-      
       <View style={styles.topBar}>
         <Image source={require('./img/icons/sol.png')} style={styles.topIconSol} />
         <Image source={require('./img/icons/partyuplg.png')} style={styles.topIconPartyup}/>

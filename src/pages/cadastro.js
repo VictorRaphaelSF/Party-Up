@@ -14,7 +14,7 @@ export default function Cadastro({ navigation }) {
   const [yearOfBirth, setYearOfBirth] = useState('');
   const [telefone, setTelefone] = useState('');
 
-  //Linha abaixo é somente para validações.
+  //Linha abaixo somente para validações.
   const [erro, setErro] = useState('');
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
