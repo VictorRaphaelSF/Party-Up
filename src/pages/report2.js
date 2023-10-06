@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 20,
-    borderBottomWidth: 1,  // Adicione esta linha
+    borderBottomWidth: 1,
     borderBottomColor: 'rgba(255, 255, 255, 0.5)',
   },
 

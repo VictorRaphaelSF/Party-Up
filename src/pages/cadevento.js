@@ -4,7 +4,7 @@ import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, TextInp
 import * as Animatable from 'react-native-animatable';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
-import { ScrollView } from 'react-native-gesture-handler';
+import axios from 'axios';
 
 export default function Cadevento({route}) {
 
@@ -12,6 +12,11 @@ export default function Cadevento({route}) {
   const [descrição, setDescrição] = useState('');
   const [cep, setCep] = useState('');
   const [estado, setEstado] = useState('');
+  const [cidade, setCidade] = useState('');
+  const [bairro, setBairro] = useState('');
+  const [nmrua, setNmrua] = useState('');
+
+  //Linha abaixo somente para validações.
   const [erro, setErro] = useState('');
   const [image, setImage] = useState(null);
   const navigation = useNavigation();
@@ -41,8 +46,21 @@ export default function Cadevento({route}) {
       </Text>
     );
   };
+
+  const handleCepChange = async (newCep) => {
+    try {
+      const response = await axios.get(`https://viacep.com.br/ws/${newCep}/json/`);
+      const data = response.data;
   
-  
+      setEstado(data.uf);
+      setCidade(data.localidade);
+      setBairro(data.bairro);
+      setNmrua(data.logradouro);
+    } catch (error) {
+      console.error('Erro ao consultar o CEP:', error);
+    }
+  };
+
   //const userData = route.params.userData;
   
   // adicionando mais dados no objeto do cliente
@@ -53,14 +71,14 @@ export default function Cadevento({route}) {
   
   
   const handleVamosLaPress = () => {
-    if (!nmusuario || !descrição) {
+    if (!nmevento || !descrição || !cep || !estado || !cidade || !bairro || !nmrua) {
       setErro('Preencha todos os campos obrigatórios.');
       setTimeout(() => {
         setErro('');
       }, 4000);
     } else {
       setErro('');
-      navigation.navigate('termos', { userImage: image, userData: userData });
+      navigation.navigate('cadevento2', { userImage: image   });
     }
   };
   // verificando pra ver se ta certo
@@ -108,14 +126,31 @@ export default function Cadevento({route}) {
           </View>
 
           <View style={styles.textInputContainerSmall}>
+          <TextInput
+            style={styles.textInput2}
+            placeholder="CEP"
+            placeholderTextColor="rgba(255, 255, 255, 0.5)"
+            underlineColorAndroid="transparent"
+            maxLength={15}
+            value={cep}
+            onChangeText={(newCep) => {
+              setCep(newCep);
+              if (newCep.length === 8) {
+                handleCepChange(newCep);
+              }
+            }}
+          />
+          </View>
+
+          <View style={styles.textInputContainerSmall}>
             <TextInput
               style={styles.textInput2}
-              placeholder="CEP"
+              placeholder="Cidade"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               underlineColorAndroid="transparent"
-              maxLength={15}
-              value={cep}
-              onChangeText={setCep}
+              maxLength={50}
+              value={cidade}
+              onChangeText={setCidade}
             />
           </View>
 
@@ -125,14 +160,39 @@ export default function Cadevento({route}) {
               placeholder="Estado"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               underlineColorAndroid="transparent"
-              maxLength={15}
+              maxLength={2}
               value={estado}
               onChangeText={setEstado}
             />
           </View>
+
+          <View style={styles.textInputContainerSmall2}>
+            <TextInput
+              style={styles.textInput2}
+              placeholder="Bairro"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              underlineColorAndroid="transparent"
+              maxLength={125}
+              value={bairro}
+              onChangeText={setBairro}
+            />
+          </View>
+
+          <View style={styles.textInputContainerLow}>
+            <Image source={require('./img/icons/location.png')} style={styles.iconlocation} />
+            <TextInput
+              style={styles.textInput}
+              placeholder="Rua e número"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              underlineColorAndroid="transparent"
+              maxLength={125}
+              value={nmrua}
+              onChangeText={setNmrua}
+            />
+          </View>
         </View>
 
-        <Pressable onPress={handleImagePicker} style={{ top: -400 }}>
+        <Pressable onPress={handleImagePicker} style={{ top: -550 }}>
           <View style={styles.imageContainer}>
             <Image
               source={image ? { uri: image } : require('./img/icons/layer1.png')}
@@ -195,13 +255,14 @@ const styles = StyleSheet.create({
   },
 
   button: {
+    position: 'absolute',
     backgroundColor: 'rgba(255, 1, 108, 0.4)',
     paddingVertical: 14,
     paddingHorizontal: 100,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    top: Platform.OS === 'web' ? 140 : 160,
+    bottom: Platform.OS === 'web' ? 50 : 160,
   },
 
   backButton: {
@@ -231,7 +292,45 @@ const styles = StyleSheet.create({
     borderBottomColor: '#FFFFFF',
     marginBottom: 13,
     justifyContent: 'center',
-    top: 95,
+    top: 200,
+  },
+
+  textInputContainerSmall: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: Platform.OS === 'web' ? '45%' : '80%',
+    height: Platform.OS === 'web' ? 50 : 55,
+    borderBottomWidth: 1,
+    right: 84,  
+    borderBottomColor: '#FFFFFF',
+    marginBottom: 13,
+    justifyContent: 'center',
+    top: 194,
+  },
+
+  textInputContainerSmall2: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: Platform.OS === 'web' ? '45%' : '80%',
+    height: Platform.OS === 'web' ? 50 : 55,
+    borderBottomWidth: 1,
+    left: 84,  
+    borderBottomColor: '#FFFFFF',
+    marginBottom: 13,
+    justifyContent: 'center',
+    top: 68,
+  },
+
+  textInputContainerLow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: Platform.OS === 'web' ? '130%' : '80%',
+    height: Platform.OS === 'web' ? 55 : 55,
+    borderBottomWidth: 1,
+    borderBottomColor: '#FFFFFF',
+    marginBottom: 13,
+    justifyContent: 'center',
+    top: 65,
   },
 
   textInput: {
@@ -241,6 +340,7 @@ const styles = StyleSheet.create({
   },
 
   textInput2: {
+    maxWidth: '100%',
     color: '#FFFFFF',
     fontSize: 16,
     flex: 1,
@@ -252,12 +352,21 @@ const styles = StyleSheet.create({
     height: 24,
     marginRight: 14,
     left: 5,
+    opacity: 0.8,
   },
 
   iconuser: {
     width: 23,
     height: 23,
     marginRight: 14,
+    opacity: 0.8,
+  },
+
+  iconlocation: {
+    width: 20,
+    height: 28,
+    marginRight: 14,
+    opacity: 0.8,
   },
 
   errorBanner: {
@@ -299,32 +408,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
     bottom: 250,
     opacity: 0.6,
-    top  : -312,
-  },
-
-  textInputContainerSmall: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: Platform.OS === 'web' ? '25%' : '80%',
-    height: Platform.OS === 'web' ? 50 : 55,
-    borderBottomWidth: 1,
-    right: 54,  
-    borderBottomColor: '#FFFFFF',
-    marginBottom: 13,
-    justifyContent: 'center',
-    top: 85,
-  },
-
-  textInputContainerSmall2: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: Platform.OS === 'web' ? '25%' : '80%',
-    height: Platform.OS === 'web' ? 50 : 55,
-    borderBottomWidth: 1,
-    left: 54,  
-    borderBottomColor: '#FFFFFF',
-    marginBottom: 13,
-    justifyContent: 'center',
-    top:  22,
+    top  : -450,
   },
 });

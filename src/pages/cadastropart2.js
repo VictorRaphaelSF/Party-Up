@@ -17,13 +17,16 @@ export default function Logado({route}) {
     const result = await ImagePicker.launchImageLibraryAsync({
       aspect: [4, 4],
       allowsEditing: true,
-      base64: true,
+      base64: false,
       quality: 1,
     });
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
       const nomeDoArquivo = result.uri.split('/').pop();
-      console.log(`Nome do arquivo: ${nomeDoArquivo}`);
+      setImage({
+        uri: result.uri,
+        name: nomeDoArquivo,
+        type: `image/${nomeDoArquivo.split('.')[1]}`,
+      });
     }
   };
   
@@ -47,22 +50,37 @@ export default function Logado({route}) {
   // adicionando mais dados no objeto do cliente
   userData["nmUser"] = nmusuario;
   userData["descricao"] = descrição;
-  userData["uri"] = image;
+  userData["image"] = image;
 
   
   
   const handleVamosLaPress = () => {
-    if (!nmusuario || !descrição) {
+    if (!nmusuario || !descrição || !image) {
       setErro('Preencha todos os campos obrigatórios.');
       setTimeout(() => {
         setErro('');
       }, 4000);
     } else {
       setErro('');
-      navigation.navigate('termos', { userImage: image, userData: userData });
+      const formData = new FormData();
+      formData.append('nome', nmusuario);
+      formData.append('descricao', descrição);
+      formData.append('image', image);
+      fetch('http://localhost:3003/', {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          navigation.navigate('termos', { userImage: image, userData: userData });
+        })
+        .catch(error => {
+          console.error('Erro:', error);
+          setErro('Erro ao enviar dados para o servidor.');
+        });
     }
   };
-  // verificando pra ver se ta certo
   
   return (
     <ImageBackground

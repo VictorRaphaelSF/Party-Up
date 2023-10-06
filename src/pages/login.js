@@ -133,7 +133,7 @@ export default function Login({ navigation }) {
 						placeholder="E-mail"
 						placeholderTextColor="rgba(255, 255, 255, 0.5)"
 						underlineColorAndroid="transparent"
-						maxLength={40}
+						maxLength={50}
 						value={email}
 						onChangeText={setEmail}
 					/>
@@ -147,7 +147,7 @@ export default function Login({ navigation }) {
 						placeholderTextColor="rgba(255, 255, 255, 0.5)"
 						underlineColorAndroid="transparent"
 						secureTextEntry={!senhaVisivel}
-						maxLength={24}
+						maxLength={50}
 						value={senha}
 						onChangeText={setSenha}
 						/>
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
 	textInputContainer: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		width: '80%',
+		width: '90%',
 		height: 50,
 		borderBottomWidth: 1,
 		borderBottomColor: '#FFFFFF',

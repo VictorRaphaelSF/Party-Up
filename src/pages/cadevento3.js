@@ -11,7 +11,7 @@ export default function Cadevento3() {
       style={styles.container}
       resizeMode="cover">
       <View style={styles.overlay}>
-
+        
       </View>
     </ImageBackground>
   );
