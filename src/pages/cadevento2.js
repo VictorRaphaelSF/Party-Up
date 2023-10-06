@@ -1,9 +1,23 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, TextInput, ScrollView, ImageBackground } from 'react-native';
+import React, { useState, useRef } from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Pressable,
+  Image,
+  Platform,
+  Dimensions,
+  Modal,
+  TextInput,
+  ScrollView,
+  ImageBackground,
+  PanResponder,
+} from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
 import { TextInputMask } from 'react-native-masked-text';
+
 import axios from 'axios';
 
 export default function Cadevento2() {
@@ -11,13 +25,35 @@ export default function Cadevento2() {
   const [sitectt, setSitectt] = useState('');
   const [instagram, setInstagram] = useState('');
   const [infoctt, setInfoctt] = useState('');
+  const [searchText, setSearchText] = useState('');
 
-  //Linha abaixo somente para validações.
   const [erro, setErro] = useState('');
   const navigation = useNavigation();
+  const [isMenuVisible, setMenuVisible] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
 
   const backbutton = () => {
     navigation.goBack();
+  };
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  const selectOption = (option) => {
+    setSelectedOption(option);
+    setSearchText(option);
+    toggleModal();  
+    setMenuVisible(false);
+  };
+
+  const openMenu = () => {
+    setMenuVisible(true);
+  };
+
+  const closeMenu = () => {
+    setMenuVisible(false);
   };
 
   const InputNum = (value, setter) => {
@@ -37,39 +73,48 @@ export default function Cadevento2() {
     }
   };
 
+  const panResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponder: () => true,
+      onPanResponderMove: (evt, gestureState) => {
+        const { dy } = gestureState;
+        const newMenuVisible = dy < 0;
+        setMenuVisible(newMenuVisible);
+      },
+    })
+  ).current; 
+
   return (
     <ImageBackground
       source={require('./img/telap.png')}
       style={styles.container}
       resizeMode="cover"
     >
-
       <Pressable style={styles.backButton} onPress={backbutton}>
         <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
       </Pressable>
-      <View style={styles.overlay}>
+      <View style={styles.overlay} {...panResponder.panHandlers}>
         <View style={styles.content}>
           <Text style={styles.textadd}>
             Adicionar informações de contato
           </Text>
-
           <View style={styles.textInputContainer}>
-          <Image source={require('./img/icons/uil_padlock.png')} style={styles.icon} />
-          <TextInputMask
-            style={styles.textInput}
-            placeholder="Telefone(Cel)"
-            placeholderTextColor="rgba(255, 255, 255, 0.5)"
-            underlineColorAndroid="transparent"
-            type={'cel-phone'}
-            options={{
-              maskType: 'BRL',
-            }}
-            maxLength={15}
-            value={nmtelefone}
-            onChangeText={(text) => InputNum(text, setTelefone)}
-          />
-        </View>
-
+            <Image source={require('./img/icons/uil_padlock.png')} style={styles.icon} />
+            <TextInputMask
+              style={styles.textInput}
+              placeholder="Telefone(Cel)"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              underlineColorAndroid="transparent"
+              type={'cel-phone'}
+              options={{
+                maskType: 'BRL',
+              }}
+              maxLength={15}
+              value={nmtelefone}
+              onChangeText={(text) => InputNum(text, setTelefone)}
+            />
+          </View>
           <View style={styles.textInputContainer}>
             <Image source={require('./img/icons/globo.png')} style={styles.icon} />
             <TextInput
@@ -82,7 +127,6 @@ export default function Cadevento2() {
               onChangeText={setSitectt}
             />
           </View>
-
           <View style={styles.textInputContainer}>
             <Image source={require('./img/icons/instagramicon.png')} style={styles.icon} />
             <TextInput
@@ -95,7 +139,6 @@ export default function Cadevento2() {
               onChangeText={setInstagram}
             />
           </View>
-
           <View style={styles.textInputContainer}>
             <Image source={require('./img/icons/info(g).png')} style={styles.icon} />
             <TextInput
@@ -103,17 +146,54 @@ export default function Cadevento2() {
               placeholder="Outras informações"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               underlineColorAndroid="transparent"
-              maxLength={100}
+              maxLength={255}
               value={infoctt}
               onChangeText={setInfoctt}
             />
           </View>
         </View>
-
+        <View style={styles.searchBarContainer}>
+          <Pressable onPress={openMenu}>
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Selecione uma opção"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              value={searchText}
+            />
+          </Pressable>
+        </View>
+        <Modal
+          style={styles.modalContainer}
+          transparent={true}
+          visible={isMenuVisible}
+          onRequestClose={closeMenu}
+        >
+          <Pressable onPress={closeMenu} style={styles.modalBackground} >
+            <Animatable.View
+              style={styles.menuContainer}
+              animation={isMenuVisible ? 'slideInUp' : 'slideInDown'}
+              duration={500}
+              
+            >
+              <View style={styles.dragIndicator} />
+              <Pressable style={styles.menubtt} onPress={() => selectOption('Rock')}>
+                <Text style={styles.menubtttext}>Rock</Text>
+              </Pressable>
+              <Pressable style={styles.menubtt} onPress={() => selectOption('Sertanejo')}>
+                <Text style={styles.menubtttext}>Sertanejo</Text>
+              </Pressable>
+              <Pressable style={styles.menubtt} onPress={() => selectOption('Dança')}>
+                <Text style={styles.menubtttext}>Dança</Text>
+              </Pressable>
+              <Pressable style={styles.menubtt} onPress={() => selectOption('Teatral')}>
+                <Text style={styles.menubtttext}>Teatral</Text>
+              </Pressable>
+            </Animatable.View>
+          </Pressable>
+        </Modal>
         <Pressable style={styles.button} onPress={bttCriarEvento}>
           <Text style={styles.buttonText}>Criar Evento</Text>
         </Pressable>
-
         {erro !== '' && (
           <Animatable.View
             style={[
@@ -131,7 +211,6 @@ export default function Cadevento2() {
             <Text style={styles.errorMessage}>{erro}</Text>
           </Animatable.View>
         )}
-
         <Pressable style={styles.backButton} onPress={backbutton}>
           <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
         </Pressable>
@@ -151,7 +230,7 @@ const styles = StyleSheet.create({
 
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    backgroundColor: 'rgba(0, 0, 0, 0.01)',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
@@ -266,5 +345,84 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: 200,
+  },
+
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+  },
+
+  modalText: {
+    fontSize: 22,
+    marginBottom: 12,
+    textAlign: 'center',
+  },  
+
+  modalBackground: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    justifyContent: 'flex-end',
+  },
+
+  menuContainer: {
+    backgroundColor: '#470F62',
+    padding: 16,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+  },
+
+  dragIndicator: {
+    height: 8,
+    width: 50,
+    backgroundColor: '#000000',
+    alignSelf: 'center',
+    marginBottom: 16,
+    borderRadius: 24,
+    opacity: 0.5,
+  },
+
+  menubtt: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(255, 255, 255, 0.5)',
+  },
+
+  menubtttext: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    opacity: 0.7,
+  },
+
+  searchBarContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '80%',
+    backgroundColor: '#582C74',
+    padding: 12,
+    position: 'absolute',
+    bottom: 375,
+    borderRadius: 10,
+  },
+
+  searchInput: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    width: '150%',
+    flex: 1,
+    paddingLeft: 10,
+    borderRadius: 5,
+    textAlign: 'center',
   },
 });

@@ -182,7 +182,7 @@ export default function Cadevento({route}) {
             <Image source={require('./img/icons/location.png')} style={styles.iconlocation} />
             <TextInput
               style={styles.textInput}
-              placeholder="Nome da ruae número"
+              placeholder="Rua e número"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               underlineColorAndroid="transparent"
               maxLength={125}
