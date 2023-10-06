@@ -21,15 +21,7 @@ export default function Logado({route}) {
       quality: 1,
     });
     if (!result.canceled) {
-      const nomeDoArquivo = result.uri.split('/').pop();
-      setImage({
-        uri: result.uri,
-        name: nomeDoArquivo,
-        type: `image/${nomeDoArquivo.split('.')[1]}`,
-      });
-      console.log(image.uri)
-      console.log(image.name)
-      console.log(image.type)
+      setImage(results[0].uri);
     }
     
   };
@@ -77,7 +69,20 @@ export default function Logado({route}) {
       //   .then(response => response.json())
       //   .then(data => {
       //     console.log(data);
-          navigation.navigate('termos', { userImage: image, userData: userData });
+      const formData = new FormData
+
+
+
+      navigation.navigate('termos', { userImage: image, userData: userData });
+
+
+
+
+
+
+
+
+
         // })
         // .catch(error => {
         //   console.error('Erro:', error);
