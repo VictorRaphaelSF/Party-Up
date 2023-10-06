@@ -85,8 +85,19 @@ export default function Logado({route}) {
   });
   console.log(fileName)
   // try {
-    axios.post('http://localhost:3003/testeimagem', formData.name);
-    console.log('Imagem enviada com sucesso!', response.data);
+    axios.post('http://localhost:3003/testeimagem', fileName)
+    .then((response) => {
+
+      console.log(response);
+
+    })
+
+    .catch((error) => {
+
+      console.error('Erro ao enviar os dados para o backend:', error);
+
+    });
+  
     
     //navigation.navigate('termos', { userImage: image, userData: userData });
     
