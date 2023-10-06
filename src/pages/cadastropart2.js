@@ -4,6 +4,7 @@ import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, TextInp
 import * as Animatable from 'react-native-animatable';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 export default function Logado({route}) {
 
@@ -12,6 +13,7 @@ export default function Logado({route}) {
   const [erro, setErro] = useState('');
   const [image, setImage] = useState(null);
   const navigation = useNavigation();
+  const [fileName, setFileName] = useState('');
   
   const handleImagePicker = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -20,15 +22,15 @@ export default function Logado({route}) {
       base64: false,
       quality: 1,
     });
+  
     if (!result.canceled) {
-      const nomeDoArquivo = result.uri.split('/').pop();
-      setImage({
-        uri: result.uri,
-        name: nomeDoArquivo,
-        type: `image/${nomeDoArquivo.split('.')[1]}`,
-      });
+      const nomeDoArquivo = result.assets[0].uri.split('/').pop();
+      setImage(result.assets[0].uri);
+      setFileName(nomeDoArquivo);
     }
   };
+  
+  
   
   const backbutton = () => {
     navigation.goBack();
@@ -43,44 +45,56 @@ export default function Logado({route}) {
       </Text>
     );
   };
-  
-  console.log(image)
-  const userData = route.params.userData;
-  
-  // adicionando mais dados no objeto do cliente
-  userData["nmUser"] = nmusuario;
-  userData["descricao"] = descrição;
-  userData["image"] = image;
 
   
   
-  const handleVamosLaPress = () => {
-    if (!nmusuario || !descrição || !image) {
-      setErro('Preencha todos os campos obrigatórios.');
-      setTimeout(() => {
-        setErro('');
-      }, 4000);
-    } else {
+
+  //const userData = route.params.userData;
+  
+  // adicionando mais dados no objeto do cliente
+  //userData["nmUser"] = nmusuario;
+  //userData["descricao"] = descrição;
+ // userData["image"] = image;
+
+  
+  
+ const handleVamosLaPress = async () => {
+  if (!nmusuario || !descrição) {
+    setErro('Preencha todos os campos obrigatórios.');
+    setTimeout(() => {
       setErro('');
-      const formData = new FormData();
-      formData.append('nome', nmusuario);
-      formData.append('descricao', descrição);
-      formData.append('image', image);
-      fetch('http://localhost:3003/', {
-        method: 'POST',
-        body: formData,
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          navigation.navigate('termos', { userImage: image, userData: userData });
-        })
-        .catch(error => {
-          console.error('Erro:', error);
-          setErro('Erro ao enviar dados para o servidor.');
-        });
-    }
-  };
+    }, 4000);
+    return;
+  }
+
+  if (!image || !fileName) {
+    setErro('Selecione uma imagem e insira o nome do arquivo.');
+    setTimeout(() => {
+      setErro('');
+    }, 4000);
+    return;
+  }
+
+  setErro('');
+
+  const formData = new FormData();
+  formData.append('file', {
+    uri: image,
+    type: `image/${fileName.split('.')[1]}`,
+    name: fileName
+  });
+  console.log(fileName)
+  // try {
+    axios.post('http://localhost:3003/testeimagem', formData.name);
+    console.log('Imagem enviada com sucesso!', response.data);
+    
+    //navigation.navigate('termos', { userImage: image, userData: userData });
+    
+  // } catch (error) {
+  //   console.error('Erro ao enviar a imagem: ', error);
+  // }
+};
+
   
   return (
     <ImageBackground
