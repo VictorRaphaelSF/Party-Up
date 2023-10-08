@@ -1,11 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, Image, ImageBackground, Pressable, Dimensions, Platform} from 'react-native';
+import { StyleSheet, View, Text, Image, ImageBackground, Pressable, Dimensions, Platform, Animated, Easing } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 import axios from 'axios';
 
-export default function Evento() {
+export default function Evento( {navigation} ) {
   const [backgroundImage, setBackgroundImage] = useState(null);
   const [titulo, setTitulo] = useState('');
   const [buttonVisible, setButtonVisible] = useState(true);
+  const [isButtonPressed, setIsButtonPressed] = useState(false);
+  const spinValue = new Animated.Value(0);
+  const [likeImage, setLikeImage] = useState(require('./img/icons/like.png'));
+
+  const spin = spinValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg']
+  });
+
+  const startAnimation = () => {
+    Animated.timing(spinValue, {
+      toValue: 1,
+      duration: 300,
+      easing: Easing.linear,
+      useNativeDriver: true
+    }).start(() => {
+      setIsButtonPressed(false);
+      setLikeImage(prev => prev === require('./img/icons/like.png') ? require('./img/icons/liked.png') : require('./img/icons/like.png'));
+      spinValue.setValue(0); // Resetar a animação para 0
+    });
+  };
 
   useEffect(() => {
     axios.get('Essa parte precisa colocar a url da imagem que esta no back')
@@ -30,11 +52,12 @@ export default function Evento() {
   };
 
   const handleButtonPress = () => {
-    console.log('Primeiro botão pressionado')
+    setIsButtonPressed(true);
+    startAnimation();
   };
 
   const handleSecondButtonPress = () => {
-    console.log('Segundo botão pressionado')
+    navigation.navigate('comentario');
   };
 
   const handleThirdButtonPress = () => {
@@ -53,9 +76,12 @@ export default function Evento() {
     >
       {buttonVisible && (
         <View style={styles.buttonContainer}>
-          <Pressable style={styles.customButton} onPress={handleButtonPress}>
-            <Image source={require('./img/icons/like.png')} style={styles.icon} />
-          </Pressable>
+        <Pressable style={styles.customButton} onPress={handleButtonPress}>
+            <Animated.Image
+              source={likeImage}
+              style={[styles.icon, { transform: [{ rotate: spin }] }]}
+            />
+        </Pressable>
           <Pressable style={styles.customButton} onPress={handleSecondButtonPress}>
             <Image source={require('./img/icons/comment.png')} style={styles.icon} />
           </Pressable>

@@ -54,7 +54,7 @@ export default function Logado({route}) {
   // adicionando mais dados no objeto do cliente
   //userData["nmUser"] = nmusuario;
   //userData["descricao"] = descrição;
- // userData["image"] = image;
+  //userData["image"] = image;
 
   
   
