@@ -25,7 +25,7 @@ export default function Evento( {navigation} ) {
     }).start(() => {
       setIsButtonPressed(false);
       setLikeImage(prev => prev === require('./img/icons/like.png') ? require('./img/icons/liked.png') : require('./img/icons/like.png'));
-      spinValue.setValue(0); // Resetar a animação para 0
+      spinValue.setValue(0);
     });
   };
 
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   },
 
   customButton: {
-    marginHorizontal: 10, // Ajusta o espaçamento entre os botões
+    marginHorizontal: 10,
   },
 
   icon: {

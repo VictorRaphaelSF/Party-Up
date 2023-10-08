@@ -33,7 +33,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='evento'>
+      <Stack.Navigator initialRouteName='index'>
         <Stack.Screen 
           options={{
             headerShown: false
