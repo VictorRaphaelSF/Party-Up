@@ -32,7 +32,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='cadastropart2'>
+      <Stack.Navigator initialRouteName='evento'>
         <Stack.Screen 
           options={{
             headerShown: false
