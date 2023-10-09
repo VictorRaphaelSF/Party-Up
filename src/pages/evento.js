@@ -28,7 +28,7 @@ export default function Evento( {navigation} ) {
   const startAnimation = () => {
     Animated.timing(spinValue, {
       toValue: 1,
-      duration: 300,
+      duration: 100,
       easing: Easing.linear,
       useNativeDriver: true
     }).start(() => {
@@ -152,12 +152,10 @@ export default function Evento( {navigation} ) {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={backgroundImage || require('./img/telap.png')}
+        source={backgroundImage || require('./img/telanexist.png')}
         style={styles.backgroundImage}
         resizeMode="cover"
       >
-        
-
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.overlay}>
           <View style={styles.descricaoContainer}>
@@ -186,7 +184,21 @@ export default function Evento( {navigation} ) {
         <Text style={styles.tagsTexto}>{tags}</Text>
       </View>
 
-      
+      <View style={styles.line} />
+
+      <View style={styles.comentariosContainer}>
+        <Text style={styles.comentariosTitulo}>Comentários</Text>
+      <Image
+        source={require('./img/icons/loading.png')}
+        style={styles.imagemComentarios}
+      />
+      <Text style={styles.semComentarios}>Sem comentários disponíveis</Text>
+    </View>
+
+    <View style={styles.line3} />
+
+    <View style={styles.line2} />
+
       {buttonVisible && (
         <View style={styles.buttonContainer}>
           <Pressable style={styles.customButton} onPress={handleButtonPress}>
@@ -223,7 +235,7 @@ export default function Evento( {navigation} ) {
       
       </ScrollView>
     </ImageBackground>
-    <View style={styles.navbar}>
+    <View style={styles.navbar} zIndex={2}>
           <Pressable style={styles.navButton} onPress={handleButtonHome}>
             <Image source={require('./img/icons/home(g).png')} style={styles.navButtonImage} />
           </Pressable>
@@ -451,7 +463,7 @@ const styles = StyleSheet.create({
   tagsContainer: {
     marginVertical: 8,
     position: 'absolute',
-    top: windowHeight / 2 + 245,
+    top: windowHeight / 2 + 225,
     left: 15,
     zIndex: 1,
   },
@@ -508,5 +520,78 @@ const styles = StyleSheet.create({
   circleButtonImage: {
     width: 70,
     height: 75,
+  },
+
+  line: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: -530,
+    height: 2,
+    backgroundColor: 'white',
+    opacity: 0.6,
+  },
+
+  line2: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: -890,
+    height: 2,
+    backgroundColor: 'white',
+    opacity: 0.6,
+  },
+
+  line3: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: -790,
+    height: 2,
+    backgroundColor: 'white',
+    opacity: 0.6,
+  },
+
+  comentariosContainer: {
+    marginVertical: 8,
+    position: 'absolute',
+    top: windowHeight / 2 + 300,
+    left: 15,
+    zIndex: 1,
+  },
+  
+  comentariosTitulo: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'inter',
+    textAlign: 'left',
+  },
+  
+  comentarioItem: {
+    marginTop: 10,
+    opacity: 0.5,
+  },
+  
+  comentarioTexto: {
+    color: 'white',
+    fontSize: 16,
+  },
+
+  imagemComentarios: {
+    width: 100,
+    height: 100,
+    left: 70,
+    alignSelf: 'center',
+    marginTop: 30,
+  },
+
+  semComentarios: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'inter',
+    textAlign: 'center',
+    left: 60,
+    marginTop: 25,
+    opacity: 0.7,
   },
 });
