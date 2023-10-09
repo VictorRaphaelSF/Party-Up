@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, Image, ImageBackground, Pressable, Dimensions, Platform, Animated, Easing } from 'react-native';
-import * as Animatable from 'react-native-animatable';
 import axios from 'axios';
 
 export default function Evento( {navigation} ) {
   const [backgroundImage, setBackgroundImage] = useState(null);
   const [titulo, setTitulo] = useState('');
+  const [descricao, setDescricao] = useState('');
   const [buttonVisible, setButtonVisible] = useState(true);
   const [isButtonPressed, setIsButtonPressed] = useState(false);
   const spinValue = new Animated.Value(0);
@@ -30,7 +30,7 @@ export default function Evento( {navigation} ) {
   };
 
   useEffect(() => {
-    axios.get('Essa parte precisa colocar a url da imagem que esta no back')
+    axios.get('Coloque_aqui_a_URL_da_imagem_do_back')
       .then(response => {
         setBackgroundImage({ uri: response.data.url });
       })
@@ -38,12 +38,20 @@ export default function Evento( {navigation} ) {
         console.error('Erro ao obter a imagem do back end:', error);
       });
 
-    axios.get('Essa parte precisa colocar a url do titulo que esta no back')
+    axios.get('Coloque_aqui_a_URL_do_titulo_do_back')
       .then(response => {
         setTitulo(response.data.titulo);
       })
       .catch(error => {
         console.error('Erro ao obter o título do back end:', error);
+      });
+
+    axios.get('Coloque_aqui_a_URL_da_descricao_do_back')
+      .then(response => {
+        setDescricao(response.data.descricao);
+      })
+      .catch(error => {
+        console.error('Erro ao obter a descrição do back end:', error);
       });
   }, []);
 
@@ -74,17 +82,24 @@ export default function Evento( {navigation} ) {
       style={styles.container}
       resizeMode="cover"
     >
+      <View style={styles.descricaoContainer}>
+        <Text style={styles.descricaoTitulo}>Descrição</Text>
+        <Text style={styles.descricaoTexto}>{descricao}</Text>
+      </View>
+
       {buttonVisible && (
         <View style={styles.buttonContainer}>
-        <Pressable style={styles.customButton} onPress={handleButtonPress}>
+          <Pressable style={styles.customButton} onPress={handleButtonPress}>
             <Animated.Image
               source={likeImage}
               style={[styles.icon, { transform: [{ rotate: spin }] }]}
             />
-        </Pressable>
+          </Pressable>
+          <Text style={styles.buttonTitle1}>Curtir</Text>
           <Pressable style={styles.customButton} onPress={handleSecondButtonPress}>
             <Image source={require('./img/icons/comment.png')} style={styles.icon} />
           </Pressable>
+          <Text style={styles.buttonTitle2}>Comentar</Text>
         </View>
       )}
       {buttonVisible && (
@@ -92,9 +107,11 @@ export default function Evento( {navigation} ) {
           <Pressable style={styles.customButton} onPress={handleThirdButtonPress}>
             <Image source={require('./img/icons/locate.png')} style={styles.icon} />
           </Pressable>
+          <Text style={styles.buttonTitle3}>Localização</Text>
           <Pressable style={styles.customButton} onPress={handleFourthButtonPress}>
             <Image source={require('./img/icons/share.png')} style={styles.icon} />
           </Pressable>
+          <Text style={styles.buttonTitle4}>Compartilhar</Text>
         </View>
       )}
       <Pressable style={styles.backButton} onPress={backbutton}>
@@ -182,5 +199,71 @@ const styles = StyleSheet.create({
   icon: {
     width: 65,
     height: 65,
+  },
+
+  buttonTitle: {
+    position: 'absolute',
+    right: 18,
+    top: 75,
+    color: 'white',
+    fontSize: 12,
+    marginRight: -10,
+  },
+
+  buttonTitle1: {
+    position: 'absolute',
+    right: 124,
+    top: 75,
+    color: 'white',
+    fontSize: 12,
+    marginRight: -10,
+  },
+
+  buttonTitle2: {
+    position: 'absolute',
+    right: 28,
+    top: 75,
+    color: 'white',
+    fontSize: 12,
+    marginRight: -10,
+  },
+
+  buttonTitle3: {
+    position: 'absolute',
+    right: 108,
+    top: 75,
+    color: 'white',
+    fontSize: 12,
+    marginRight: -10,
+  },
+
+  buttonTitle4: {
+    position: 'absolute',
+    right: 18,
+    top: 75,
+    color: 'white',
+    fontSize: 12,
+    marginRight: -10,
+  },
+
+  descricaoContainer: {
+    position: 'absolute',
+    top: windowHeight / 2 - 15,
+    left: 15,
+    zIndex: 1,
+  },
+
+  descricaoTitulo: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'inter',
+    textAlign: 'left',
+  },
+
+  descricaoTexto: {
+    color: 'white',
+    fontSize: 16,
+    marginTop: 10,
+    opacity: 0.5,
   },
 });
