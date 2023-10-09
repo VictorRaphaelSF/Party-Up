@@ -13,7 +13,6 @@ export default function Evento( {navigation} ) {
   const [siteInfo, setSiteInfo] = useState('');
   const [tags, setTags] = useState('');
 
-
   const [buttonVisible, setButtonVisible] = useState(true);
   const [isButtonPressed, setIsButtonPressed] = useState(false);
   const spinValue = new Animated.Value(0);

@@ -137,8 +137,7 @@ export default function Cadastro({ navigation }) {
       !confirmarSenha ||
       !cpfCnpj ||
       !telefone ||
-      confirmarSenhaErro ||
-      calcularForcaSenha(senha) < 2
+      confirmarSenhaErro
     ) {
       setErro('Preencha todos os campos obrigatórios');
       setTimeout(() => {
