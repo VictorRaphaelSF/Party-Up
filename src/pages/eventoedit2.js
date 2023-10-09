@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef  } from 'react';
 import { StyleSheet, View, Text, Image, ImageBackground, Pressable, Dimensions, Platform, Animated, Easing } from 'react-native';
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -14,6 +14,24 @@ export default function Eventoedit2( {navigation} ) {
   const [horaFim, setHoraFim] = useState('');
   const [siteInfo, setSiteInfo] = useState('');
   const [tags, setTags] = useState('');
+  const [tituloWidth, setTituloWidth] = useState(0);
+  const animatedValue = useRef(new Animated.Value(0)).current;
+
+
+  useEffect(() => {
+    Animated.timing(animatedValue, {
+      toValue: tituloWidth,
+      duration: 500,
+      easing: Easing.linear,
+      useNativeDriver: false,
+    }).start();
+  }, [tituloWidth]);
+  
+  const imagemTituloLeft = animatedValue.interpolate({
+    inputRange: [0, tituloWidth],
+    outputRange: [0, tituloWidth + 15], // Ajuste conforme necessário
+  });
+  
 
   useEffect(() => {
     axios.get('Coloque aqui a URL da imagem do back')
@@ -118,31 +136,55 @@ export default function Eventoedit2( {navigation} ) {
       >
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.overlay}>
-          <View style={styles.descricaoContainer}>
+        <View style={styles.descricaoContainer}>
+        <View style={styles.tituloContainer}>
             <Text style={styles.descricaoTitulo}>Descrição</Text>
-            <Text style={styles.descricaoTexto}>{descricao}</Text>
-          </View>
-        </View> 
+            <Image
+            source={require('./img/icons/pencil(g).png')}
+            style={styles.imagemTitulo}
+            />
+        </View>
+        <Text style={styles.descricaoTexto}>{descricao}</Text>
+        </View>
+        </View>
 
-      <View style={styles.dataContainer}>
-        <Text style={styles.dataTitulo}>Data e horarios</Text>
+        <View style={styles.dataContainer}>
+        <View style={styles.tituloContainer}>
+            <Text style={styles.dataTitulo}>Data e horarios</Text>
+            <Image
+            source={require('./img/icons/pencil(g).png')}
+            style={styles.imagemTitulo}
+            />
+        </View>
         <Text style={styles.dataTexto}>
-          Entre {dataInicio} - {dataFim}
+            Entre {dataInicio} - {dataFim}
         </Text>
         <Text style={styles.dataTexto2}>
-         {horaInicio} - {horaFim} - Entrada Padrão
+            {horaInicio} - {horaFim} - Entrada Padrão
         </Text>
-      </View>
+        </View>
 
-      <View style={styles.siteInfoContainer}>
-        <Text style={styles.siteInfoTitulo}>Site para mais informações</Text>
+        <View style={styles.siteInfoContainer}>
+        <View style={styles.tituloContainer}>
+            <Text style={styles.siteInfoTitulo}>Site para mais informações</Text>
+            <Image
+            source={require('./img/icons/pencil(g).png')}
+            style={styles.imagemTitulo}
+            />
+        </View>
         <Text style={styles.siteInfoTexto}>{siteInfo}</Text>
-      </View>
+        </View>
 
-      <View style={styles.tagsContainer}>
-        <Text style={styles.tagsTitulo}>Tags Relacionadas</Text>
+        <View style={styles.tagsContainer}>
+        <View style={styles.tituloContainer}>
+            <Text style={styles.tagsTitulo}>Tags Relacionadas</Text>
+            <Image
+            source={require('./img/icons/pencil(g).png')}
+            style={styles.imagemTitulo}
+            />
+        </View>
         <Text style={styles.tagsTexto}>{tags}</Text>
-      </View>
+        </View>
 
       <View style={styles.line} />
 
@@ -163,8 +205,21 @@ export default function Eventoedit2( {navigation} ) {
         <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
       </Pressable>
       <View style={styles.square}>
-        <Text style={styles.titulo}>{titulo}</Text>
-      </View>
+      <Image
+        source={require('./img/icons/pencil(g).png')}
+        style={[styles.imagemTitulo1, { left: imagemTituloLeft }]}
+        />
+        <Text
+        style={styles.titulo}
+        ref={(ref) => {
+            if (ref) {
+            ref.measure((x, y, width, height, pageX, pageY) => {
+                setTituloWidth(width);
+            });
+            }
+        }}
+        >{titulo}</Text>
+        </View>
       
       </ScrollView>
     </ImageBackground>
@@ -527,4 +582,24 @@ const styles = StyleSheet.create({
     marginTop: 25,
     opacity: 0.7,
   },
+
+  imagemTitulo1: {
+    position: 'absolute',
+    left: 0,
+    bottom: 12,
+    width: 30,
+    height: 30,
+  },
+  
+  tituloContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  
+  imagemTitulo: {
+    marginLeft: 10, // Ajuste conforme necessário
+    width: 20, // Ajuste conforme necessário
+    height: 20, // Ajuste conforme necessário
+  },
+  
 });

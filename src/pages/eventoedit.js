@@ -89,6 +89,10 @@ export default function Eventoedit( {navigation} ) {
     navigation.goBack();
   };
 
+  const handleButtonEdit = () => {
+    navigation.navigate('eventoedit2')
+  }
+
   const handleButtonHome = () => {
     navigation.navigate('telaprincipal')
   };
@@ -166,6 +170,11 @@ export default function Eventoedit( {navigation} ) {
         <Text style={styles.titulo}>{titulo}</Text>
       </View>
       
+      <View style={styles.editButtonContainer}>
+        <Pressable style={styles.editButton} onPress={handleButtonEdit}>
+          <Text style={styles.editButtonText}>Editar evento</Text>
+        </Pressable>
+      </View>
       </ScrollView>
     </ImageBackground>
     <View style={styles.navbar} zIndex={2}>
@@ -494,6 +503,7 @@ const styles = StyleSheet.create({
   },
   
   comentariosTitulo: {
+    top: 70,
     color: 'white',
     fontSize: 18,
     fontWeight: 'inter',
@@ -511,6 +521,7 @@ const styles = StyleSheet.create({
   },
 
   imagemComentarios: {
+    top: 65,
     width: 100,
     height: 100,
     left: 70,
@@ -519,6 +530,7 @@ const styles = StyleSheet.create({
   },
 
   semComentarios: {
+    top: 55,
     color: 'white',
     fontSize: 18,
     fontWeight: 'inter',
@@ -527,4 +539,22 @@ const styles = StyleSheet.create({
     marginTop: 25,
     opacity: 0.7,
   },
+
+  editButtonContainer: {
+    top: 115,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  editButton: {
+    backgroundColor: '#7E3CA7',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+  },
+  editButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'inter',
+  },
+  
 });
