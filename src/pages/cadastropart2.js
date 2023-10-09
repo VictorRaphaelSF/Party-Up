@@ -4,6 +4,7 @@ import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, TextInp
 import * as Animatable from 'react-native-animatable';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 export default function Logado({route}) {
 
@@ -12,6 +13,7 @@ export default function Logado({route}) {
   const [erro, setErro] = useState('');
   const [image, setImage] = useState(null);
   const navigation = useNavigation();
+  const [fileName, setFileName] = useState('');
   
   const handleImagePicker = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -20,11 +22,16 @@ export default function Logado({route}) {
       base64: false,
       quality: 1,
     });
+  
     if (!result.canceled) {
-      setImage(results[0].uri);
+      const nomeDoArquivo = result.assets[0].uri.split('/').pop();
+      setImage(result.assets[0].uri);
+      setFileName(nomeDoArquivo);
     }
     
   };
+  
+  
   
   const backbutton = () => {
     navigation.goBack();
@@ -39,14 +46,16 @@ export default function Logado({route}) {
       </Text>
     );
   };
+
   
-  console.log(image)
-  const userData = route.params.userData;
+  
+
+  //const userData = route.params.userData;
   
   // adicionando mais dados no objeto do cliente
   userData["nmUser"] = nmusuario;
   userData["descricao"] = descrição;
-  //userData["image"] = image;
+  userData["image"] = image;
 
   
   
@@ -57,37 +66,24 @@ export default function Logado({route}) {
         setErro('');
       }, 4000);
     } else {
-      // setErro('');
-      // const formData = new FormData();
-      // formData.append('nome', nmusuario);
-      // formData.append('descricao', descrição);
-      // formData.append('image', image);
-      // fetch('http://localhost:3003/', {
-      //   method: 'POST',
-      //   body: formData,
-      // })
-      //   .then(response => response.json())
-      //   .then(data => {
-      //     console.log(data);
-      const formData = new FormData
-
-
-
-      navigation.navigate('termos', { userImage: image, userData: userData });
-
-
-
-
-
-
-
-
-
-        // })
-        // .catch(error => {
-        //   console.error('Erro:', error);
-        //   setErro('Erro ao enviar dados para o servidor.');
-        // });
+      setErro('');
+      const formData = new FormData();
+      formData.append('nome', nmusuario);
+      formData.append('descricao', descrição);
+      formData.append('image', image);
+      fetch('http://localhost:3003/', {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          navigation.navigate('termos', { userImage: image, userData: userData });
+        })
+        .catch(error => {
+          console.error('Erro:', error);
+          setErro('Erro ao enviar dados para o servidor.');
+        });
     }
   };
   

@@ -26,13 +26,14 @@ import Report3 from './src/pages/report3';
 import Evento from './src/pages/evento';
 import Eventoedit from './src/pages/eventoedit';
 import Tags from './src/pages/tags';
+import Comentario from './src/pages/comentario';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='cadastro'>
+      <Stack.Navigator initialRouteName='index'>
         <Stack.Screen 
           options={{
             headerShown: false
@@ -158,6 +159,12 @@ export default function App() {
           headerShown: false
         }}
         name='report3' component={Report3}
+        />
+        <Stack.Screen
+        options={{
+          headerShown: false
+        }}
+        name='comentario' component={Comentario}
         />
       </Stack.Navigator>
     </NavigationContainer>

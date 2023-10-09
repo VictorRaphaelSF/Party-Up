@@ -26,12 +26,17 @@ export default function Cadevento2() {
   const [instagram, setInstagram] = useState('');
   const [infoctt, setInfoctt] = useState('');
   const [searchText, setSearchText] = useState('');
+  const [eventtype, setEventtype] = useState('');
+  const [accessType, setAccessType] = useState('');
 
   const [erro, setErro] = useState('');
   const navigation = useNavigation();
   const [isMenuVisible, setMenuVisible] = useState(false);
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [isTypeMenuVisible, setTypeMenuVisible] = useState(false);
+  const [isAccessTypeMenuVisible, setAccessTypeMenuVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedEventType, setSelectedEventType] = useState(null);
+  const [selectedAccessType, setSelectedAccessType] = useState(null);
 
   const backbutton = () => {
     navigation.goBack();
@@ -44,6 +49,7 @@ export default function Cadevento2() {
   const selectOption = (option) => {
     setSelectedOption(option);
     setSearchText(option);
+    setSelectedEventType(option);
     toggleModal();  
     setMenuVisible(false);
   };
@@ -56,13 +62,41 @@ export default function Cadevento2() {
     setMenuVisible(false);
   };
 
+  const openTypeMenu = () => {
+    setTypeMenuVisible(true);
+  };
+
+  const closeTypeMenu = () => {
+    setTypeMenuVisible(false);
+  };
+
+  const selectEventType = (type) => {
+    setSelectedEventType(type);
+    setEventtype(type);
+    closeTypeMenu();
+  };
+
+  const openAccessTypeMenu = () => {
+    setAccessTypeMenuVisible(true);
+  };
+
+  const closeAccessTypeMenu = () => {
+    setAccessTypeMenuVisible(false);
+  };
+
+  const selectAccessType = (accessType) => {
+    setSelectedAccessType(accessType);
+    setAccessType(accessType);
+    closeAccessTypeMenu();
+  };
+
   const InputNum = (value, setter) => {
     const numericValue = value.replace(/[^0-9]/g, '');
     setter(numericValue);
   };
   
   const bttCriarEvento = () => {
-    if (!nmtelefone || !sitectt) {
+    if (!nmtelefone || !sitectt || !accessType) {
       setErro('Preencha todos os campos obrigatórios.');
       setTimeout(() => {
         setErro('');
@@ -96,9 +130,6 @@ export default function Cadevento2() {
       </Pressable>
       <View style={styles.overlay} {...panResponder.panHandlers}>
         <View style={styles.content}>
-          <Text style={styles.textadd}>
-            Adicionar informações de contato
-          </Text>
           <View style={styles.textInputContainer}>
             <Image source={require('./img/icons/uil_padlock.png')} style={styles.icon} />
             <TextInputMask
@@ -156,9 +187,29 @@ export default function Cadevento2() {
           <Pressable onPress={openMenu}>
             <TextInput
               style={styles.searchInput}
-              placeholder="Selecione uma opção"
+              placeholder="Selecione tags"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               value={searchText}
+            />
+          </Pressable>
+        </View>
+        <View style={styles.searchBarContainerLow}>
+          <Pressable onPress={openTypeMenu}>
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Selecionar tipo de evento"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              value={eventtype}
+            />
+          </Pressable>
+        </View>
+        <View style={styles.searchBarContainerLowLow}>
+          <Pressable onPress={openAccessTypeMenu}>
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Definir tipo de acesso"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              value={accessType}
             />
           </Pressable>
         </View>
@@ -173,7 +224,6 @@ export default function Cadevento2() {
               style={styles.menuContainer}
               animation={isMenuVisible ? 'slideInUp' : 'slideInDown'}
               duration={500}
-              
             >
               <View style={styles.dragIndicator} />
               <Pressable style={styles.menubtt} onPress={() => selectOption('Rock')}>
@@ -187,6 +237,62 @@ export default function Cadevento2() {
               </Pressable>
               <Pressable style={styles.menubtt} onPress={() => selectOption('Teatral')}>
                 <Text style={styles.menubtttext}>Teatral</Text>
+              </Pressable>
+              <Pressable style={styles.menubtt} onPress={() => selectOption('Religioso')}>
+                <Text style={styles.menubtttext}>Religioso</Text>
+              </Pressable>
+              <Pressable style={styles.menubtt} onPress={() => selectOption('Funk')}>
+                <Text style={styles.menubtttext}>Funk</Text>
+              </Pressable>
+            </Animatable.View>
+          </Pressable>
+        </Modal>
+        <Modal
+          style={styles.modalContainer}
+          transparent={true}
+          visible={isTypeMenuVisible}
+          onRequestClose={closeTypeMenu}
+        >
+          <Pressable onPress={closeTypeMenu} style={styles.modalBackground} >
+            <Animatable.View
+              style={styles.menuContainer}
+              animation={isTypeMenuVisible ? 'slideInUp' : 'slideInDown'}
+              duration={500}
+            >
+              <View style={styles.dragIndicator} />
+              <Pressable style={styles.menubtt} onPress={() => selectEventType('Aniversário')}>
+                <Text style={styles.menubtttext}>Aniversário</Text>
+              </Pressable>
+              <Pressable style={styles.menubtt} onPress={() => selectEventType('Casamento')}>
+                <Text style={styles.menubtttext}>Casamento</Text>
+              </Pressable>
+              <Pressable style={styles.menubtt} onPress={() => selectEventType('Conferência')}>
+                <Text style={styles.menubtttext}>Conferência</Text>
+              </Pressable>
+            </Animatable.View>
+          </Pressable>
+        </Modal>
+        <Modal
+          style={styles.modalContainer}
+          transparent={true}
+          visible={isAccessTypeMenuVisible}
+          onRequestClose={closeAccessTypeMenu}
+        >
+          <Pressable onPress={closeAccessTypeMenu} style={styles.modalBackground} >
+            <Animatable.View
+              style={styles.menuContainer}
+              animation={isAccessTypeMenuVisible ? 'slideInUp' : 'slideInDown'}
+              duration={500}
+            >
+              <View style={styles.dragIndicator} />
+              <Pressable style={styles.menubtt} onPress={() => selectAccessType('Presencial')}>
+                <Text style={styles.menubtttext}>Presencial</Text>
+              </Pressable>
+              <Pressable style={styles.menubtt} onPress={() => selectAccessType('Online')}>
+                <Text style={styles.menubtttext}>Online</Text>
+              </Pressable>
+              <Pressable style={styles.menubtt} onPress={() => selectAccessType('Beneficiente')}>
+                <Text style={styles.menubtttext}>Beneficiente</Text>
               </Pressable>
             </Animatable.View>
           </Pressable>
@@ -279,7 +385,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#FFFFFF',
     marginBottom: 13,
-    top: -300,
+    top: -265,
   },
 
   textInput: {
@@ -310,7 +416,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     textAlign: 'center',
     width: '125%',
-    top: -315,
+    top: -300,
   },
 
   errorBanner: {
@@ -411,18 +517,36 @@ const styles = StyleSheet.create({
     width: '80%',
     backgroundColor: '#582C74',
     padding: 12,
-    position: 'absolute',
-    bottom: 375,
+    bottom: 135,
     borderRadius: 10,
   },
 
+  searchBarContainerLow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '80%',
+    backgroundColor: '#582C74',
+    padding: 12,
+    bottom: 115,
+    borderRadius: 10,
+  },
+
+  searchBarContainerLowLow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '80%',
+    backgroundColor: '#582C74',
+    padding: 12,
+    bottom: 95,
+    borderRadius: 10,
+  },
+  
   searchInput: {
     color: '#FFFFFF',
     fontSize: 16,
     width: '150%',
     flex: 1,
-    paddingLeft: 10,
-    borderRadius: 5,
+    borderRadius: 8,
     textAlign: 'center',
   },
 });

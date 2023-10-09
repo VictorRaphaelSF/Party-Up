@@ -33,7 +33,7 @@ export default function Report3({ navigation }) {
         <View style={styles.topic}>
             <Text style={styles.bullet}>•</Text>
             <Text style={styles.topicText}>
-            Agradecemos o suaa mensagem de aviso para a plataforma, Sua contribuição é valiosa para garantir a segurança e estabilidade do Party Up.
+            Agradecemos o sua mensagem de aviso para a plataforma, Sua contribuição é valiosa para garantir a segurança e estabilidade do Party Up.
             </Text>
           </View>
         </View>

@@ -66,7 +66,7 @@ export default function Cadastro({ navigation }) {
 
   const setForcaSenha = (senha) => {
     const pontuacao = calcularForcaSenha(senha);
-    setSenhaFraca(pontuacao < 1);
+    setSenhaFraca(pontuacao < 0);
   };
 
   const validarSenha = (senhaConfirmacao) => {
