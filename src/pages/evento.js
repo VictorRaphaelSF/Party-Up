@@ -39,75 +39,23 @@ export default function Evento( {navigation} ) {
   };
 
   useEffect(() => {
-    axios.get('Coloque aqui a URL da imagem do back')
+    axios.get('Coloque aqui a URL do endpoint que retorna todas as informações')
       .then(response => {
         setBackgroundImage({ uri: response.data.url });
-      })
-      .catch(error => {
-        console.error('Erro ao obter a imagem do back end:', error);
-      });
-
-    axios.get('Coloque aqui a URL do titulo do back')
-      .then(response => {
         setTitulo(response.data.titulo);
-      })
-      .catch(error => {
-        console.error('Erro ao obter o título do back end:', error);
-      });
-
-    axios.get('Coloque aqui a URL da descricao do back')
-      .then(response => {
         setDescricao(response.data.descricao);
-      })
-      .catch(error => {
-        console.error('Erro ao obter a descrição do back end:', error);
-      });
-
-    axios.get('Coloque aqui a URL da data inicio do back')
-      .then(response => {
         setDataInicio(response.data.dataInicio);
-      })
-      .catch(error => {
-        console.error('Erro ao obter a data de início do back end:', error);
-      });
-
-    axios.get('Coloque aqui a URL da data fim do back')
-      .then(response => {
         setDataFim(response.data.dataFim);
-      })
-      .catch(error => {
-        console.error('Erro ao obter a data de fim do back end:', error);
-      });
-    axios.get('Coloque aqui a URL da hora inicio do back')
-      .then(response => {
         setHoraInicio(response.data.horaInicio);
-      })
-      .catch(error => {
-        console.error('Erro ao obter a hora de inicio do back end:', error);
-      });
-    axios.get('Coloque aqui a URL da hora fim do back')
-      .then(response => {
         setHoraFim(response.data.horaFim);
+        setSiteInfo(response.data.siteInfo);
+        setTags(response.data.tags);
       })
       .catch(error => {
-        console.error('Erro ao obter a hora de finalização do back:', error);
+        console.error('Erro ao obter informações do back end:', error);
       });
-    axios.get('Coloque aqui a URL do site info do backend')
-    .then(response => {
-      setSiteInfo(response.data.siteInfo);
-    })
-    .catch(error => {
-      console.error('Erro ao obter as informações do site do back end:', error);
-    });
-    axios.get('Coloque aqui a URL das tags relacionadas do back')
-    .then(response => {
-      setTags(response.data.tags);
-    })
-    .catch(error => {
-      console.error('Erro ao obter as tags do back end:', error);
-    });
   }, []);
-
+  
   const backbutton = () => {
     navigation.goBack();
   };
