@@ -25,6 +25,8 @@ export default function Eventoedit2( {navigation} ) {
   const [horaFimNovo, setHoraFimNovo] = useState('');
   const [siteInfoNovo, setSiteInfoNovo] = useState('');
   const [tagsNovo, setTagsNovo] = useState('');
+
+  
   useEffect(() => {
     Animated.timing(animatedValue, {
       toValue: tituloWidth,
