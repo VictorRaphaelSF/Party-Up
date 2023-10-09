@@ -26,7 +26,7 @@ export default function Telaprincipal() {
   };
 
   const handleButtonPeople = () => {
-    console.log('Botão perfil pressionado');
+    navigation.navigate('telaprofile')
   };
 
   const handleUserImagePress = () => {

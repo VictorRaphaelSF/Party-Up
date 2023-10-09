@@ -38,30 +38,31 @@ export default function Telaprofile() {
   };
 
   const handleButtonPeople = () => {
-    console.log('Botão perfil pressionado');
+    navigation.navigate('telaprofile')
   };
 
   return (
+
     <View style={styles.container}>
+      
+      <Image
+          source={require('./img/telap.png')}
+          style={styles.backgroundImage}
+          resizeMode="cover"
+        />
+        <View style={styles.circle}></View>
       <View style={styles.header}>
 
         <Pressable style={styles.backButton} onPress={backbutton}>
           <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
         </Pressable>
+      </View>
 
-        <Pressable style={styles.button} onPress={menu}>
+      <Pressable style={styles.button} onPress={menu}>
           <View style={styles.bttbarra}></View>
           <View style={styles.bttbarra}></View>
           <View style={styles.bttbarra}></View>
         </Pressable>
-      </View>
-
-      <View style={styles.bottomImageContainer}>
-        <Image
-          source={require('./img/img_borda_inicio.png')}
-          style={styles.bottomImage} 
-        />
-      </View>
 
       <Modal
         transparent={true}
@@ -125,6 +126,25 @@ const styles = StyleSheet.create({
     padding: 16,
   },
 
+  circle: {
+    width: '100%',
+    height: 450,
+    borderRadius: 220  / 2,
+    backgroundColor: 'rgba(123, 85, 85, 0.40)',
+    position: 'absolute',
+    top: (windowHeight * 0.06) - (397 / 2), 
+  },
+
+
+  backgroundImage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
+
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -144,13 +164,13 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: 'transparent',
-    flexDirection: 'column',
-    alignItems: 'center',
+    position: 'absolute',
     justifyContent: 'center',
+    backgroundColor: 'transparent',
     width: 30,
     height: 18,
-    marginLeft: 150,
+    right: 135,
+    top: 50,
   },
 
   bttbarra: {
@@ -228,11 +248,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     left: '50%',
-    marginLeft: -20,
+    marginLeft: -27,
   },
 
   circleButtonImage: {
-    width: 75,
+    width: 70,
     height: 75,
   },
 
