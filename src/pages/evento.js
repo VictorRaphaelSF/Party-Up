@@ -3,12 +3,17 @@ import { StyleSheet, View, Text, Image, ImageBackground, Pressable, Dimensions, 
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
 
+
 export default function Evento( {navigation} ) {
   const [backgroundImage, setBackgroundImage] = useState(null);
   const [titulo, setTitulo] = useState('');
   const [descricao, setDescricao] = useState('');
   const [dataInicio, setDataInicio] = useState('');
   const [dataFim, setDataFim] = useState('');
+  const [siteInfo, setSiteInfo] = useState('');
+  const [tags, setTags] = useState('');
+
+
   const [buttonVisible, setButtonVisible] = useState(true);
   const [isButtonPressed, setIsButtonPressed] = useState(false);
   const spinValue = new Animated.Value(0);
@@ -84,8 +89,22 @@ export default function Evento( {navigation} ) {
         setHoraFim(response.data.horaFim);
       })
       .catch(error => {
-        console.error('Erro ao obter a hora de finalização do back end:', error);
+        console.error('Erro ao obter a hora de finalização do back:', error);
       });
+    axios.get('Coloque aqui a URL do site info do backend')
+    .then(response => {
+      setSiteInfo(response.data.siteInfo);
+    })
+    .catch(error => {
+      console.error('Erro ao obter as informações do site do back end:', error);
+    });
+    axios.get('Coloque aqui a URL das tags relacionadas do back')
+    .then(response => {
+      setTags(response.data.tags);
+    })
+    .catch(error => {
+      console.error('Erro ao obter as tags do back end:', error);
+    });
   }, []);
 
   const backbutton = () => {
@@ -109,24 +128,42 @@ export default function Evento( {navigation} ) {
     console.log('Quarto botão pressionado')
   };
 
-  const windowHeight = Dimensions.get('window').height;
+  const handleButtonHome = () => {
+    navigation.navigate('telaprincipal')
+  };
+
+  const handleButtonSearch = () => {
+    navigation.navigate('search');
+  };
+
+  const handleButtonCenter = () => {
+    navigation.navigate('cadevento');
+  };
+
+  const handleButtonNotification = () => {
+    navigation.navigate('notificação');
+  };
+
+  const handleButtonPeople = () => {
+    console.log('Botão perfil pressionado');
+  };
 
   return (
-    <ImageBackground
-      source={backgroundImage || require('./img/telap.png')}
-      style={styles.container}
-      resizeMode="cover"
-    >
-      
-      <ScrollView
-      showsVerticalScrollIndicator={false}
+    <View style={styles.container}>
+      <ImageBackground
+        source={backgroundImage || require('./img/telap.png')}
+        style={styles.backgroundImage}
+        resizeMode="cover"
       >
-      <View style={styles.overlay}>
-      <View style={styles.descricaoContainer}>
-        <Text style={styles.descricaoTitulo}>Descrição</Text>
-        <Text style={styles.descricaoTexto}>{descricao}</Text>
-      </View>
-      </View> 
+        
+
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.overlay}>
+          <View style={styles.descricaoContainer}>
+            <Text style={styles.descricaoTitulo}>Descrição</Text>
+            <Text style={styles.descricaoTexto}>{descricao}</Text>
+          </View>
+        </View> 
 
       <View style={styles.dataContainer}>
         <Text style={styles.dataTitulo}>Data e horarios</Text>
@@ -137,8 +174,18 @@ export default function Evento( {navigation} ) {
           - - Entrada Padrão
         </Text>
       </View>
-      
 
+      <View style={styles.siteInfoContainer}>
+        <Text style={styles.siteInfoTitulo}>Site para mais informações</Text>
+        <Text style={styles.siteInfoTexto}>teste{siteInfo}</Text>
+      </View>
+
+      <View style={styles.tagsContainer}>
+        <Text style={styles.tagsTitulo}>Tags Relacionadas</Text>
+        <Text style={styles.tagsTexto}>teste{tags}</Text>
+      </View>
+
+      
       {buttonVisible && (
         <View style={styles.buttonContainer}>
           <Pressable style={styles.customButton} onPress={handleButtonPress}>
@@ -175,6 +222,28 @@ export default function Evento( {navigation} ) {
       
       </ScrollView>
     </ImageBackground>
+    <View style={styles.navbar}>
+          <Pressable style={styles.navButton} onPress={handleButtonHome}>
+            <Image source={require('./img/icons/home(g).png')} style={styles.navButtonImage} />
+          </Pressable>
+
+          <Pressable style={[styles.navButton, { left: -15 }]} onPress={handleButtonSearch}>
+            <Image source={require('./img/icons/search(g).png')} style={styles.navButtonImage} />
+          </Pressable>
+
+          <Pressable style={[styles.circleButton, { bottom: 30 }]} onPress={handleButtonCenter}>
+            <Image source={require('./img/icons/add(g).png')} style={styles.circleButtonImage} />
+          </Pressable>
+
+          <Pressable style={[styles.navButton, { left: 15 }]} onPress={handleButtonNotification}>
+            <Image source={require('./img/icons/notification(g).png')} style={styles.navButtonImage} />
+          </Pressable>
+
+          <Pressable style={styles.navButton} onPress={handleButtonPeople}>
+            <Image source={require('./img/icons/people(g).png')} style={styles.navButtonImage} />
+          </Pressable>
+        </View>
+    </View>
   );
 }
 
@@ -185,6 +254,10 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
+  },
+
+  backgroundImage: {
+    flex: 1,
   },
 
   overlay: {
@@ -350,5 +423,89 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 10,
     opacity: 0.5,
+  },
+
+  siteInfoContainer: {
+    marginVertical: 8,
+    position: 'absolute',
+    top: windowHeight / 2 + 175,
+    left: 15,
+    zIndex: 1,
+  },
+
+  siteInfoTitulo: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'inter',
+    textAlign: 'left',
+  },
+
+  siteInfoTexto: {
+    color: 'white',
+    fontSize: 16,
+    marginTop: 10,
+    opacity: 0.5,
+  },
+
+  tagsContainer: {
+    marginVertical: 8,
+    position: 'absolute',
+    top: windowHeight / 2 + 245,
+    left: 15,
+    zIndex: 1,
+  },
+  
+  tagsTitulo: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'inter',
+    textAlign: 'left',
+  },
+  
+  tagsTexto: {
+    color: 'white',
+    fontSize: 16,
+    marginTop: 10,
+    opacity: 0.5,
+  },
+
+  navbar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#380053',
+    padding: 10,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+
+  navButton: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 10,
+  },
+
+  navButtonImage: {
+    width: 20,
+    height: 20,
+  },
+
+  circleButton: {
+    width: 60,
+    height: 60,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 0,
+    left: '50%',
+    marginLeft: -27,
+  },
+
+  circleButtonImage: {
+    width: 70,
+    height: 75,
   },
 });
