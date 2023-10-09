@@ -31,6 +31,8 @@ export default function Telaprincipal() {
 
   const handleButtonPeople = () => {
     console.log('Botão perfil pressionado');
+    navigation.navigate('telaprofile', {id : id});
+   
   };
 
   const handleUserImagePress = () => {
@@ -40,15 +42,15 @@ export default function Telaprincipal() {
 
   
 
-  axios
-      .post('http://localhost:3003/viewEvent')
-      .then((response) => {
-        console.log(response);
+  // axios
+  //     .post('http://localhost:3003/viewEvent')
+  //     .then((response) => {
+  //       console.log(response);
 
-      })
-      .catch((error) => {
-        console.error('Erro ao enviar ou retono de dados para o backend:', error);
-      });
+  //     })
+  //     .catch((error) => {
+  //       console.error('Erro ao enviar ou retono de dados para o backend:', error);
+  //     });
 
   return (
     <View style={styles.container}>

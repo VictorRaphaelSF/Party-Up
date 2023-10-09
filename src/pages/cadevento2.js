@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, Modal, TextInput, ScrollView, ImageBackground, PanResponder,} from 'react-native';
-
+import { useRoute } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
 import { TextInputMask } from 'react-native-masked-text';
@@ -17,7 +17,10 @@ export default function Cadevento2() {
   const [searchText, setSearchText] = useState('');
   const [eventtype, setEventtype] = useState('');
   const [accessType, setAccessType] = useState('');
+  const [ClassificationType, setClassificationType] = useState('');
   
+  
+
   const [datainicio, setdataInicio] = useState('');
   const [datafinal, setdataFinal] = useState('');
   const [horainicio, setHoraInicio] = useState('');
@@ -86,11 +89,6 @@ export default function Cadevento2() {
     closeAccessTypeMenu();
   };
 
-
-
-
-
-
   const openClassificationTypeMenu = () => {
     setClassificationTypeMenuVisible(true);
   };
@@ -113,8 +111,10 @@ export default function Cadevento2() {
   };
 
   
+
+  
   const route = useRoute();
-  const { eventData } = route.params;
+  const { eventData, id } = route.params;
   console.log(eventData);
   eventData["Site_contact_code"] = sitectt;
   eventData["instagram_user_code"] = instagram;
@@ -123,6 +123,11 @@ export default function Cadevento2() {
   eventData["Tp_Event_code"] = eventtype;
   eventData["Tp_Modality_code"] = accessType;
   eventData["Event_classification_code"] = ClassificationType;
+  eventData["Dt_begin_code"] = datainicio;
+  eventData["Dt_end_code"] = datafinal;
+  eventData["Hr_begin_code"] = horainicio;
+  eventData["Hr_end_code"] = horafinal;
+  eventData["Tag_event_code"] = searchText;
  
 		// Dt_end_code,
 		// Dt_creation_code,
@@ -148,7 +153,7 @@ export default function Cadevento2() {
       .post('http://localhost:3003/cadEvent', eventData)
       .then((response) => {
         console.log(response);
-        navigation.navigate('telaprincipal',{id: eventData.id});
+        navigation.navigate('telaprincipal',{id: id});
       })
       .catch((error) => {
         console.error('Erro ao enviar os dados para o backend:', error);
@@ -384,7 +389,7 @@ export default function Cadevento2() {
             underlineColorAndroid="transparent"
             type={'datetime'}
             options={{
-              format: 'DD/MM/YY',
+              format: 'DD/MM/YYYY',
             }}
             value={datainicio}
             onChangeText={setdataInicio}
@@ -414,7 +419,7 @@ export default function Cadevento2() {
               underlineColorAndroid="transparent"
               type={'datetime'}
               options={{
-                format: 'DD/MM/YY',
+                format: 'DD/MM/YYYY',
               }}
               value={datafinal}
               onChangeText={setdataFinal}

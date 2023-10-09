@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, Modal, TouchableWithoutFeedback,} from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
+import { useRoute} from '@react-navigation/native';
+import axios from 'axios';
+
+
 
 export default function Telaprofile() {
   const navigation = useNavigation();
+  const [eventData, setEventData] = useState([]);
 
   const backbutton = () => {
     navigation.goBack();
@@ -30,7 +35,7 @@ export default function Telaprofile() {
   };
 
   const handleButtonCenter = () => {
-    navigation.navigate('cadevento');
+    navigation.navigate('cadevento', {id : id});
   };
 
   const handleButtonNotification = () => {
@@ -41,6 +46,29 @@ export default function Telaprofile() {
     console.log('Botão perfil pressionado');
   };
 
+  const route = useRoute();
+  const { id } = route.params;
+  console.log(id);
+  const idUser = {
+    userId_code: id
+  };
+
+  useEffect(() => {
+    axios
+      .post('http://localhost:3003/viewEventUser', idUser)
+      .then((response) => {
+        console.log(response)
+        console.log(response.data.results[0].Nm_event);
+        setEventData(response.data.results);
+      })
+      .catch((error) => {
+        console.error('Erro ao enviar ou retono de dados para o backend:', error);
+      });
+
+      
+    }, []);
+    
+    console.log(eventData)
   return (
     <View style={styles.container}>
       <View style={styles.header}>

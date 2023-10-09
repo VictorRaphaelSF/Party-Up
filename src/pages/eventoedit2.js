@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef  } from 'react';
-import { StyleSheet, View, Text, Image, ImageBackground, Pressable, Dimensions, Platform, Animated, Easing } from 'react-native';
+import { StyleSheet, View, TextInput,Text, Image, ImageBackground, Pressable, Dimensions, Platform, Animated, Easing } from 'react-native';
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
 
@@ -17,7 +17,14 @@ export default function Eventoedit2( {navigation} ) {
   const [tituloWidth, setTituloWidth] = useState(0);
   const animatedValue = useRef(new Animated.Value(0)).current;
 
-
+  const [tituloNovo, setTituloNovo] = useState('');
+  const [descricaoNovo, setDescricaoNovo] = useState('');
+  const [dataInicioNovo, setDataInicioNovo] = useState('');
+  const [dataFimNovo, setDataFimNovo] = useState('');
+  const [horaInicioNovo, setHoraInicioNovo] = useState('');
+  const [horaFimNovo, setHoraFimNovo] = useState('');
+  const [siteInfoNovo, setSiteInfoNovo] = useState('');
+  const [tagsNovo, setTagsNovo] = useState('');
   useEffect(() => {
     Animated.timing(animatedValue, {
       toValue: tituloWidth,
@@ -32,76 +39,65 @@ export default function Eventoedit2( {navigation} ) {
     outputRange: [0, tituloWidth + 15], // Ajuste conforme necessário
   });
   
-
   useEffect(() => {
-    axios.get('Coloque aqui a URL da imagem do back')
-      .then(response => {
-        setBackgroundImage({ uri: response.data.url });
-      })
-      .catch(error => {
-        console.error('Erro ao obter a imagem do back end:', error);
-      });
+    const id ={
+      eventId_code: 1
+    }
+    axios
+      .post('http://localhost:3003/viewEvent',id)
+      .then((response) => {
+        console.log(response.data[0])
+        //nome
+        setTitulo(response.data[0].Nm_event);
 
-    axios.get('Coloque aqui a URL do titulo do back')
-      .then(response => {
-        setTitulo(response.data.titulo);
-      })
-      .catch(error => {
-        console.error('Erro ao obter o título do back end:', error);
-      });
+        //descrição
+        setDescricao(response.data[0].desc_event);
 
-    axios.get('Coloque aqui a URL da descricao do back')
-      .then(response => {
-        setDescricao(response.data.descricao);
-      })
-      .catch(error => {
-        console.error('Erro ao obter a descrição do back end:', error);
-      });
+        //data início
+        const dataB = new Date(response.data[0].Dt_begin);
+        const anoB = dataB.getFullYear();
+        const mesB = String(dataB.getMonth() + 1).padStart(2, "0");
+        const diaB= String(dataB.getDate()).padStart(2, "0");
+        const horaB = String(dataB.getHours()).padStart(2, "0");
+        const minutoB = String(dataB.getMinutes()).padStart(2, "0");
 
-    axios.get('Coloque aqui a URL da data inicio do back')
-      .then(response => {
-        setDataInicio(response.data.dataInicio);
-      })
-      .catch(error => {
-        console.error('Erro ao obter a data de início do back end:', error);
-      });
+        const dtFormatB = (diaB + '-' + mesB + '-' + anoB);
+        const hrFormatB = (horaB + ':' + minutoB);
+        
+        setDataInicio(dtFormatB);
+        setHoraInicio(hrFormatB);
 
-    axios.get('Coloque aqui a URL da data fim do back')
-      .then(response => {
-        setDataFim(response.data.dataFim);
+        //data fim
+        const dataE = new Date(response.data[0].Dt_end);
+        const anoE = String(dataE.getFullYear()).padStart(2, "0");
+        const mesE = String(dataE.getMonth() + 1).padStart(2, "0");
+        const diaE= String(dataE.getDate()).padStart(2, "0");
+        const horaE = String(dataE.getHours()).padStart(2, "0");
+        const minutoE = String(dataE.getMinutes()).padStart(2, "0");
+
+        const dtFormatE = (diaE + '-' + mesE+ '-' + anoE);
+        const hrFormatE = (horaE + ':' + minutoE);
+        
+        setDataFim(dtFormatE);
+        setHoraFim(hrFormatE);
+
+        //site
+        setSiteInfo(response.data[0].Site_contact);
+
+        //tag
+        setTags(response.data[0].Tag_event);
+
+
+
+
+
+        //navigation.navigate('telaprincipal',{id: id});
       })
-      .catch(error => {
-        console.error('Erro ao obter a data de fim do back end:', error);
+      .catch((error) => {
+        console.error('Erro ao enviar os dados para o backend:', error);
       });
-    axios.get('Coloque aqui a URL da hora inicio do back')
-      .then(response => {
-        setHoraInicio(response.data.horaInicio);
-      })
-      .catch(error => {
-        console.error('Erro ao obter a hora de inicio do back end:', error);
-      });
-    axios.get('Coloque aqui a URL da hora fim do back')
-      .then(response => {
-        setHoraFim(response.data.horaFim);
-      })
-      .catch(error => {
-        console.error('Erro ao obter a hora de finalização do back:', error);
-      });
-    axios.get('Coloque aqui a URL do site info do backend')
-    .then(response => {
-      setSiteInfo(response.data.siteInfo);
-    })
-    .catch(error => {
-      console.error('Erro ao obter as informações do site do back end:', error);
-    });
-    axios.get('Coloque aqui a URL das tags relacionadas do back')
-    .then(response => {
-      setTags(response.data.tags);
-    })
-    .catch(error => {
-      console.error('Erro ao obter as tags do back end:', error);
-    });
   }, []);
+ 
 
   const backbutton = () => {
     navigation.goBack();

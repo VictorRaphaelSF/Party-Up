@@ -98,7 +98,7 @@ export default function Cadevento({route}) {
       }, 4000);
     } else {
       setErro('');
-      navigation.navigate('cadevento2', { userImage: image, eventData: eventData});
+      navigation.navigate('cadevento2', { userImage: image, eventData: eventData, id: id});
     }
   };
   // verificando pra ver se ta certo
