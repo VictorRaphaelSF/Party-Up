@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, Modal, TouchableWithoutFeedback,} from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 export default function Telaprofile() {
   const navigation = useNavigation();
+  const [profileImage, setProfileImage] = useState(null);
+  const [isMenuVisible, setMenuVisible] = useState(false);
 
   const backbutton = () => {
     navigation.goBack();
   };
-
-  const [isMenuVisible, setMenuVisible] = useState(false);
 
   const menu = () => {
     setMenuVisible(true);
@@ -41,18 +42,40 @@ export default function Telaprofile() {
     navigation.navigate('telaprofile')
   };
 
-  return (
+  useEffect(() => {
+    axios.get('url da imagem do back')
+      .then(response => {
+        setProfileImage(response.data.image_url);
+      })
+      .catch(error => {
+        console.error('Erro ao obter a imagem do backend:', error);
+      });
+  }, []);
 
-    <View style={styles.container}>
-      
+  return (
+    <View style={styles.container}>  
       <Image
           source={require('./img/telap.png')}
           style={styles.backgroundImage}
           resizeMode="cover"
         />
-        <View style={styles.circle}></View>
+        <View style={styles.circle}>
+      <View style={styles.innerCircle}>
+        {profileImage && (
+          <Image
+            source={{ uri: profileImage }}
+            style={{ flex: 1, width: '100%', borderRadius: 105, backgroundColor: 'black' }}
+          />
+        )}
+      </View>
+      <View style={styles.textContainer}>
+        <Text style={styles.text}>Seguidores</Text>
+      </View>
+      <View style={styles.textContainer1}>
+        <Text style={styles.text}>Seguindo</Text>
+      </View>
+    </View>
       <View style={styles.header}>
-
         <Pressable style={styles.backButton} onPress={backbutton}>
           <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
         </Pressable>
@@ -129,12 +152,45 @@ const styles = StyleSheet.create({
   circle: {
     width: '100%',
     height: 450,
-    borderRadius: 220  / 2,
+    borderRadius: 220 / 2,
     backgroundColor: 'rgba(123, 85, 85, 0.40)',
     position: 'absolute',
-    top: (windowHeight * 0.06) - (397 / 2), 
+    top: (windowHeight * 0.06) - (397 / 2),
+    justifyContent: 'center',
   },
 
+  innerCircle: {
+    width: 90,
+    height: 90,
+    borderRadius: 105,
+    backgroundColor: '#FFFFFF',
+    overflow: 'hidden',
+    left: 50,
+    top: 70,
+  },
+
+  textContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '60%',
+    position: 'absolute',
+    top: (windowHeight * 0.06) + 220,
+    right: 0,
+  },
+  
+  textContainer1: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '60%',
+    position: 'absolute',
+    top: (windowHeight * 0.06) + 220,
+    left: 275,
+  },
+
+  text: {
+    color: '#FFFFFF',
+    fontSize: 14,
+  },
 
   backgroundImage: {
     flex: 1,

@@ -95,7 +95,7 @@ export default function Cadevento2() {
       }, 4000);
     } else {
       setErro('');
-      navigation.navigate('termos', { userImage: image });
+      navigation.navigate('evento', { userImage: image });
     }
   };
 
