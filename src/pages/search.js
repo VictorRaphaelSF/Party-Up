@@ -171,7 +171,7 @@ export default function Search() {
             <Image source={require('./img/icons/add(g).png')} style={styles.circleButtonImage} />
           </Pressable>
 
-          <Pressable style={styles.navButton} onPress={handleButtonNotification}>
+          <Pressable style={[styles.navButton, { left: 15 }]} onPress={handleButtonNotification}>
             <Image source={require('./img/icons/notification(g).png')} style={styles.navButtonImage} />
           </Pressable>
 
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     left: '50%',
-    marginLeft: -32,
+    marginLeft: -27,
   },
 
   circleButtonImage: {

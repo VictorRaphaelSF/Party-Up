@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
   },
 
   circleButtonImage: {
-    width: 75,
+    width: 70,
     height: 75,
   },
 });

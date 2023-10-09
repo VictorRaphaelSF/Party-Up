@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, Image, ImageBackground, Pressable, Dimensions, Platform, Animated, Easing } from 'react-native';
-import * as Animatable from 'react-native-animatable';
 import axios from 'axios';
+import { ScrollView } from 'react-native-gesture-handler';
+
 
 export default function Evento( {navigation} ) {
   const [backgroundImage, setBackgroundImage] = useState(null);
   const [titulo, setTitulo] = useState('');
+  const [descricao, setDescricao] = useState('');
+  const [dataInicio, setDataInicio] = useState('');
+  const [dataFim, setDataFim] = useState('');
+  const [horaInicio, setHoraInicio] = useState('');
+  const [horaFim, setHoraFim] = useState('');
+  const [siteInfo, setSiteInfo] = useState('');
+  const [tags, setTags] = useState('');
+
   const [buttonVisible, setButtonVisible] = useState(true);
   const [isButtonPressed, setIsButtonPressed] = useState(false);
   const spinValue = new Animated.Value(0);
@@ -19,7 +28,7 @@ export default function Evento( {navigation} ) {
   const startAnimation = () => {
     Animated.timing(spinValue, {
       toValue: 1,
-      duration: 300,
+      duration: 100,
       easing: Easing.linear,
       useNativeDriver: true
     }).start(() => {
@@ -30,7 +39,7 @@ export default function Evento( {navigation} ) {
   };
 
   useEffect(() => {
-    axios.get('Essa parte precisa colocar a url da imagem que esta no back')
+    axios.get('Coloque aqui a URL da imagem do back')
       .then(response => {
         setBackgroundImage({ uri: response.data.url });
       })
@@ -38,13 +47,65 @@ export default function Evento( {navigation} ) {
         console.error('Erro ao obter a imagem do back end:', error);
       });
 
-    axios.get('Essa parte precisa colocar a url do titulo que esta no back')
+    axios.get('Coloque aqui a URL do titulo do back')
       .then(response => {
         setTitulo(response.data.titulo);
       })
       .catch(error => {
         console.error('Erro ao obter o título do back end:', error);
       });
+
+    axios.get('Coloque aqui a URL da descricao do back')
+      .then(response => {
+        setDescricao(response.data.descricao);
+      })
+      .catch(error => {
+        console.error('Erro ao obter a descrição do back end:', error);
+      });
+
+    axios.get('Coloque aqui a URL da data inicio do back')
+      .then(response => {
+        setDataInicio(response.data.dataInicio);
+      })
+      .catch(error => {
+        console.error('Erro ao obter a data de início do back end:', error);
+      });
+
+    axios.get('Coloque aqui a URL da data fim do back')
+      .then(response => {
+        setDataFim(response.data.dataFim);
+      })
+      .catch(error => {
+        console.error('Erro ao obter a data de fim do back end:', error);
+      });
+    axios.get('Coloque aqui a URL da hora inicio do back')
+      .then(response => {
+        setHoraInicio(response.data.horaInicio);
+      })
+      .catch(error => {
+        console.error('Erro ao obter a hora de inicio do back end:', error);
+      });
+    axios.get('Coloque aqui a URL da hora fim do back')
+      .then(response => {
+        setHoraFim(response.data.horaFim);
+      })
+      .catch(error => {
+        console.error('Erro ao obter a hora de finalização do back:', error);
+      });
+    axios.get('Coloque aqui a URL do site info do backend')
+    .then(response => {
+      setSiteInfo(response.data.siteInfo);
+    })
+    .catch(error => {
+      console.error('Erro ao obter as informações do site do back end:', error);
+    });
+    axios.get('Coloque aqui a URL das tags relacionadas do back')
+    .then(response => {
+      setTags(response.data.tags);
+    })
+    .catch(error => {
+      console.error('Erro ao obter as tags do back end:', error);
+    });
   }, []);
 
   const backbutton = () => {
@@ -68,23 +129,89 @@ export default function Evento( {navigation} ) {
     console.log('Quarto botão pressionado')
   };
 
+  const handleButtonHome = () => {
+    navigation.navigate('telaprincipal')
+  };
+
+  const handleButtonSearch = () => {
+    navigation.navigate('search');
+  };
+
+  const handleButtonCenter = () => {
+    navigation.navigate('cadevento');
+  };
+
+  const handleButtonNotification = () => {
+    navigation.navigate('notificação');
+  };
+
+  const handleButtonPeople = () => {
+    console.log('Botão perfil pressionado');
+  };
+
   return (
-    <ImageBackground
-      source={backgroundImage || require('./img/telap.png')}
-      style={styles.container}
-      resizeMode="cover"
-    >
+    <View style={styles.container}>
+      <ImageBackground
+        source={backgroundImage || require('./img/telanexist.png')}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      >
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.overlay}>
+          <View style={styles.descricaoContainer}>
+            <Text style={styles.descricaoTitulo}>Descrição</Text>
+            <Text style={styles.descricaoTexto}>{descricao}</Text>
+          </View>
+        </View> 
+
+      <View style={styles.dataContainer}>
+        <Text style={styles.dataTitulo}>Data e horarios</Text>
+        <Text style={styles.dataTexto}>
+          Entre {dataInicio} - {dataFim}
+        </Text>
+        <Text style={styles.dataTexto2}>
+         {horaInicio} - {horaFim} - Entrada Padrão
+        </Text>
+      </View>
+
+      <View style={styles.siteInfoContainer}>
+        <Text style={styles.siteInfoTitulo}>Site para mais informações</Text>
+        <Text style={styles.siteInfoTexto}>{siteInfo}</Text>
+      </View>
+
+      <View style={styles.tagsContainer}>
+        <Text style={styles.tagsTitulo}>Tags Relacionadas</Text>
+        <Text style={styles.tagsTexto}>{tags}</Text>
+      </View>
+
+      <View style={styles.line} />
+
+      <View style={styles.comentariosContainer}>
+        <Text style={styles.comentariosTitulo}>Comentários</Text>
+      <Image
+        source={require('./img/icons/loading.png')}
+        style={styles.imagemComentarios}
+      />
+      <Text style={styles.semComentarios}>Sem comentários disponíveis</Text>
+    </View>
+
+    <View style={styles.line3} />
+
+    <View style={styles.line2} />
+
       {buttonVisible && (
         <View style={styles.buttonContainer}>
-        <Pressable style={styles.customButton} onPress={handleButtonPress}>
+          <Pressable style={styles.customButton} onPress={handleButtonPress}>
             <Animated.Image
               source={likeImage}
               style={[styles.icon, { transform: [{ rotate: spin }] }]}
             />
-        </Pressable>
+          </Pressable>
+          <Text style={styles.buttonTitle1}>Curtir</Text>
           <Pressable style={styles.customButton} onPress={handleSecondButtonPress}>
             <Image source={require('./img/icons/comment.png')} style={styles.icon} />
           </Pressable>
+          <Text style={styles.buttonTitle2}>Comentar</Text>
         </View>
       )}
       {buttonVisible && (
@@ -92,9 +219,11 @@ export default function Evento( {navigation} ) {
           <Pressable style={styles.customButton} onPress={handleThirdButtonPress}>
             <Image source={require('./img/icons/locate.png')} style={styles.icon} />
           </Pressable>
+          <Text style={styles.buttonTitle3}>Localização</Text>
           <Pressable style={styles.customButton} onPress={handleFourthButtonPress}>
             <Image source={require('./img/icons/share.png')} style={styles.icon} />
           </Pressable>
+          <Text style={styles.buttonTitle4}>Compartilhar</Text>
         </View>
       )}
       <Pressable style={styles.backButton} onPress={backbutton}>
@@ -103,8 +232,31 @@ export default function Evento( {navigation} ) {
       <View style={styles.square}>
         <Text style={styles.titulo}>{titulo}</Text>
       </View>
-      <View style={styles.overlay}></View>
+      
+      </ScrollView>
     </ImageBackground>
+    <View style={styles.navbar} zIndex={2}>
+          <Pressable style={styles.navButton} onPress={handleButtonHome}>
+            <Image source={require('./img/icons/home(g).png')} style={styles.navButtonImage} />
+          </Pressable>
+
+          <Pressable style={[styles.navButton, { left: -15 }]} onPress={handleButtonSearch}>
+            <Image source={require('./img/icons/search(g).png')} style={styles.navButtonImage} />
+          </Pressable>
+
+          <Pressable style={[styles.circleButton, { bottom: 30 }]} onPress={handleButtonCenter}>
+            <Image source={require('./img/icons/add(g).png')} style={styles.circleButtonImage} />
+          </Pressable>
+
+          <Pressable style={[styles.navButton, { left: 15 }]} onPress={handleButtonNotification}>
+            <Image source={require('./img/icons/notification(g).png')} style={styles.navButtonImage} />
+          </Pressable>
+
+          <Pressable style={styles.navButton} onPress={handleButtonPeople}>
+            <Image source={require('./img/icons/people(g).png')} style={styles.navButtonImage} />
+          </Pressable>
+        </View>
+    </View>
   );
 }
 
@@ -115,6 +267,10 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
+  },
+
+  backgroundImage: {
+    flex: 1,
   },
 
   overlay: {
@@ -162,7 +318,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     position: 'absolute',
     top: 290,
-    left: 25,
+    left: 22,
     flexDirection: 'row',
     zIndex: 1,
   },
@@ -170,7 +326,7 @@ const styles = StyleSheet.create({
   buttonContainer2: {
     position: 'absolute',
     top: 290,
-    right: 25,
+    right: 22,
     flexDirection: 'row',
     zIndex: 1,
   },
@@ -182,5 +338,260 @@ const styles = StyleSheet.create({
   icon: {
     width: 65,
     height: 65,
+  },
+
+  buttonTitle: {
+    position: 'absolute',
+    right: 18,
+    top: 75,
+    color: 'white',
+    fontSize: 12,
+    marginRight: -10,
+  },
+
+  buttonTitle1: {
+    position: 'absolute',
+    right: 124,
+    top: 75,
+    color: 'white',
+    fontSize: 12,
+    marginRight: -10,
+  },
+
+  buttonTitle2: {
+    position: 'absolute',
+    right: 28,
+    top: 75,
+    color: 'white',
+    fontSize: 12,
+    marginRight: -10,
+  },
+
+  buttonTitle3: {
+    position: 'absolute',
+    right: 108,
+    top: 75,
+    color: 'white',
+    fontSize: 12,
+    marginRight: -10,
+  },
+
+  buttonTitle4: {
+    position: 'absolute',
+    right: 18,
+    top: 75,
+    color: 'white',
+    fontSize: 12,
+    marginRight: -10,
+  },
+
+
+  descricaoContainer: {
+    marginVertical: 8,
+    position: 'absolute',
+    top: windowHeight / 2 +  -10,
+    left: 15,
+    zIndex: 1,
+  },
+
+  descricaoTitulo: {
+    position: 'relative',
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'inter',
+    textAlign: 'left',
+  },
+
+  descricaoTexto: {
+    position: 'relative',
+    color: 'white',
+    fontSize: 16,
+    marginTop: 10,
+    opacity: 0.5,
+  },
+
+  dataContainer: {
+    marginVertical: 54, 
+    top: windowHeight / 2 + 15 + 10,
+    left: 15,
+    zIndex: 1,
+  },
+
+  dataTitulo: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'inter',
+    textAlign: 'left',
+  },
+
+  dataTexto: {
+    color: 'white',
+    fontSize: 16,
+    marginTop: 10,
+    opacity: 0.5,
+  },
+
+  dataTexto2: {
+    color: 'white',
+    fontSize: 16,
+    marginTop: 10,
+    opacity: 0.5,
+  },
+
+  siteInfoContainer: {
+    marginVertical: 8,
+    position: 'absolute',
+    top: windowHeight / 2 + 175,
+    left: 15,
+    zIndex: 1,
+  },
+
+  siteInfoTitulo: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'inter',
+    textAlign: 'left',
+  },
+
+  siteInfoTexto: {
+    color: 'white',
+    fontSize: 16,
+    marginTop: 10,
+    opacity: 0.5,
+  },
+
+  tagsContainer: {
+    marginVertical: 8,
+    position: 'absolute',
+    top: windowHeight / 2 + 225,
+    left: 15,
+    zIndex: 1,
+  },
+  
+  tagsTitulo: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'inter',
+    textAlign: 'left',
+  },
+  
+  tagsTexto: {
+    color: 'white',
+    fontSize: 16,
+    marginTop: 10,
+    opacity: 0.5,
+  },
+
+  navbar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#380053',
+    padding: 10,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+
+  navButton: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 10,
+  },
+
+  navButtonImage: {
+    width: 20,
+    height: 20,
+  },
+
+  circleButton: {
+    width: 60,
+    height: 60,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 0,
+    left: '50%',
+    marginLeft: -27,
+  },
+
+  circleButtonImage: {
+    width: 70,
+    height: 75,
+  },
+
+  line: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: -530,
+    height: 2,
+    backgroundColor: 'white',
+    opacity: 0.6,
+  },
+
+  line2: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: -890,
+    height: 2,
+    backgroundColor: 'white',
+    opacity: 0.6,
+  },
+
+  line3: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: -790,
+    height: 2,
+    backgroundColor: 'white',
+    opacity: 0.6,
+  },
+
+  comentariosContainer: {
+    marginVertical: 8,
+    position: 'absolute',
+    top: windowHeight / 2 + 300,
+    left: 15,
+    zIndex: 1,
+  },
+  
+  comentariosTitulo: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'inter',
+    textAlign: 'left',
+  },
+  
+  comentarioItem: {
+    marginTop: 10,
+    opacity: 0.5,
+  },
+  
+  comentarioTexto: {
+    color: 'white',
+    fontSize: 16,
+  },
+
+  imagemComentarios: {
+    width: 100,
+    height: 100,
+    left: 70,
+    alignSelf: 'center',
+    marginTop: 30,
+  },
+
+  semComentarios: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'inter',
+    textAlign: 'center',
+    left: 60,
+    marginTop: 25,
+    opacity: 0.7,
   },
 });

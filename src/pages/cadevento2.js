@@ -1,19 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useRoute } from '@react-navigation/native';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Pressable,
-  Image,
-  Platform,
-  Dimensions,
-  Modal,
-  TextInput,
-  ScrollView,
-  ImageBackground,
-  PanResponder,
-} from 'react-native';
+import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, Modal, TextInput, ScrollView, ImageBackground, PanResponder,} from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
@@ -31,7 +17,11 @@ export default function Cadevento2() {
   const [searchText, setSearchText] = useState('');
   const [eventtype, setEventtype] = useState('');
   const [accessType, setAccessType] = useState('');
-  const [ClassificationType, setClassificationType] = useState('');
+  
+  const [datainicio, setdataInicio] = useState('');
+  const [datafinal, setdataFinal] = useState('');
+  const [horainicio, setHoraInicio] = useState('');
+  const [horafinal, sethoraFinal] = useState('');
 
   const [erro, setErro] = useState('');
   const navigation = useNavigation();
@@ -48,9 +38,9 @@ export default function Cadevento2() {
     navigation.goBack();
   };
 
-  // const toggleModal = () => {
-  //   setModalVisible(!isModalVisible);
-  // };
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
   const selectOption = (option) => {
     setSelectedOption(option);
@@ -147,7 +137,7 @@ export default function Cadevento2() {
 		// instagram_user_code//,
   
   const bttCriarEvento = () => {
-    if (!nmtelefone || !sitectt || !accessType) {
+    if (!nmtelefone || !sitectt || !accessType || !datainicio || !datafinal || !horainicio || !horafinal) {
       setErro('Preencha todos os campos obrigatórios.');
       setTimeout(() => {
         setErro('');
@@ -385,6 +375,67 @@ export default function Cadevento2() {
             </Animatable.View>
           </Pressable>
         </Modal>
+
+        <View style={styles.textInputContainerSmall}>
+          <TextInputMask
+            style={styles.textInput2}
+            placeholder="Data inicio"
+            placeholderTextColor="rgba(255, 255, 255, 0.5)"
+            underlineColorAndroid="transparent"
+            type={'datetime'}
+            options={{
+              format: 'DD/MM/YY',
+            }}
+            value={datainicio}
+            onChangeText={setdataInicio}
+          />
+        </View>
+
+        <View style={styles.textInputContainerSmall}>
+          <TextInputMask
+            style={styles.textInput2}
+            placeholder="Hora início"
+            placeholderTextColor="rgba(255, 255, 255, 0.5)"
+            underlineColorAndroid="transparent"
+            type={'datetime'}
+            options={{
+              format: 'HH:mm',
+            }}
+            value={horainicio}
+            onChangeText={setHoraInicio}
+          />
+        </View>
+
+          <View style={styles.textInputContainerSmall2}>
+            <TextInputMask
+              style={styles.textInput2}
+              placeholder="Data final"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              underlineColorAndroid="transparent"
+              type={'datetime'}
+              options={{
+                format: 'DD/MM/YY',
+              }}
+              value={datafinal}
+              onChangeText={setdataFinal}
+            />
+          </View>
+
+          <View style={styles.textInputContainerSmall2}>
+            <TextInputMask
+              style={styles.textInput2}
+              placeholder="Hora final"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              underlineColorAndroid="transparent"
+              type={'datetime'}
+              options={{
+                format: 'HH:mm',
+              }}
+              value={horafinal}
+              onChangeText={sethoraFinal}
+            />
+          </View>
+
         <Pressable style={styles.button} onPress={bttCriarEvento}>
           <Text style={styles.buttonText}>Criar Evento</Text>
         </Pressable>
@@ -473,7 +524,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#FFFFFF',
     marginBottom: 13,
-    top: -265,
+    top: -125,
   },
 
   textInput: {
@@ -605,7 +656,7 @@ const styles = StyleSheet.create({
     width: '80%',
     backgroundColor: '#582C74',
     padding: 12,
-    bottom: 135,
+    bottom: 0,
     borderRadius: 10,
   },
 
@@ -615,7 +666,7 @@ const styles = StyleSheet.create({
     width: '80%',
     backgroundColor: '#582C74',
     padding: 12,
-    bottom: 115,
+    bottom: -20,
     borderRadius: 10,
   },
 
@@ -625,7 +676,7 @@ const styles = StyleSheet.create({
     width: '80%',
     backgroundColor: '#582C74',
     padding: 12,
-    bottom: 95,
+    bottom: -40,
     borderRadius: 10,
   },
   
@@ -636,5 +687,39 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 8,
     textAlign: 'center',
+  },
+
+  textInputContainerSmall: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: Platform.OS === 'web' ? '25%' : '80%',
+    height: Platform.OS === 'web' ? 50 : 55,
+    borderBottomWidth: 1,
+    right: 84,  
+    borderBottomColor: '#FFFFFF',
+    marginBottom: 13,
+    justifyContent: 'center',
+    bottom: -50,
+  },
+
+  textInputContainerSmall2: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: Platform.OS === 'web' ? '25%' : '80%',
+    height: Platform.OS === 'web' ? 50 : 55,
+    borderBottomWidth: 1,
+    left: 84,  
+    borderBottomColor: '#FFFFFF',
+    marginBottom: 13,
+    justifyContent: 'center',
+    bottom: 76,
+  },
+
+  textInput2: {
+    maxWidth: '100%',
+    color: '#FFFFFF',
+    fontSize: 16,
+    flex: 1,
+    left: Platform.OS === 'web' ? 50 : 10,
   },
 });
