@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useRoute } from '@react-navigation/native';
 import {
   StyleSheet,
   View,
@@ -21,6 +22,8 @@ import { TextInputMask } from 'react-native-masked-text';
 import axios from 'axios';
 
 export default function Cadevento2() {
+
+ 
   const [nmtelefone, setTelefone] = useState('');
   const [sitectt, setSitectt] = useState('');
   const [instagram, setInstagram] = useState('');
@@ -28,12 +31,14 @@ export default function Cadevento2() {
   const [searchText, setSearchText] = useState('');
   const [eventtype, setEventtype] = useState('');
   const [accessType, setAccessType] = useState('');
+  const [ClassificationType, setClassificationType] = useState('');
 
   const [erro, setErro] = useState('');
   const navigation = useNavigation();
   const [isMenuVisible, setMenuVisible] = useState(false);
   const [isTypeMenuVisible, setTypeMenuVisible] = useState(false);
   const [isAccessTypeMenuVisible, setAccessTypeMenuVisible] = useState(false);
+  const [isClassificationTypeMenuVisible, setClassificationTypeMenuVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedEventType, setSelectedEventType] = useState(null);
   const [selectedAccessType, setSelectedAccessType] = useState(null);
@@ -90,10 +95,55 @@ export default function Cadevento2() {
     closeAccessTypeMenu();
   };
 
+
+
+
+
+
+  const openClassificationTypeMenu = () => {
+    setClassificationTypeMenuVisible(true);
+  };
+
+
+  const closeClassificationTypeMenu = () => {
+    setClassificationTypeMenuVisible(false);
+  };
+
+
+  const selectClassificationType = (ClassificationType) => {
+    setSelectedClassificationType(ClassificationType);
+    setClassificationType(ClassificationType);
+    closeClassificationTypeMenu();
+  };
+
   const InputNum = (value, setter) => {
     const numericValue = value.replace(/[^0-9]/g, '');
     setter(numericValue);
   };
+
+  
+  const route = useRoute();
+  const { eventData } = route.params;
+  console.log(eventData);
+  eventData["Site_contact_code"] = sitectt;
+  eventData["instagram_user_code"] = instagram;
+  eventData["more_info_code"] = infoctt;
+  eventData["telefone_event_code"] = nmtelefone;
+  eventData["Tp_Event_code"] = accessType;
+  eventData["Tp_Modality_code"] = eventtype;
+  eventData["Event_classification_code"] = ClassificationType;
+ 
+		// Dt_end_code,
+		// Dt_creation_code,
+	
+		// Status_event_code,
+		// Informative_Classification_code,
+		// Event_classification_code//,
+		// Tp_Event_code//,
+		// Tp_Modality_code//,
+		// Site_contact_code//,
+		// more_info_code//,
+		// instagram_user_code//,
   
   const bttCriarEvento = () => {
     if (!nmtelefone || !sitectt || !accessType) {
@@ -213,6 +263,16 @@ export default function Cadevento2() {
             />
           </Pressable>
         </View>
+        <View style={styles.searchBarContainerLowLow}>
+          <Pressable onPress={openAccessTypeMenu}>
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Definir classificação do evento"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              value={accessType}
+            />
+          </Pressable>
+        </View>
         <Modal
           style={styles.modalContainer}
           transparent={true}
@@ -260,15 +320,13 @@ export default function Cadevento2() {
               duration={500}
             >
               <View style={styles.dragIndicator} />
-              <Pressable style={styles.menubtt} onPress={() => selectEventType('Aniversário')}>
-                <Text style={styles.menubtttext}>Aniversário</Text>
+              <Pressable style={styles.menubtt} onPress={() => selectEventType('Pago')}>
+                <Text style={styles.menubtttext}>Pago</Text>
               </Pressable>
-              <Pressable style={styles.menubtt} onPress={() => selectEventType('Casamento')}>
-                <Text style={styles.menubtttext}>Casamento</Text>
+              <Pressable style={styles.menubtt} onPress={() => selectEventType('Gratuito')}>
+                <Text style={styles.menubtttext}>Gratuito</Text>
               </Pressable>
-              <Pressable style={styles.menubtt} onPress={() => selectEventType('Conferência')}>
-                <Text style={styles.menubtttext}>Conferência</Text>
-              </Pressable>
+              
             </Animatable.View>
           </Pressable>
         </Modal>
@@ -291,8 +349,28 @@ export default function Cadevento2() {
               <Pressable style={styles.menubtt} onPress={() => selectAccessType('Online')}>
                 <Text style={styles.menubtttext}>Online</Text>
               </Pressable>
-              <Pressable style={styles.menubtt} onPress={() => selectAccessType('Beneficiente')}>
-                <Text style={styles.menubtttext}>Beneficiente</Text>
+            </Animatable.View>
+          </Pressable>
+        </Modal>
+
+        <Modal
+          style={styles.modalContainer}
+          transparent={true}
+          visible={isClassificationTypeMenuVisible}
+          onRequestClose={closeAccessTypeMenu}
+        >
+          <Pressable onPress={closeAccessTypeMenu} style={styles.modalBackground} >
+            <Animatable.View
+              style={styles.menuContainer}
+              animation={isClassificationTypeMenuVisible ? 'slideInUp' : 'slideInDown'}
+              duration={500}
+            >
+              <View style={styles.dragIndicator} />
+              <Pressable style={styles.menubtt} onPress={() => selectClassificationType('Público')}>
+                <Text style={styles.menubtttext}>Público</Text>
+              </Pressable>
+              <Pressable style={styles.menubtt} onPress={() => selectClassificationType('Privado')}>
+                <Text style={styles.menubtttext}>Privado</Text>
               </Pressable>
             </Animatable.View>
           </Pressable>

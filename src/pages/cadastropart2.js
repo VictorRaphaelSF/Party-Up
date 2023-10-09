@@ -50,12 +50,12 @@ export default function Logado({route}) {
   
   
 
-  //const userData = route.params.userData;
+  const userData = route.params.userData;
   
   // adicionando mais dados no objeto do cliente
   userData["nmUser"] = nmusuario;
   userData["descricao"] = descrição;
-  userData["image"] = image;
+  userData["nmImage"] = fileName;
 
   
   
@@ -66,24 +66,10 @@ export default function Logado({route}) {
         setErro('');
       }, 4000);
     } else {
-      setErro('');
-      const formData = new FormData();
-      formData.append('nome', nmusuario);
-      formData.append('descricao', descrição);
-      formData.append('image', image);
-      fetch('http://localhost:3003/', {
-        method: 'POST',
-        body: formData,
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          navigation.navigate('termos', { userImage: image, userData: userData });
-        })
-        .catch(error => {
-          console.error('Erro:', error);
-          setErro('Erro ao enviar dados para o servidor.');
-        });
+      console.log(fileName)
+      console.log(image)
+      navigation.navigate('termos', { userImage: image, userData: userData });
+    
     }
   };
   
