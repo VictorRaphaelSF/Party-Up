@@ -10,6 +10,8 @@ export default function Evento( {navigation} ) {
   const [descricao, setDescricao] = useState('');
   const [dataInicio, setDataInicio] = useState('');
   const [dataFim, setDataFim] = useState('');
+  const [horaInicio, setHoraInicio] = useState('');
+  const [horaFim, setHoraFim] = useState('');
   const [siteInfo, setSiteInfo] = useState('');
   const [tags, setTags] = useState('');
 
@@ -78,7 +80,7 @@ export default function Evento( {navigation} ) {
       });
     axios.get('Coloque aqui a URL da hora inicio do back')
       .then(response => {
-        setHoraInicio(response.data.HoraInicio);
+        setHoraInicio(response.data.horaInicio);
       })
       .catch(error => {
         console.error('Erro ao obter a hora de inicio do back end:', error);
@@ -170,18 +172,18 @@ export default function Evento( {navigation} ) {
           Entre {dataInicio} - {dataFim}
         </Text>
         <Text style={styles.dataTexto2}>
-          - - Entrada Padrão
+         {horaInicio} - {horaFim} - Entrada Padrão
         </Text>
       </View>
 
       <View style={styles.siteInfoContainer}>
         <Text style={styles.siteInfoTitulo}>Site para mais informações</Text>
-        <Text style={styles.siteInfoTexto}>teste{siteInfo}</Text>
+        <Text style={styles.siteInfoTexto}>{siteInfo}</Text>
       </View>
 
       <View style={styles.tagsContainer}>
         <Text style={styles.tagsTitulo}>Tags Relacionadas</Text>
-        <Text style={styles.tagsTexto}>teste{tags}</Text>
+        <Text style={styles.tagsTexto}>{tags}</Text>
       </View>
 
       
