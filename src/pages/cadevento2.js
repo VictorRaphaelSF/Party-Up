@@ -40,22 +40,23 @@ export default function Cadevento2() {
   const [isAccessTypeMenuVisible, setAccessTypeMenuVisible] = useState(false);
   const [isClassificationTypeMenuVisible, setClassificationTypeMenuVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
-  const [selectedEventType, setSelectedEventType] = useState(null);
+  const [selectedEventType, setSelectedEventType] = useState(null); 
   const [selectedAccessType, setSelectedAccessType] = useState(null);
+  const [selectedClassificationType, setSelectedClassificationType] = useState(null);
 
   const backbutton = () => {
     navigation.goBack();
   };
 
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
+  // const toggleModal = () => {
+  //   setModalVisible(!isModalVisible);
+  // };
 
   const selectOption = (option) => {
     setSelectedOption(option);
     setSearchText(option);
     setSelectedEventType(option);
-    toggleModal();  
+    // toggleModal();  
     setMenuVisible(false);
   };
 
@@ -129,8 +130,8 @@ export default function Cadevento2() {
   eventData["instagram_user_code"] = instagram;
   eventData["more_info_code"] = infoctt;
   eventData["telefone_event_code"] = nmtelefone;
-  eventData["Tp_Event_code"] = accessType;
-  eventData["Tp_Modality_code"] = eventtype;
+  eventData["Tp_Event_code"] = eventtype;
+  eventData["Tp_Modality_code"] = accessType;
   eventData["Event_classification_code"] = ClassificationType;
  
 		// Dt_end_code,
@@ -153,7 +154,16 @@ export default function Cadevento2() {
       }, 4000);
     } else {
       setErro('');
-      navigation.navigate('termos', { userImage: image });
+      axios
+      .post('http://localhost:3003/cadEvent', eventData)
+      .then((response) => {
+        console.log(response);
+        navigation.navigate('telaprincipal',{id: eventData.id});
+      })
+      .catch((error) => {
+        console.error('Erro ao enviar os dados para o backend:', error);
+      });
+
     }
   };
 
@@ -264,12 +274,12 @@ export default function Cadevento2() {
           </Pressable>
         </View>
         <View style={styles.searchBarContainerLowLow}>
-          <Pressable onPress={openAccessTypeMenu}>
+          <Pressable onPress={openClassificationTypeMenu}>
             <TextInput
               style={styles.searchInput}
               placeholder="Definir classificação do evento"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
-              value={accessType}
+              value={ClassificationType}
             />
           </Pressable>
         </View>
@@ -357,9 +367,9 @@ export default function Cadevento2() {
           style={styles.modalContainer}
           transparent={true}
           visible={isClassificationTypeMenuVisible}
-          onRequestClose={closeAccessTypeMenu}
+          onRequestClose={closeClassificationTypeMenu}
         >
-          <Pressable onPress={closeAccessTypeMenu} style={styles.modalBackground} >
+          <Pressable onPress={closeClassificationTypeMenu} style={styles.modalBackground} >
             <Animatable.View
               style={styles.menuContainer}
               animation={isClassificationTypeMenuVisible ? 'slideInUp' : 'slideInDown'}

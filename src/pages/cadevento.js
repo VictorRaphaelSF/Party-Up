@@ -4,6 +4,8 @@ import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, TextInp
 import * as Animatable from 'react-native-animatable';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
+
 import axios from 'axios';
 
 export default function Cadevento({route}) {
@@ -72,6 +74,8 @@ export default function Cadevento({route}) {
   //userData["descricao"] = descrição;
   //userData["uri"] = "imagem.png";
 
+  const opa = useRoute();
+  const { id } = opa.params;
   const eventData = {
     name_event_code : nmevento,
 		desc_event_code : descrição,
@@ -81,7 +85,8 @@ export default function Cadevento({route}) {
 		cd_cep_code: cep,
 		nm_rua_code: nmrua,
 		num_residencia_code: numero,
-    nm_image: fileName
+    nm_image: fileName,
+    idUser_code: id
   
   }
   

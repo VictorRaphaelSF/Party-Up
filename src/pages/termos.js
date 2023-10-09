@@ -43,7 +43,7 @@ export default function Termos() {
       .then((response) => {
         console.log(response);
         setTermsAccepted(true); // Marcando os termos como aceitos
-        navigation.navigate('telaprincipal', { userImage: route.params.userImage });
+        navigation.navigate('telaprincipal', { userImage: route.params.userImage, id: response.data.id });
       })
       .catch((error) => {
         console.error('Erro ao enviar os dados para o backend:', error);

@@ -17,8 +17,12 @@ export default function Telaprincipal() {
     navigation.navigate('search');
   };
 
+
+  const route = useRoute();
+  const { id } = route.params;
+  console.log(id);
   const handleButtonCenter = () => {
-    navigation.navigate('cadevento');
+    navigation.navigate('cadevento', {id : id});
   };
 
   const handleButtonNotification = () => {
@@ -32,6 +36,9 @@ export default function Telaprincipal() {
   const handleUserImagePress = () => {
    console.log('Foto de perfil pressionada')
   };
+
+
+  
 
   axios
       .post('http://localhost:3003/viewEvent')
