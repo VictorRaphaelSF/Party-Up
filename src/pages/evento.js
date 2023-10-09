@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, Image, ImageBackground, Pressable, Dimensions, Platform, Animated, Easing } from 'react-native';
 import axios from 'axios';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default function Evento( {navigation} ) {
   const [backgroundImage, setBackgroundImage] = useState(null);
   const [titulo, setTitulo] = useState('');
   const [descricao, setDescricao] = useState('');
+  const [dataInicio, setDataInicio] = useState('');
+  const [dataFim, setDataFim] = useState('');
   const [buttonVisible, setButtonVisible] = useState(true);
   const [isButtonPressed, setIsButtonPressed] = useState(false);
   const spinValue = new Animated.Value(0);
@@ -30,7 +33,7 @@ export default function Evento( {navigation} ) {
   };
 
   useEffect(() => {
-    axios.get('Coloque_aqui_a_URL_da_imagem_do_back')
+    axios.get('Coloque aqui a URL da imagem do back')
       .then(response => {
         setBackgroundImage({ uri: response.data.url });
       })
@@ -38,7 +41,7 @@ export default function Evento( {navigation} ) {
         console.error('Erro ao obter a imagem do back end:', error);
       });
 
-    axios.get('Coloque_aqui_a_URL_do_titulo_do_back')
+    axios.get('Coloque aqui a URL do titulo do back')
       .then(response => {
         setTitulo(response.data.titulo);
       })
@@ -46,12 +49,42 @@ export default function Evento( {navigation} ) {
         console.error('Erro ao obter o título do back end:', error);
       });
 
-    axios.get('Coloque_aqui_a_URL_da_descricao_do_back')
+    axios.get('Coloque aqui a URL da descricao do back')
       .then(response => {
         setDescricao(response.data.descricao);
       })
       .catch(error => {
         console.error('Erro ao obter a descrição do back end:', error);
+      });
+
+    axios.get('Coloque aqui a URL da data inicio do back')
+      .then(response => {
+        setDataInicio(response.data.dataInicio);
+      })
+      .catch(error => {
+        console.error('Erro ao obter a data de início do back end:', error);
+      });
+
+    axios.get('Coloque aqui a URL da data fim do back')
+      .then(response => {
+        setDataFim(response.data.dataFim);
+      })
+      .catch(error => {
+        console.error('Erro ao obter a data de fim do back end:', error);
+      });
+    axios.get('Coloque aqui a URL da hora inicio do back')
+      .then(response => {
+        setHoraInicio(response.data.HoraInicio);
+      })
+      .catch(error => {
+        console.error('Erro ao obter a hora de inicio do back end:', error);
+      });
+    axios.get('Coloque aqui a URL da hora fim do back')
+      .then(response => {
+        setHoraFim(response.data.horaFim);
+      })
+      .catch(error => {
+        console.error('Erro ao obter a hora de finalização do back end:', error);
       });
   }, []);
 
@@ -76,16 +109,35 @@ export default function Evento( {navigation} ) {
     console.log('Quarto botão pressionado')
   };
 
+  const windowHeight = Dimensions.get('window').height;
+
   return (
     <ImageBackground
       source={backgroundImage || require('./img/telap.png')}
       style={styles.container}
       resizeMode="cover"
     >
+      
+      <ScrollView
+      showsVerticalScrollIndicator={false}
+      >
+      <View style={styles.overlay}>
       <View style={styles.descricaoContainer}>
         <Text style={styles.descricaoTitulo}>Descrição</Text>
         <Text style={styles.descricaoTexto}>{descricao}</Text>
       </View>
+      </View> 
+
+      <View style={styles.dataContainer}>
+        <Text style={styles.dataTitulo}>Data e horarios</Text>
+        <Text style={styles.dataTexto}>
+          Entre {dataInicio} - {dataFim}
+        </Text>
+        <Text style={styles.dataTexto2}>
+          - - Entrada Padrão
+        </Text>
+      </View>
+      
 
       {buttonVisible && (
         <View style={styles.buttonContainer}>
@@ -120,7 +172,8 @@ export default function Evento( {navigation} ) {
       <View style={styles.square}>
         <Text style={styles.titulo}>{titulo}</Text>
       </View>
-      <View style={styles.overlay}></View>
+      
+      </ScrollView>
     </ImageBackground>
   );
 }
@@ -179,7 +232,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     position: 'absolute',
     top: 290,
-    left: 25,
+    left: 22,
     flexDirection: 'row',
     zIndex: 1,
   },
@@ -187,7 +240,7 @@ const styles = StyleSheet.create({
   buttonContainer2: {
     position: 'absolute',
     top: 290,
-    right: 25,
+    right: 22,
     flexDirection: 'row',
     zIndex: 1,
   },
@@ -246,14 +299,17 @@ const styles = StyleSheet.create({
     marginRight: -10,
   },
 
+
   descricaoContainer: {
+    marginVertical: 8,
     position: 'absolute',
-    top: windowHeight / 2 - 15,
+    top: windowHeight / 2 +  -10,
     left: 15,
     zIndex: 1,
   },
 
   descricaoTitulo: {
+    position: 'relative',
     color: 'white',
     fontSize: 18,
     fontWeight: 'inter',
@@ -261,6 +317,35 @@ const styles = StyleSheet.create({
   },
 
   descricaoTexto: {
+    position: 'relative',
+    color: 'white',
+    fontSize: 16,
+    marginTop: 10,
+    opacity: 0.5,
+  },
+
+  dataContainer: {
+    marginVertical: 54, 
+    top: windowHeight / 2 + 15 + 10,
+    left: 15,
+    zIndex: 1,
+  },
+
+  dataTitulo: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'inter',
+    textAlign: 'left',
+  },
+
+  dataTexto: {
+    color: 'white',
+    fontSize: 16,
+    marginTop: 10,
+    opacity: 0.5,
+  },
+
+  dataTexto2: {
     color: 'white',
     fontSize: 16,
     marginTop: 10,
