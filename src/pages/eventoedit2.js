@@ -4,7 +4,7 @@ import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
 
 
-export default function Eventoedit( {navigation} ) {
+export default function Eventoedit2( {navigation} ) {
   const [backgroundImage, setBackgroundImage] = useState(null);
   const [titulo, setTitulo] = useState('');
   const [descricao, setDescricao] = useState('');
