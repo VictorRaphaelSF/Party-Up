@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, Modal, TouchableWithoutFeedback,} from 'react-native';
-
+import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, Modal, TouchableWithoutFeedback } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
@@ -9,6 +8,11 @@ export default function Telaprofile() {
   const navigation = useNavigation();
   const [profileImage, setProfileImage] = useState(null);
   const [isMenuVisible, setMenuVisible] = useState(false);
+  const [name, setName] = useState('');
+  const [idade, setIdade] = useState('');
+  const [descricao, setDescricao] = useState('');
+  const [eventImage, setEventImage] = useState(null);
+  const [eventId, setEventId] = useState(null); 
 
   const backbutton = () => {
     navigation.goBack();
@@ -21,6 +25,10 @@ export default function Telaprofile() {
   const closeMenu = () => {
     setMenuVisible(false);
   };
+
+  const handleButtonEdit = () => {
+    console.log('Botão edit pressionado')
+  }
 
   const handleButtonHome = () => {
     navigation.navigate('telaprincipal');
@@ -42,38 +50,53 @@ export default function Telaprofile() {
     navigation.navigate('telaprofile')
   };
 
+  const handleButtonEvent = () => {
+    console.log('Evento clicado');
+    if (eventId) {
+      navigation.navigate('evento', { eventId });
+    }
+  };
+
   useEffect(() => {
-    axios.get('url da imagem do back')
+    axios
+      .get('url da imagem do back')
       .then(response => {
         setProfileImage(response.data.image_url);
+        setName(response.data.titulo);
+        setIdade(response.data.idade);
+        setDescricao(response.data.descricao);
       })
       .catch(error => {
         console.error('Erro ao obter a imagem do backend:', error);
       });
   }, []);
 
+  useEffect(() => {
+    axios
+      .get('url da imagem do evento')
+      .then(response => {
+        setEventImage(response.data.image_url);
+        setEventId(response.data.event_id);
+      })
+      .catch(error => {
+        console.error('Erro ao obter a imagem do evento:', error);
+      });
+  }, []);
+
   return (
     <View style={styles.container}>  
       <Image
-          source={require('./img/telap.png')}
+          source={require('./img/telap2.png')}
           style={styles.backgroundImage}
           resizeMode="cover"
         />
-        <View style={styles.circle}>
       <View style={styles.innerCircle}>
         {profileImage && (
           <Image
             source={{ uri: profileImage }}
-            style={{ flex: 1, width: '100%', borderRadius: 105, backgroundColor: 'black' }}
+            style={{ flex: 1, width: '100%', borderRadius: 105 }}
           />
         )}
-      </View>
-      <View style={styles.textContainer}>
-        <Text style={styles.text}>Seguidores</Text>
-      </View>
-      <View style={styles.textContainer1}>
-        <Text style={styles.text}>Seguindo</Text>
-      </View>
     </View>
       <View style={styles.header}>
         <Pressable style={styles.backButton} onPress={backbutton}>
@@ -86,6 +109,43 @@ export default function Telaprofile() {
           <View style={styles.bttbarra}></View>
           <View style={styles.bttbarra}></View>
         </Pressable>
+        
+        <View style={styles.editButtonContainer}>
+        <Pressable style={styles.editButton} onPress={handleButtonEdit}>
+          <Text style={styles.editButtonText}>Editar perfil</Text>
+        </Pressable>
+      </View>
+      
+       <View style={styles.allContainer}>
+       <View styles={styles.nameContainer}>    
+        <Text style={styles.titulo}>Victor{name}</Text>
+      </View>
+
+       <View styles={styles.nameContainer1}>    
+        <Text style={styles.titulo1}>19 Anos{idade}</Text>
+      </View>
+      </View>
+
+       <View styles={styles.descContainer}>    
+        <Text style={styles.descricao}>Nam quis nulla. Integer malesuada{descricao}</Text>
+      </View>
+
+      <View style={styles.line}/>
+
+      <Text style={styles.comentariosTitulo}>Meus eventos</Text>
+
+      <View style={styles.eventImagePlaceholder}>
+      <View style={styles.eventImagePlaceholderInner}>
+      </View>
+    </View>
+
+      <Pressable style={styles.buttonEvent} onPress={handleButtonEvent}>
+        {eventImage && (
+          <View style={{ width: '100%', height: 200 }}>
+            <Image source={{ uri: eventImage }} style={{ width: '100%', height: '100%', borderRadius: 8 }} />
+          </View>
+        )}
+      </Pressable>
 
       <Modal
         transparent={true}
@@ -160,31 +220,26 @@ const styles = StyleSheet.create({
   },
 
   innerCircle: {
+    position: 'absolute',
     width: 90,
     height: 90,
     borderRadius: 105,
     backgroundColor: '#FFFFFF',
     overflow: 'hidden',
-    left: 50,
-    top: 70,
+    left: 45,
+    top: 100,
   },
 
   textContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '60%',
     position: 'absolute',
-    top: (windowHeight * 0.06) + 220,
+    top: 0,
     right: 0,
   },
   
   textContainer1: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '60%',
     position: 'absolute',
-    top: (windowHeight * 0.06) + 220,
-    left: 275,
+    top: 0,
+    left: 0,
   },
 
   text: {
@@ -315,5 +370,101 @@ const styles = StyleSheet.create({
   menubtttext: {
     color: '#FFFFFF',
     fontSize: 18,
+  },
+
+  editButtonContainer: {
+    position: 'absolute',
+    top: 225,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+
+  editButton: {
+    backgroundColor: '#7E3CA7',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+  },
+
+  editButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'inter',
+  },
+
+  nameContainer: {
+    position: 'absolute',
+    },
+
+  titulo: {
+    right: 135,
+    bottom: 55,
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'inter',
+  },
+
+  nameContainer1: {
+    position: 'absolute',
+    },
+
+  titulo1: {
+    right: 55,
+    bottom: 75,
+    color: '#919191',
+    fontSize: 16,
+    fontWeight: 'inter',
+  },
+
+  descContainer: {
+    position: 'absolute',
+    },
+
+  descricao: {
+    right: 40,
+    top: 0,
+    color: '#919191',
+    textAlign: 'right',
+    fontSize: 16,
+    fontWeight: 'inter',
+  },
+
+  allContainer: {
+    top: 55,
+  },
+
+  line: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 350,
+    height: 2,
+    backgroundColor: 'white',
+    opacity: 0.6,
+  },
+
+  comentariosTitulo: {
+    top: 70,
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'inter',
+    textAlign: 'left',
+  },
+
+  eventImagePlaceholder: {
+    position: 'absolute',
+    width: 150,
+    height: 100,
+    backgroundColor: 'black',
+    bottom: 175,
+    right: 220, 
+    borderRadius: 8,
+    marginBottom: 16,
+  },
+
+  eventImagePlaceholderInner: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
