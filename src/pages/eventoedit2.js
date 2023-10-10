@@ -126,7 +126,7 @@ export default function Eventoedit2({ navigation }) {
 	};
 
 	const handleButtonSearch = () => {
-		navigation.navigate('search');
+		navigation.navigate('search', {id : id});
 	};
 
 	const handleButtonCenter = () => {
@@ -143,11 +143,11 @@ export default function Eventoedit2({ navigation }) {
 	};
 
 	const handleButtonNotification = () => {
-		navigation.navigate('notificação');
+		navigation.navigate('notificação', {id : id});
 	};
 
 	const handleButtonPeople = () => {
-		console.log('Botão perfil pressionado');
+		navigation.navigate('telaprofile', {id : id});
 	};
 
 	const [editDescription, setEditDescription] = useState(false);
@@ -600,7 +600,7 @@ const styles = StyleSheet.create({
 	tagsContainer: {
 		marginVertical: 8,
 		position: 'absolute',
-		top: windowHeight / 2 + 225,
+		top: windowHeight / 2 + 250,
 		left: 15,
 		zIndex: 1,
 	},
@@ -663,7 +663,7 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		left: 0,
 		right: 0,
-		bottom: -530,
+		bottom: -550,
 		height: 2,
 		backgroundColor: 'white',
 		opacity: 0.6,
@@ -692,7 +692,7 @@ const styles = StyleSheet.create({
 	comentariosContainer: {
 		marginVertical: 8,
 		position: 'absolute',
-		top: windowHeight / 2 + 300,
+		top: windowHeight / 2 + 320,
 		left: 15,
 		zIndex: 1,
 	},

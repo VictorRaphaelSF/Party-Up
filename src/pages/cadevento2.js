@@ -364,7 +364,7 @@ export default function Cadevento2() {
           visible={isClassificationTypeMenuVisible}
           onRequestClose={closeClassificationTypeMenu}
         >
-          <Pressable onPress={closeClassificationTypeMenu} style={styles.modalBackground} >
+          <Pressable onPress={closeClassificationTypeMenu} style={styles.modalBackground1} >
             <Animatable.View
               style={styles.menuContainer}
               animation={isClassificationTypeMenuVisible ? 'slideInUp' : 'slideInDown'}

@@ -40,7 +40,7 @@ export default function Telaprofile() {
   };
 
   const handleButtonSearch = () => {
-    navigation.navigate('search');
+    navigation.navigate('search', {id : id});
   };
 
   const handleButtonCenter = () => {
@@ -48,7 +48,7 @@ export default function Telaprofile() {
   };
 
   const handleButtonNotification = () => {
-    navigation.navigate('notificação');
+    navigation.navigate('notificação', {id : id});
   };
 
   const handleButtonPeople = () => {
@@ -60,7 +60,7 @@ export default function Telaprofile() {
   const { id } = route.params;
   console.log(id);
   const idUser = {
-    
+    userId_code: id
   };
   
   const handleEventImageClick = () => {

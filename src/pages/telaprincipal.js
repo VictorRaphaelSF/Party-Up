@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Pressable, Image, Dimensions, Text, ScrollView, FlatList,  } from 'react-native';
 
-import { useRoute, useNavigation } from '@react-navigation/native';
+import { useRoute, useNavigation, useContext } from '@react-navigation/native';
 import axios from 'axios';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
@@ -17,19 +17,19 @@ export default function Telaprincipal() {
   };
 
   const handleButtonSearch = () => {
-    navigation.navigate('search');
+    navigation.navigate('search', {id : id});
   };
 
 
-  //const route = useRoute();
-  //const { id } = route.params;
-  //console.log(id);
+  const route = useRoute();
+  const { id } = route.params;
+  console.log(id);
   const handleButtonCenter = () => {
     navigation.navigate('cadevento', {id : id});
   };
 
   const handleButtonNotification = () => {
-    navigation.navigate('notificação');
+    navigation.navigate('notificação', {id : id});
   };
 
   const handleButtonPeople = () => {
@@ -37,7 +37,7 @@ export default function Telaprincipal() {
   };
 
   const handleUserImagePress = () => {
-    console.log('Foto de perfil pressionada')
+    navigation.navigate('telaprofile', {id : id})
   };
 
 

@@ -3,6 +3,7 @@ import {StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, Modal} f
 
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 
 export default function Notificações() {
   const navigation = useNavigation();

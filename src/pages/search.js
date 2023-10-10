@@ -4,7 +4,7 @@ import { StyleSheet, View, Pressable, Image, Dimensions, TextInput, KeyboardAvoi
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { useRoute } from '@react-navigation/native';
 
 export default function Search() {
   const [reload, setReload] = useState(0);
@@ -13,6 +13,10 @@ export default function Search() {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const [searchHistory, setSearchHistory] = useState([]);
 
+
+  const route = useRoute();
+  const { id } = route.params;
+  console.log(id);
   useEffect(() => {
     const loadSearchHistory = async () => {
       try {
@@ -53,19 +57,19 @@ export default function Search() {
   };
 
   const handleButtonHome = () => {
-    navigation.navigate('telaprincipal');
+    navigation.navigate('telaprincipal', {id : id});
   };
 
   const handleButtonCenter = () => {
-    navigation.navigate('cadevento');
+    navigation.navigate('cadevento', {id : id});
   };
 
   const handleButtonNotification = () => {
-    navigation.navigate('notificação');
+    navigation.navigate('notificação', {id : id});
   };
 
   const handleButtonPeople = () => {
-    navigation.navigate('telaprofile')
+    navigation.navigate('telaprofile', {id : id})
   };
 
   const handleButtonSuge = () => {
