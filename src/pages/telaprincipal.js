@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Pressable, Image, Dimensions, Text, ScrollView, FlatList } from 'react-native';
+import { StyleSheet, View, Pressable, Image, Dimensions, Text, ScrollView, FlatList,  } from 'react-native';
 
 import { useRoute, useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 
@@ -22,9 +21,9 @@ export default function Telaprincipal() {
   };
 
 
-  const route = useRoute();
-  const { id } = route.params;
-  console.log(id);
+  //const route = useRoute();
+  //const { id } = route.params;
+  //console.log(id);
   const handleButtonCenter = () => {
     navigation.navigate('cadevento', {id : id});
   };
@@ -89,6 +88,15 @@ export default function Telaprincipal() {
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.carousel}
+      />
+
+      <Image 
+        source={require('./img/Eventos(Temporarios)/EventoM(1).png')}
+        style={styles.backgroundImage}
+      />
+      <Image 
+        source={require('./img/Eventos(Temporarios)/EventoM(2).png')}
+        style={styles.backgroundImage1}
       />
 
       <View style={styles.navbar}>
@@ -233,5 +241,23 @@ const styles = StyleSheet.create({
   circleButtonImage: {
     width: 70,
     height: 75,
+  },
+
+  backgroundImage: {
+    position: 'absolute',
+    width: '80%',
+    bottom: 250,
+    height: 200,
+    marginTop: 20,
+    borderRadius: 8,
+  },
+
+  backgroundImage1: {
+    position: 'absolute',
+    width: '80%',
+    bottom: 25,
+    height: 200,
+    marginTop: 20,
+    borderRadius: 8,
   },
 });

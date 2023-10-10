@@ -67,10 +67,6 @@ export default function Eventoedit( {navigation} ) {
         //tag
         setTags(response.data[0].Tag_event);
 
-
-
-
-
         //navigation.navigate('telaprincipal',{id: id});
       })
       .catch((error) => {
