@@ -36,7 +36,7 @@ export default function Telaprofile() {
   }
 
   const handleButtonHome = () => {
-    navigation.navigate('telaprincipal');
+    navigation.navigate('telaprincipal', { id: id });
   };
 
   const handleButtonSearch = () => {
@@ -44,7 +44,7 @@ export default function Telaprofile() {
   };
 
   const handleButtonCenter = () => {
-    navigation.navigate('cadevento', { id: id });
+    navigation.navigate('cadevento');
   };
 
   const handleButtonNotification = () => {
