@@ -19,7 +19,9 @@ export default function Notificações() {
   const closeMenu = () => {
     setMenuVisible(false);
   };
-
+  const route = useRoute();
+  const { id } = route.params;
+  console.log(id);
   return (
     <View style={styles.container}>
       <Image

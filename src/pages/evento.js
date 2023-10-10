@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, Image, ImageBackground, Pressable, Dimensions, Platform, Animated, Easing } from 'react-native';
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
-
+import { useRoute } from '@react-navigation/native';
 
 export default function Evento( {navigation} ) {
   const [backgroundImage, setBackgroundImage] = useState(null);
@@ -38,12 +38,16 @@ export default function Evento( {navigation} ) {
     });
   };
 
+  const route = useRoute();
+  const { id } = route.params;
+  console.log(id);
+
   useEffect(() => {
-    const id ={
+    const idEvent ={
       eventId_code: 1
     }
     axios
-      .post('http://localhost:3003/viewEvent',id)
+      .post('http://localhost:3003/viewEvent',idEvent)
       .then((response) => {
         console.log(response.data[0])
         //nome
@@ -119,11 +123,11 @@ export default function Evento( {navigation} ) {
   };
 
   const handleButtonHome = () => {
-    navigation.navigate('telaprincipal')
+    navigation.navigate('telaprincipal',{id: id})
   };
 
   const handleButtonSearch = () => {
-    navigation.navigate('search');
+    navigation.navigate('search',{id: id});
   };
 
   const handleButtonCenter = () => {
@@ -131,11 +135,11 @@ export default function Evento( {navigation} ) {
   };
 
   const handleButtonNotification = () => {
-    navigation.navigate('notificação');
+    navigation.navigate('notificação',{id: id});
   };
 
   const handleButtonPeople = () => {
-    console.log('Botão perfil pressionado');
+    navigation.navigate('telaprofile',{id: id});
   };
 
   return (

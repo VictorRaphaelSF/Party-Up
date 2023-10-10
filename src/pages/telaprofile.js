@@ -67,7 +67,7 @@ export default function Telaprofile() {
     const idEvent = eventData[0].Id_App_Events;
     setEventId(idEvent);
   
-    navigation.navigate('eventoedit', { eventId });
+    navigation.navigate('eventoedit', {eventId , id: id});
 
   };
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { StyleSheet, View, TextInput, Text, Image, ImageBackground, Pressable, Dimensions, Platform, Animated, Easing } from 'react-native';
 import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
-
+import { useRoute } from '@react-navigation/native';
 
 export default function Eventoedit2({ navigation }) {
 	const [backgroundImage, setBackgroundImage] = useState(null);
@@ -26,6 +26,8 @@ export default function Eventoedit2({ navigation }) {
 	const [siteInfoNovo, setSiteInfoNovo] = useState('');
 	const [tagsNovo, setTagsNovo] = useState('');
 
+	const route = useRoute();
+  	const { id } = route.params;
 
 	useEffect(() => {
 		Animated.timing(animatedValue, {
@@ -41,12 +43,12 @@ export default function Eventoedit2({ navigation }) {
 		outputRange: [0, tituloWidth + 15], // Ajuste conforme necessário
 	});
 
-	const id = {
+	const idEvent = {
 		eventId_code: 1
 	}
 	useEffect(() => {
 		axios
-			.post('http://localhost:3003/viewEvent', id)
+			.post('http://localhost:3003/viewEvent', idEvent)
 			.then((response) => {
 				console.log(response.data[0])
 				//nome
@@ -79,6 +81,7 @@ export default function Eventoedit2({ navigation }) {
 
 				const dtFormatE = (diaE + '-' + mesE + '-' + anoE);
 				const hrFormatE = (horaE + ':' + minutoE);
+				console.log(hrFormatE)
 
 				setDataFim(dtFormatE);
 				setHoraFim(hrFormatE);
@@ -110,7 +113,7 @@ export default function Eventoedit2({ navigation }) {
 			up_Hr_end_code: horaFim,
 			up_Site_contact_code: siteInfo,
 			tag_event_code: tags,
-			up_Id_App_Events: id.eventId_code
+			up_Id_App_Events: idEvent.eventId_code
 		}
 		console.log(updateEvent);
 
@@ -119,7 +122,7 @@ export default function Eventoedit2({ navigation }) {
 	};
 
 	const handleButtonHome = () => {
-		navigation.navigate('telaprincipal')
+		navigation.navigate('telaprincipal',{id: id})
 	};
 
 	const handleButtonSearch = () => {
@@ -131,7 +134,7 @@ export default function Eventoedit2({ navigation }) {
       .post('http://localhost:3003/updateEvent', updateEvent)
       .then((response) => {
         console.log(response);
-        // navigation.navigate('telaprincipal',{id: id});
+        navigation.navigate('evento',{id: id});
       })
       .catch((error) => {
         console.error('Erro ao enviar os dados para o backend:', error);
