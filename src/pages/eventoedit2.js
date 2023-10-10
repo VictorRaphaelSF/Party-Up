@@ -127,7 +127,16 @@ export default function Eventoedit2({ navigation }) {
 	};
 
 	const handleButtonCenter = () => {
-		navigation.navigate('cadevento');
+		axios
+      .post('http://localhost:3003/updateEvent', updateEvent)
+      .then((response) => {
+        console.log(response);
+        // navigation.navigate('telaprincipal',{id: id});
+      })
+      .catch((error) => {
+        console.error('Erro ao enviar os dados para o backend:', error);
+      });
+		// navigation.navigate('cadevento');
 	};
 
 	const handleButtonNotification = () => {

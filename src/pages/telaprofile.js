@@ -62,11 +62,13 @@ export default function Telaprofile() {
   const idUser = {
     userId_code: id
   };
-
+  
   const handleEventImageClick = () => {
-    if (eventId) {
-      navigation.navigate('evento', { eventId });
-    }
+    const idEvent = eventData[0].Id_App_Events;
+    setEventId(idEvent);
+  
+    navigation.navigate('eventoedit', { eventId });
+
   };
 
   useEffect(() => {
@@ -91,7 +93,7 @@ export default function Telaprofile() {
       });
   }, []);
 
-
+console.log(eventData);
   return (
     <View style={styles.container}>
       <Image
