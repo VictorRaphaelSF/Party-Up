@@ -39,20 +39,61 @@ export default function Evento( {navigation} ) {
   };
 
   useEffect(() => {
-    axios.get('Coloque aqui a URL do endpoint que retorna todas as informações')
-      .then(response => {
-        setBackgroundImage({ uri: response.data.url });
-        setTitulo(response.data.titulo);
-        setDescricao(response.data.descricao);
-        setDataInicio(response.data.dataInicio);
-        setDataFim(response.data.dataFim);
-        setHoraInicio(response.data.horaInicio);
-        setHoraFim(response.data.horaFim);
-        setSiteInfo(response.data.siteInfo);
-        setTags(response.data.tags);
+    const id ={
+      eventId_code: 1
+    }
+    axios
+      .post('http://localhost:3003/viewEvent',id)
+      .then((response) => {
+        console.log(response.data[0])
+        //nome
+        setTitulo(response.data[0].Nm_event);
+
+        //descrição
+        setDescricao(response.data[0].desc_event);
+
+        //data início
+        const dataB = new Date(response.data[0].Dt_begin);
+        const anoB = dataB.getFullYear();
+        const mesB = String(dataB.getMonth() + 1).padStart(2, "0");
+        const diaB= String(dataB.getDate()).padStart(2, "0");
+        const horaB = String(dataB.getHours()).padStart(2, "0");
+        const minutoB = String(dataB.getMinutes()).padStart(2, "0");
+
+        const dtFormatB = (diaB + '-' + mesB + '-' + anoB);
+        const hrFormatB = (horaB + ':' + minutoB);
+        
+        setDataInicio(dtFormatB);
+        setHoraInicio(hrFormatB);
+
+        //data fim
+        const dataE = new Date(response.data[0].Dt_end);
+        const anoE = String(dataE.getFullYear()).padStart(2, "0");
+        const mesE = String(dataE.getMonth() + 1).padStart(2, "0");
+        const diaE= String(dataE.getDate()).padStart(2, "0");
+        const horaE = String(dataE.getHours()).padStart(2, "0");
+        const minutoE = String(dataE.getMinutes()).padStart(2, "0");
+
+        const dtFormatE = (diaE + '-' + mesE+ '-' + anoE);
+        const hrFormatE = (horaE + ':' + minutoE);
+        
+        setDataFim(dtFormatE);
+        setHoraFim(hrFormatE);
+
+        //site
+        setSiteInfo(response.data[0].Site_contact);
+
+        //tag
+        setTags(response.data[0].Tag_event);
+
+
+
+
+
+        //navigation.navigate('telaprincipal',{id: id});
       })
-      .catch(error => {
-        console.error('Erro ao obter informações do back end:', error);
+      .catch((error) => {
+        console.error('Erro ao enviar os dados para o backend:', error);
       });
   }, []);
   

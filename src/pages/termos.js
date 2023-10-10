@@ -42,8 +42,8 @@ export default function Termos() {
       .post('http://localhost:3003/cadUser', userData)
       .then((response) => {
         console.log(response);
-        setTermsAccepted(true);
-        navigation.navigate('login', { userImage: route.params.userImage });
+        setTermsAccepted(true); // Marcando os termos como aceitos
+        navigation.navigate('telaprincipal', { userImage: route.params.userImage, id: response.data.id });
       })
       .catch((error) => {
         console.error('Erro ao enviar os dados para o backend:', error);

@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, Modal, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, Modal, TouchableWithoutFeedback, } from 'react-native';
+
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import axios from 'axios';
+
+
 
 export default function Telaprofile() {
   const navigation = useNavigation();
+  const [eventData, setEventData] = useState([]);
   const [profileImage, setProfileImage] = useState(null);
   const [isMenuVisible, setMenuVisible] = useState(false);
   const [name, setName] = useState('');
@@ -39,7 +44,7 @@ export default function Telaprofile() {
   };
 
   const handleButtonCenter = () => {
-    navigation.navigate('cadevento');
+    navigation.navigate('cadevento', { id: id });
   };
 
   const handleButtonNotification = () => {
@@ -47,7 +52,15 @@ export default function Telaprofile() {
   };
 
   const handleButtonPeople = () => {
-    navigation.navigate('telaprofile')
+    navigation.navigate('telaprofile', { id: id })
+  };
+
+
+  const route = useRoute();
+  const { id } = route.params;
+  console.log(id);
+  const idUser = {
+    userId_code: id
   };
 
   const handleEventImageClick = () => {
@@ -57,33 +70,30 @@ export default function Telaprofile() {
   };
 
   useEffect(() => {
+    // axios
+    //   .post('url do back', idUser)
+    //   .then((response) => {
+    //     setProfileImage(response.data.image_url);
+    //   })
+    //   .catch((error) => {
+    //     console.error('Erro ao enviar ou retono de dados para o backend:', error);
+    //   });
+
     axios
-      .get('url da imagem do back')
-      .then(response => {
-        setProfileImage(response.data.image_url);
-        setName(response.data.titulo);
-        setIdade(response.data.idade);
-        setDescricao(response.data.descricao);
+      .post('http://localhost:3003/viewEventUser', idUser)
+      .then((response) => {
+        console.log(response)
+        console.log(response.data.results[0].Nm_event);
+        setEventData(response.data.results);
       })
-      .catch(error => {
-        console.error('Erro ao obter a imagem do backend:', error);
+      .catch((error) => {
+        console.error('Erro ao enviar ou retono de dados para o backend:', error);
       });
   }, []);
 
-  useEffect(() => {
-    axios
-      .get('url da imagem do evento')
-      .then(response => {
-        setEventImage(response.data.image_url);
-        setEventId(response.data.event_id);
-      })
-      .catch(error => {
-        console.error('Erro ao obter a imagem do evento:', error);
-      });
-  }, []);
 
   return (
-    <View style={styles.container}>  
+    <View style={styles.container}>
       <Image
           source={require('./img/telap2.png')}
           style={styles.backgroundImage}
@@ -98,11 +108,13 @@ export default function Telaprofile() {
         )}
     </View>
       <View style={styles.header}>
+        {/* botão de voltar */}
         <Pressable style={styles.backButton} onPress={backbutton}>
           <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
         </Pressable>
       </View>
 
+      {/* menu */}
       <Pressable style={styles.button} onPress={menu}>
           <View style={styles.bttbarra}></View>
           <View style={styles.bttbarra}></View>
@@ -236,7 +248,7 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
   },
-  
+
   textContainer1: {
     position: 'absolute',
     top: 0,

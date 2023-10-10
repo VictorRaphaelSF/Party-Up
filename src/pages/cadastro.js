@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Image, Pressable, Text, TextInput, Platform } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { TextInputMask } from 'react-native-masked-text';
 import { useNavigation } from '@react-navigation/native';
@@ -148,6 +149,7 @@ export default function Cadastro({ navigation }) {
       navigation.navigate('cadastropart2', { userData });
     }
   };
+  
 
   return (
     <View style={styles.container}>
@@ -266,7 +268,7 @@ export default function Cadastro({ navigation }) {
         </View>
 
         <View style={styles.textInputContainer}>
-          <Image source={require('./img/icons/Group.png')} style={styles.lockIcon} />
+        <Image source={require('./img/icons/Group.png')} style={styles.lockIcon} />
           <TextInput
             style={styles.textInput}
             placeholder="CPF ou CNPJ"

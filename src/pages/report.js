@@ -63,7 +63,6 @@ export default function Report({ navigation }) {
   );
 }
 
-
 const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({

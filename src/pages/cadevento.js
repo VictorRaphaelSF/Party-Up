@@ -4,6 +4,8 @@ import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, TextInp
 import * as Animatable from 'react-native-animatable';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
+
 import axios from 'axios';
 
 export default function Cadevento({route}) {
@@ -15,6 +17,8 @@ export default function Cadevento({route}) {
   const [cidade, setCidade] = useState('');
   const [bairro, setBairro] = useState('');
   const [nmrua, setNmrua] = useState('');
+  const [numero, setNumero] = useState('');
+  const [fileName, setFileName] = useState('');
 
   //Linha abaixo somente para validações.
   const [erro, setErro] = useState('');
@@ -29,7 +33,9 @@ export default function Cadevento({route}) {
       quality: 1,
     });
     if (!result.canceled) {
+      const nomeDoArquivo = result.assets[0].uri.split('/').pop();
       setImage(result.assets[0].uri);
+      setFileName(nomeDoArquivo);
     }
   };
   
@@ -68,17 +74,31 @@ export default function Cadevento({route}) {
   //userData["descricao"] = descrição;
   //userData["uri"] = "imagem.png";
 
+  const opa = useRoute();
+  const { id } = opa.params;
+  const eventData = {
+    name_event_code : nmevento,
+		desc_event_code : descrição,
+    nm_estado_code : estado,
+		nm_cidade_code : cidade,
+		nm_bairro_code: bairro,
+		cd_cep_code: cep,
+		nm_rua_code: nmrua,
+		num_residencia_code: numero,
+    nm_image: fileName,
+    idUser_code: id
   
+  }
   
   const handleVamosLaPress = () => {
-    if (!nmevento || !descrição || !cep || !estado || !cidade || !bairro || !nmrua) {
+    if (!nmevento || !descrição || !cep || !estado || !cidade || !bairro || !nmrua || !numero) {
       setErro('Preencha todos os campos obrigatórios.');
       setTimeout(() => {
         setErro('');
       }, 4000);
     } else {
       setErro('');
-      navigation.navigate('cadevento2', { userImage: image   });
+      navigation.navigate('cadevento2', { userImage: image, eventData: eventData, id: id});
     }
   };
   // verificando pra ver se ta certo
@@ -112,7 +132,7 @@ export default function Cadevento({route}) {
           <View style={styles.textInputContainer}>
             <Image source={require('./img/icons/page.png')} style={styles.icon} />
             <TextInput
-              style={styles.textInput}
+              style={styles.textInput2}
               placeholder="Descrição"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               underlineColorAndroid="transparent"
@@ -178,11 +198,23 @@ export default function Cadevento({route}) {
             />
           </View>
 
+          <View style={styles.textInputContainerSmall2}>
+            <TextInput
+              style={styles.textInput2}
+              placeholder="Número"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              underlineColorAndroid="transparent"
+              maxLength={9}
+              value={numero}
+              onChangeText={setNumero}
+            />
+          </View>
+
           <View style={styles.textInputContainerLow}>
             <Image source={require('./img/icons/location.png')} style={styles.iconlocation} />
             <TextInput
               style={styles.textInput}
-              placeholder="Rua e número"
+              placeholder="Rua"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               underlineColorAndroid="transparent"
               maxLength={125}
@@ -190,6 +222,8 @@ export default function Cadevento({route}) {
               onChangeText={setNmrua}
             />
           </View>
+
+               
         </View>
 
         <Pressable onPress={handleImagePicker} style={{ top: -550 }}>

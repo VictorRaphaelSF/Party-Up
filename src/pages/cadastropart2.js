@@ -28,6 +28,7 @@ export default function Logado({route}) {
       setImage(result.assets[0].uri);
       setFileName(nomeDoArquivo);
     }
+    
   };
   
   
@@ -46,60 +47,31 @@ export default function Logado({route}) {
     );
   };
 
-  //const userData = route.params.userData;
+  
+  
+
+  const userData = route.params.userData;
   
   // adicionando mais dados no objeto do cliente
-  //userData["nmUser"] = nmusuario;
-  //userData["descricao"] = descrição;
-  //userData["image"] = image;
+  userData["nmUser"] = nmusuario;
+  userData["descricao"] = descrição;
+  userData["nmImage"] = fileName;
 
   
   
- const handleVamosLaPress = async () => {
-  if (!nmusuario || !descrição) {
-    setErro('Preencha todos os campos obrigatórios.');
-    setTimeout(() => {
-      setErro('');
-    }, 4000);
-    return;
-  }
-
-  if (!image || !fileName) {
-    setErro('Selecione uma imagem e insira o nome do arquivo.');
-    setTimeout(() => {
-      setErro('');
-    }, 4000);
-    return;
-  }
-
-  setErro('');
-
-  const formData = new FormData();
-  formData.append('file', {
-    uri: image,
-    type: `image/${fileName.split('.')[1]}`,
-    name: fileName
-  });
-  // try {
-    axios.post('http://localhost:3003/testeimagem', fileName)
-    .then((response) => {
-
-      console.log(response);
-
-    })
-
-    .catch((error) => {
-
-      console.error('Erro ao enviar os dados para o backend:', error);
-
-    });
-    navigation.navigate('termos', { userImage: image, userData: userData });
+  const handleVamosLaPress = () => {
+    if (!nmusuario || !descrição || !image) {
+      setErro('Preencha todos os campos obrigatórios.');
+      setTimeout(() => {
+        setErro('');
+      }, 4000);
+    } else {
+      console.log(fileName)
+      console.log(image)
+      navigation.navigate('termos', { userImage: image, userData: userData });
     
-    // } catch (error) {
-   //  console.error('Erro ao enviar a imagem: ', error);
-  //   }
-};
-
+    }
+  };
   
   return (
     <ImageBackground

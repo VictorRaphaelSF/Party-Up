@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, Modal, TextInput, ScrollView, ImageBackground, PanResponder,} from 'react-native';
-
+import { useRoute } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
 import { TextInputMask } from 'react-native-masked-text';
@@ -8,6 +8,8 @@ import { TextInputMask } from 'react-native-masked-text';
 import axios from 'axios';
 
 export default function Cadevento2() {
+
+ 
   const [nmtelefone, setTelefone] = useState('');
   const [sitectt, setSitectt] = useState('');
   const [instagram, setInstagram] = useState('');
@@ -15,7 +17,10 @@ export default function Cadevento2() {
   const [searchText, setSearchText] = useState('');
   const [eventtype, setEventtype] = useState('');
   const [accessType, setAccessType] = useState('');
+  const [ClassificationType, setClassificationType] = useState('');
   
+  
+
   const [datainicio, setdataInicio] = useState('');
   const [datafinal, setdataFinal] = useState('');
   const [horainicio, setHoraInicio] = useState('');
@@ -26,23 +31,25 @@ export default function Cadevento2() {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const [isTypeMenuVisible, setTypeMenuVisible] = useState(false);
   const [isAccessTypeMenuVisible, setAccessTypeMenuVisible] = useState(false);
+  const [isClassificationTypeMenuVisible, setClassificationTypeMenuVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
-  const [selectedEventType, setSelectedEventType] = useState(null);
+  const [selectedEventType, setSelectedEventType] = useState(null); 
   const [selectedAccessType, setSelectedAccessType] = useState(null);
+  const [selectedClassificationType, setSelectedClassificationType] = useState(null);
 
   const backbutton = () => {
     navigation.goBack();
   };
 
   const toggleModal = () => {
-    setMenuVisible(!isMenuVisible);
+    setModalVisible(!isModalVisible);
   };
 
   const selectOption = (option) => {
     setSelectedOption(option);
     setSearchText(option);
     setSelectedEventType(option);
-    toggleModal();  
+    // toggleModal();  
     setMenuVisible(false);
   };
 
@@ -82,10 +89,57 @@ export default function Cadevento2() {
     closeAccessTypeMenu();
   };
 
+  const openClassificationTypeMenu = () => {
+    setClassificationTypeMenuVisible(true);
+  };
+
+
+  const closeClassificationTypeMenu = () => {
+    setClassificationTypeMenuVisible(false);
+  };
+
+
+  const selectClassificationType = (ClassificationType) => {
+    setSelectedClassificationType(ClassificationType);
+    setClassificationType(ClassificationType);
+    closeClassificationTypeMenu();
+  };
+
   const InputNum = (value, setter) => {
     const numericValue = value.replace(/[^0-9]/g, '');
     setter(numericValue);
   };
+
+  
+
+  
+  const route = useRoute();
+  const { eventData, id } = route.params;
+  console.log(eventData);
+  eventData["Site_contact_code"] = sitectt;
+  eventData["instagram_user_code"] = instagram;
+  eventData["more_info_code"] = infoctt;
+  eventData["telefone_event_code"] = nmtelefone;
+  eventData["Tp_Event_code"] = eventtype;
+  eventData["Tp_Modality_code"] = accessType;
+  eventData["Event_classification_code"] = ClassificationType;
+  eventData["Dt_begin_code"] = datainicio;
+  eventData["Dt_end_code"] = datafinal;
+  eventData["Hr_begin_code"] = horainicio;
+  eventData["Hr_end_code"] = horafinal;
+  eventData["Tag_event_code"] = searchText;
+ 
+		// Dt_end_code,
+		// Dt_creation_code,
+	
+		// Status_event_code,
+		// Informative_Classification_code,
+		// Event_classification_code//,
+		// Tp_Event_code//,
+		// Tp_Modality_code//,
+		// Site_contact_code//,
+		// more_info_code//,
+		// instagram_user_code//,
   
   const bttCriarEvento = () => {
     if (!nmtelefone || !sitectt || !accessType || !datainicio || !datafinal || !horainicio || !horafinal) {
@@ -95,7 +149,16 @@ export default function Cadevento2() {
       }, 4000);
     } else {
       setErro('');
-      navigation.navigate('evento', { userImage: image });
+      axios
+      .post('http://localhost:3003/cadEvent', eventData)
+      .then((response) => {
+        console.log(response);
+        navigation.navigate('telaprincipal',{id: id});
+      })
+      .catch((error) => {
+        console.error('Erro ao enviar os dados para o backend:', error);
+      });
+
     }
   };
 
@@ -205,6 +268,16 @@ export default function Cadevento2() {
             />
           </Pressable>
         </View>
+        <View style={styles.searchBarContainerLowLow}>
+          <Pressable onPress={openClassificationTypeMenu}>
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Definir classificação do evento"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              value={ClassificationType}
+            />
+          </Pressable>
+        </View>
         <Modal
           style={styles.modalContainer}
           transparent={true}
@@ -252,15 +325,13 @@ export default function Cadevento2() {
               duration={500}
             >
               <View style={styles.dragIndicator} />
-              <Pressable style={styles.menubtt} onPress={() => selectEventType('Aniversário')}>
-                <Text style={styles.menubtttext}>Aniversário</Text>
+              <Pressable style={styles.menubtt} onPress={() => selectEventType('Pago')}>
+                <Text style={styles.menubtttext}>Pago</Text>
               </Pressable>
-              <Pressable style={styles.menubtt} onPress={() => selectEventType('Casamento')}>
-                <Text style={styles.menubtttext}>Casamento</Text>
+              <Pressable style={styles.menubtt} onPress={() => selectEventType('Gratuito')}>
+                <Text style={styles.menubtttext}>Gratuito</Text>
               </Pressable>
-              <Pressable style={styles.menubtt} onPress={() => selectEventType('Conferência')}>
-                <Text style={styles.menubtttext}>Conferência</Text>
-              </Pressable>
+              
             </Animatable.View>
           </Pressable>
         </Modal>
@@ -283,8 +354,28 @@ export default function Cadevento2() {
               <Pressable style={styles.menubtt} onPress={() => selectAccessType('Online')}>
                 <Text style={styles.menubtttext}>Online</Text>
               </Pressable>
-              <Pressable style={styles.menubtt} onPress={() => selectAccessType('Beneficiente')}>
-                <Text style={styles.menubtttext}>Beneficiente</Text>
+            </Animatable.View>
+          </Pressable>
+        </Modal>
+
+        <Modal
+          style={styles.modalContainer}
+          transparent={true}
+          visible={isClassificationTypeMenuVisible}
+          onRequestClose={closeClassificationTypeMenu}
+        >
+          <Pressable onPress={closeClassificationTypeMenu} style={styles.modalBackground} >
+            <Animatable.View
+              style={styles.menuContainer}
+              animation={isClassificationTypeMenuVisible ? 'slideInUp' : 'slideInDown'}
+              duration={500}
+            >
+              <View style={styles.dragIndicator} />
+              <Pressable style={styles.menubtt} onPress={() => selectClassificationType('Público')}>
+                <Text style={styles.menubtttext}>Público</Text>
+              </Pressable>
+              <Pressable style={styles.menubtt} onPress={() => selectClassificationType('Privado')}>
+                <Text style={styles.menubtttext}>Privado</Text>
               </Pressable>
             </Animatable.View>
           </Pressable>
@@ -298,7 +389,7 @@ export default function Cadevento2() {
             underlineColorAndroid="transparent"
             type={'datetime'}
             options={{
-              format: 'DD/MM/YY',
+              format: 'DD/MM/YYYY',
             }}
             value={datainicio}
             onChangeText={setdataInicio}
@@ -328,7 +419,7 @@ export default function Cadevento2() {
               underlineColorAndroid="transparent"
               type={'datetime'}
               options={{
-                format: 'DD/MM/YY',
+                format: 'DD/MM/YYYY',
               }}
               value={datafinal}
               onChangeText={setdataFinal}

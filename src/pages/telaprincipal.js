@@ -21,8 +21,12 @@ export default function Telaprincipal() {
     navigation.navigate('search');
   };
 
+
+  const route = useRoute();
+  const { id } = route.params;
+  console.log(id);
   const handleButtonCenter = () => {
-    navigation.navigate('cadevento');
+    navigation.navigate('cadevento', {id : id});
   };
 
   const handleButtonNotification = () => {
@@ -30,21 +34,25 @@ export default function Telaprincipal() {
   };
 
   const handleButtonPeople = () => {
-    navigation.navigate('telaprofile')
+    navigation.navigate('telaprofile', {id : id})
   };
 
   const handleUserImagePress = () => {
     console.log('Foto de perfil pressionada')
   };
 
-  axios
-      .post('http://localhost:3003/viewEvent')
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error('Erro ao enviar ou retono de dados para o backend:', error);
-      });
+
+  
+
+  // axios
+  //     .post('http://localhost:3003/viewEvent')
+  //     .then((response) => {
+  //       console.log(response);
+
+  //     })
+  //     .catch((error) => {
+  //       console.error('Erro ao enviar ou retono de dados para o backend:', error);
+  //     });
 
   const eventosTemporarios = [
     require('./img/Eventos(Temporarios)/Evento(1).png'),
