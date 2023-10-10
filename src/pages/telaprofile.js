@@ -44,7 +44,7 @@ export default function Telaprofile() {
   };
 
   const handleButtonCenter = () => {
-    navigation.navigate('cadevento');
+    navigation.navigate('cadevento', { id: id });
   };
 
   const handleButtonNotification = () => {
