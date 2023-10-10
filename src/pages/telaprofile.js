@@ -117,16 +117,16 @@ export default function Telaprofile() {
       
        <View style={styles.allContainer}>
        <View styles={styles.nameContainer}>    
-        <Text style={styles.titulo}>Victor{name}</Text>
+        <Text style={styles.titulo}>{name}</Text>
       </View>
 
        <View styles={styles.nameContainer1}>    
-        <Text style={styles.titulo1}>19 Anos{idade}</Text>
+        <Text style={styles.titulo1}>{idade}</Text>
       </View>
       </View>
 
        <View styles={styles.descContainer}>    
-        <Text style={styles.descricao}>Nam quis nulla. Integer malesuada{descricao}</Text>
+        <Text style={styles.descricao}>{descricao}</Text>
       </View>
 
       <View style={styles.line}/>
@@ -445,7 +445,7 @@ const styles = StyleSheet.create({
   },
 
   comentariosTitulo: {
-    top: 70,
+    top: 100,
     color: 'white',
     fontSize: 18,
     fontWeight: 'inter',

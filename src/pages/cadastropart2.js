@@ -46,9 +46,6 @@ export default function Logado({route}) {
     );
   };
 
-  
-  
-
   //const userData = route.params.userData;
   
   // adicionando mais dados no objeto do cliente
@@ -83,7 +80,6 @@ export default function Logado({route}) {
     type: `image/${fileName.split('.')[1]}`,
     name: fileName
   });
-  console.log(fileName)
   // try {
     axios.post('http://localhost:3003/testeimagem', fileName)
     .then((response) => {
@@ -97,13 +93,11 @@ export default function Logado({route}) {
       console.error('Erro ao enviar os dados para o backend:', error);
 
     });
-  
+    navigation.navigate('termos', { userImage: image, userData: userData });
     
-    //navigation.navigate('termos', { userImage: image, userData: userData });
-    
-  // } catch (error) {
-  //   console.error('Erro ao enviar a imagem: ', error);
-  // }
+    // } catch (error) {
+   //  console.error('Erro ao enviar a imagem: ', error);
+  //   }
 };
 
   

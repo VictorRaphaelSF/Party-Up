@@ -39,7 +39,7 @@ export default function Login({ navigation }) {
 					// Lidar com a resposta do servidor, se necessário
 					if (response.data.validateLogin) {
 						console.log('response.ValidadeLogin');
-						navigation.navigate('telaprincipal');
+						navigation.navigate('telaprincipal', { userImage: route.params.userImage });
 					}
 					else {
 						console.log('Email ou senha inválido!')
