@@ -10,13 +10,10 @@ import axios from 'axios';
 
 export default function Telaprofile() {
   const navigation = useNavigation();
-  const [eventData, setEventData] = useState([]);
 
   const backbutton = () => {
     navigation.goBack();
   };
-
-  const [isMenuVisible, setMenuVisible] = useState(false);
 
   const menu = () => {
     setMenuVisible(true);
@@ -43,8 +40,9 @@ export default function Telaprofile() {
   };
 
   const handleButtonPeople = () => {
-    console.log('Botão perfil pressionado');
+    navigation.navigate('telaprofile')
   };
+
 
   const route = useRoute();
   const { id } = route.params;
@@ -70,26 +68,39 @@ export default function Telaprofile() {
     
     console.log(eventData)
   return (
-    <View style={styles.container}>
+    <View style={styles.container}>  
+      <Image
+          source={require('./img/telap.png')}
+          style={styles.backgroundImage}
+          resizeMode="cover"
+        />
+        <View style={styles.circle}>
+      <View style={styles.innerCircle}>
+        {profileImage && (
+          <Image
+            source={{ uri: profileImage }}
+            style={{ flex: 1, width: '100%', borderRadius: 105, backgroundColor: 'black' }}
+          />
+        )}
+      </View>
+      <View style={styles.textContainer}>
+        <Text style={styles.text}>Seguidores</Text>
+      </View>
+      <View style={styles.textContainer1}>
+        <Text style={styles.text}>Seguindo</Text>
+      </View>
+    </View>
       <View style={styles.header}>
-
         <Pressable style={styles.backButton} onPress={backbutton}>
           <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
         </Pressable>
+      </View>
 
-        <Pressable style={styles.button} onPress={menu}>
+      <Pressable style={styles.button} onPress={menu}>
           <View style={styles.bttbarra}></View>
           <View style={styles.bttbarra}></View>
           <View style={styles.bttbarra}></View>
         </Pressable>
-      </View>
-
-      <View style={styles.bottomImageContainer}>
-        <Image
-          source={require('./img/img_borda_inicio.png')}
-          style={styles.bottomImage} 
-        />
-      </View>
 
       <Modal
         transparent={true}
@@ -153,6 +164,58 @@ const styles = StyleSheet.create({
     padding: 16,
   },
 
+  circle: {
+    width: '100%',
+    height: 450,
+    borderRadius: 220 / 2,
+    backgroundColor: 'rgba(123, 85, 85, 0.40)',
+    position: 'absolute',
+    top: (windowHeight * 0.06) - (397 / 2),
+    justifyContent: 'center',
+  },
+
+  innerCircle: {
+    width: 90,
+    height: 90,
+    borderRadius: 105,
+    backgroundColor: '#FFFFFF',
+    overflow: 'hidden',
+    left: 50,
+    top: 70,
+  },
+
+  textContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '60%',
+    position: 'absolute',
+    top: (windowHeight * 0.06) + 220,
+    right: 0,
+  },
+  
+  textContainer1: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '60%',
+    position: 'absolute',
+    top: (windowHeight * 0.06) + 220,
+    left: 275,
+  },
+
+  text: {
+    color: '#FFFFFF',
+    fontSize: 14,
+  },
+
+  backgroundImage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
+
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -172,13 +235,13 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: 'transparent',
-    flexDirection: 'column',
-    alignItems: 'center',
+    position: 'absolute',
     justifyContent: 'center',
+    backgroundColor: 'transparent',
     width: 30,
     height: 18,
-    marginLeft: 150,
+    right: 135,
+    top: 50,
   },
 
   bttbarra: {
@@ -256,11 +319,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     left: '50%',
-    marginLeft: -20,
+    marginLeft: -27,
   },
 
   circleButtonImage: {
-    width: 75,
+    width: 70,
     height: 75,
   },
 

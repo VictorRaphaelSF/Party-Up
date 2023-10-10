@@ -22,6 +22,11 @@ export default function Notificações() {
 
   return (
     <View style={styles.container}>
+      <Image
+          source={require('./img/telap.png')}
+          style={styles.backgroundImage}
+          resizeMode="cover"
+        />
       <View style={styles.header}>
 
         <Pressable style={styles.backButton} onPress={backbutton}>
@@ -38,12 +43,6 @@ export default function Notificações() {
       </Pressable>
 
       <View style={styles.linha}></View>
-      <View style={styles.bottomImageContainer}>
-        <Image
-          source={require('./img/img_borda_inicio.png')}
-          style={styles.bottomImage} 
-        />
-      </View>
 
       <Modal
         transparent={true}
@@ -82,6 +81,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
+  },
+
+  backgroundImage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
   },
 
   header: {

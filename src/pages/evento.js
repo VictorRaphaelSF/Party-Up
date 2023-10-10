@@ -96,7 +96,7 @@ export default function Evento( {navigation} ) {
         console.error('Erro ao enviar os dados para o backend:', error);
       });
   }, []);
-
+  
   const backbutton = () => {
     navigation.goBack();
   };

@@ -65,7 +65,7 @@ export default function Search() {
   };
 
   const handleButtonPeople = () => {
-    console.log('Botão perfil pressionado');
+    navigation.navigate('telaprofile')
   };
 
   const handleButtonSuge = () => {
