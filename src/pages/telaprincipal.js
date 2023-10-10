@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Pressable, Image, Dimensions, Text, ScrollView } from 'react-native';
+import { StyleSheet, View, Pressable, Image, Dimensions, Text, ScrollView, FlatList } from 'react-native';
 
 import { useRoute, useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
+
 
 export default function Telaprincipal() {
   const [reload, setReload] = useState(0);
@@ -34,7 +38,7 @@ export default function Telaprincipal() {
   };
 
   const handleUserImagePress = () => {
-   console.log('Foto de perfil pressionada')
+    console.log('Foto de perfil pressionada')
   };
 
 
@@ -50,6 +54,16 @@ export default function Telaprincipal() {
   //       console.error('Erro ao enviar ou retono de dados para o backend:', error);
   //     });
 
+  const eventosTemporarios = [
+    require('./img/Eventos(Temporarios)/Evento(1).png'),
+    require('./img/Eventos(Temporarios)/Evento(2).png'),
+    require('./img/Eventos(Temporarios)/Evento(3).png'),
+  ];
+
+  const renderItem = ({ item }) => (
+    <Image style={styles.carouselImage} source={item} />
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
@@ -58,15 +72,24 @@ export default function Telaprincipal() {
       </View>
       
       <View style={styles.topUser}>
-      <Pressable onPress={handleUserImagePress}>
-        <Image
-          source={params?.userImage ? { uri: params.userImage } : require('./img/icons/people(f).png')}
-          style={styles.userImage}
-        />
-      </Pressable>
+        <Pressable onPress={handleUserImagePress}>
+          <Image
+            source={params?.userImage ? { uri: params.userImage } : require('./img/icons/people(f).png')}
+            style={styles.userImage}
+          />
+        </Pressable>
       </View>
 
       <Text style={styles.highlightsText}>Destaques</Text>
+
+      <FlatList
+        data={eventosTemporarios}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => index.toString()}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.carousel}
+      />
 
       <View style={styles.navbar}>
         <Pressable style={styles.navButton} onPress={handleButtonHome}>
@@ -158,16 +181,17 @@ const styles = StyleSheet.create({
 
   carousel: {
     alignItems: 'center',
-    paddingVertical: 12,
+    paddingVertical: 24,
     bottom: 170,
     marginVertical: 0,
+    width: '100%',
   },
 
   carouselImage: {
     width: 100,
     height: 200,
     borderRadius: 10,
-    marginHorizontal: 6,
+    marginHorizontal: 12,
     marginVertical: 0,
   },
 

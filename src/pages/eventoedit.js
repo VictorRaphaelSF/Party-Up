@@ -534,16 +534,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
   },
+
   editButton: {
     backgroundColor: '#7E3CA7',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
   },
+
   editButtonText: {
     color: 'white',
     fontSize: 16,
     fontWeight: 'inter',
   },
-  
 });

@@ -13,6 +13,11 @@ export default function Telaprofile() {
   const [eventData, setEventData] = useState([]);
   const [profileImage, setProfileImage] = useState(null);
   const [isMenuVisible, setMenuVisible] = useState(false);
+  const [name, setName] = useState('');
+  const [idade, setIdade] = useState('');
+  const [descricao, setDescricao] = useState('');
+  const [eventImage, setEventImage] = useState(null);
+  const [eventId, setEventId] = useState(null); 
 
   const backbutton = () => {
     navigation.goBack();
@@ -25,6 +30,10 @@ export default function Telaprofile() {
   const closeMenu = () => {
     setMenuVisible(false);
   };
+
+  const handleButtonEdit = () => {
+    console.log('Botão edit pressionado')
+  }
 
   const handleButtonHome = () => {
     navigation.navigate('telaprincipal');
@@ -54,6 +63,12 @@ export default function Telaprofile() {
     userId_code: id
   };
 
+  const handleEventImageClick = () => {
+    if (eventId) {
+      navigation.navigate('evento', { eventId });
+    }
+  };
+
   useEffect(() => {
     // axios
     //   .post('url do back', idUser)
@@ -80,26 +95,18 @@ export default function Telaprofile() {
   return (
     <View style={styles.container}>
       <Image
-        source={require('./img/telap.png')}
-        style={styles.backgroundImage}
-        resizeMode="cover"
-      />
-      <View style={styles.circle}>
-        <View style={styles.innerCircle}>
-          {profileImage && (
-            <Image
-              source={{ uri: profileImage }}
-              style={{ flex: 1, width: '100%', borderRadius: 105, backgroundColor: 'black' }}
-            />
-          )}
-        </View>
-        <View style={styles.textContainer}>
-          <Text style={styles.text}>Seguidores</Text>
-        </View>
-        <View style={styles.textContainer1}>
-          <Text style={styles.text}>Seguindo</Text>
-        </View>
-      </View>
+          source={require('./img/telap2.png')}
+          style={styles.backgroundImage}
+          resizeMode="cover"
+        />
+      <View style={styles.innerCircle}>
+        {profileImage && (
+          <Image
+            source={{ uri: profileImage }}
+            style={{ flex: 1, width: '100%', borderRadius: 105 }}
+          />
+        )}
+    </View>
       <View style={styles.header}>
         {/* botão de voltar */}
         <Pressable style={styles.backButton} onPress={backbutton}>
@@ -109,10 +116,48 @@ export default function Telaprofile() {
 
       {/* menu */}
       <Pressable style={styles.button} onPress={menu}>
-        <View style={styles.bttbarra}></View>
-        <View style={styles.bttbarra}></View>
-        <View style={styles.bttbarra}></View>
+          <View style={styles.bttbarra}></View>
+          <View style={styles.bttbarra}></View>
+          <View style={styles.bttbarra}></View>
+        </Pressable>
+        
+        <View style={styles.editButtonContainer}>
+        <Pressable style={styles.editButton} onPress={handleButtonEdit}>
+          <Text style={styles.editButtonText}>Editar perfil</Text>
+        </Pressable>
+      </View>
+      
+       <View style={styles.allContainer}>
+       <View styles={styles.nameContainer}>    
+        <Text style={styles.titulo}>{name}</Text>
+      </View>
+
+       <View styles={styles.nameContainer1}>    
+        <Text style={styles.titulo1}>{idade}</Text>
+      </View>
+      </View>
+
+       <View styles={styles.descContainer}>    
+        <Text style={styles.descricao}>{descricao}</Text>
+      </View>
+
+      <View style={styles.line}/>
+
+      <Text style={styles.comentariosTitulo}>Meus eventos</Text>
+      
+      
+      
+      <Pressable style={styles.eventImagePlaceholder} onPress={handleEventImageClick}>
+      <View style={styles.eventImagePlaceholderInner}>
+      {eventImage && (
+          <View style={{ width: '100%', height: 200 }}>
+            <Image source={{ uri: eventImage }} style={{ width: '100%', height: '100%', borderRadius: 8 }} />
+          </View>
+      )}
+      </View>
       </Pressable>
+    
+
       <Modal
         transparent={true}
         visible={isMenuVisible}
@@ -125,7 +170,6 @@ export default function Telaprofile() {
               animation={isMenuVisible ? 'slideInUp' : 'slideInDown'}
               duration={500}
             >
-              {''}
               <Pressable style={styles.menubtt} onPress={() => console.log('Item 1 clicado')}>
                 <Text style={styles.menubtttext}>Item 1</Text>
               </Pressable>
@@ -187,31 +231,26 @@ const styles = StyleSheet.create({
   },
 
   innerCircle: {
+    position: 'absolute',
     width: 90,
     height: 90,
     borderRadius: 105,
     backgroundColor: '#FFFFFF',
     overflow: 'hidden',
-    left: 50,
-    top: 70,
+    left: 45,
+    top: 100,
   },
 
   textContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '60%',
     position: 'absolute',
-    top: (windowHeight * 0.06) + 220,
+    top: 0,
     right: 0,
   },
 
   textContainer1: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '60%',
     position: 'absolute',
-    top: (windowHeight * 0.06) + 220,
-    left: 275,
+    top: 0,
+    left: 0,
   },
 
   text: {
@@ -342,5 +381,95 @@ const styles = StyleSheet.create({
   menubtttext: {
     color: '#FFFFFF',
     fontSize: 18,
+  },
+
+  editButtonContainer: {
+    position: 'absolute',
+    top: 225,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+
+  editButton: {
+    backgroundColor: '#7E3CA7',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+  },
+
+  editButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'inter',
+  },
+
+  nameContainer: {
+    position: 'absolute',
+    },
+
+  titulo: {
+    right: 135,
+    bottom: 55,
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'inter',
+  },
+
+  nameContainer1: {
+    position: 'absolute',
+    },
+
+  titulo1: {
+    right: 55,
+    bottom: 75,
+    color: '#919191',
+    fontSize: 16,
+    fontWeight: 'inter',
+  },
+
+  descContainer: {
+    position: 'absolute',
+    },
+
+  descricao: {
+    right: 40,
+    top: 0,
+    color: '#919191',
+    textAlign: 'right',
+    fontSize: 16,
+    fontWeight: 'inter',
+  },
+
+  allContainer: {
+    top: 55,
+  },
+
+  line: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 350,
+    height: 2,
+    backgroundColor: 'white',
+    opacity: 0.6,
+  },
+
+  comentariosTitulo: {
+    top: 100,
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'inter',
+    textAlign: 'left',
+  },
+
+  eventImagePlaceholder: {
+    position: 'absolute',
+    width: 150,
+    height: 100,
+    backgroundColor: 'black',
+    bottom: 175,
+    right: 220, 
+    borderRadius: 8,
+    marginBottom: 16,
   },
 });

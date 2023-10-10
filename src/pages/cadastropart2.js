@@ -51,6 +51,7 @@ export default function Logado({route}) {
   
 
   const userData = route.params.userData;
+  //const userData = route.params.userData;
   
   // adicionando mais dados no objeto do cliente
   userData["nmUser"] = nmusuario;
