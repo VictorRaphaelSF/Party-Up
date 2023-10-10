@@ -268,7 +268,7 @@ export default function Cadevento2() {
             />
           </Pressable>
         </View>
-        <View style={styles.searchBarContainerLowLow}>
+        <View style={styles.searchBarContainerLowLow1}>
           <Pressable onPress={openClassificationTypeMenu}>
             <TextInput
               style={styles.searchInput}
@@ -682,6 +682,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#582C74',
     padding: 12,
     bottom: -40,
+    borderRadius: 10,
+  },
+
+  searchBarContainerLowLow1: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '80%',
+    backgroundColor: '#582C74',
+    padding: 12,
+    bottom: -60,
     borderRadius: 10,
   },
   
