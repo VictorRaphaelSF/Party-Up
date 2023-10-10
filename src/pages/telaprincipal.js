@@ -30,7 +30,7 @@ export default function Telaprincipal() {
   };
 
   const handleButtonPeople = () => {
-    navigation.navigate('telaprofile')
+    navigation.navigate('telaprofile', {id : id})
   };
 
   const handleUserImagePress = () => {

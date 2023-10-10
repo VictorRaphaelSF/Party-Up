@@ -10,6 +10,7 @@ import axios from 'axios';
 
 export default function Telaprofile() {
   const navigation = useNavigation();
+  const [eventData, setEventData] = useState('');
 
   const backbutton = () => {
     navigation.goBack();
@@ -40,7 +41,7 @@ export default function Telaprofile() {
   };
 
   const handleButtonPeople = () => {
-    navigation.navigate('telaprofile')
+    navigation.navigate('telaprofile',{id : id})
   };
 
 
