@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import {StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, Modal, TouchableWithoutFeedback,} from 'react-native';
+import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, Modal, TouchableWithoutFeedback, } from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
-import { useRoute} from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import axios from 'axios';
 
 
@@ -12,6 +12,7 @@ export default function Telaprofile() {
   const navigation = useNavigation();
   const [eventData, setEventData] = useState([]);
   const [profileImage, setProfileImage] = useState(null);
+  const [isMenuVisible, setMenuVisible] = useState(false);
 
   const backbutton = () => {
     navigation.goBack();
@@ -34,7 +35,7 @@ export default function Telaprofile() {
   };
 
   const handleButtonCenter = () => {
-    navigation.navigate('cadevento', {id : id});
+    navigation.navigate('cadevento', { id: id });
   };
 
   const handleButtonNotification = () => {
@@ -42,7 +43,7 @@ export default function Telaprofile() {
   };
 
   const handleButtonPeople = () => {
-    navigation.navigate('telaprofile',{id : id})
+    navigation.navigate('telaprofile', { id: id })
   };
 
 
@@ -54,63 +55,64 @@ export default function Telaprofile() {
   };
 
   useEffect(() => {
+    // axios
+    //   .post('url do back', idUser)
+    //   .then((response) => {
+    //     setProfileImage(response.data.image_url);
+    //   })
+    //   .catch((error) => {
+    //     console.error('Erro ao enviar ou retono de dados para o backend:', error);
+    //   });
+
     axios
-      .post('url do back', idUser)
+      .post('http://localhost:3003/viewEventUser', idUser)
       .then((response) => {
-        setProfileImage(response.data.image_url);
+        console.log(response)
+        console.log(response.data.results[0].Nm_event);
+        setEventData(response.data.results);
       })
       .catch((error) => {
         console.error('Erro ao enviar ou retono de dados para o backend:', error);
       });
+  }, []);
 
-    // axios
-    // .post('http://localhost:3003/viewEventUser', idUser)
-    // .then((response) => {
-    //   console.log(response)
-    //   console.log(response.data.results[0].Nm_event);
-    //   setEventData(response.data.results);
-    // })
-    // .catch((error) => {
-    //   console.error('Erro ao enviar ou retono de dados para o backend:', error);
-    // });
-}, []);
-    
-    console.log(eventData)
+
   return (
-    <View style={styles.container}>  
+    <View style={styles.container}>
       <Image
-          source={require('./img/telap.png')}
-          style={styles.backgroundImage}
-          resizeMode="cover"
-        />
-        <View style={styles.circle}>
-      <View style={styles.innerCircle}>
-        {profileImage && (
-          <Image
-            source={{ uri: profileImage }}
-            style={{ flex: 1, width: '100%', borderRadius: 105, backgroundColor: 'black' }}
-          />
-        )}
+        source={require('./img/telap.png')}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      />
+      <View style={styles.circle}>
+        <View style={styles.innerCircle}>
+          {profileImage && (
+            <Image
+              source={{ uri: profileImage }}
+              style={{ flex: 1, width: '100%', borderRadius: 105, backgroundColor: 'black' }}
+            />
+          )}
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>Seguidores</Text>
+        </View>
+        <View style={styles.textContainer1}>
+          <Text style={styles.text}>Seguindo</Text>
+        </View>
       </View>
-      <View style={styles.textContainer}>
-        <Text style={styles.text}>Seguidores</Text>
-      </View>
-      <View style={styles.textContainer1}>
-        <Text style={styles.text}>Seguindo</Text>
-      </View>
-    </View>
       <View style={styles.header}>
+        {/* botão de voltar */}
         <Pressable style={styles.backButton} onPress={backbutton}>
           <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
         </Pressable>
       </View>
 
+      {/* menu */}
       <Pressable style={styles.button} onPress={menu}>
-          <View style={styles.bttbarra}></View>
-          <View style={styles.bttbarra}></View>
-          <View style={styles.bttbarra}></View>
-        </Pressable>
-
+        <View style={styles.bttbarra}></View>
+        <View style={styles.bttbarra}></View>
+        <View style={styles.bttbarra}></View>
+      </Pressable>
       <Modal
         transparent={true}
         visible={isMenuVisible}
@@ -137,6 +139,7 @@ export default function Telaprofile() {
           </View>
         </TouchableWithoutFeedback>
       </Modal>
+      {/* navbar */}
       <View style={styles.navbar}>
         <Pressable style={styles.navButton} onPress={handleButtonHome}>
           <Image source={require('./img/icons/home(g).png')} style={styles.navButtonImage} />
@@ -201,7 +204,7 @@ const styles = StyleSheet.create({
     top: (windowHeight * 0.06) + 220,
     right: 0,
   },
-  
+
   textContainer1: {
     flexDirection: 'row',
     justifyContent: 'space-between',
