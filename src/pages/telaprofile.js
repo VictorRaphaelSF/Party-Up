@@ -50,8 +50,7 @@ export default function Telaprofile() {
     navigation.navigate('telaprofile')
   };
 
-  const handleButtonEvent = () => {
-    console.log('Evento clicado');
+  const handleEventImageClick = () => {
     if (eventId) {
       navigation.navigate('evento', { eventId });
     }
@@ -133,19 +132,19 @@ export default function Telaprofile() {
       <View style={styles.line}/>
 
       <Text style={styles.comentariosTitulo}>Meus eventos</Text>
-
-      <View style={styles.eventImagePlaceholder}>
+      
+      
+      
+      <Pressable style={styles.eventImagePlaceholder} onPress={handleEventImageClick}>
       <View style={styles.eventImagePlaceholderInner}>
-      </View>
-    </View>
-
-      <Pressable style={styles.buttonEvent} onPress={handleButtonEvent}>
-        {eventImage && (
+      {eventImage && (
           <View style={{ width: '100%', height: 200 }}>
             <Image source={{ uri: eventImage }} style={{ width: '100%', height: '100%', borderRadius: 8 }} />
           </View>
-        )}
+      )}
+      </View>
       </Pressable>
+    
 
       <Modal
         transparent={true}
@@ -159,7 +158,6 @@ export default function Telaprofile() {
               animation={isMenuVisible ? 'slideInUp' : 'slideInDown'}
               duration={500}
             >
-              {''}
               <Pressable style={styles.menubtt} onPress={() => console.log('Item 1 clicado')}>
                 <Text style={styles.menubtttext}>Item 1</Text>
               </Pressable>
@@ -173,6 +171,9 @@ export default function Telaprofile() {
           </View>
         </TouchableWithoutFeedback>
       </Modal>
+
+      
+
       <View style={styles.navbar}>
         <Pressable style={styles.navButton} onPress={handleButtonHome}>
           <Image source={require('./img/icons/home(g).png')} style={styles.navButtonImage} />
@@ -460,11 +461,5 @@ const styles = StyleSheet.create({
     right: 220, 
     borderRadius: 8,
     marginBottom: 16,
-  },
-
-  eventImagePlaceholderInner: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
