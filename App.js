@@ -35,7 +35,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='eventoedit2'>
+      <Stack.Navigator initialRouteName='index'>
         <Stack.Screen 
           options={{
             headerShown: false

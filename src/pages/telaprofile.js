@@ -60,7 +60,7 @@ export default function Telaprofile() {
   const { id } = route.params;
   console.log(id);
   const idUser = {
-    userId_code: id
+    
   };
 
   const handleEventImageClick = () => {
@@ -107,6 +107,18 @@ export default function Telaprofile() {
           />
         )}
     </View>
+
+    <View style={styles.titlesContainer}>
+    <View style={styles.titleContainer}>
+      <Text style={styles.title}>Seguidores</Text>
+      <Text style={styles.number}>0</Text>
+    </View>
+    <View style={styles.titleContainer}>
+      <Text style={styles.title}>Seguindo</Text>
+      <Text style={styles.number}>0</Text>
+    </View>
+  </View>
+
       <View style={styles.header}>
         {/* botão de voltar */}
         <Pressable style={styles.backButton} onPress={backbutton}>
@@ -151,7 +163,10 @@ export default function Telaprofile() {
       <View style={styles.eventImagePlaceholderInner}>
       {eventImage && (
           <View style={{ width: '100%', height: 200 }}>
-            <Image source={{ uri: eventImage }} style={{ width: '100%', height: '100%', borderRadius: 8 }} />
+            <Image 
+            source={params?.userImage ? { uri: eventImage } : require('./img/icons/people(f).png')} 
+            style={{ width: '100%', height: '100%', borderRadius: 8 }}
+            />
           </View>
       )}
       </View>
@@ -294,7 +309,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 18,
     right: 135,
-    top: 50,
+    top: 55,
   },
 
   bttbarra: {
@@ -474,4 +489,31 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 16,
   },
+
+  titlesContainer: {
+    position: 'absolute',
+    top: 110,
+    right: 42,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  
+  titleContainer: {
+    alignItems: 'center',
+    marginHorizontal: 15,
+  },
+  
+  title: {
+    color: 'white',
+    fontSize: 14,
+    opacity: 0.5,
+  },
+  
+  number: {
+    color: '#919191',
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginTop: 5,
+  }  
 });
