@@ -10,7 +10,8 @@ import axios from 'axios';
 
 export default function Telaprofile() {
   const navigation = useNavigation();
-  const [eventData, setEventData] = useState('');
+  const [eventData, setEventData] = useState([]);
+  const [profileImage, setProfileImage] = useState(null);
 
   const backbutton = () => {
     navigation.goBack();
@@ -54,18 +55,25 @@ export default function Telaprofile() {
 
   useEffect(() => {
     axios
-      .post('http://localhost:3003/viewEventUser', idUser)
+      .post('url do back', idUser)
       .then((response) => {
-        console.log(response)
-        console.log(response.data.results[0].Nm_event);
-        setEventData(response.data.results);
+        setProfileImage(response.data.image_url);
       })
       .catch((error) => {
         console.error('Erro ao enviar ou retono de dados para o backend:', error);
       });
 
-      
-    }, []);
+    // axios
+    // .post('http://localhost:3003/viewEventUser', idUser)
+    // .then((response) => {
+    //   console.log(response)
+    //   console.log(response.data.results[0].Nm_event);
+    //   setEventData(response.data.results);
+    // })
+    // .catch((error) => {
+    //   console.error('Erro ao enviar ou retono de dados para o backend:', error);
+    // });
+}, []);
     
     console.log(eventData)
   return (
