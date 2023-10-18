@@ -1,6 +1,6 @@
-node_modules/
-.expo/
-dist/
+node_modules
+.expo
+dist
 npm-debug.*
 *.jks
 *.p8
@@ -8,7 +8,8 @@ npm-debug.*
 *.key
 *.mobileprovision
 *.orig.*
-web-build/
+web-build
+*.vscode
 
 # macOS
 .DS_Store
