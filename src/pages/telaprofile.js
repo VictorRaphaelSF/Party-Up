@@ -32,15 +32,15 @@ export default function Telaprofile() {
   };
 
   const handleButtonEdit = () => {
-    console.log('Botão edit pressionado')
+    console.log('Botão edit pressionado', { id: id })
   }
 
   const handleButtonHome = () => {
-    navigation.navigate('telaprincipal');
+    navigation.navigate('telaprincipal', { id: id });
   };
 
   const handleButtonSearch = () => {
-    navigation.navigate('search');
+    navigation.navigate('search', { id: id });
   };
 
   const handleButtonCenter = () => {
@@ -48,7 +48,7 @@ export default function Telaprofile() {
   };
 
   const handleButtonNotification = () => {
-    navigation.navigate('notificação');
+    navigation.navigate('notificação', { id: id });
   };
 
   const handleButtonPeople = () => {

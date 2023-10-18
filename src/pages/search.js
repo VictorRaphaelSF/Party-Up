@@ -53,19 +53,19 @@ export default function Search() {
   };
 
   const handleButtonHome = () => {
-    navigation.navigate('telaprincipal');
+    navigation.navigate('telaprincipal', { id: id });
   };
 
   const handleButtonCenter = () => {
-    navigation.navigate('cadevento');
+    navigation.navigate('cadevento', { id: id });
   };
 
   const handleButtonNotification = () => {
-    navigation.navigate('notificação');
+    navigation.navigate('notificação', { id: id });
   };
 
   const handleButtonPeople = () => {
-    navigation.navigate('telaprofile')
+    navigation.navigate('telaprofile', { id: id })
   };
 
   const handleButtonSuge = () => {
