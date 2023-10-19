@@ -18,7 +18,7 @@
     "@react-navigation/stack": "^6.3.17",
     "axios": "^1.5.0",
     "date-and-time": "^3.0.3",
-    "expo": "^49.0.13",
+    "expo": "^49.0.15",
     "expo-image-picker": "~14.3.2",
     "expo-status-bar": "~1.6.0",
     "lottie-react-native": "^5.1.6",

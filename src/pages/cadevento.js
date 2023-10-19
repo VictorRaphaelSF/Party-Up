@@ -87,7 +87,6 @@ export default function Cadevento({route}) {
 		num_residencia_code: numero,
     nm_image: fileName,
     idUser_code: id
-  
   }
   
   const handleVamosLaPress = () => {
@@ -198,7 +197,7 @@ export default function Cadevento({route}) {
             />
           </View>
 
-          <View style={styles.textInputContainerSmall2}>
+          <View style={styles.textInputContainerSmallCenter}>
             <TextInput
               style={styles.textInput2}
               placeholder="Número"
@@ -290,7 +289,7 @@ const styles = StyleSheet.create({
 
   button: {
     position: 'absolute',
-    backgroundColor: 'rgba(255, 1, 108, 0.4)',
+    backgroundColor: 'rgba(255, 1, 108, 0.60)',
     paddingVertical: 14,
     paddingHorizontal: 100,
     justifyContent: 'center',
@@ -339,7 +338,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#FFFFFF',
     marginBottom: 13,
     justifyContent: 'center',
-    top: 194,
+    top: 184,
   },
 
   textInputContainerSmall2: {
@@ -352,7 +351,19 @@ const styles = StyleSheet.create({
     borderBottomColor: '#FFFFFF',
     marginBottom: 13,
     justifyContent: 'center',
-    top: 68,
+    top: 58,
+  },
+
+  textInputContainerSmallCenter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: Platform.OS === 'web' ? '45%' : '80%',
+    height: Platform.OS === 'web' ? 50 : 55,
+    borderBottomWidth: 1,  
+    borderBottomColor: '#FFFFFF',
+    marginBottom: 13,
+    justifyContent: 'center',
+    top: 58,
   },
 
   textInputContainerLow: {
@@ -364,7 +375,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#FFFFFF',
     marginBottom: 13,
     justifyContent: 'center',
-    top: 65,
+    top: 45,
   },
 
   textInput: {

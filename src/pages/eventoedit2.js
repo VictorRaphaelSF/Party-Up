@@ -14,6 +14,12 @@ export default function Eventoedit2({ navigation }) {
 	const [horaFim, setHoraFim] = useState('');
 	const [siteInfo, setSiteInfo] = useState('');
 	const [tags, setTags] = useState('');
+	const [typeEvent, setTypeEvent] = useState('');
+	const [modalityEvent, setModality] = useState('');
+	const [classificationEvent, setClassication] = useState('');
+	const [moreInfo, setMoreInfo] = useState('');
+	
+	const [statusEvent, setStatusEvent] = useState('');
 	const [tituloWidth, setTituloWidth] = useState(0);
 	const animatedValue = useRef(new Animated.Value(0)).current;
 
@@ -25,6 +31,10 @@ export default function Eventoedit2({ navigation }) {
 	const [horaFimNovo, setHoraFimNovo] = useState('');
 	const [siteInfoNovo, setSiteInfoNovo] = useState('');
 	const [tagsNovo, setTagsNovo] = useState('');
+	const [typeNovo, setTypeNovo] = useState('');
+	const [statusNovo, setStatusNOvo] = useState('');
+	const [modalityNovo, setModalityNovo] = useState('');
+	const [classificationNovo, setClassificationNovo] = useState('');
 
 
 	useEffect(() => {
@@ -110,7 +120,12 @@ export default function Eventoedit2({ navigation }) {
 			up_Hr_end_code: horaFim,
 			up_Site_contact_code: siteInfo,
 			tag_event_code: tags,
-			up_Id_App_Events: id.eventId_code
+			up_Id_App_Events: id.eventId_code,
+			tp_Event_code: typeEvent,
+			up_Status_event_code : statusEvent,
+			up_Informative_Classification_code: classificationEvent,
+			up_Tp_Modality_code: modalityEvent,
+
 		}
 		console.log(updateEvent);
 
@@ -118,33 +133,15 @@ export default function Eventoedit2({ navigation }) {
 		navigation.goBack();
 	};
 
-	const handleButtonHome = () => {
-		navigation.navigate('telaprincipal')
-	};
-
-	const handleButtonSearch = () => {
-		navigation.navigate('search');
-	};
-
-	const handleButtonCenter = () => {
-		navigation.navigate('cadevento');
-	};
-
-	const handleButtonNotification = () => {
-		navigation.navigate('notificação');
-	};
-
-	const handleButtonPeople = () => {
-		console.log('Botão perfil pressionado');
-	};
-
 	const [editDescription, setEditDescription] = useState(false);
 	const [editTitle, setEditTitle] = useState(false);
 	const [editSite, setEditSite] = useState(false);
 	const [editTags, setEditTags] = useState(false);
 	const [editData, setEditData] = useState(false);
-
-
+	const [editType, setEditType] = useState(false);
+	const [editStatus, setEditStatus] = useState(false);
+	const [editClassification, setEditClassification] = useState(false);
+	const [editModality, setEditModality] = useState(false);
 	
 	return (
 		<View style={styles.container}>
@@ -304,27 +301,106 @@ export default function Eventoedit2({ navigation }) {
 								/>
 								: <Text style={styles.tagsTexto}>{tags}</Text>
 						}
-
 					</View>
 
-					<View style={styles.line} />
-
-					<View style={styles.comentariosContainer}>
-						<Text style={styles.comentariosTitulo}>Comentários</Text>
-						<Image
-							source={require('./img/icons/loading.png')}
-							style={styles.imagemComentarios}
-						/>
-						<Text style={styles.semComentarios}>Sem comentários disponíveis</Text>
+					<View style={styles.typeContainer}>
+						<View style={styles.tituloContainer}>
+							<Text style={styles.typeTitulo}>Tipo do evento</Text>
+							<Pressable onPress={() => {
+								setEditType(!editType)
+							}}>
+								<Image
+									source={require('./img/icons/pencil(g).png')}
+									style={styles.imagemTitulo}
+								/>
+							</Pressable>
+						</View>
+						{
+							editTags
+								? <TextInput
+									style={styles.typeTexto}
+									onChangeText={e => setTypeEvent(e)}
+									value={typeEvent}
+								/>
+								: <Text style={styles.typeTexto}>{typeEvent}</Text>
+						}
 					</View>
 
-					<View style={styles.line3} />
+					<View style={styles.statusContainer}>
+						<View style={styles.tituloContainer}>
+							<Text style={styles.statusTitulo}>Status do evento</Text>
+							<Pressable onPress={() => {
+								setEditStatus(!editStatus)
+							}}>
+								<Image
+									source={require('./img/icons/pencil(g).png')}
+									style={styles.imagemTitulo}
+								/>
+							</Pressable>
+						</View>
+						{
+							editTags
+								? <TextInput
+									style={styles.statusTexto}
+									onChangeText={e => setStatusEvent(e)}
+									value={statusEvent}
+								/>
+								: <Text style={styles.statusTexto}>{statusEvent}</Text>
+						}
+					</View>
+
+					<View style={styles.modalidadeContainer}>
+						<View style={styles.tituloContainer}>
+							<Text style={styles.modalidadeTitulo}>Modalidade</Text>
+							<Pressable onPress={() => {
+								setEditModality(!editModality)
+							}}>
+								<Image
+									source={require('./img/icons/pencil(g).png')}
+									style={styles.imagemTitulo}
+								/>
+							</Pressable>
+						</View>
+						{
+							editTags
+								? <TextInput
+									style={styles.statusTexto}
+									onChangeText={e => setModality(e)}
+									value={modalityEvent}
+								/>
+								: <Text style={styles.modalidadeTexto}>{modalityEvent}</Text>
+						}
+					</View>
+
+					<View style={styles.classificationContainer}>
+						<View style={styles.tituloContainer}>
+							<Text style={styles.classificationTitulo}>Classificação</Text>
+							<Pressable onPress={() => {
+								setEditClassification(!editClassification)
+							}}>
+								<Image
+									source={require('./img/icons/pencil(g).png')}
+									style={styles.imagemTitulo}
+								/>
+							</Pressable>
+						</View>
+						{
+							editTags
+								? <TextInput
+									style={styles.statusTexto}
+									onChangeText={e => setClassication(e)}
+									value={classificationEvent}
+								/>
+								: <Text style={styles.classificationTexto}>{classificationEvent}</Text>
+						}
+					</View>
 
 					<View style={styles.line2} />
 
 					<Pressable style={styles.backButton} onPress={backbutton}>
 						<Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
 					</Pressable>
+
 					<View style={styles.square}>
 						<View style={styles.flexRow}>
 							{
@@ -350,37 +426,14 @@ export default function Eventoedit2({ navigation }) {
 							}}>
 								<Image
 									source={require('./img/icons/pencil(g).png')}
-									style={[styles.imagemTitulo1, { left: imagemTituloLeft }]}
+									style={[styles.imagemTitulo2, { left: imagemTituloLeft }]}
 								/>
 							</Pressable>
-
 						</View>
-
 					</View>
 
 				</ScrollView>
 			</ImageBackground>
-			<View style={styles.navbar} zIndex={2}>
-				<Pressable style={styles.navButton} onPress={handleButtonHome}>
-					<Image source={require('./img/icons/home(g).png')} style={styles.navButtonImage} />
-				</Pressable>
-
-				<Pressable style={[styles.navButton, { left: -15 }]} onPress={handleButtonSearch}>
-					<Image source={require('./img/icons/search(g).png')} style={styles.navButtonImage} />
-				</Pressable>
-
-				<Pressable style={[styles.circleButton, { bottom: 30 }]} onPress={handleButtonCenter}>
-					<Image source={require('./img/icons/add(g).png')} style={styles.circleButtonImage} />
-				</Pressable>
-
-				<Pressable style={[styles.navButton, { left: 15 }]} onPress={handleButtonNotification}>
-					<Image source={require('./img/icons/notification(g).png')} style={styles.navButtonImage} />
-				</Pressable>
-
-				<Pressable style={styles.navButton} onPress={handleButtonPeople}>
-					<Image source={require('./img/icons/people(g).png')} style={styles.navButtonImage} />
-				</Pressable>
-			</View>
 		</View>
 	);
 }
@@ -514,7 +567,7 @@ const styles = StyleSheet.create({
 	descricaoContainer: {
 		marginVertical: 8,
 		position: 'absolute',
-		top: windowHeight / 2 + -10,
+		top: windowHeight / 2 + -125,
 		left: 15,
 		zIndex: 1,
 	},
@@ -537,7 +590,7 @@ const styles = StyleSheet.create({
 
 	dataContainer: {
 		marginVertical: 54,
-		top: windowHeight / 2 + 15 + 10,
+		top: windowHeight / 2 + -75,
 		left: 15,
 		zIndex: 1,
 	},
@@ -566,7 +619,7 @@ const styles = StyleSheet.create({
 	siteInfoContainer: {
 		marginVertical: 8,
 		position: 'absolute',
-		top: windowHeight / 2 + 175,
+		top: windowHeight / 2 + 75,
 		left: 15,
 		zIndex: 1,
 	},
@@ -588,7 +641,7 @@ const styles = StyleSheet.create({
 	tagsContainer: {
 		marginVertical: 8,
 		position: 'absolute',
-		top: windowHeight / 2 + 225,
+		top: windowHeight / 2 + 145,
 		left: 15,
 		zIndex: 1,
 	},
@@ -607,54 +660,92 @@ const styles = StyleSheet.create({
 		opacity: 0.5,
 	},
 
-	navbar: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'space-between',
-		backgroundColor: '#380053',
-		padding: 10,
+	typeContainer: {
+		marginVertical: 8,
 		position: 'absolute',
-		bottom: 0,
-		left: 0,
-		right: 0,
+		top: windowHeight / 2 + 215,
+		left: 15,
+		zIndex: 1,
 	},
 
-	navButton: {
-		flex: 1,
-		alignItems: 'center',
-		padding: 10,
+	typeTitulo: {
+		color: 'white',
+		fontSize: 18,
+		fontWeight: 'inter',
+		textAlign: 'left',
 	},
 
-	navButtonImage: {
-		width: 20,
-		height: 20,
+	typeTexto: {
+		color: 'white',
+		fontSize: 16,
+		marginTop: 10,
+		opacity: 0.5,
 	},
 
-	circleButton: {
-		width: 60,
-		height: 60,
-		backgroundColor: 'transparent',
-		alignItems: 'center',
-		justifyContent: 'center',
+	statusContainer: {
+		marginVertical: 8,
 		position: 'absolute',
-		bottom: 0,
-		left: '50%',
-		marginLeft: -27,
+		top: windowHeight / 2 + 280,
+		left: 15,
+		zIndex: 1,
 	},
 
-	circleButtonImage: {
-		width: 70,
-		height: 75,
+	statusTitulo: {
+		color: 'white',
+		fontSize: 18,
+		fontWeight: 'inter',
+		textAlign: 'left',
 	},
 
-	line: {
+	statusTexto: {
+		color: 'white',
+		fontSize: 16,
+		marginTop: 10,
+		opacity: 0.5,
+	},
+
+	modalidadeContainer: {
+		marginVertical: 8,
 		position: 'absolute',
-		left: 0,
-		right: 0,
-		bottom: -530,
-		height: 2,
-		backgroundColor: 'white',
-		opacity: 0.6,
+		top: windowHeight / 2 + 345,
+		left: 15,
+		zIndex: 1,
+	},
+
+	modalidadeTitulo: {
+		color: 'white',
+		fontSize: 18,
+		fontWeight: 'inter',
+		textAlign: 'left',
+	},
+
+	modalidadeTexto: {
+		color: 'white',
+		fontSize: 16,
+		marginTop: 10,
+		opacity: 0.5,
+	},
+
+	classificationContainer: {
+		marginVertical: 8,
+		position: 'absolute',
+		top: windowHeight / 2 + 410,
+		left: 15,
+		zIndex: 1,
+	},
+
+	classificationTitulo: {
+		color: 'white',
+		fontSize: 18,
+		fontWeight: 'inter',
+		textAlign: 'left',
+	},
+
+	classificationTexto: {
+		color: 'white',
+		fontSize: 16,
+		marginTop: 10,
+		opacity: 0.5,
 	},
 
 	line2: {
@@ -662,16 +753,6 @@ const styles = StyleSheet.create({
 		left: 0,
 		right: 0,
 		bottom: -890,
-		height: 2,
-		backgroundColor: 'white',
-		opacity: 0.6,
-	},
-
-	line3: {
-		position: 'absolute',
-		left: 0,
-		right: 0,
-		bottom: -790,
 		height: 2,
 		backgroundColor: 'white',
 		opacity: 0.6,
@@ -721,11 +802,15 @@ const styles = StyleSheet.create({
 	},
 
 	imagemTitulo1: {
-		// position: 'absolute',
-		// left: 0,
-		// bottom: 12,
+		bottom: 12,
 		width: 30,
 		height: 30,
+	},
+
+	imagemTitulo2: {
+		bottom: 12,
+		width: 25,
+		height: 25,
 	},
 
 	tituloContainer: {
@@ -734,17 +819,14 @@ const styles = StyleSheet.create({
 	},
 
 	imagemTitulo: {
-		marginLeft: 10, // Ajuste conforme necessário
-		width: 20, // Ajuste conforme necessário
-		height: 20, // Ajuste conforme necessário
+		marginLeft: 10,
+		width: 20,
+		height: 20, 
 	},
-
 
 	flexRow: {
 		flexDirection: "row",
 		alignItems: "center",
 		gap: 12,
 	}
-
-
 });
