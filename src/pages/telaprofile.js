@@ -62,6 +62,10 @@ export default function Telaprofile() {
   const idUser = {
     userId_code: id
   };
+
+  const { imgProfile } = route.params;
+  console.log(imgProfile);
+  
   
   const handleEventImageClick = () => {
     const idEvent = eventData[0].Id_App_Events;
@@ -166,7 +170,8 @@ console.log(eventData);
       {eventImage && (
           <View style={{ width: '100%', height: 200 }}>
             <Image 
-            source={params?.userImage ? { uri: eventImage } : require('./img/icons/people(f).png')} 
+            source={`data:image/png;base64,${imgProfile}`}
+            // style={styles.userImage}
             style={{ width: '100%', height: '100%', borderRadius: 8 }}
             />
           </View>

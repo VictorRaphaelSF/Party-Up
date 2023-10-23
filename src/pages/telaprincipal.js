@@ -41,7 +41,7 @@ export default function Telaprincipal() {
   };
 
   const handleButtonPeople = () => {
-    navigation.navigate("telaprofile", { id: id });
+    navigation.navigate("telaprofile", { id: id, imgProfile: imgProfile});
   };
 
   const handleUserImagePress = () => {
@@ -78,7 +78,7 @@ export default function Telaprincipal() {
         console.log('====================================');
         console.log(id);
         console.log('====================================');
-        setImgProfile(e.data.results[0].Image_data);
+        setImgProfile(e.data.results[0].User_image);
       });
   }, [])
 
