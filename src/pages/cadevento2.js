@@ -111,7 +111,7 @@ export default function Cadevento2() {
   };
 
   
-
+  
   
   const route = useRoute();
   const { eventData, id } = route.params;

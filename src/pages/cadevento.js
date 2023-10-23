@@ -18,13 +18,13 @@ export default function Cadevento({route}) {
   const [bairro, setBairro] = useState('');
   const [nmrua, setNmrua] = useState('');
   const [numero, setNumero] = useState('');
-  const [fileName, setFileName] = useState('');
 
   //Linha abaixo somente para validações.
   const [erro, setErro] = useState('');
   const [image, setImage] = useState(null);
   const navigation = useNavigation();
-  
+  const [imageData, setImageData] = useState("");
+
   const handleImagePicker = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       aspect: [4, 4],
@@ -32,11 +32,14 @@ export default function Cadevento({route}) {
       base64: true,
       quality: 1,
     });
+
     if (!result.canceled) {
-      const nomeDoArquivo = result.assets[0].uri.split('/').pop();
+      const imageB64 = result.assets[0].base64;
       setImage(result.assets[0].uri);
-      setFileName(nomeDoArquivo);
+      setImageData(imageB64);
     }
+
+    console.log(result.assets[0].base64);
   };
   
   const backbutton = () => {
@@ -85,7 +88,7 @@ export default function Cadevento({route}) {
 		cd_cep_code: cep,
 		nm_rua_code: nmrua,
 		num_residencia_code: numero,
-    nm_image: fileName,
+    img_Data: imageData,
     idUser_code: id
   
   }
