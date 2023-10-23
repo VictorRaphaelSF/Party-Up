@@ -29,6 +29,7 @@ import Tags from './src/pages/tags';
 import Comentario from './src/pages/comentario';
 import Myevent from './src/pages/myevent';
 import Eventoedit2 from './src/pages/eventoedit2';
+import Event_progress from './src/pages/event_progress';
 
 const Stack = createNativeStackNavigator();
 
@@ -179,6 +180,12 @@ export default function App() {
           headerShown: false
         }}
         name='eventoedit2' component={Eventoedit2}
+        />
+        <Stack.Screen
+        options={{
+          headerShown: false
+        }}
+        name='event_progress' component={Event_progress}
         />
       </Stack.Navigator>
     </NavigationContainer>

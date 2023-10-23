@@ -56,12 +56,11 @@ export default function Telaprofile() {
   };
 
 
-  const route = useRoute();
-  const { id } = route.params;
-  console.log(id);
-  const idUser = {
-    
-  };
+  // const route = useRoute();
+  // const { id } = route.params;
+  // console.log(id);
+  // const idUser = {
+  // };
 
   const handleEventImageClick = () => {
     if (eventId) {
@@ -80,7 +79,7 @@ export default function Telaprofile() {
     //   });
 
     axios
-      .post('http://localhost:3003/viewEventUser', idUser)
+      .post('http://localhost:3003/viewEventUser', /*idUser*/)
       .then((response) => {
         console.log(response)
         console.log(response.data.results[0].Nm_event);
@@ -141,11 +140,11 @@ export default function Telaprofile() {
       
        <View style={styles.allContainer}>
        <View styles={styles.nameContainer}>    
-        <Text style={styles.titulo}>{name}</Text>
+        <Text style={styles.titulo}>Victor{name}</Text>
       </View>
 
        <View styles={styles.nameContainer1}>    
-        <Text style={styles.titulo1}>{idade}</Text>
+        <Text style={styles.titulo1}>12{idade} Anos</Text>
       </View>
       </View>
 
@@ -183,7 +182,7 @@ export default function Telaprofile() {
             <Animatable.View
               style={styles.menuContainer}
               animation={isMenuVisible ? 'slideInUp' : 'slideInDown'}
-              duration={500}
+              duration={250}
             >
               <Pressable style={styles.menubtt} onPress={() => console.log('Item 1 clicado')}>
                 <Text style={styles.menubtttext}>Item 1</Text>
@@ -483,9 +482,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 150,
     height: 100,
-    backgroundColor: 'black',
     bottom: 175,
-    right: 220, 
+    left: 12,
     borderRadius: 8,
     marginBottom: 16,
   },
