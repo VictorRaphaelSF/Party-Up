@@ -195,13 +195,22 @@ export default function Telaprofile() {
               duration={250}
             >
               <Pressable style={styles.menubtt} onPress={() => console.log('Item 1 clicado')}>
-                <Text style={styles.menubtttext}>Item 1</Text>
+                <Text style={styles.menubtttext}>Configurações</Text>
+              </Pressable>
+              <Pressable style={styles.menubtt} onPress={() => console.log('Item 1 clicado')}>
+                <Text style={styles.menubtttext}>Configurações</Text>
+              </Pressable>
+              <Pressable style={styles.menubtt} onPress={() => console.log('Item 1 clicado')}>
+                <Text style={styles.menubtttext}>Teste</Text>
+              </Pressable>
+              <Pressable style={styles.menubtt} onPress={() => console.log('Item 1 clicado')}>
+                <Text style={styles.menubtttext}>Configurações</Text>
               </Pressable>
               <Pressable style={styles.menubtt} onPress={() => console.log('Item 2 clicado')}>
-                <Text style={styles.menubtttext}>Item 2</Text>
+                <Text style={styles.menubtttext}>Termos</Text>
               </Pressable>
               <Pressable style={styles.menubtt} onPress={() => console.log('Item 3 clicado')}>
-                <Text style={styles.menubtttext}>Item 3</Text>
+                <Text style={styles.menubtttext}>Sair</Text>
               </Pressable>
             </Animatable.View>
           </View>
