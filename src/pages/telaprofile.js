@@ -66,11 +66,11 @@ export default function Telaprofile() {
   };
 
 
-  const route = useRoute();
-  const { id } = route.params;
-  console.log(id);
-  const idUser = {
-  };
+  // const route = useRoute();
+  // const { id } = route.params;
+  // console.log(id);
+  // const idUser = {
+  // };
 
   const handleEventImageClick = () => {
     if (eventId) {
@@ -78,27 +78,27 @@ export default function Telaprofile() {
     }
   };
 
-  useEffect(() => {
-    axios
-      .post('url do back', idUser)
-      .then((response) => {
-        setProfileImage(response.data.image_url);
-      })
-      .catch((error) => {
-        console.error('Erro ao enviar ou retono de dados para o backend:', error);
-      });
+  // useEffect(() => {
+  //   axios
+  //     .post('url do back', idUser)
+  //     .then((response) => {
+  //       setProfileImage(response.data.image_url);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Erro ao enviar ou retono de dados para o backend:', error);
+  //     });
 
-    axios
-      .post('http://localhost:3003/viewEventUser', /*idUser*/)
-      .then((response) => {
-        console.log(response)
-        console.log(response.data.results[0].Nm_event);
-        setEventData(response.data.results);
-      })
-      .catch((error) => {
-        console.error('Erro ao enviar ou retono de dados para o backend:', error);
-      });
-  }, []);
+  //   axios
+  //     .post('http://localhost:3003/viewEventUser', /*idUser*/)
+  //     .then((response) => {
+  //       console.log(response)
+  //       console.log(response.data.results[0].Nm_event);
+  //       setEventData(response.data.results);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Erro ao enviar ou retono de dados para o backend:', error);
+  //     });
+  // }, []);
 
 
   return (
@@ -150,17 +150,17 @@ export default function Telaprofile() {
       
        <View style={styles.allContainer}>
        <View styles={styles.nameContainer}>    
-        <Text style={styles.titulo}>Victor Raphael{name}</Text>
+        <Text style={styles.titulo}>{name}</Text>
       </View>
 
        <View styles={styles.nameContainer1}>    
-        <Text style={styles.titulo1}>19{idade} Anos</Text>
+        <Text style={styles.titulo1}>{idade} Anos</Text>
       </View>
       </View>
 
       <View style={styles.allContainerOne}>
        <View styles={styles.descContainer}>    
-        <Text style={styles.descricao}>bdebdfbdfbebwrbf~bwerpnk{descricao}</Text>
+        <Text style={styles.descricao}>{descricao}</Text>
       </View>
       </View>
 
@@ -437,7 +437,7 @@ const styles = StyleSheet.create({
     right: 135,
     bottom: 55,
     color: 'white',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'inter',
   },
 
@@ -445,10 +445,10 @@ const styles = StyleSheet.create({
     },
 
   titulo1: {
-    right: 115,
+    right: 130,
     bottom: 50,
     color: '#919191',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'inter',
   },
 
@@ -456,24 +456,25 @@ const styles = StyleSheet.create({
     },
 
   descricao: {
-    top: 0,
+    top: -10,
     color: '#919191',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'inter',
+    maxWidth: 300,
   },
 
   allContainer: {
     position: 'absolute',
     left: 152,
     flexDirection: 'row',
-    top: 435,
+    top: 440,
   },
 
   allContainerOne: {
     position: 'absolute',
     left: 20,
     flexDirection: 'row',
-    top: 435,
+    top: 420,
   },
 
   line: {
