@@ -158,7 +158,6 @@ export default function Cadevento2() {
       .catch((error) => {
         console.error('Erro ao enviar os dados para o backend:', error);
       });
-
     }
   };
 
@@ -268,7 +267,7 @@ export default function Cadevento2() {
             />
           </Pressable>
         </View>
-        <View style={styles.searchBarContainerLowLow}>
+        <View style={styles.searchBarContainerLowLowLow}>
           <Pressable onPress={openClassificationTypeMenu}>
             <TextInput
               style={styles.searchInput}
@@ -671,7 +670,7 @@ const styles = StyleSheet.create({
     width: '80%',
     backgroundColor: '#582C74',
     padding: 12,
-    bottom: -20,
+    bottom: -15,
     borderRadius: 10,
   },
 
@@ -681,7 +680,16 @@ const styles = StyleSheet.create({
     width: '80%',
     backgroundColor: '#582C74',
     padding: 12,
-    bottom: -40,
+    bottom: -30,
+    borderRadius: 10,
+  },
+  searchBarContainerLowLowLow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '80%',
+    backgroundColor: '#582C74',
+    padding: 12,
+    bottom: -45,
     borderRadius: 10,
   },
   
