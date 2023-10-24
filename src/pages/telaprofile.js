@@ -56,11 +56,11 @@ export default function Telaprofile() {
   };
 
 
-  // const route = useRoute();
-  // const { id } = route.params;
-  // console.log(id);
-  // const idUser = {
-  // };
+  const route = useRoute();
+  const { id } = route.params;
+  console.log(id);
+  const idUser = {
+  };
 
   const handleEventImageClick = () => {
     if (eventId) {

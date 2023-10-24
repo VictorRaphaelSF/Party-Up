@@ -289,7 +289,7 @@ export default function Cadevento2() {
               animation={isMenuVisible ? 'slideInUp' : 'slideInDown'}
               duration={500}
             >
-              <View style={styles.dragIndicator} />
+              <View style={styles.dragIndicator}/>
               <Pressable style={styles.menubtt} onPress={() => selectOption('Rock')}>
                 <Text style={styles.menubtttext}>Rock</Text>
               </Pressable>

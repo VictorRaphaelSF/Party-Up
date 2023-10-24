@@ -119,19 +119,19 @@ export default function Search() {
         </Pressable>
 
         <ScrollView
-        style={styles.termsContainer}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.termsContent}
+          style={styles.termsContainer}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.termsContent}
         >
-        {searchHistory.map((term, index) => (
-        <View style={styles.searchHistoryItemContainer} key={index}>
-        <Image source={require('./img/icons/search(g).png')} style={styles.searchHistoryIcon} />
-        <Pressable onPress={() => setSearchTerm(term)}>
-          <Text style={styles.searchHistoryItem}>{term}</Text>
-        </Pressable>
-      </View>
-        ))}
-      </ScrollView>
+          {searchHistory.map((term, index) => (
+            <View style={styles.searchHistoryItemContainer} key={index}>
+              <Image source={require('./img/icons/search(g).png')} style={styles.searchHistoryIcon} />
+              <Pressable onPress={() => setSearchTerm(term)}>
+                <Text style={styles.searchHistoryItem}>{term}</Text>
+              </Pressable>
+            </View>
+          ))}
+        </ScrollView>
 
 
         <Modal
@@ -143,17 +143,55 @@ export default function Search() {
             <Animatable.View
               style={styles.menuContainer}
               animation={isMenuVisible ? 'slideInUp' : 'slideInDown'}
-              duration={500}
+              duration={250}
             >
-              <Pressable style={styles.menubtt} onPress={() => console.log('Item 1 clicado')}>
-                <Text style={styles.menubtttext}>Item 1</Text>
+              <View style={styles.dragIndicator}/>
+              <View style={styles.whiteLine}/>
+              <View style={styles.textTitle}>
+                <Text style={styles.menubtttext}>Classificar por</Text>
+              </View>
+              <View style={styles.menuOption}>
+                <Pressable style={styles.menubtt} onPress={() => console.log('Editar clicado 1')}>
+                  <Text style={styles.menubtttextLight}>Editar</Text>
+                </Pressable>
+              </View>
+              <View style={styles.whiteLine}/>
+              <View style={styles.textTitle}>
+                <Text style={styles.menubtttext}>Data do evento</Text>
+              </View>
+              <View style={styles.menuOption}>
+                <Pressable style={styles.menubtt} onPress={() => console.log('Editar clicado 2')}>
+                  <Text style={styles.menubtttextLight}>Editar</Text>
+                </Pressable>
+              </View>
+              <View style={styles.whiteLine}/>
+              <View style={styles.textTitle}>
+                <Text style={styles.menubtttext}>Modalidade</Text>
+              </View>
+              <View style={styles.menuOption}>
+              <Pressable style={styles.menubtt} onPress={() => console.log('Editar clicado 3')}>
+                <Text style={styles.menubtttextLight}>Editar</Text>
               </Pressable>
-              <Pressable style={styles.menubtt} onPress={() => console.log('Item 2 clicado')}>
-                <Text style={styles.menubtttext}>Item 2</Text>
-              </Pressable>
-              <Pressable style={styles.menubtt} onPress={() => console.log('Item 3 clicado')}>
-                <Text style={styles.menubtttext}>Item 3</Text>
-              </Pressable>
+              </View>
+              <View style={styles.whiteLine}/>
+              <View style={styles.textTitle}>
+                <Text style={styles.menubtttext}>Tipo do evento</Text>
+              </View>
+              <View style={styles.menuOption}>
+                <Pressable style={styles.menubtt} onPress={() => console.log('Editar clicado 4')}>
+                <Text style={styles.menubtttextLight}>Editar</Text> 
+                </Pressable>
+              </View>
+              <View style={styles.whiteLine}/>
+              <View style={styles.textTitle}>
+                <Text style={styles.menubtttext}>Tags</Text>
+              </View>
+              <View style={styles.menuOption}>
+                <Pressable style={styles.menubtt} onPress={() => console.log('Editar clicado 5')}>
+                <Text style={styles.menubtttextLight}>Editar</Text> 
+                </Pressable>
+              </View>
+              <View style={styles.whiteLine}/>
             </Animatable.View>
           </Pressable>
         </Modal>
@@ -313,14 +351,30 @@ const styles = StyleSheet.create({
   },
 
   menubtt: {
-    alignItems: 'center',
+    alignItems: 'flex-end',
     justifyContent: 'center',
     paddingVertical: 10,
+    right: 22,
+    bottom: 13, 
   },
 
-  menubtttext: {
-    color: '#FFFFFF',
-    fontSize: 18,
+  textTitle: {
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    paddingVertical: 10,
+    marginTop: -20,
+    top: 28,
+  },
+
+  dragIndicator: {
+    height: 8,
+    width: 50,
+    backgroundColor: '#000000',
+    alignSelf: 'center',
+    marginBottom: 50,
+    top: 22,
+    borderRadius: 24,
+    opacity: 0.5,
   },
 
   textView: {
@@ -360,4 +414,22 @@ const styles = StyleSheet.create({
     maxHeight: '80%',
     top: 12,
   },
+
+  menubtttext: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    opacity: 0.9,
+  },
+
+  menubtttextLight: {
+    color: 'rgba(255, 255, 255, 0.5)',
+    fontSize: 16,
+  },
+
+  whiteLine: {
+    height: 1,
+    backgroundColor: '#FFFFFF',
+    marginVertical: 5,
+    opacity: 0.8,
+  },  
 });
