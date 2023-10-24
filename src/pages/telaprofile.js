@@ -42,7 +42,7 @@ export default function Telaprofile() {
   };
 
   const handleButtonEdit = () => {
-    console.log('Botão edit pressionado', { id: id })
+    console.log('Botão edit pressionado',)
   }
 
   const handleButtonHome = () => {
