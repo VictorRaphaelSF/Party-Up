@@ -12,8 +12,6 @@ import {
 
 import { useRoute, useNavigation } from "@react-navigation/native";
 import axios from "axios";
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
 
 export default function Telaprincipal() {
   const [reload, setReload] = useState(0);
@@ -29,9 +27,10 @@ export default function Telaprincipal() {
     navigation.navigate("search");
   };
 
-  const route = useRoute();
-  const { id } = route.params;
-  console.log(id);
+  // const route = useRoute();
+  // const { id } = route.params;
+  // console.log(id);
+
   const handleButtonCenter = () => {
     navigation.navigate("cadevento", { id: id });
   };
@@ -68,19 +67,19 @@ export default function Telaprincipal() {
   ];
 
 
-  useEffect(() => {
-    axios
-      .post("http://localhost:3003/profileUser", {
-        userName_code: id,
-      })
-      .then((e) => {
-        console.log(e);
-        console.log('====================================');
-        console.log(id);
-        console.log('====================================');
-        setImgProfile(e.data.results[0].Image_data);
-      });
-  }, [])
+  // useEffect(() => {
+  //   axios
+  //     .post("http://localhost:3003/profileUser", {
+  //       userName_code: id,
+  //     })
+  //     .then((e) => {
+  //       console.log(e);
+  //       console.log('====================================');
+  //       console.log(id);
+  //       console.log('====================================');
+  //       setImgProfile(e.data.results[0].Image_data);
+  //     });
+  // }, [])
 
   const renderItem = ({ item }) => (
     <Image style={styles.carouselImage} source={item} />

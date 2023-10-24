@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, Modal, TouchableWithoutFeedback, } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Pressable,
+  Image,
+  Platform,
+  Dimensions,
+  Modal,
+  TouchableWithoutFeedback,
+ } from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
@@ -56,11 +66,11 @@ export default function Telaprofile() {
   };
 
 
-  const route = useRoute();
-  const { id } = route.params;
-  console.log(id);
-  const idUser = {
-  };
+  // const route = useRoute();
+  // const { id } = route.params;
+  // console.log(id);
+  // const idUser = {
+  // };
 
   const handleEventImageClick = () => {
     if (eventId) {

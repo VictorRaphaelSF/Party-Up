@@ -363,7 +363,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 10,
     marginTop: -20,
-    top: 28,
+    top: 30,
   },
 
   dragIndicator: {
