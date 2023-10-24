@@ -150,23 +150,23 @@ export default function Telaprofile() {
       
        <View style={styles.allContainer}>
        <View styles={styles.nameContainer}>    
-        <Text style={styles.titulo}>Victor{name}</Text>
+        <Text style={styles.titulo}>Victor Raphael{name}</Text>
       </View>
 
        <View styles={styles.nameContainer1}>    
-        <Text style={styles.titulo1}>12{idade} Anos</Text>
+        <Text style={styles.titulo1}>19{idade} Anos</Text>
       </View>
       </View>
 
+      <View style={styles.allContainerOne}>
        <View styles={styles.descContainer}>    
-        <Text style={styles.descricao}>{descricao}</Text>
+        <Text style={styles.descricao}>bdebdfbdfbebwrbf~bwerpnk{descricao}</Text>
+      </View>
       </View>
 
       <View style={styles.line}/>
 
       <Text style={styles.comentariosTitulo}>Meus eventos</Text>
-      
-      
       
       <Pressable style={styles.eventImagePlaceholder} onPress={handleEventImageClick}>
       <View style={styles.eventImagePlaceholderInner}>
@@ -442,32 +442,38 @@ const styles = StyleSheet.create({
   },
 
   nameContainer1: {
-    position: 'absolute',
     },
 
   titulo1: {
-    right: 55,
-    bottom: 75,
+    right: 115,
+    bottom: 50,
     color: '#919191',
     fontSize: 16,
     fontWeight: 'inter',
   },
 
   descContainer: {
-    position: 'absolute',
     },
 
   descricao: {
-    right: 40,
     top: 0,
     color: '#919191',
-    textAlign: 'right',
     fontSize: 16,
     fontWeight: 'inter',
   },
 
   allContainer: {
-    top: 55,
+    position: 'absolute',
+    left: 152,
+    flexDirection: 'row',
+    top: 435,
+  },
+
+  allContainerOne: {
+    position: 'absolute',
+    left: 20,
+    flexDirection: 'row',
+    top: 435,
   },
 
   line: {
