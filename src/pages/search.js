@@ -247,6 +247,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 10,
     borderRadius: 5,
+    outlineWidth: 0,
   },
 
   searchIcon: {

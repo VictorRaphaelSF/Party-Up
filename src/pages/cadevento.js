@@ -392,6 +392,7 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 16,
     flex: 1,
+    outlineWidth: 0,
   },
 
   textInput2: {
@@ -400,6 +401,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     flex: 1,
     left: Platform.OS === "web" ? 50 : 10,
+    outlineWidth: 0,
   },
 
   icon: {

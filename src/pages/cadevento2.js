@@ -734,6 +734,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 8,
     textAlign: "center",
+    outlineWidth: 0,
   },
 
   textInputContainerSmall: {
@@ -768,5 +769,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     flex: 1,
     left: Platform.OS === "web" ? 50 : 10,
+    outlineWidth: 0,
   },
 });
