@@ -60,13 +60,13 @@ export default function Termos() {
 
   return (
     <ImageBackground
-      source={require("./img/telap.png")}
+      source={require("../assets/images/telap.png")}
       style={styles.backgroundImage}>
       <View style={styles.container}>
         <View style={styles.header}>
           <Pressable style={styles.backButton} onPress={backbutton}>
             <Image
-              source={require("./img/icons/backicon.png")}
+              source={require("../assets/images/icons/backicon.png")}
               style={styles.backIcon}
             />
           </Pressable>

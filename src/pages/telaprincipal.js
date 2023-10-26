@@ -12,12 +12,16 @@ import {
 
 import { useRoute, useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import Navbar from "../components/navbar";
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
 
 export default function Telaprincipal() {
   const [reload, setReload] = useState(0);
   const [imgProfile, setImgProfile] = useState("");
   const { params } = useRoute();
   const navigation = useNavigation();
+  const id = 1;
 
   const handleButtonHome = () => {
     setReload(reload + 1);
@@ -27,29 +31,15 @@ export default function Telaprincipal() {
     navigation.navigate("search");
   };
 
-  // const route = useRoute();
+  const route = useRoute();
   // const { id } = route.params;
-  // console.log(id);
-
-  const handleButtonCenter = () => {
-    navigation.navigate("cadevento", { id: id });
-  };
-
-  const handleButtonNotification = () => {
-    navigation.navigate("notificação", { id: id });
-  };
-
-  const handleButtonPeople = () => {
-    navigation.navigate("telaprofile", { id: id });
-  };
+  console.log(id);
 
   const handleUserImagePress = () => {
     console.log("Foto de perfil pressionada");
   };
 
-  useEffect(() => {
-    
-  })
+  useEffect(() => {});
 
   // axios
   //   .post("http://localhost:3003/viewEvent")
@@ -61,25 +51,24 @@ export default function Telaprincipal() {
   //   });
 
   const eventosTemporarios = [
-    require("./img/Eventos(Temporarios)/Evento(1).png"),
-    require("./img/Eventos(Temporarios)/Evento(2).png"),
-    require("./img/Eventos(Temporarios)/Evento(3).png"),
+    require("../assets/images/Eventos(Temporarios)/Evento(1).png"),
+    require("../assets/images/Eventos(Temporarios)/Evento(2).png"),
+    require("../assets/images/Eventos(Temporarios)/Evento(3).png"),
   ];
 
-
-  // useEffect(() => {
-  //   axios
-  //     .post("http://localhost:3003/profileUser", {
-  //       userName_code: id,
-  //     })
-  //     .then((e) => {
-  //       console.log(e);
-  //       console.log('====================================');
-  //       console.log(id);
-  //       console.log('====================================');
-  //       setImgProfile(e.data.results[0].Image_data);
-  //     });
-  // }, [])
+  useEffect(() => {
+    axios
+      .post("http://localhost:3003/profileUser", {
+        userName_code: id,
+      })
+      .then((e) => {
+        console.log(e);
+        console.log("====================================");
+        console.log(id);
+        console.log("====================================");
+        setImgProfile(e.data.results[0].Image_data);
+      });
+  }, []);
 
   const renderItem = ({ item }) => (
     <Image style={styles.carouselImage} source={item} />
@@ -89,11 +78,11 @@ export default function Telaprincipal() {
     <View style={styles.container}>
       <View style={styles.topBar}>
         <Image
-          source={require("./img/icons/sol.png")}
+          source={require("../assets/images/icons/sol.png")}
           style={styles.topIconSol}
         />
         <Image
-          source={require("./img/icons/partyuplg.png")}
+          source={require("../assets/images/icons/partyuplg.png")}
           style={styles.topIconPartyup}
         />
       </View>
@@ -119,18 +108,20 @@ export default function Telaprincipal() {
       />
 
       <Image
-        source={require("./img/Eventos(Temporarios)/EventoM(1).png")}
+        source={require("../assets/images/Eventos(Temporarios)/EventoM(1).png")}
         style={styles.backgroundImage}
       />
       <Image
-        source={require("./img/Eventos(Temporarios)/EventoM(2).png")}
+        source={require("../assets/images/Eventos(Temporarios)/EventoM(2).png")}
         style={styles.backgroundImage1}
       />
 
-      <View style={styles.navbar}>
+      <Navbar />
+
+      {/* <View style={styles.navbar}>
         <Pressable style={styles.navButton} onPress={handleButtonHome}>
           <Image
-            source={require("./img/icons/home(g).png")}
+            source={require("../assets/images/icons/home(g).png")}
             style={styles.navButtonImage}
           />
         </Pressable>
@@ -139,7 +130,7 @@ export default function Telaprincipal() {
           style={[styles.navButton, { left: -15 }]}
           onPress={handleButtonSearch}>
           <Image
-            source={require("./img/icons/search(g).png")}
+            source={require("../assets/images/icons/search(g).png")}
             style={styles.navButtonImage}
           />
         </Pressable>
@@ -148,7 +139,7 @@ export default function Telaprincipal() {
           style={[styles.circleButton, { bottom: 30 }]}
           onPress={handleButtonCenter}>
           <Image
-            source={require("./img/icons/add(g).png")}
+            source={require("../assets/images/icons/add(g).png")}
             style={styles.circleButtonImage}
           />
         </Pressable>
@@ -157,18 +148,18 @@ export default function Telaprincipal() {
           style={[styles.navButton, { left: 15 }]}
           onPress={handleButtonNotification}>
           <Image
-            source={require("./img/icons/notification(g).png")}
+            source={require("../assets/images/icons/notification(g).png")}
             style={styles.navButtonImage}
           />
         </Pressable>
 
         <Pressable style={styles.navButton} onPress={handleButtonPeople}>
           <Image
-            source={require("./img/icons/people(g).png")}
+            source={require("../assets/images/icons/people(g).png")}
             style={styles.navButtonImage}
           />
         </Pressable>
-      </View>
+      </View> */}
     </View>
   );
 }

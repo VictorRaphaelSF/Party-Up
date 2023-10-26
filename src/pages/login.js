@@ -21,7 +21,9 @@ export default function Login({ navigation }) {
   const errorRef = useRef(null);
   const [msgError, setMsgError] = useState({ status: false, msg: "" });
   const [senhaVisivel, setSenhaVisivel] = useState(false);
-  const [senhaIcon, setSenhaIcon] = useState(require("./img/icons/eye.png"));
+  const [senhaIcon, setSenhaIcon] = useState(
+    require("../assets/images/icons/eye.png")
+  );
 
   const Entrar = async () => {
     if (!email || !senha) {
@@ -105,14 +107,14 @@ export default function Login({ navigation }) {
   return (
     <View style={styles.container}>
       <Image
-        source={require("./img/telap.png")}
+        source={require("../assets/images/telap.png")}
         style={styles.backgroundImage}
         resizeMode="cover"
       />
 
       <Pressable style={styles.backButton} onPress={backbutton}>
         <Image
-          source={require("./img/icons/backicon.png")}
+          source={require("../assets/images/icons/backicon.png")}
           style={styles.backIcon}
         />
       </Pressable>
@@ -141,7 +143,7 @@ export default function Login({ navigation }) {
         }
         <View style={styles.textInputContainer}>
           <Image
-            source={require("./img/icons/mailicon.png")}
+            source={require("../assets/images/icons/mailicon.png")}
             style={styles.icon}
           />
           <TextInput
@@ -157,7 +159,7 @@ export default function Login({ navigation }) {
 
         <View style={styles.textInputContainer}>
           <Image
-            source={require("./img/icons/cadeadoicon.png")}
+            source={require("../assets/images/icons/cadeadoicon.png")}
             style={styles.lockIcon}
           />
           <TextInput
@@ -175,8 +177,8 @@ export default function Login({ navigation }) {
               setSenhaVisivel(!senhaVisivel);
               setSenhaIcon(
                 senhaVisivel
-                  ? require("./img/icons/eye.png")
-                  : require("./img/icons/eyeclosed.png")
+                  ? require("../assets/images/icons/eye.png")
+                  : require("../assets/images/icons/eyeclosed.png")
               );
             }}>
             <Image source={senhaIcon} style={styles.rightIcon} />

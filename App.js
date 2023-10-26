@@ -16,7 +16,7 @@ import Cadevento3 from './src/pages/cadevento3';
 import Historicoevent from './src/pages/historicoevent';
 import Search from './src/pages/search'
 import Searched from './src/pages/searched';
-import Notificação from './src/pages/notificações'
+import Notificacao from './src/pages/notificacoes'
 import Termos from './src/pages/termos';
 import Telaprincipal from './src/pages/telaprincipal';
 import Telaprofile from './src/pages/telaprofile'
@@ -41,7 +41,7 @@ export default function App() {
           options={{
             headerShown: false
           }}
-          name='index' component={Index}
+          name='index' component={Telaprincipal}
         />
         <Stack.Screen
         options={{
@@ -77,7 +77,7 @@ export default function App() {
         options={{
           headerShown: false
         }}
-        name='notificação' component={Notificação}
+        name='notificacao' component={Notificacao}
         />
         <Stack.Screen
         options={{

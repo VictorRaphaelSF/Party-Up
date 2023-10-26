@@ -73,12 +73,12 @@ export default function Logado({ route }) {
 
   return (
     <ImageBackground
-      source={require("./img/telap2.png")}
+      source={require("../assets/images/telap2.png")}
       style={styles.container}
       resizeMode="cover">
       <Pressable style={styles.backButton} onPress={backbutton}>
         <Image
-          source={require("./img/icons/backicon.png")}
+          source={require("../assets/images/icons/backicon.png")}
           style={styles.backIcon}
         />
       </Pressable>
@@ -87,7 +87,7 @@ export default function Logado({ route }) {
         <View style={styles.content}>
           <View style={styles.textInputContainer}>
             <Image
-              source={require("./img/icons/Group.png")}
+              source={require("../assets/images/icons/Group.png")}
               style={styles.iconuser}
             />
             <TextInput
@@ -103,7 +103,7 @@ export default function Logado({ route }) {
 
           <View style={styles.textInputContainer}>
             <Image
-              source={require("./img/icons/page.png")}
+              source={require("../assets/images/icons/page.png")}
               style={styles.icon}
             />
             <TextInput
@@ -125,7 +125,9 @@ export default function Logado({ route }) {
           <View style={styles.imageContainer}>
             <Image
               source={
-                image ? { uri: image } : require("./img/icons/layer1.png")
+                image
+                  ? { uri: image }
+                  : require("../assets/images/icons/layer1.png")
               }
               style={styles.image}
             />
