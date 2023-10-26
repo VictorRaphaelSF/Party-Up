@@ -13,6 +13,9 @@ import {
 } from "react-native";
 import axios from "axios";
 import { ScrollView } from "react-native-gesture-handler";
+import Navbar from "../components/navbar";
+import Backbutton from "../components/backbutton";
+import Navbuttons from "../components/navbuttons";
 
 export default function Evento({ navigation }) {
   const [backgroundImage, setBackgroundImage] = useState(null);
@@ -109,10 +112,6 @@ export default function Evento({ navigation }) {
       });
   }, []);
 
-  const backbutton = () => {
-    navigation.goBack();
-  };
-
   const handleButtonPress = () => {
     setIsButtonPressed(true);
     startAnimation();
@@ -130,32 +129,13 @@ export default function Evento({ navigation }) {
     console.log("Quarto botão pressionado");
   };
 
-  const handleButtonHome = () => {
-    navigation.navigate("telaprincipal");
-  };
-
-  const handleButtonSearch = () => {
-    navigation.navigate("search");
-  };
-
-  const handleButtonCenter = () => {
-    navigation.navigate("cadevento");
-  };
-
-  const handleButtonNotification = () => {
-    navigation.navigate("notificacao");
-  };
-
-  const handleButtonPeople = () => {
-    console.log("Botão perfil pressionado");
-  };
-
   return (
     <View style={styles.container}>
       <ImageBackground
         source={backgroundImage || require("../assets/images/telanexist.png")}
         style={styles.backgroundImage}
         resizeMode="cover">
+        <Backbutton/>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.overlay}>
             <View style={styles.descricaoContainer}>
@@ -212,8 +192,9 @@ export default function Evento({ navigation }) {
                   source={likeImage}
                   style={[styles.icon, { transform: [{ rotate: spin }] }]}
                 />
+                <Text style={styles.buttonTitle}>Curtir</Text>
               </Pressable>
-              <Text style={styles.buttonTitle1}>Curtir</Text>
+              
               <Pressable
                 style={styles.customButton}
                 onPress={handleSecondButtonPress}>
@@ -221,12 +202,9 @@ export default function Evento({ navigation }) {
                   source={require("../assets/images/icons/comment.png")}
                   style={styles.icon}
                 />
+                <Text style={styles.buttonTitle}>Comentar</Text>
               </Pressable>
-              <Text style={styles.buttonTitle2}>Comentar</Text>
-            </View>
-          )}
-          {buttonVisible && (
-            <View style={styles.buttonContainer2}>
+              
               <Pressable
                 style={styles.customButton}
                 onPress={handleThirdButtonPress}>
@@ -234,8 +212,9 @@ export default function Evento({ navigation }) {
                   source={require("../assets/images/icons/locate.png")}
                   style={styles.icon}
                 />
+                <Text style={styles.buttonTitle}>Localização</Text>
               </Pressable>
-              <Text style={styles.buttonTitle3}>Localização</Text>
+              
               <Pressable
                 style={styles.customButton}
                 onPress={handleFourthButtonPress}>
@@ -243,63 +222,17 @@ export default function Evento({ navigation }) {
                   source={require("../assets/images/icons/share.png")}
                   style={styles.icon}
                 />
+                <Text style={styles.buttonTitle}>Compartilhar</Text>
               </Pressable>
-              <Text style={styles.buttonTitle4}>Compartilhar</Text>
+              
             </View>
           )}
-          <Pressable style={styles.backButton} onPress={backbutton}>
-            <Image
-              source={require("../assets/images/icons/backicon.png")}
-              style={styles.backIcon}
-            />
-          </Pressable>
           <View style={styles.square}>
             <Text style={styles.titulo}>{titulo}</Text>
           </View>
         </ScrollView>
       </ImageBackground>
-      <View style={styles.navbar} zIndex={2}>
-        <Pressable style={styles.navButton} onPress={handleButtonHome}>
-          <Image
-            source={require("../assets/images/icons/home(g).png")}
-            style={styles.navButtonImage}
-          />
-        </Pressable>
-
-        <Pressable
-          style={[styles.navButton, { left: -15 }]}
-          onPress={handleButtonSearch}>
-          <Image
-            source={require("../assets/images/icons/search(g).png")}
-            style={styles.navButtonImage}
-          />
-        </Pressable>
-
-        <Pressable
-          style={[styles.circleButton, { bottom: 30 }]}
-          onPress={handleButtonCenter}>
-          <Image
-            source={require("../assets/images/icons/add(g).png")}
-            style={styles.circleButtonImage}
-          />
-        </Pressable>
-
-        <Pressable
-          style={[styles.navButton, { left: 15 }]}
-          onPress={handleButtonNotification}>
-          <Image
-            source={require("../assets/images/icons/notification(g).png")}
-            style={styles.navButtonImage}
-          />
-        </Pressable>
-
-        <Pressable style={styles.navButton} onPress={handleButtonPeople}>
-          <Image
-            source={require("../assets/images/icons/people(g).png")}
-            style={styles.navButtonImage}
-          />
-        </Pressable>
-      </View>
+      <Navbar/>
     </View>
   );
 }
@@ -347,32 +280,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 
-  backButton: {
-    position: "absolute",
-    top: 35,
-    left: 27,
-    zIndex: 1,
-  },
-
-  backIcon: {
-    width: 30,
-    height: 24,
-  },
-
   buttonContainer: {
-    position: "absolute",
-    top: 290,
-    left: 22,
     flexDirection: "row",
-    zIndex: 1,
-  },
-
-  buttonContainer2: {
-    position: "absolute",
-    top: 290,
-    right: 22,
-    flexDirection: "row",
-    zIndex: 1,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    top: 100,
+    left: 0,
+    marginHorizontal: 12,
   },
 
   customButton: {
@@ -385,48 +299,13 @@ const styles = StyleSheet.create({
   },
 
   buttonTitle: {
-    position: "absolute",
-    right: 18,
-    top: 75,
+    flexDirection: 'row',
+    right: 5,
+    top: 12,
     color: "white",
     fontSize: 12,
     marginRight: -10,
-  },
-
-  buttonTitle1: {
-    position: "absolute",
-    right: 124,
-    top: 75,
-    color: "white",
-    fontSize: 12,
-    marginRight: -10,
-  },
-
-  buttonTitle2: {
-    position: "absolute",
-    right: 28,
-    top: 75,
-    color: "white",
-    fontSize: 12,
-    marginRight: -10,
-  },
-
-  buttonTitle3: {
-    position: "absolute",
-    right: 108,
-    top: 75,
-    color: "white",
-    fontSize: 12,
-    marginRight: -10,
-  },
-
-  buttonTitle4: {
-    position: "absolute",
-    right: 18,
-    top: 75,
-    color: "white",
-    fontSize: 12,
-    marginRight: -10,
+    alignSelf: 'center',
   },
 
   descricaoContainer: {
@@ -511,6 +390,10 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
 
+  navButton: {
+    flexDirection: 'row',
+  },
+
   tagsTitulo: {
     color: "white",
     fontSize: 18,
@@ -523,46 +406,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 10,
     opacity: 0.5,
-  },
-
-  navbar: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#380053",
-    padding: 10,
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
-
-  navButton: {
-    flex: 1,
-    alignItems: "center",
-    padding: 10,
-  },
-
-  navButtonImage: {
-    width: 20,
-    height: 20,
-  },
-
-  circleButton: {
-    width: 60,
-    height: 60,
-    backgroundColor: "transparent",
-    alignItems: "center",
-    justifyContent: "center",
-    position: "absolute",
-    bottom: 0,
-    left: "50%",
-    marginLeft: -27,
-  },
-
-  circleButtonImage: {
-    width: 70,
-    height: 75,
   },
 
   line: {
