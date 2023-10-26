@@ -12,6 +12,7 @@ import {
 
 import * as Animatable from "react-native-animatable";
 import axios from "axios";
+import Backbutton from "../components/backbutton";
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
@@ -96,10 +97,6 @@ export default function Login({ navigation }) {
     }
   };
 
-  const backbutton = () => {
-    navigation.goBack();
-  };
-
   const bttnvconta = () => {
     navigation.navigate("cadastro");
   };
@@ -112,12 +109,7 @@ export default function Login({ navigation }) {
         resizeMode="cover"
       />
 
-      <Pressable style={styles.backButton} onPress={backbutton}>
-        <Image
-          source={require("../assets/images/icons/backicon.png")}
-          style={styles.backIcon}
-        />
-      </Pressable>
+        <Backbutton/>
 
       <Animatable.View
         ref={errorRef}
@@ -242,18 +234,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#FFFFFF",
     opacity: 0.7,
-  },
-
-  backButton: {
-    position: "absolute",
-    top: 50,
-    left: 27,
-    zIndex: 1,
-  },
-
-  backIcon: {
-    width: 30,
-    height: 24,
   },
 
   smallButton: {

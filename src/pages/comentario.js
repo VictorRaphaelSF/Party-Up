@@ -12,14 +12,11 @@ import {
 
 import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
+import Backbutton from "../components/backbutton";
 
 export default function Comentario() {
   const navigation = useNavigation();
   const [isMenuVisible, setMenuVisible] = useState(false);
-
-  const backbutton = () => {
-    navigation.goBack();
-  };
 
   const menu = () => {
     setMenuVisible(true);
@@ -31,14 +28,8 @@ export default function Comentario() {
 
   return (
     <View style={styles.container}>
+      <Backbutton/>
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={backbutton}>
-          <Image
-            source={require("../assets/images/icons/backicon.png")}
-            style={styles.backIcon}
-          />
-        </Pressable>
-
         <Text style={styles.title}>Comentarios</Text>
       </View>
 
@@ -103,7 +94,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "absolute",
     top: windowHeight * 0.06,
-    left: 30,
     zIndex: 1,
   },
 
@@ -114,15 +104,6 @@ const styles = StyleSheet.create({
     top: windowHeight * 0.06,
     right: 30,
     zIndex: 1,
-  },
-
-  backButton: {
-    marginRight: 10,
-  },
-
-  backIcon: {
-    width: 30,
-    height: 24,
   },
 
   title: {

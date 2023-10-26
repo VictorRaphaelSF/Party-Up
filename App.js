@@ -41,7 +41,7 @@ export default function App() {
           options={{
             headerShown: false
           }}
-          name='index' component={Telaprincipal}
+          name='index' component={Index}
         />
         <Stack.Screen
         options={{

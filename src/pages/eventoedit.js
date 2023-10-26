@@ -13,6 +13,8 @@ import {
 } from "react-native";
 import axios from "axios";
 import { ScrollView } from "react-native-gesture-handler";
+import Backbutton from "../components/backbutton";
+import Navbar from "../components/navbar";
 
 export default function Eventoedit({ navigation }) {
   const [backgroundImage, setBackgroundImage] = useState(null);
@@ -80,34 +82,14 @@ export default function Eventoedit({ navigation }) {
       });
   }, []);
 
-  const backbutton = () => {
-    navigation.goBack();
-  };
-
   const handleButtonEdit = () => {
     navigation.navigate("eventoedit2");
   };
 
-  const handleButtonHome = () => {
-    navigation.navigate("telaprincipal");
+  const handleButtonDelete = () => {
+    console.log('Lógica para apagar')
   };
-
-  const handleButtonSearch = () => {
-    navigation.navigate("search");
-  };
-
-  const handleButtonCenter = () => {
-    navigation.navigate("cadevento");
-  };
-
-  const handleButtonNotification = () => {
-    navigation.navigate("notificacao");
-  };
-
-  const handleButtonPeople = () => {
-    console.log("Botão perfil pressionado");
-  };
-
+  
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -160,66 +142,22 @@ export default function Eventoedit({ navigation }) {
           <View style={styles.line3} />
 
           <View style={styles.line2} />
-
-          <Pressable style={styles.backButton} onPress={backbutton}>
-            <Image
-              source={require("../assets/images/icons/backicon.png")}
-              style={styles.backIcon}
-            />
-          </Pressable>
+          <Backbutton/>
           <View style={styles.square}>
             <Text style={styles.titulo}>{titulo}</Text>
           </View>
 
           <View style={styles.editButtonContainer}>
+            <Pressable style={styles.editButton} onPress={handleButtonDelete}>
+              <Text style={styles.editButtonText}>Excluir</Text>
+            </Pressable>
             <Pressable style={styles.editButton} onPress={handleButtonEdit}>
               <Text style={styles.editButtonText}>Editar evento</Text>
             </Pressable>
           </View>
         </ScrollView>
       </ImageBackground>
-      <View style={styles.navbar} zIndex={2}>
-        <Pressable style={styles.navButton} onPress={handleButtonHome}>
-          <Image
-            source={require("../assets/images/icons/home(g).png")}
-            style={styles.navButtonImage}
-          />
-        </Pressable>
-
-        <Pressable
-          style={[styles.navButton, { left: -15 }]}
-          onPress={handleButtonSearch}>
-          <Image
-            source={require("../assets/images/icons/search(g).png")}
-            style={styles.navButtonImage}
-          />
-        </Pressable>
-
-        <Pressable
-          style={[styles.circleButton, { bottom: 30 }]}
-          onPress={handleButtonCenter}>
-          <Image
-            source={require("../assets/images/icons/add(g).png")}
-            style={styles.circleButtonImage}
-          />
-        </Pressable>
-
-        <Pressable
-          style={[styles.navButton, { left: 15 }]}
-          onPress={handleButtonNotification}>
-          <Image
-            source={require("../assets/images/icons/notification(g).png")}
-            style={styles.navButtonImage}
-          />
-        </Pressable>
-
-        <Pressable style={styles.navButton} onPress={handleButtonPeople}>
-          <Image
-            source={require("../assets/images/icons/people(g).png")}
-            style={styles.navButtonImage}
-          />
-        </Pressable>
-      </View>
+      <Navbar/>
     </View>
   );
 }
@@ -265,18 +203,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "inter",
     textAlign: "center",
-  },
-
-  backButton: {
-    position: "absolute",
-    top: 35,
-    left: 27,
-    zIndex: 1,
-  },
-
-  backIcon: {
-    width: 30,
-    height: 24,
   },
 
   buttonContainer: {
@@ -445,46 +371,6 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
 
-  navbar: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#380053",
-    padding: 10,
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
-
-  navButton: {
-    flex: 1,
-    alignItems: "center",
-    padding: 10,
-  },
-
-  navButtonImage: {
-    width: 20,
-    height: 20,
-  },
-
-  circleButton: {
-    width: 60,
-    height: 60,
-    backgroundColor: "transparent",
-    alignItems: "center",
-    justifyContent: "center",
-    position: "absolute",
-    bottom: 0,
-    left: "50%",
-    marginLeft: -27,
-  },
-
-  circleButtonImage: {
-    width: 70,
-    height: 75,
-  },
-
   line: {
     position: "absolute",
     left: 0,
@@ -562,9 +448,11 @@ const styles = StyleSheet.create({
   },
 
   editButtonContainer: {
+    flexDirection: 'row',
     top: 115,
     alignItems: "center",
     marginTop: 10,
+    marginHorizontal:  50,
   },
 
   editButton: {
@@ -572,6 +460,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
+    marginHorizontal: 20,
   },
 
   editButtonText: {

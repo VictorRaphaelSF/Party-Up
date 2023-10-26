@@ -13,13 +13,11 @@ import {
 
 import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
+import Backbutton from "../components/backbutton";
+import Navbar from "../components/navbar";
 
 export default function Historicoevent() {
   const navigation = useNavigation();
-
-  const backbutton = () => {
-    navigation.goBack();
-  };
 
   const [isMenuVisible, setMenuVisible] = useState(false);
 
@@ -33,22 +31,17 @@ export default function Historicoevent() {
 
   return (
     <View style={styles.container}>
+      <Backbutton/>
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={backbutton}>
-          <Image
-            source={require("../assets/images/icons/backicon.png")}
-            style={styles.backIcon}
-          />
-        </Pressable>
 
-        <Text style={styles.title}>Histórico</Text>
-
-        <Pressable style={styles.button} onPress={menu}>
-          <View style={styles.bttbarra}></View>
-          <View style={styles.bttbarra}></View>
-          <View style={styles.bttbarra}></View>
-        </Pressable>
+        <Text style={styles.title}>Histórico</Text>  
       </View>
+
+      <Pressable style={styles.button} onPress={menu}>
+          <View style={styles.bttbarra}></View>
+          <View style={styles.bttbarra}></View>
+          <View style={styles.bttbarra}></View>
+      </Pressable>
 
       <View style={styles.linha}></View>
       <View style={styles.bottomImageContainer}>
@@ -88,6 +81,7 @@ export default function Historicoevent() {
           </View>
         </TouchableWithoutFeedback>
       </Modal>
+      <Navbar/>
     </View>
   );
 }
@@ -108,17 +102,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "absolute",
     top: windowHeight * 0.06,
-    left: 30,
     zIndex: 1,
-  },
-
-  backButton: {
-    marginRight: 10,
-  },
-
-  backIcon: {
-    width: 30,
-    height: 24,
   },
 
   title: {
@@ -136,13 +120,13 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: "transparent",
-    flexDirection: "column",
-    alignItems: "center",
+    position: "absolute",
     justifyContent: "center",
+    backgroundColor: "transparent",
     width: 30,
     height: 18,
-    marginLeft: 150,
+    right: 20,
+    top: 50,
   },
 
   bttbarra: {

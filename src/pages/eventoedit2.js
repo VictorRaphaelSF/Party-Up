@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import axios from "axios";
 import { ScrollView } from "react-native-gesture-handler";
+import Backbutton from "../components/backbutton";
 
 export default function Eventoedit2({ navigation }) {
   const [backgroundImage, setBackgroundImage] = useState(null);
@@ -133,10 +134,6 @@ export default function Eventoedit2({ navigation }) {
   };
   console.log(updateEvent);
 
-  const backbutton = () => {
-    navigation.goBack();
-  };
-
   const [editDescription, setEditDescription] = useState(false);
   const [editTitle, setEditTitle] = useState(false);
   const [editSite, setEditSite] = useState(false);
@@ -153,6 +150,7 @@ export default function Eventoedit2({ navigation }) {
         source={backgroundImage || require("../assets/images/telanexist.png")}
         style={styles.backgroundImage}
         resizeMode="cover">
+          <Backbutton/>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.overlay}>
             <View style={styles.descricaoContainer}>
@@ -392,13 +390,6 @@ export default function Eventoedit2({ navigation }) {
 
           <View style={styles.line2} />
 
-          <Pressable style={styles.backButton} onPress={backbutton}>
-            <Image
-              source={require("../assets/images/icons/backicon.png")}
-              style={styles.backIcon}
-            />
-          </Pressable>
-
           <View style={styles.square}>
             <View style={styles.flexRow}>
               {editTitle ? (
@@ -478,18 +469,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "inter",
     textAlign: "center",
-  },
-
-  backButton: {
-    position: "absolute",
-    top: 35,
-    left: 27,
-    zIndex: 1,
-  },
-
-  backIcon: {
-    width: 30,
-    height: 24,
   },
 
   buttonContainer: {

@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import axios from "axios";
 import Navbar from "../components/navbar";
+import Backbutton from "../components/backbutton";
 
 export default function Telaprofile() {
   const navigation = useNavigation();
@@ -28,10 +29,6 @@ export default function Telaprofile() {
   const [eventImage, setEventImage] = useState(null);
   const [eventId, setEventId] = useState(null);
 
-  const backbutton = () => {
-    navigation.goBack();
-  };
-
   const menu = () => {
     setMenuVisible(true);
   };
@@ -42,6 +39,26 @@ export default function Telaprofile() {
 
   const handleButtonEdit = () => {
     console.log("Botão edit pressionado");
+  };
+
+  const bttSair = () => {
+    navigation.navigate('index');
+    setMenuVisible(false);
+  };
+
+  const bttReport = () => {
+    navigation.navigate('report');
+    setMenuVisible(false);
+  };
+
+  const bttMyevent = () => {
+    navigation.navigate('myevent');
+    setMenuVisible(false);
+  };
+
+  const bttEventProgress = () => {
+    navigation.navigate('event_progress');
+    setMenuVisible(false);
   };
 
   // const route = useRoute();
@@ -85,6 +102,7 @@ export default function Telaprofile() {
         style={styles.backgroundImage}
         resizeMode="cover"
       />
+      <Backbutton/>
       <View style={styles.innerCircle}>
         {profileImage && (
           <Image
@@ -103,16 +121,6 @@ export default function Telaprofile() {
           <Text style={styles.title}>Seguindo</Text>
           <Text style={styles.number}>0</Text>
         </View>
-      </View>
-
-      <View style={styles.header}>
-        {/* botão de voltar */}
-        <Pressable style={styles.backButton} onPress={backbutton}>
-          <Image
-            source={require("../assets/images/icons/backicon.png")}
-            style={styles.backIcon}
-          />
-        </Pressable>
       </View>
 
       {/* menu */}
@@ -184,35 +192,34 @@ export default function Telaprofile() {
               </Pressable>
               <Pressable
                 style={styles.menubtt}
-                onPress={() => console.log("Item 1 clicado")}>
-                <Text style={styles.menubtttext}>Configurações</Text>
+                onPress={bttEventProgress}>
+                <Text style={styles.menubtttext}>Eventos em andamentos</Text>
               </Pressable>
               <Pressable
                 style={styles.menubtt}
-                onPress={() => console.log("Item 1 clicado")}>
-                <Text style={styles.menubtttext}>Teste</Text>
+                onPress={bttMyevent}>
+                <Text style={styles.menubtttext}>Meus Eventos</Text>
               </Pressable>
               <Pressable
                 style={styles.menubtt}
-                onPress={() => console.log("Item 1 clicado")}>
-                <Text style={styles.menubtttext}>Configurações</Text>
+                onPress={bttReport}>
+                <Text style={styles.menubtttext}>Report</Text>
               </Pressable>
               <Pressable
                 style={styles.menubtt}
-                onPress={() => console.log("Item 2 clicado")}>
+                onPress={() => console.log("Item 5 clicado")}>
                 <Text style={styles.menubtttext}>Termos</Text>
               </Pressable>
               <Pressable
                 style={styles.menubtt}
-                onPress={() => console.log("Item 3 clicado")}>
+                onPress={bttSair}>
                 <Text style={styles.menubtttext}>Sair</Text>
               </Pressable>
             </Animatable.View>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
-
-      <Navbar />
+      <Navbar/>
     </View>
   );
 }
@@ -282,15 +289,6 @@ const styles = StyleSheet.create({
     top: windowHeight * 0.06,
     left: 30,
     zIndex: 1,
-  },
-
-  backButton: {
-    marginRight: 10,
-  },
-
-  backIcon: {
-    width: 30,
-    height: 24,
   },
 
   button: {

@@ -18,6 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 
 import axios from "axios";
+import Backbutton from "../components/backbutton";
 
 export default function Cadevento({ route }) {
   const [nmevento, setNmevento] = useState("");
@@ -47,10 +48,6 @@ export default function Cadevento({ route }) {
       setImage(result.assets[0].uri);
       setFileName(nomeDoArquivo);
     }
-  };
-
-  const backbutton = () => {
-    navigation.goBack();
   };
 
   const renderCaracteresRestantes = () => {
@@ -129,13 +126,7 @@ export default function Cadevento({ route }) {
       source={require("../assets/images/telap2.png")}
       style={styles.container}
       resizeMode="cover">
-      <Pressable style={styles.backButton} onPress={backbutton}>
-        <Image
-          source={require("../assets/images/icons/backicon.png")}
-          style={styles.backIcon}
-        />
-      </Pressable>
-
+        <Backbutton/>
       <View style={styles.overlay}>
         <View style={styles.content}>
           <View style={styles.textInputContainer}>
@@ -320,25 +311,13 @@ const styles = StyleSheet.create({
 
   button: {
     position: "absolute",
-    backgroundColor: "rgba(255, 1, 108, 0.60)",
+    backgroundColor: "rgba(255, 1, 108, 0.50)",
     paddingVertical: 14,
     paddingHorizontal: 100,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
     bottom: Platform.OS === "web" ? 50 : 160,
-  },
-
-  backButton: {
-    position: "absolute",
-    top: Platform.OS === "web" ? 55 : 50,
-    left: 27,
-    zIndex: 1,
-  },
-
-  backIcon: {
-    width: 30,
-    height: 24,
   },
 
   buttonText: {

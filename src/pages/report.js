@@ -10,14 +10,11 @@ import {
   Image,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
+import Backbutton from "../components/backbutton";
 
 export default function Report({ navigation }) {
   const VamosLa = () => {
     navigation.navigate("report2");
-  };
-
-  const backbutton = () => {
-    navigation.goBack();
   };
 
   return (
@@ -25,6 +22,7 @@ export default function Report({ navigation }) {
       source={require("../assets/images/telanexist.png")}
       style={styles.container}
       resizeMode="cover">
+        <Backbutton/>
       <View style={styles.overlay}>
         <View style={styles.content}>
           <Animatable.Image
@@ -32,15 +30,6 @@ export default function Report({ navigation }) {
             source={require("../assets/images/icons/report.png")}
             style={styles.reportlogo}
           />
-
-          <View style={styles.header}>
-            <Pressable style={styles.backButton} onPress={backbutton}>
-              <Image
-                source={require("../assets/images/icons/backicon.png")}
-                style={styles.backIcon}
-              />
-            </Pressable>
-          </View>
 
           <Animatable.View animation="fadeInUp">
             <Text style={styles.title}>Relatar um problema</Text>
@@ -124,16 +113,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#FFFFFF",
     top: 24,
-  },
-
-  backButton: {
-    right: 8,
-    bottom: 30,
-  },
-
-  backIcon: {
-    width: 30,
-    height: 24,
   },
 
   topic: {

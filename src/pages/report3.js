@@ -13,7 +13,7 @@ import * as Animatable from "react-native-animatable";
 
 export default function Report3({ navigation }) {
   const VamosLa = () => {
-    navigation.navigate("report3");
+    navigation.navigate("telaprincipal");
   };
 
   const backbutton = () => {

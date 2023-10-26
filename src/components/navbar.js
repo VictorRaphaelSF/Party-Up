@@ -13,7 +13,7 @@ export default function Navbar() {
   };
 
   const handleButtonCenter = () => {
-    navigation.navigate("cadevento", { id: 1 });
+    navigation.navigate("cadevento", { id : id });
   };
 
   const handleButtonNotification = () => {
@@ -22,7 +22,6 @@ export default function Navbar() {
 
   const handleButtonPeople = () => {
     navigation.navigate("telaprofile");
-    console.log("Botão perfil pressionado");
   };
 
   return (

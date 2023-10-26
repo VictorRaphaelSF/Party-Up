@@ -19,6 +19,7 @@ import { useNavigation } from "@react-navigation/native";
 import { TextInputMask } from "react-native-masked-text";
 
 import axios from "axios";
+import Backbutton from "../components/backbutton";
 
 export default function Cadevento2() {
   const [nmtelefone, setTelefone] = useState("");
@@ -47,10 +48,6 @@ export default function Cadevento2() {
   const [selectedAccessType, setSelectedAccessType] = useState(null);
   const [selectedClassificationType, setSelectedClassificationType] =
     useState(null);
-
-  const backbutton = () => {
-    navigation.goBack();
-  };
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -119,21 +116,21 @@ export default function Cadevento2() {
     setter(numericValue);
   };
 
-  const route = useRoute();
-  const { eventData, id } = route.params;
-  console.log(eventData);
-  eventData["Site_contact_code"] = sitectt;
-  eventData["instagram_user_code"] = instagram;
-  eventData["more_info_code"] = infoctt;
-  eventData["telefone_event_code"] = nmtelefone;
-  eventData["Tp_Event_code"] = eventtype;
-  eventData["Tp_Modality_code"] = accessType;
-  eventData["Event_classification_code"] = ClassificationType;
-  eventData["Dt_begin_code"] = datainicio;
-  eventData["Dt_end_code"] = datafinal;
-  eventData["Hr_begin_code"] = horainicio;
-  eventData["Hr_end_code"] = horafinal;
-  eventData["Tag_event_code"] = searchText;
+  // const route = useRoute();
+  // const { eventData, id } = route.params;
+  // console.log(eventData);
+  // eventData["Site_contact_code"] = sitectt;
+  // eventData["instagram_user_code"] = instagram;
+  // eventData["more_info_code"] = infoctt;
+  // eventData["telefone_event_code"] = nmtelefone;
+  // eventData["Tp_Event_code"] = eventtype;
+  // eventData["Tp_Modality_code"] = accessType;
+  // eventData["Event_classification_code"] = ClassificationType;
+  // eventData["Dt_begin_code"] = datainicio;
+  // eventData["Dt_end_code"] = datafinal;
+  // eventData["Hr_begin_code"] = horainicio;
+  // eventData["Hr_end_code"] = horafinal;
+  // eventData["Tag_event_code"] = searchText;
 
   // Dt_end_code,
   // Dt_creation_code,
@@ -201,12 +198,7 @@ export default function Cadevento2() {
       source={require("../assets/images/telap.png")}
       style={styles.container}
       resizeMode="cover">
-      <Pressable style={styles.backButton} onPress={backbutton}>
-        <Image
-          source={require("../assets/images/icons/backicon.png")}
-          style={styles.backIcon}
-        />
-      </Pressable>
+        <Backbutton/>
       <View style={styles.overlay} {...panResponder.panHandlers}>
         <View style={styles.content}>
           <View style={styles.textInputContainer}>
@@ -517,12 +509,6 @@ export default function Cadevento2() {
             <Text style={styles.errorMessage}>{erro}</Text>
           </Animatable.View>
         )}
-        <Pressable style={styles.backButton} onPress={backbutton}>
-          <Image
-            source={require("../assets/images/icons/backicon.png")}
-            style={styles.backIcon}
-          />
-        </Pressable>
       </View>
     </ImageBackground>
   );
@@ -566,18 +552,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#FFFFFF",
     opacity: 0.7,
-  },
-
-  backButton: {
-    position: "absolute",
-    top: Platform.OS === "web" ? 40 : 50,
-    left: 27,
-    zIndex: 1,
-  },
-
-  backIcon: {
-    width: 30,
-    height: 24,
   },
 
   textInputContainer: {

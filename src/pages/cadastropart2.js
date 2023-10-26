@@ -15,6 +15,7 @@ import * as Animatable from "react-native-animatable";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import Backbutton from "../components/backbutton";
 
 export default function Logado({ route }) {
   const [nmusuario, setNmusuario] = useState("");
@@ -39,10 +40,6 @@ export default function Logado({ route }) {
     }
 
     console.log(result.assets[0].base64);
-  };
-
-  const backbutton = () => {
-    navigation.goBack();
   };
 
   const renderCaracteresRestantes = () => {
@@ -76,12 +73,8 @@ export default function Logado({ route }) {
       source={require("../assets/images/telap2.png")}
       style={styles.container}
       resizeMode="cover">
-      <Pressable style={styles.backButton} onPress={backbutton}>
-        <Image
-          source={require("../assets/images/icons/backicon.png")}
-          style={styles.backIcon}
-        />
-      </Pressable>
+
+        <Backbutton/>
 
       <View style={styles.overlay}>
         <View style={styles.content}>
@@ -192,18 +185,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 10,
     top: Platform.OS === "web" ? 140 : 160,
-  },
-
-  backButton: {
-    position: "absolute",
-    top: Platform.OS === "web" ? 55 : 50,
-    left: 27,
-    zIndex: 1,
-  },
-
-  backIcon: {
-    width: 30,
-    height: 24,
   },
 
   buttonText: {

@@ -15,6 +15,7 @@ import * as Animatable from "react-native-animatable";
 import { CurrentRenderContext, useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import axios from "axios";
+import Backbutton from "../components/backbutton";
 
 export default function Termos() {
   const navigation = useNavigation();
@@ -22,10 +23,6 @@ export default function Termos() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const scrollViewRef = useRef(null);
   const [termsAccepted, setTermsAccepted] = useState(false);
-
-  const backbutton = () => {
-    navigation.goBack();
-  };
 
   const handleScroll = (event) => {
     const position = event.nativeEvent.contentOffset.y;
@@ -62,15 +59,8 @@ export default function Termos() {
     <ImageBackground
       source={require("../assets/images/telap.png")}
       style={styles.backgroundImage}>
+        <Backbutton/>
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={backbutton}>
-            <Image
-              source={require("../assets/images/icons/backicon.png")}
-              style={styles.backIcon}
-            />
-          </Pressable>
-        </View>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Termos de uso</Text>
         </View>
@@ -165,15 +155,6 @@ const styles = StyleSheet.create({
     top: windowHeight * 0.06,
     left: 30,
     zIndex: 1,
-  },
-
-  backButton: {
-    marginRight: 0,
-  },
-
-  backIcon: {
-    width: 30,
-    height: 24,
   },
 
   title: {
