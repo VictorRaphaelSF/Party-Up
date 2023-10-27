@@ -73,12 +73,12 @@ export default function Cadevento({ route }) {
     }
   };
 
-  //const userData = route.params.userData;
+  const userData = route.params.userData;
 
   // adicionando mais dados no objeto do cliente
-  //userData["nmUser"] = nmusuario;
-  //userData["descricao"] = descrição;
-  //userData["uri"] = "imagem.png";
+  userData["nmUser"] = nmusuario;
+  userData["descricao"] = descrição;
+  userData["uri"] = "imagem.png";
 
   const opa = useRoute();
   const { id } = opa.params;
@@ -246,7 +246,7 @@ export default function Cadevento({ route }) {
           </View>
         </View>
 
-        <Pressable onPress={handleImagePicker} style={{ top: -550 }}>
+        <Pressable onPress={handleImagePicker} style={{ top: -575 }}>
           <View style={styles.imageContainer}>
             <Image
               source={
@@ -465,6 +465,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
     bottom: 250,
     opacity: 0.6,
-    top: -450,
+    top: -475,
   },
 });
