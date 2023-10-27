@@ -1,14 +1,27 @@
-import { StyleSheet, View, Pressable, Image, Dimensions, } from "react-native";
-import { useRoute, useNavigation, useState, useEffect } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { useRoute, useNavigation } from "@react-navigation/native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  ImageBackground,
+  Pressable,
+  Dimensions,
+  Platform,
+  Animated,
+  Easing,
+} from "react-native";
 
 export default function Navbuttons() {
   const [buttonVisible, setButtonVisible] = useState(true);
   const [isButtonPressed, setIsButtonPressed] = useState(false);
   const spinValue = new Animated.Value(0);
+  const navigation = useNavigation();
   const [likeImage, setLikeImage] = useState(
     require("../assets/images/icons/like.png")
   );
-
+    
     const spin = spinValue.interpolate({
         inputRange: [0, 1],
         outputRange: ["0deg", "360deg"],
@@ -46,11 +59,10 @@ export default function Navbuttons() {
     
       const handleFourthButtonPress = () => {
         console.log("Quarto botão pressionado");
-      };
-
-
+    };
+    
 return (
-    <View style={styles.container}>
+    <View>
             {buttonVisible && (
             <View style={styles.buttonContainer}>
               <Pressable
@@ -101,12 +113,6 @@ return (
 const windowHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        width: "100%",
-        height: "100%",
-      },
-
       buttonContainer: {
         flexDirection: "row",
         justifyContent: 'space-between',
