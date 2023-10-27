@@ -24,6 +24,11 @@ export default function Emailvalidation() {
     navigation.navigate('login')
   };
 
+  const InputNum = (value, setter) => {
+    const numericValue = value.replace(/[^0-9]/g, "");
+    setter(numericValue);
+  };
+
   return (
     <ImageBackground
       source={require("../assets/images/telap.png")}
@@ -50,8 +55,9 @@ export default function Emailvalidation() {
                 style={styles.searchInput}
                 placeholder="Digite o código"
                 placeholderTextColor="rgba(255, 255, 255, 0.5)"
+                maxLength={4}
                 value={nmcode}
-                onChangeText={setNmcode}
+                onChangeText={(text) => InputNum(text, setNmcode)}
               />
           </View>
         </Animatable.View>
