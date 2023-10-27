@@ -13,23 +13,15 @@ import {
 import { useRoute, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import Navbar from "../components/navbar";
+import Buttonprofile from "../components/buttonprofile";
 // import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
 
 export default function Telaprincipal() {
-  const [reload, setReload] = useState(0);
   const [imgProfile, setImgProfile] = useState("");
   const { params } = useRoute();
   const navigation = useNavigation();
   const id = 1;
-
-  const handleButtonHome = () => {
-    setReload(reload + 1);
-  };
-
-  const handleButtonSearch = () => {
-    navigation.navigate("search");
-  };
 
   const route = useRoute();
   // const { id } = route.params;
@@ -87,6 +79,7 @@ export default function Telaprincipal() {
         />
       </View>
 
+
       <View style={styles.topUser}>
         <Pressable onPress={handleUserImagePress}>
           <Image
@@ -115,51 +108,7 @@ export default function Telaprincipal() {
         source={require("../assets/images/Eventos(Temporarios)/EventoM(2).png")}
         style={styles.backgroundImage1}
       />
-
       <Navbar />
-
-      {/* <View style={styles.navbar}>
-        <Pressable style={styles.navButton} onPress={handleButtonHome}>
-          <Image
-            source={require("../assets/images/icons/home(g).png")}
-            style={styles.navButtonImage}
-          />
-        </Pressable>
-
-        <Pressable
-          style={[styles.navButton, { left: -15 }]}
-          onPress={handleButtonSearch}>
-          <Image
-            source={require("../assets/images/icons/search(g).png")}
-            style={styles.navButtonImage}
-          />
-        </Pressable>
-
-        <Pressable
-          style={[styles.circleButton, { bottom: 30 }]}
-          onPress={handleButtonCenter}>
-          <Image
-            source={require("../assets/images/icons/add(g).png")}
-            style={styles.circleButtonImage}
-          />
-        </Pressable>
-
-        <Pressable
-          style={[styles.navButton, { left: 15 }]}
-          onPress={handleButtonNotification}>
-          <Image
-            source={require("../assets/images/icons/notification(g).png")}
-            style={styles.navButtonImage}
-          />
-        </Pressable>
-
-        <Pressable style={styles.navButton} onPress={handleButtonPeople}>
-          <Image
-            source={require("../assets/images/icons/people(g).png")}
-            style={styles.navButtonImage}
-          />
-        </Pressable>
-      </View> */}
     </View>
   );
 }

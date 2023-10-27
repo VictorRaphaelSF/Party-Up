@@ -31,6 +31,7 @@ import Myevent from './src/pages/myevent';
 import Eventoedit2 from './src/pages/eventoedit2';
 import Event_progress from './src/pages/event_progress';
 import Emailvalidation from './src/pages/emailvalidation';
+import Location from './src/pages/location';
 
 const Stack = createNativeStackNavigator();
 
@@ -193,6 +194,12 @@ export default function App() {
           headerShown: false
         }}
         name='emailvalidation' component={Emailvalidation}
+        />
+        <Stack.Screen
+        options={{
+          headerShown: false
+        }}
+        name='location' component={Location}
         />
       </Stack.Navigator>
     </NavigationContainer>
