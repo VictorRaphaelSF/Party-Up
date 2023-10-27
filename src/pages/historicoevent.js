@@ -33,7 +33,6 @@ export default function Historicoevent() {
     <View style={styles.container}>
       <Backbutton/>
       <View style={styles.header}>
-
         <Text style={styles.title}>Histórico</Text>  
       </View>
 
@@ -108,7 +107,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 19,
     color: "#FFFFFF",
-    marginLeft: 20,
   },
 
   linha: {

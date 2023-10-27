@@ -11,6 +11,7 @@ import {
 } from "react-native";
 
 import { useRoute, useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
 export default function Buttonprofile() {
     const navigation = useNavigation();
@@ -23,7 +24,7 @@ export default function Buttonprofile() {
       useEffect(() => {
         axios
           .post("http://localhost:3003/profileUser", {
-            userName_code: id,
+            userName_code: 1,
           })
           .then((e) => {
             console.log(e);
@@ -62,5 +63,6 @@ const styles = StyleSheet.create({
         width: 45,
         height: 45,
         borderRadius: 25,
+        backgroundColor: 'black',
       },
 });

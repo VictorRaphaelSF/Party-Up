@@ -40,7 +40,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName='index'>
         <Stack.Screen 
-          options={{
+          options={{ 
             headerShown: false
           }}
           name='index' component={Index}

@@ -53,7 +53,7 @@ export default function Emailvalidation() {
       <View style={styles.searchBarContainer}>
               <TextInput
                 style={styles.searchInput}
-                placeholder="Digite o código"
+                placeholder="Digite o código de verificação"
                 placeholderTextColor="rgba(255, 255, 255, 0.5)"
                 maxLength={4}
                 value={nmcode}

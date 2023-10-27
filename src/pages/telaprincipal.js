@@ -79,16 +79,6 @@ export default function Telaprincipal() {
         />
       </View>
 
-
-      <View style={styles.topUser}>
-        <Pressable onPress={handleUserImagePress}>
-          <Image
-            source={`data:image/png;base64,${imgProfile}`}
-            style={styles.userImage}
-          />
-        </Pressable>
-      </View>
-
       <Text style={styles.highlightsText}>Destaques</Text>
 
       <FlatList
@@ -96,7 +86,7 @@ export default function Telaprincipal() {
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         horizontal
-        showsHorizontalScrollIndicator={false}
+        showsHorizontalScrollIndicator={true}
         contentContainerStyle={styles.carousel}
       />
 
@@ -108,6 +98,7 @@ export default function Telaprincipal() {
         source={require("../assets/images/Eventos(Temporarios)/EventoM(2).png")}
         style={styles.backgroundImage1}
       />
+      <Buttonprofile/>
       <Navbar />
     </View>
   );
@@ -132,20 +123,6 @@ const styles = StyleSheet.create({
     right: 0,
     paddingHorizontal: 16,
     paddingTop: 8,
-  },
-
-  topUser: {
-    flexDirection: "row",
-    position: "absolute",
-    top: 33,
-    right: 22,
-    alignItems: "center",
-  },
-
-  userImage: {
-    width: 45,
-    height: 45,
-    borderRadius: 25,
   },
 
   topIconSol: {
@@ -180,8 +157,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 24,
     bottom: 170,
-    marginVertical: 0,
-    width: "100%",
   },
 
   carouselImage: {
@@ -189,7 +164,6 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 10,
     marginHorizontal: 12,
-    marginVertical: 0,
   },
 
   navbar: {

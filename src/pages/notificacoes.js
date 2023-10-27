@@ -13,14 +13,11 @@ import {
 import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
 import Navbar from "../components/navbar";
+import Backbutton from "../components/backbutton";
 
 export default function Notificações() {
   const navigation = useNavigation();
   const [isMenuVisible, setMenuVisible] = useState(false);
-
-  const backbutton = () => {
-    navigation.goBack();
-  };
 
   const menu = () => {
     setMenuVisible(true);
@@ -37,14 +34,8 @@ export default function Notificações() {
         style={styles.backgroundImage}
         resizeMode="cover"
       />
+      <Backbutton/>
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={backbutton}>
-          <Image
-            source={require("../assets/images/icons/backicon.png")}
-            style={styles.backIcon}
-          />
-        </Pressable>
-
         <Text style={styles.title}>Notificações</Text>
       </View>
 
@@ -113,8 +104,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "absolute",
     top: windowHeight * 0.06,
-    left: 30,
     zIndex: 1,
+  },
+
+  title: {
+    fontSize: 19,
+    color: "#FFFFFF",
   },
 
   header1: {
@@ -125,22 +120,7 @@ const styles = StyleSheet.create({
     right: 30,
     zIndex: 1,
   },
-
-  backButton: {
-    marginRight: 10,
-  },
-
-  backIcon: {
-    width: 30,
-    height: 24,
-  },
-
-  title: {
-    fontSize: 19,
-    color: "#FFFFFF",
-    marginLeft: 20,
-  },
-
+  
   linha: {
     width: Platform.OS === "web" ? "100%" : "108%",
     height: 1,

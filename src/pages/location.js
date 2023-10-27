@@ -9,6 +9,7 @@ import {
   Pressable,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
+import Buttonprofile from "../components/buttonprofile";
 
 export default function Location() {
   return (
@@ -16,8 +17,12 @@ export default function Location() {
       source={require("../assets/images/telap.png")}
       style={styles.container}
       resizeMode="cover">
-      <View style={styles.overlay}></View>
+      <View style={styles.overlay}>
+      <Buttonprofile/>
+      </View>
     </ImageBackground>
+
+    
   );
 }
 
