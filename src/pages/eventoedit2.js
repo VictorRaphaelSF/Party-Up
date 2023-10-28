@@ -105,17 +105,44 @@ export default function Eventoedit2({ navigation }) {
 		}, []);
 		
 		const updateEvent = {
-			up_name_event_code: titulo, 
+			up_name_event_code: titulo, //
 			up_desc_event_code: descricao,
-			up_Dt_begin_code: dataInicio,
-			up_Hr_begin_code: horaInicio,
-			up_Dt_end_code: dataFim,
-			up_Hr_end_code: horaFim,
-			up_Site_contact_code: siteInfo,
-			tag_event_code: tags,
+			up_Dt_begin_code: dataInicio,//
+			up_Hr_begin_code: horaInicio,//
+			up_Dt_end_code: dataFim,//
+			up_Hr_end_code: horaFim,//
+			up_Site_contact_code: siteInfo,//
+			tag_event_code: tags,// !!!!!
+			//up_Informative_Classification_code
+			//up_Event_classification_code :
+			//up_Telefone_event_code :
+			//up_Tp_Event_code :
+			//up_Tp_Modality_code :
+			//up_cd_cep_code :
+			//up_complemento_code :
+			//up_desc_event_code :
+			//up_instagram_user_code :
+			//up_more_info_code :
+			//up_nm_estado_code :
+			//up_nm_cidade_code :
+			//up_nm_bairro_code :
+			//up_nm_rua_code :
+			//up_num_residencia_code :
+			//up_num_complemento_code :
+			//up_img_Data_code :
 			up_Id_App_Events: idEvent.eventId_code
+
+
+
+
+
+
+
+
+
+
 		}
-		console.log(updateEvent);
+		// console.log(updateEvent);
 
 	const backbutton = () => {
 		navigation.goBack();
