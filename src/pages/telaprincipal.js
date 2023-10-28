@@ -21,17 +21,15 @@ export default function Telaprincipal() {
   const [imgProfile, setImgProfile] = useState("");
   const { params } = useRoute();
   const navigation = useNavigation();
-  const id = 1;
+  // const id = 1;
 
   const route = useRoute();
-  // const { id } = route.params;
+  const { id } = route.params;
   console.log(id);
 
   const handleUserImagePress = () => {
     console.log("Foto de perfil pressionada");
   };
-
-  useEffect(() => {});
 
   // axios
   //   .post("http://localhost:3003/viewEvent")
@@ -47,20 +45,6 @@ export default function Telaprincipal() {
     require("../assets/images/Eventos(Temporarios)/Evento(2).png"),
     require("../assets/images/Eventos(Temporarios)/Evento(3).png"),
   ];
-
-  useEffect(() => {
-    axios
-      .post("http://localhost:3003/profileUser", {
-        userName_code: id,
-      })
-      .then((e) => {
-        console.log(e);
-        console.log("====================================");
-        console.log(id);
-        console.log("====================================");
-        setImgProfile(e.data.results[0].Image_data);
-      });
-  }, []);
 
   const renderItem = ({ item }) => (
     <Image style={styles.carouselImage} source={item} />
@@ -98,7 +82,7 @@ export default function Telaprincipal() {
         source={require("../assets/images/Eventos(Temporarios)/EventoM(2).png")}
         style={styles.backgroundImage1}
       />
-      <Buttonprofile/>
+      <Buttonprofile id={id} />
       <Navbar />
     </View>
   );
