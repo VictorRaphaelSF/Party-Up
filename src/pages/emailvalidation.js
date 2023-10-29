@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -11,17 +11,33 @@ import {
 } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 import * as Animatable from "react-native-animatable";
 import Backbutton from "../components/backbutton";
+import axios from "axios";
 
 export default function Emailvalidation() {
-
   const navigation = useNavigation();
-  const [nmcode, setNmcode] = useState("");
+  const route = useRoute();
+  const [code, setCode] = useState("");
   const [searchText, setSearchText] = useState("");
+  const [codeError, setCodeError] = useState(null);
 
-  const handleVamosLaPress = () => {
-    navigation.navigate('login')
+  const handleCode = () => {
+    axios
+      .post("http://localhost:3003/authCode", {
+        code: code,
+      })
+      .then((e) => {
+        setCodeError(false);
+        navigation.navigate("login", {
+          userImage: route.params.userImage,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        setCodeError(true);
+      });
   };
 
   const InputNum = (value, setter) => {
@@ -34,9 +50,9 @@ export default function Emailvalidation() {
       source={require("../assets/images/telap.png")}
       style={styles.container}
       resizeMode="cover">
-        <Backbutton/>
+      <Backbutton />
       <View style={styles.overlay}>
-      <View style={styles.content}>
+        <View style={styles.content}>
           <Animatable.Image
             animation="fadeInUp"
             source={require("../assets//images/icons/logotwo.png")}
@@ -45,28 +61,29 @@ export default function Emailvalidation() {
         </View>
 
         <Animatable.View animation="fadeInUp">
-            <Text style={styles.title}>Um código de verificação foi enviado para o endereço de e-mail </Text>
+          <Text style={styles.title}>
+            Um código de verificação foi enviado para o endereço de e-mail{" "}
+          </Text>
         </Animatable.View>
       </View>
 
       <Animatable.View delay={700} animation="fadeInUp">
-      <View style={styles.searchBarContainer}>
-              <TextInput
-                style={styles.searchInput}
-                placeholder="Digite o código de verificação"
-                placeholderTextColor="rgba(255, 255, 255, 0.5)"
-                maxLength={4}
-                value={nmcode}
-                onChangeText={(text) => InputNum(text, setNmcode)}
-              />
-          </View>
-        </Animatable.View>
+        <View style={styles.searchBarContainer}>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Digite o código de verificação"
+            placeholderTextColor="rgba(255, 255, 255, 0.5)"
+            maxLength={4}
+            value={code}
+            onChangeText={(text) => InputNum(text, setCode)}
+          />
+        </View>
+      </Animatable.View>
 
-      <Pressable style={styles.button} onPress={handleVamosLaPress}>
-          <Text style={styles.buttonText}>Avançar</Text>
+      <Pressable style={styles.button} onPress={handleCode}>
+        <Text style={styles.buttonText}>Avançar</Text>
       </Pressable>
-
-    </ImageBackground> 
+    </ImageBackground>
   );
 }
 
@@ -89,7 +106,7 @@ const styles = StyleSheet.create({
 
   content: {
     flex: 1,
-    position:'absolute',
+    position: "absolute",
     top: 55,
   },
 
@@ -111,7 +128,7 @@ const styles = StyleSheet.create({
   },
 
   searchBarContainer: {
-    alignSelf: 'center',
+    alignSelf: "center",
     alignItems: "center",
     width: "80%",
     backgroundColor: "#582C74",
@@ -136,7 +153,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 1, 108, 0.50)",
     paddingVertical: 14,
     paddingHorizontal: 100,
-    alignSelf: 'center',
+    alignSelf: "center",
     borderRadius: 10,
     bottom: Platform.OS === "web" ? 50 : 160,
   },

@@ -46,7 +46,7 @@ export default function Termos() {
       .then((response) => {
         console.log(response);
         setTermsAccepted(true); // Marcando os termos como aceitos
-        navigation.navigate("login", {
+        navigation.navigate("emailvalidation", {
           userImage: route.params.userImage,
         });
       })
