@@ -147,6 +147,13 @@ export default function Cadevento2() {
   const bttCriarEvento = () => {
     const horaI = new Date("2000-01-01 " + horainicio);
     const horaF = new Date("2000-01-01 " + horafinal);
+    const dataInicioFormatada = new Date(
+      `${datainicio.split("/")[2]}-${datainicio.split("/")[1]}-${datainicio.split("/")[0]}`
+    );
+    const dataFinalFormatada = new Date(
+      `${datafinal.split("/")[2]}-${datafinal.split("/")[1]}-${datafinal.split("/")[0]}`
+    );
+  
     if (
       !nmtelefone ||
       !sitectt ||
@@ -157,13 +164,16 @@ export default function Cadevento2() {
       !horafinal
     ) {
       setErro("Preencha todos os campos obrigatórios.");
-      console.log(horaI);
-      console.log(horaF);
       setTimeout(() => {
         setErro("");
       }, 4000);
     } else if (horaI > horaF) {
       setErro("Horário inválido.");
+      setTimeout(() => {
+        setErro("");
+      }, 4000);
+    } else if (dataInicioFormatada > dataFinalFormatada) {
+      setErro("A data de início deve ser anterior à data final.");
       setTimeout(() => {
         setErro("");
       }, 4000);
@@ -180,7 +190,7 @@ export default function Cadevento2() {
         });
     }
   };
-
+  
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
