@@ -26,7 +26,7 @@ export default function Telaprincipal() {
   };
 
   const handleButtonSearch = () => {
-    navigation.navigate("search");
+    navigation.navigate("search", { id: id });
   };
 
   const route = useRoute();
