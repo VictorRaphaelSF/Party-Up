@@ -10,11 +10,11 @@ import {
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 
-import DateTimePicker from "@react-native-community/datetimepicker";
 import { TextInputMask } from "react-native-masked-text";
 import { cpf, cnpj } from 'cpf-cnpj-validator';
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import Backbutton from "../components/backbutton";
 
 export default function Cadastro({ navigation }) {
   const [email, setEmail] = useState("");
@@ -26,8 +26,6 @@ export default function Cadastro({ navigation }) {
 
   //Linha abaixo somente para validações.
   const [erro, setErro] = useState("");
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const [senhaVisivel, setSenhaVisivel] = useState(false);
   const [confirmarSenhaVisivel, setConfirmarSenhaVisivel] = useState(false);
   const [senhaIcon, setSenhaIcon] = useState(
@@ -48,40 +46,22 @@ export default function Cadastro({ navigation }) {
     setter(numericValue);
   };
 
-  const handleDateChange = (event, selected) => {
-    setShowDatePicker(false);
-    if (selected) {
-      if (isUnderage(selected)) {
-        setYearOfBirth("");
-        setErro("Você deve ter pelo menos 18 anos de idade.");
-      } else {
-        setSelectedDate(selected);
-        const formattedDate = `${selected.getDate()}/${
-          selected.getMonth() + 1
-        }/${selected.getFullYear()}`;
-        setYearOfBirth(formattedDate);
-        setErro("");
-      }
+  const validarIdade = (dataNascimento) => {
+    const regex = /^\d{2}\/\d{2}\/\d{4}$/;
+    if (!regex.test(dataNascimento)) {
+      setErro("Formato de data inválido. Use dd/mm/aaaa.");
+      return false;
     }
-  };
+  
+    const parts = dataNascimento.split("/");
+    const data = new Date(parts[2], parts[1] - 1, parts[0]);
+    const idade = new Date().getFullYear() - data.getFullYear();
+    return idade >= 18;
+  };  
 
   const validarEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
-  };
-
-  const isUnderage = (date) => {
-    const today = new Date();
-    const ageLimit = new Date(
-      today.getFullYear() - 18,
-      today.getMonth(),
-      today.getDate()
-    );
-    return date > ageLimit;
-  };
-
-  const backbutton = () => {
-    navigation.goBack();
   };
 
   const setForcaSenha = (senha) => {
@@ -158,42 +138,49 @@ export default function Cadastro({ navigation }) {
   }
 
   const Avancar = () => {
-  const cpfDigits = cpfCnpj.replace(/\D/g, '');
-  const cnpjDigits = cpfCnpj.replace(/\D/g, '');
-
-  if (
-    !emailValido ||
-    !senha ||
-    !confirmarSenha ||
-    !telefone ||
-    confirmarSenhaErro
-  ) {
-    setErro("Preencha todos os campos obrigatórios");
-    setTimeout(() => {
+    const cpfDigits = cpfCnpj.replace(/\D/g, '');
+    const cnpjDigits = cpfCnpj.replace(/\D/g, '');
+  
+    if (
+      !emailValido ||
+      !senha ||
+      !confirmarSenha ||
+      !telefone ||
+      confirmarSenhaErro
+    ) {
+      setErro("Preencha todos os campos obrigatórios");
+      setTimeout(() => {
+        setErro("");
+      }, 4000);
+    } else if (cpfDigits.length === 11 && !cpf.isValid(cpfCnpj)) {
+      setErro("CPF inválido");
+      setTimeout(() => {
+        setErro("");
+      }, 4000);
+    } else if (cnpjDigits.length === 14 && !cnpj.isValid(cpfCnpj)) {
+      setErro("CNPJ inválido");
+      setTimeout(() => {
+        setErro("");
+      }, 4000);
+    } else if (cpfDigits.length !== 11 && cnpjDigits.length !== 14) {
+      setErro("Digite um CPF ou CNPJ válido");
+      setTimeout(() => {
+        setErro("");
+      }, 4000);
+    } else if (!validarIdade(yearOfBirth)) {
+      setTimeout(() => {
+        setErro("Você deve ter pelo menos 18 anos de idade.");
+      }, 0);
+      setTimeout(() => {
+        setErro("");
+      }, 4000);
+    } else {
       setErro("");
-    }, 4000);
-  } else if (cpfDigits.length === 11 && !cpf.isValid(cpfCnpj)) {
-    setErro("CPF inválido");
-    setTimeout(() => {
-      setErro("");
-    }, 4000);
-  } else if (cnpjDigits.length === 14 && !cnpj.isValid(cpfCnpj)) {
-    setErro("CNPJ inválido");
-    setTimeout(() => {
-      setErro("");
-    }, 4000);
-  } else if (cpfDigits.length !== 11 && cnpjDigits.length !== 14) {
-    setErro("Digite um CPF ou CNPJ válido");
-    setTimeout(() => {
-      setErro("");
-    }, 4000);
-  } else {
-    setErro("");
-    navigation.navigate("cadastropart2", { userData });
-  }
-};
-
-
+      navigation.navigate("cadastropart2", { userData });
+    }
+  };
+  
+  
   return (
     <View style={styles.container}>
       <Image
@@ -201,13 +188,7 @@ export default function Cadastro({ navigation }) {
         style={styles.backgroundImage}
         resizeMode="cover"
       />
-      <Pressable style={styles.backButton} onPress={backbutton}>
-        <Image
-          source={require("../assets/images/icons/backicon.png")}
-          style={styles.backIcon}
-        />
-      </Pressable>
-
+      <Backbutton/>
       {erro !== "" && (
         <Animatable.View
           style={[
@@ -224,7 +205,6 @@ export default function Cadastro({ navigation }) {
           <Text style={styles.errorMessage}>{erro}</Text>
         </Animatable.View>
       )}
-
       {emailInvalido && (
         <Animatable.View
           style={[
@@ -243,7 +223,6 @@ export default function Cadastro({ navigation }) {
           </Text>
         </Animatable.View>
       )}
-
       <View style={styles.content}>
         <View style={styles.textInputContainer}>
           <Image
@@ -264,7 +243,6 @@ export default function Cadastro({ navigation }) {
             }}
           />
         </View>
-
         <View style={styles.textInputContainerLock}>
           <Image
             source={require("../assets/images/icons/cadeadoicon.png")}
@@ -292,7 +270,6 @@ export default function Cadastro({ navigation }) {
             <Image source={senhaIcon} style={styles.rightIcon} />
           </Pressable>
         </View>
-
         <View style={styles.textInputContainerLock}>
           <Image
             source={require("../assets/images/icons/cadeadoicon.png")}
@@ -327,7 +304,6 @@ export default function Cadastro({ navigation }) {
             <Image source={confirmarSenhaIcon} style={styles.rightIcon} />
           </Pressable>
         </View>
-
         <View style={styles.textInputContainer}>
           <Image
             source={require("../assets/images/icons/Group.png")}
@@ -343,7 +319,6 @@ export default function Cadastro({ navigation }) {
             onChangeText={(text) => setCpfCnpj(text)}
           />
         </View>
-
         {Platform.OS === "web" ? (
           <View style={styles.textInputContainer}>
             <Image
@@ -369,31 +344,8 @@ export default function Cadastro({ navigation }) {
               source={require("../assets/images/icons/Vector.png")}
               style={styles.lockIcon}
             />
-            <Pressable
-              style={styles.textInput}
-              onPress={() => setShowDatePicker(true)}
-              value={yearOfBirth}
-              maxLength={8}>
-              <Text
-                style={[
-                  styles.placeholderText,
-                  yearOfBirth ? {} : styles.activePlaceholder,
-                ]}>
-                {yearOfBirth || "DD/MM/AAAA"}
-              </Text>
-            </Pressable>
           </View>
         )}
-        {showDatePicker && (
-          <DateTimePicker
-            value={selectedDate}
-            mode="date"
-            display="default"
-            maximumDate={new Date()}
-            onChange={handleDateChange}
-          />
-        )}
-
         <View style={styles.textInputContainer}>
           <Image
             source={require("../assets/images/icons/uil_padlock.png")}
@@ -414,13 +366,11 @@ export default function Cadastro({ navigation }) {
           />
         </View>
       </View>
-
       <View style={styles.MessageSenhaError}>
         {confirmarSenhaErro && (
           <Text style={styles.errorText}>As senhas não coincidem.</Text>
         )}
       </View>
-
       <View style={styles.MessageSenhaError2}>
         {mostrarMensagemSenhaFraca && (
           <Text style={styles.errorText}>
@@ -428,7 +378,6 @@ export default function Cadastro({ navigation }) {
           </Text>
         )}
       </View>
-
       <Pressable style={styles.button} onPress={Avancar}>
         <Text style={styles.buttonText}>Avançar</Text>
       </Pressable>
@@ -455,18 +404,6 @@ const styles = StyleSheet.create({
   content: {
     justifyContent: "center",
     alignItems: "center",
-  },
-
-  backButton: {
-    position: "absolute",
-    top: Platform.OS === "web" ? 50 : 50,
-    left: 27,
-    zIndex: 1,
-  },
-
-  backIcon: {
-    width: 30,
-    height: 24,
   },
 
   button: {

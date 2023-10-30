@@ -108,9 +108,7 @@ export default function Login({ navigation }) {
         style={styles.backgroundImage}
         resizeMode="cover"
       />
-
         <Backbutton/>
-
       <Animatable.View
         ref={errorRef}
         style={[
