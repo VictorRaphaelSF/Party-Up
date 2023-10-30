@@ -229,6 +229,13 @@ export default function App() {
           name="location"
           component={Location}
         />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="dashboard"
+          component={Dashboard}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
