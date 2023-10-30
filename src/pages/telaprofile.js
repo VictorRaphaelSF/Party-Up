@@ -17,6 +17,7 @@ import { useRoute } from "@react-navigation/native";
 import axios from "axios";
 import Navbar from "../components/navbar";
 import Backbutton from "../components/backbutton";
+import Modalmenu from "../components/modalmenu";
 
 export default function Telaprofile() {
   const navigation = useNavigation();
@@ -124,11 +125,7 @@ export default function Telaprofile() {
       </View>
 
       {/* menu */}
-      <Pressable style={styles.button} onPress={menu}>
-        <View style={styles.bttbarra}></View>
-        <View style={styles.bttbarra}></View>
-        <View style={styles.bttbarra}></View>
-      </Pressable>
+      
 
       <View style={styles.editButtonContainer}>
         <Pressable style={styles.editButton} onPress={handleButtonEdit}>
@@ -173,6 +170,12 @@ export default function Telaprofile() {
             </View>
           )}
         </View>
+      </Pressable>
+
+      <Pressable style={styles.button} onPress={menu}>
+        <View style={styles.bttbarra}></View>
+        <View style={styles.bttbarra}></View>
+        <View style={styles.bttbarra}></View>
       </Pressable>
 
       <Modal

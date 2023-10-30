@@ -21,7 +21,7 @@ export default function Tags() {
   const menu = () => {
     setMenuVisible(true);
   };
-
+ 
   const closeMenu = () => {
     setMenuVisible(false);
   };
@@ -36,16 +36,14 @@ export default function Tags() {
       <Backbutton/>
 
       <View style={styles.header}>
-        <Text style={styles.title}>Tags</Text>
+        <Text style={styles.title}>Buscar tags</Text>
       </View>
-      
 
       <Pressable style={styles.button} onPress={menu}>
         <View style={styles.bttbarra}></View>
         <View style={styles.bttbarra}></View>
         <View style={styles.bttbarra}></View>
       </Pressable>
-      
 
       <View style={styles.linha}></View>
 
@@ -57,7 +55,7 @@ export default function Tags() {
           <Animatable.View
             style={styles.menuContainer}
             animation={isMenuVisible ? "slideInUp" : "slideInDown"}
-            duration={500}>
+            duration={250}>
             <Pressable
               style={styles.menubtt}
               onPress={() => console.log("Item 1 clicado")}>
