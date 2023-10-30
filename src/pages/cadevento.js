@@ -73,6 +73,11 @@ export default function Cadevento({ route }) {
     }
   };
 
+  const InputNum = (value, setter) => {
+    const numericValue = value.replace(/[^0-9]/g, "");
+    setter(numericValue);
+  };
+
   const userData = route.params.userData;
 
   // adicionando mais dados no objeto do cliente
@@ -173,7 +178,7 @@ export default function Cadevento({ route }) {
               maxLength={15}
               value={cep}
               onChangeText={(newCep) => {
-                setCep(newCep);
+                InputNum(newCep, setCep);
                 if (newCep.length === 8) {
                   handleCepChange(newCep);
                 }
@@ -223,9 +228,9 @@ export default function Cadevento({ route }) {
               placeholder="Número"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               underlineColorAndroid="transparent"
-              maxLength={9}
+              maxLength={4}
               value={numero}
-              onChangeText={setNumero}
+              onChangeText={(text) => InputNum(text, setNumero)}
             />
           </View>
 
