@@ -12,6 +12,7 @@ import * as Animatable from "react-native-animatable";
 
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { TextInputMask } from "react-native-masked-text";
+import { cpf, cnpj } from 'cpf-cnpj-validator';
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 
@@ -157,23 +158,41 @@ export default function Cadastro({ navigation }) {
   }
 
   const Avancar = () => {
-    if (
-      !emailValido ||
-      !senha ||
-      !confirmarSenha ||
-      !cpfCnpj ||
-      !telefone ||
-      confirmarSenhaErro
-    ) {
-      setErro("Preencha todos os campos obrigatórios");
-      setTimeout(() => {
-        setErro("");
-      }, 4000);
-    } else {
+  const cpfDigits = cpfCnpj.replace(/\D/g, '');
+  const cnpjDigits = cpfCnpj.replace(/\D/g, '');
+
+  if (
+    !emailValido ||
+    !senha ||
+    !confirmarSenha ||
+    !telefone ||
+    confirmarSenhaErro
+  ) {
+    setErro("Preencha todos os campos obrigatórios");
+    setTimeout(() => {
       setErro("");
-      navigation.navigate("cadastropart2", { userData });
-    }
-  };
+    }, 4000);
+  } else if (cpfDigits.length === 11 && !cpf.isValid(cpfCnpj)) {
+    setErro("CPF inválido");
+    setTimeout(() => {
+      setErro("");
+    }, 4000);
+  } else if (cnpjDigits.length === 14 && !cnpj.isValid(cpfCnpj)) {
+    setErro("CNPJ inválido");
+    setTimeout(() => {
+      setErro("");
+    }, 4000);
+  } else if (cpfDigits.length !== 11 && cnpjDigits.length !== 14) {
+    setErro("Digite um CPF ou CNPJ válido");
+    setTimeout(() => {
+      setErro("");
+    }, 4000);
+  } else {
+    setErro("");
+    navigation.navigate("cadastropart2", { userData });
+  }
+};
+
 
   return (
     <View style={styles.container}>
