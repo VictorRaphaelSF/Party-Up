@@ -389,9 +389,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#260038",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: Platform.OS === "web" ? 0 : 16,
   },
 
   backgroundImage: {
@@ -402,50 +399,50 @@ const styles = StyleSheet.create({
   },
 
   content: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    padding: 16,
   },
 
   button: {
+    position: 'absolute',
     backgroundColor: "rgba(255, 1, 108, 0.4)",
+    maxWidth: "80%",
     paddingVertical: 14,
-    paddingHorizontal: Platform.OS === "web" ? 100 : 100,
-    justifyContent: "center",
-    alignItems: "center",
+    paddingHorizontal: Platform.OS === "web" ? 100 : 110,
+    justifyContent:'flex-end',
+    alignSelf: "center",
     borderRadius: 10,
-    top: Platform.OS === "web" ? 115 : 120,
+    bottom: 75,
   },
 
   buttonText: {
     fontSize: 18,
     color: "#FFFFFF",
-    opacity: 0.7,
+    opacity: 0.9,
   },
 
   textInputContainer: {
     flexDirection: "row",
     alignItems: "center",
-    width: Platform.OS === "web" ? "140%" : "80%",
-    height: Platform.OS === "web" ? 55 : 55,
+    width: "80%",
+    height: 50,
     borderBottomWidth: 1,
     borderBottomColor: "#FFFFFF",
-    marginBottom: 13,
-    justifyContent: "center",
-    bottom: 35,
-    position: "static",
+    marginBottom: 20,
+    bottom: 30,
   },
 
   textInputContainerLock: {
     flexDirection: "row",
     alignItems: "center",
-    width: Platform.OS === "web" ? "140%" : "80%",
-    height: Platform.OS === "web" ? 55 : 55,
+    width: "80%",
+    height: 50,
     borderBottomWidth: 1,
     borderBottomColor: "#FFFFFF",
-    marginBottom: 13,
-    justifyContent: "center",
-    bottom: 35,
-    position: "static",
+    marginBottom: 20,
+    bottom: 30,
   },
 
   textInput: {

@@ -561,7 +561,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 18,
     color: "#FFFFFF",
-    opacity: 0.7,
+    opacity: 0.9,
   },
 
   textInputContainer: {

@@ -73,9 +73,7 @@ export default function Logado({ route }) {
       source={require("../assets/images/telap2.png")}
       style={styles.container}
       resizeMode="cover">
-
         <Backbutton/>
-
       <View style={styles.overlay}>
         <View style={styles.content}>
           <View style={styles.textInputContainer}>
@@ -190,7 +188,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 18,
     color: "#FFFFFF",
-    opacity: 0.7,
+    opacity: 0.9,
   },
 
   textInputContainer: {

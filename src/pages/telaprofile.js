@@ -17,7 +17,6 @@ import { useRoute } from "@react-navigation/native";
 import axios from "axios";
 import Navbar from "../components/navbar";
 import Backbutton from "../components/backbutton";
-import Modalmenu from "../components/modalmenu";
 
 export default function Telaprofile() {
   const navigation = useNavigation();
@@ -60,6 +59,10 @@ export default function Telaprofile() {
   const bttEventProgress = () => {
     navigation.navigate('event_progress');
     setMenuVisible(false);
+  };
+
+  const bttDashboard = () => {
+    navigation.navigate('dashboard');
   };
 
   // const route = useRoute();
@@ -113,6 +116,58 @@ export default function Telaprofile() {
         )}
       </View>
 
+      
+      <Pressable style={styles.button} onPress={menu}>
+        <View style={styles.bttbarra}></View>
+        <View style={styles.bttbarra}></View>
+        <View style={styles.bttbarra}></View>
+      </Pressable>
+
+      <Modal
+        transparent={true}
+        visible={isMenuVisible}
+        onRequestClose={closeMenu}>
+        <TouchableWithoutFeedback onPress={closeMenu}>
+          <View style={styles.modalBackground}>
+            <Animatable.View
+              style={styles.menuContainer}
+              animation={isMenuVisible ? "slideInUp" : "slideInDown"}
+              duration={250}>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttDashboard}>
+                <Text style={styles.menubtttext}>Dashboard</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttEventProgress}>
+                <Text style={styles.menubtttext}>Eventos em andamentos</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttMyevent}>
+                <Text style={styles.menubtttext}>Meus Eventos</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttReport}>
+                <Text style={styles.menubtttext}>Report</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => console.log("Item 5 clicado")}>
+                <Text style={styles.menubtttext}>Termos</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttSair}>
+                <Text style={styles.menubtttext}>Sair</Text>
+              </Pressable>
+            </Animatable.View>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+
       <View style={styles.titlesContainer}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Seguidores</Text>
@@ -123,9 +178,6 @@ export default function Telaprofile() {
           <Text style={styles.number}>0</Text>
         </View>
       </View>
-
-      {/* menu */}
-      
 
       <View style={styles.editButtonContainer}>
         <Pressable style={styles.editButton} onPress={handleButtonEdit}>
@@ -171,57 +223,6 @@ export default function Telaprofile() {
           )}
         </View>
       </Pressable>
-
-      <Pressable style={styles.button} onPress={menu}>
-        <View style={styles.bttbarra}></View>
-        <View style={styles.bttbarra}></View>
-        <View style={styles.bttbarra}></View>
-      </Pressable>
-
-      <Modal
-        transparent={true}
-        visible={isMenuVisible}
-        onRequestClose={closeMenu}>
-        <TouchableWithoutFeedback onPress={closeMenu}>
-          <View style={styles.modalBackground}>
-            <Animatable.View
-              style={styles.menuContainer}
-              animation={isMenuVisible ? "slideInUp" : "slideInDown"}
-              duration={250}>
-              <Pressable
-                style={styles.menubtt}
-                onPress={() => console.log("Item 1 clicado")}>
-                <Text style={styles.menubtttext}>Configurações</Text>
-              </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={bttEventProgress}>
-                <Text style={styles.menubtttext}>Eventos em andamentos</Text>
-              </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={bttMyevent}>
-                <Text style={styles.menubtttext}>Meus Eventos</Text>
-              </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={bttReport}>
-                <Text style={styles.menubtttext}>Report</Text>
-              </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={() => console.log("Item 5 clicado")}>
-                <Text style={styles.menubtttext}>Termos</Text>
-              </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={bttSair}>
-                <Text style={styles.menubtttext}>Sair</Text>
-              </Pressable>
-            </Animatable.View>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
       <Navbar/>
     </View>
   );
@@ -296,12 +297,11 @@ const styles = StyleSheet.create({
 
   button: {
     position: "absolute",
-    justifyContent: "center",
     backgroundColor: "transparent",
     width: 30,
     height: 18,
-    right: 135,
-    top: 55,
+    right: 50,
+    top: 50,
   },
 
   bttbarra: {
@@ -310,7 +310,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     borderRadius: 2,
     marginVertical: 3.5,
-    left: 100,
   },
 
   bottomImageContainer: {
@@ -326,6 +325,10 @@ const styles = StyleSheet.create({
   bottomImage: {
     width: Platform.OS === "web" ? "100%" : "108%",
     height: "100%",
+  },
+
+  modalContainer: {
+    left: 12,
   },
 
   modalBackground: {
@@ -419,7 +422,6 @@ const styles = StyleSheet.create({
   },
 
   line: {
-    position: "absolute",
     left: 0,
     right: 0,
     bottom: 350,
