@@ -29,6 +29,30 @@ export default function Historicoevent() {
     setMenuVisible(false);
   };
 
+  const bttSair = () => {
+    navigation.navigate('index');
+    setMenuVisible(false);
+  };
+
+  const bttReport = () => {
+    navigation.navigate('report');
+    setMenuVisible(false);
+  };
+
+  const bttMyevent = () => {
+    navigation.navigate('myevent');
+    setMenuVisible(false);
+  };
+
+  const bttEventProgress = () => {
+    navigation.navigate('event_progress');
+    setMenuVisible(false);
+  };
+
+  const bttDashboard = () => {
+    navigation.navigate('dashboard');
+  };
+
   return (
     <View style={styles.container}>
       <Backbutton/>
@@ -50,6 +74,12 @@ export default function Historicoevent() {
         />
       </View>
 
+      <Pressable style={styles.button} onPress={menu}>
+        <View style={styles.bttbarra}></View>
+        <View style={styles.bttbarra}></View>
+        <View style={styles.bttbarra}></View>
+      </Pressable>
+
       <Modal
         transparent={true}
         visible={isMenuVisible}
@@ -59,22 +89,36 @@ export default function Historicoevent() {
             <Animatable.View
               style={styles.menuContainer}
               animation={isMenuVisible ? "slideInUp" : "slideInDown"}
-              duration={500}>
-              {""}
+              duration={250}>
               <Pressable
                 style={styles.menubtt}
-                onPress={() => console.log("Item 1 clicado")}>
-                <Text style={styles.menubtttext}>Item 1</Text>
+                onPress={bttDashboard}>
+                <Text style={styles.menubtttext}>Dashboard</Text>
               </Pressable>
               <Pressable
                 style={styles.menubtt}
-                onPress={() => console.log("Item 2 clicado")}>
-                <Text style={styles.menubtttext}>Item 2</Text>
+                onPress={bttEventProgress}>
+                <Text style={styles.menubtttext}>Eventos em andamentos</Text>
               </Pressable>
               <Pressable
                 style={styles.menubtt}
-                onPress={() => console.log("Item 3 clicado")}>
-                <Text style={styles.menubtttext}>Item 3</Text>
+                onPress={bttMyevent}>
+                <Text style={styles.menubtttext}>Meus Eventos</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttReport}>
+                <Text style={styles.menubtttext}>Report</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => console.log("Item 5 clicado")}>
+                <Text style={styles.menubtttext}>Termos</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttSair}>
+                <Text style={styles.menubtttext}>Sair</Text>
               </Pressable>
             </Animatable.View>
           </View>

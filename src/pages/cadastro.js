@@ -56,8 +56,10 @@ export default function Cadastro({ navigation }) {
     const parts = dataNascimento.split("/");
     const data = new Date(parts[2], parts[1] - 1, parts[0]);
     const idade = new Date().getFullYear() - data.getFullYear();
-    return idade >= 18;
-  };  
+    
+    return idade >= 18 && idade <= 102;
+};
+
 
   const validarEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -106,19 +108,15 @@ export default function Cadastro({ navigation }) {
 
   const calcularForcaSenha = (senha) => {
     let pontuacao = 0;
-
     if (senha.length >= 8) {
       pontuacao += 1;
     }
-
     if (/[0-9]/.test(senha)) {
       pontuacao += 1;
     }
-
     if (/[A-Z]/.test(senha)) {
       pontuacao += 1;
     }
-
     return pontuacao;
   };
 
@@ -169,7 +167,7 @@ export default function Cadastro({ navigation }) {
       }, 4000);
     } else if (!validarIdade(yearOfBirth)) {
       setTimeout(() => {
-        setErro("Você deve ter pelo menos 18 anos de idade.");
+        setErro("Insira uma data de nascimento válida");
       }, 0);
       setTimeout(() => {
         setErro("");
@@ -426,7 +424,7 @@ const styles = StyleSheet.create({
   textInputContainer: {
     flexDirection: "row",
     alignItems: "center",
-    width: "80%",
+    width: "90%",
     height: 50,
     borderBottomWidth: 1,
     borderBottomColor: "#FFFFFF",
@@ -437,7 +435,7 @@ const styles = StyleSheet.create({
   textInputContainerLock: {
     flexDirection: "row",
     alignItems: "center",
-    width: "80%",
+    width: "90%",
     height: 50,
     borderBottomWidth: 1,
     borderBottomColor: "#FFFFFF",
