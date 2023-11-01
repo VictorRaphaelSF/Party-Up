@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import {
   StyleSheet,
   View,
@@ -42,7 +43,7 @@ export default function Telaprincipal() {
   };
 
   const handleButtonPeople = () => {
-    navigation.navigate("telaprofile", { id: id, imgProfile: imgProfile});
+    navigation.navigate("telaprofile");
   };
 
   const handleUserImagePress = () => {
@@ -77,12 +78,14 @@ export default function Telaprincipal() {
         console.log('====================================');
         setImgProfile(e.data.results[0].User_image);
       });
+
+    
   }, [])
 
   const renderItem = ({ item }) => (
     <Image style={styles.carouselImage} source={item} />
   );
-
+  console.log(imgProfile);
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
@@ -116,7 +119,7 @@ export default function Telaprincipal() {
         style={styles.backgroundImage1}
       />
       <Buttonprofile id={id} />
-      <Navbar />
+      <Navbar id={id} imgProfile= {imgProfile}/>
     </View>
   );
 }

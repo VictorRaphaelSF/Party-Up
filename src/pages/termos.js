@@ -1,10 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, ScrollView, ImageBackground } from 'react-native';
 
-import * as Animatable from 'react-native-animatable';
-import { CurrentRenderContext, useNavigation } from '@react-navigation/native';
-import { useRoute } from '@react-navigation/native';
-import axios from 'axios';
+
 
 import * as Animatable from "react-native-animatable";
 import { CurrentRenderContext, useNavigation } from "@react-navigation/native";

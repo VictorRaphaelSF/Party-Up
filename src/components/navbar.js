@@ -21,9 +21,12 @@ export default function Navbar() {
   };
 
   const handleButtonPeople = () => {
-    navigation.navigate("telaprofile");
+    navigation.navigate("telaprofile", { id: id, imgProfile: imgProfile});
   };
 
+  const route = useRoute();
+  const { id } = route.params;
+  const { imgProfile } = route.params;
   return (
     <View style={styles.navbar}>
       <Pressable style={styles.navButton} onPress={handleButtonHome}>
