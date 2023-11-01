@@ -9,15 +9,20 @@ import {
   Pressable,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
+import Buttonprofile from "../components/buttonprofile";
 
-export default function Cadastropart3() {
+export default function Location() {
   return (
     <ImageBackground
       source={require("../assets/images/telap.png")}
       style={styles.container}
       resizeMode="cover">
-      <View style={styles.overlay}></View>
+      <View style={styles.overlay}>
+      <Buttonprofile/>
+      </View>
     </ImageBackground>
+
+    
   );
 }
 

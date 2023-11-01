@@ -8,13 +8,15 @@ import {
   Platform,
   Dimensions,
   Modal,
+  TouchableWithoutFeedback
 } from "react-native";
 
 import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
+import Navbar from "../components/navbar";
 import Backbutton from "../components/backbutton";
 
-export default function Comentario() {
+export default function Notificações() {
   const navigation = useNavigation();
   const [isMenuVisible, setMenuVisible] = useState(false);
 
@@ -26,12 +28,43 @@ export default function Comentario() {
     setMenuVisible(false);
   };
 
+  const bttSair = () => {
+    navigation.navigate('index');
+    setMenuVisible(false);
+  };
+
+  const bttReport = () => {
+    navigation.navigate('report');
+    setMenuVisible(false);
+  };
+
+  const bttMyevent = () => {
+    navigation.navigate('myevent');
+    setMenuVisible(false);
+  };
+
+  const bttEventProgress = () => {
+    navigation.navigate('event_progress');
+    setMenuVisible(false);
+  };
+
+  const bttDashboard = () => {
+    navigation.navigate('dashboard');
+  };
+
   return (
     <View style={styles.container}>
+      <Image
+        source={require("../assets/images/telap.png")}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      />
       <Backbutton/>
       <View style={styles.header}>
-        <Text style={styles.title}>Comentarios</Text>
+        <Text style={styles.title}>Notificações</Text>
       </View>
+
+      <View style={styles.linha}></View>
 
       <Pressable style={styles.button} onPress={menu}>
         <View style={styles.bttbarra}></View>
@@ -39,41 +72,51 @@ export default function Comentario() {
         <View style={styles.bttbarra}></View>
       </Pressable>
 
-      <View style={styles.linha}></View>
-      <View style={styles.bottomImageContainer}>
-        <Image
-          source={require("../assets/images/img_borda_inicio.png")}
-          style={styles.bottomImage}
-        />
-      </View>
-
       <Modal
         transparent={true}
         visible={isMenuVisible}
         onRequestClose={closeMenu}>
-        <Pressable onPress={closeMenu} style={styles.modalBackground}>
-          <Animatable.View
-            style={styles.menuContainer}
-            animation={isMenuVisible ? "slideInUp" : "slideInDown"}
-            duration={500}>
-            <Pressable
-              style={styles.menubtt}
-              onPress={() => console.log("Item 1 clicado")}>
-              <Text style={styles.menubtttext}>Item 1</Text>
-            </Pressable>
-            <Pressable
-              style={styles.menubtt}
-              onPress={() => console.log("Item 2 clicado")}>
-              <Text style={styles.menubtttext}>Item 2</Text>
-            </Pressable>
-            <Pressable
-              style={styles.menubtt}
-              onPress={() => console.log("Item 3 clicado")}>
-              <Text style={styles.menubtttext}>Item 3</Text>
-            </Pressable>
-          </Animatable.View>
-        </Pressable>
+        <TouchableWithoutFeedback onPress={closeMenu}>
+          <View style={styles.modalBackground}>
+            <Animatable.View
+              style={styles.menuContainer}
+              animation={isMenuVisible ? "slideInUp" : "slideInDown"}
+              duration={250}>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttDashboard}>
+                <Text style={styles.menubtttext}>Dashboard</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttEventProgress}>
+                <Text style={styles.menubtttext}>Eventos em andamentos</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttMyevent}>
+                <Text style={styles.menubtttext}>Meus Eventos</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttReport}>
+                <Text style={styles.menubtttext}>Report</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => console.log("Item 5 clicado")}>
+                <Text style={styles.menubtttext}>Termos</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttSair}>
+                <Text style={styles.menubtttext}>Sair</Text>
+              </Pressable>
+            </Animatable.View>
+          </View>
+        </TouchableWithoutFeedback>
       </Modal>
+      <Navbar/>
     </View>
   );
 }
@@ -89,12 +132,26 @@ const styles = StyleSheet.create({
     padding: 16,
   },
 
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    top: 0,
+    left: 0,
+  },
+
   header: {
     flexDirection: "row",
     alignItems: "center",
     position: "absolute",
     top: windowHeight * 0.06,
     zIndex: 1,
+  },
+
+  title: {
+    fontSize: 19,
+    color: "#FFFFFF",
   },
 
   header1: {
@@ -105,12 +162,7 @@ const styles = StyleSheet.create({
     right: 30,
     zIndex: 1,
   },
-
-  title: {
-    fontSize: 19,
-    color: "#FFFFFF",
-  },
-
+  
   linha: {
     width: Platform.OS === "web" ? "100%" : "108%",
     height: 1,

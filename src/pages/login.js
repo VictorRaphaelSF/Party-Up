@@ -1,18 +1,21 @@
 import React, { useState, useRef } from 'react';
 import { StyleSheet, View, Image, Pressable, Text, TextInput, Platform, Dimensions } from 'react-native';
 
-import * as Animatable from 'react-native-animatable';
-import axios from 'axios';
+import * as Animatable from "react-native-animatable";
+import axios from "axios";
+import Backbutton from "../components/backbutton";
 
 export default function Login({ navigation }) {
-	const [email, setEmail] = useState('');
-	const [senha, setSenha] = useState('');
-	const [erro, setErro] = useState('');
-	const [emptyFieldError, setEmptyFieldError] = useState('');
-	const errorRef = useRef(null);
-	const [msgError, setMsgError] = useState({status: false, msg: ""})
-	const [senhaVisivel, setSenhaVisivel] = useState(false);
-	const [senhaIcon, setSenhaIcon] = useState(require('./img/icons/eye.png'));
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [erro, setErro] = useState("");
+  const [emptyFieldError, setEmptyFieldError] = useState("");
+  const errorRef = useRef(null);
+  const [msgError, setMsgError] = useState({ status: false, msg: "" });
+  const [senhaVisivel, setSenhaVisivel] = useState(false);
+  const [senhaIcon, setSenhaIcon] = useState(
+    require("../assets/images/icons/eye.png")
+  );
 
 	const Entrar = async () => {
 
@@ -54,7 +57,7 @@ export default function Login({ navigation }) {
 					console.error('Erro ao enviar os dados para o backend:', error);
 				});
 
-			//   if (response.status === 200 && response.data.validateLogin) {
+							//   if (response.status === 200 && response.data.validateLogin) {
 			//     console.log(response.data.message);
 			//     navigation.navigate('telaprincipal');
 			//   } else {
@@ -91,75 +94,83 @@ export default function Login({ navigation }) {
 		navigation.navigate('cadastro');
 	};
 
-	return (
-		<View style={styles.container}>
-			<Image
-				source={require('./img/telap.png')}
-				style={styles.backgroundImage}
-				resizeMode="cover"
-			/>
 
-			<Pressable style={styles.backButton} onPress={backbutton}>
-				<Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
-			</Pressable>
 
-			<Animatable.View
-				ref={errorRef}
-				style={[
-					styles.errorBanner,
-					{
-						display: erro || emptyFieldError ? 'flex' : 'none',
-						borderRadius: 10,
-						marginTop: erro || emptyFieldError ? 20 : 0,
-					}
-				]}
-				animation="shake"
-				iterationCount={1}
-				duration={800}
-			>
+  return (
+    <View style={styles.container}>
+      <Image
+        source={require("../assets/images/telap.png")}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      />
+        <Backbutton/>
+      <Animatable.View
+        ref={errorRef}
+        style={[
+          styles.errorBanner,
+          {
+            display: erro || emptyFieldError ? "flex" : "none",
+            borderRadius: 10,
+            marginTop: erro || emptyFieldError ? 20 : 0,
+          },
+        ]}
+        animation="shake"
+        iterationCount={1}
+        duration={800}>
+        <Text style={styles.errorMessage}>{erro || emptyFieldError}</Text>
+      </Animatable.View>
 
-				<Text style={styles.errorMessage}>{erro || emptyFieldError}</Text>
-			</Animatable.View>
+     
 
-			<View style={styles.content}>
-				{
-					msgError.status && <Text style={styles.textError}>{msgError.msg}</Text> // && verifica se um valor possui valor verdadeiro, se estiver certo o que estiver no lado direito é executado
-				}
-				<View style={styles.textInputContainer}>
-					<Image source={require('./img/icons/mailicon.png')} style={styles.icon} />
-					<TextInput
-						style={styles.textInput}
-						placeholder="E-mail"
-						placeholderTextColor="rgba(255, 255, 255, 0.5)"
-						underlineColorAndroid="transparent"
-						maxLength={50}
-						value={email}
-						onChangeText={setEmail}
-					/>
-				</View>
+	  <View style={styles.content}>
+        {
+          msgError.status && (
+            <Text style={styles.textError}>{msgError.msg}</Text>
+          ) // && verifica se um valor possui valor verdadeiro, se estiver certo o que estiver no lado direito é executado
+        }
+        <View style={styles.textInputContainer}>
+          <Image
+            source={require("../assets/images/icons/mailicon.png")}
+            style={styles.icon}
+          />
+          <TextInput
+            style={styles.textInput}
+            placeholder="E-mail"
+            placeholderTextColor="rgba(255, 255, 255, 0.5)"
+            underlineColorAndroid="transparent"
+            maxLength={50}
+            value={email}
+            onChangeText={setEmail}
+          />
+        </View>
 
-				<View style={styles.textInputContainer}>
-					<Image source={require('./img/icons/cadeadoicon.png')} style={styles.lockIcon} />
-					<TextInput
-						style={styles.textInput}
-						placeholder="Senha"
-						placeholderTextColor="rgba(255, 255, 255, 0.5)"
-						underlineColorAndroid="transparent"
-						secureTextEntry={!senhaVisivel}
-						maxLength={50}
-						value={senha}
-						onChangeText={setSenha}
-						/>
-						<Pressable
-						  onPress={() => {
-							setSenhaVisivel(!senhaVisivel);
-							setSenhaIcon(senhaVisivel ? require('./img/icons/eye.png') : require('./img/icons/eyeclosed.png'));
-						  }}
-						>
-						  <Image source={senhaIcon} style={styles.rightIcon} />
-						</Pressable>
-				</View>
-
+        <View style={styles.textInputContainer}>
+          <Image
+            source={require("../assets/images/icons/cadeadoicon.png")}
+            style={styles.lockIcon}
+          />
+          <TextInput
+            style={styles.textInput}
+            placeholder="Senha"
+            placeholderTextColor="rgba(255, 255, 255, 0.5)"
+            underlineColorAndroid="transparent"
+            secureTextEntry={!senhaVisivel}
+            maxLength={50}
+            value={senha}
+            onChangeText={setSenha}
+          />
+          <Pressable
+            onPress={() => {
+              setSenhaVisivel(!senhaVisivel);
+              setSenhaIcon(
+                senhaVisivel
+                  ? require("../assets/images/icons/eye.png")
+                  : require("../assets/images/icons/eyeclosed.png")
+              );
+            }}>
+            <Image source={senhaIcon} style={styles.rightIcon} />
+          </Pressable>
+        </View>
 				<View style={styles.buttonContainer}>
 					<Pressable style={styles.button} onPress={Entrar}>
 						<Text style={styles.buttonText}>Entrar</Text>
@@ -213,23 +224,11 @@ const styles = StyleSheet.create({
 		bottom: -32,
 	},
 
-	buttonText: {
-		fontSize: 18,
-		color: '#FFFFFF',
-		opacity: 0.7,
-	},
-
-	backButton: {
-		position: 'absolute',
-		top: 50,
-		left: 27,
-		zIndex: 1,
-	},
-
-	backIcon: {
-		width: 30,
-		height: 24,
-	},
+  buttonText: {
+    fontSize: 18,
+    color: "#FFFFFF",
+    opacity: 0.9,
+  },
 
 
 	smallButton: {
@@ -243,15 +242,12 @@ const styles = StyleSheet.create({
 		opacity: 0.7,
 	},
 
-	textInputContainer: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		width: '90%',
-		height: 50,
-		borderBottomWidth: 1,
-		borderBottomColor: '#FFFFFF',
-		marginBottom: 20,
-	},
+  textInput: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    flex: 1,
+    outlineWidth: 0,
+  },
 
 	textInput: {
 		color: '#FFFFFF',

@@ -9,15 +9,70 @@ import {
   Pressable,
   Image,
 } from "react-native";
+import {
+  LineChart,
+  BarChart,
+  PieChart,
+  ProgressChart,
+  ContributionGraph,
+  StackedBarChart,
+} from "react-native-chart-kit";
 import * as Animatable from "react-native-animatable";
+import Backbutton from "../components/backbutton";
 
-export default function Report3({ navigation }) {
+export default function Report({ navigation }) {
   const VamosLa = () => {
-    navigation.navigate("telaprincipal");
+    navigation.navigate("report2");
   };
+  const screenWidth = Dimensions.get("window").width;
 
-  const backbutton = () => {
-    navigation.goBack();
+  const data = [
+    {
+      name: "Seoul",
+      population: 21500000,
+      color: "rgba(211, 141, 231, 1)",
+      legendFontColor: "#FFFFFF",
+      legendFontSize: 15,
+    },
+    {
+      name: "Toronto",
+      population: 2800000,
+      color: "#F00",
+      legendFontColor: "#FFFFFF",
+      legendFontSize: 15,
+    },
+    {
+      name: "Beijing",
+      population: 527612,
+      color: "red",
+      legendFontColor: "#FFFFFF",
+      legendFontSize: 15,
+    },
+    {
+      name: "New York",
+      population: 8538000,
+      color: "#ffffff",
+      legendFontColor: "#FFFFFF",
+      legendFontSize: 15,
+    },
+    {
+      name: "Moscow",
+      population: 11920000,
+      color: "rgb(0, 0, 255)",
+      legendFontColor: "#FFFFFF",
+      legendFontSize: 15,
+    },
+  ];
+
+  const chartConfig = {
+    backgroundGradientFrom: "#1E2923",
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: "#08130D",
+    backgroundGradientToOpacity: 0.5,
+    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    strokeWidth: 2, // optional, default 3
+    barPercentage: 0.5,
+    useShadowColorFromDataset: false, // optional
   };
 
   return (
@@ -25,25 +80,22 @@ export default function Report3({ navigation }) {
       source={require("../assets/images/telanexist.png")}
       style={styles.container}
       resizeMode="cover">
+      <Backbutton />
       <View style={styles.overlay}>
         <View style={styles.content}>
-          <Animatable.Image
-            animation="fadeInUp"
-            source={require("../assets/images/icons/report.png")}
-            style={styles.reportlogo}
-          />
-
-          <Animatable.View animation="fadeInUp">
-            <Text style={styles.title}>Problema relatado com sucesso</Text>
-          </Animatable.View>
-
-          <View style={styles.topic}>
-            <Text style={styles.bullet}>•</Text>
-            <Text style={styles.topicText}>
-              Agradecemos o sua mensagem de aviso para a plataforma, Sua
-              contribuição é valiosa para garantir a segurança e estabilidade do
-              Party Up.
-            </Text>
+          <View>
+            <Text>Bezier Line Chart</Text>
+            <PieChart
+              data={data}
+              width={screenWidth}
+              height={300}
+              chartConfig={chartConfig}
+              accessor={"population"}
+              backgroundColor={"transparent"}
+              paddingLeft={"15"}
+              center={[10, 50]}
+              absolute
+            />
           </View>
         </View>
       </View>
@@ -54,7 +106,7 @@ export default function Report3({ navigation }) {
           animation="fadeInUp"
           style={styles.vamosLaButton}>
           <Pressable style={styles.button} onPress={VamosLa}>
-            <Text style={styles.buttonText}>Concluir</Text>
+            <Text style={styles.buttonText}>Avançar</Text>
           </Pressable>
         </Animatable.View>
       </View>

@@ -15,6 +15,7 @@ import * as Animatable from "react-native-animatable";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import Backbutton from "../components/backbutton";
 
 export default function Logado({ route }) {
   const [nmusuario, setNmusuario] = useState("");
@@ -39,10 +40,6 @@ export default function Logado({ route }) {
     }
 
     console.log(result.assets[0].base64);
-  };
-
-  const backbutton = () => {
-    navigation.goBack();
   };
 
   const renderCaracteresRestantes = () => {
@@ -73,21 +70,15 @@ export default function Logado({ route }) {
 
   return (
     <ImageBackground
-      source={require("./img/telap2.png")}
+      source={require("../assets/images/telap2.png")}
       style={styles.container}
       resizeMode="cover">
-      <Pressable style={styles.backButton} onPress={backbutton}>
-        <Image
-          source={require("./img/icons/backicon.png")}
-          style={styles.backIcon}
-        />
-      </Pressable>
-
+        <Backbutton/>
       <View style={styles.overlay}>
         <View style={styles.content}>
           <View style={styles.textInputContainer}>
             <Image
-              source={require("./img/icons/Group.png")}
+              source={require("../assets/images/icons/Group.png")}
               style={styles.iconuser}
             />
             <TextInput
@@ -103,7 +94,7 @@ export default function Logado({ route }) {
 
           <View style={styles.textInputContainer}>
             <Image
-              source={require("./img/icons/page.png")}
+              source={require("../assets/images/icons/page.png")}
               style={styles.icon}
             />
             <TextInput
@@ -125,7 +116,9 @@ export default function Logado({ route }) {
           <View style={styles.imageContainer}>
             <Image
               source={
-                image ? { uri: image } : require("./img/icons/layer1.png")
+                image
+                  ? { uri: image }
+                  : require("../assets/images/icons/layer1.png")
               }
               style={styles.image}
             />
@@ -192,22 +185,10 @@ const styles = StyleSheet.create({
     top: Platform.OS === "web" ? 140 : 160,
   },
 
-  backButton: {
-    position: "absolute",
-    top: Platform.OS === "web" ? 55 : 50,
-    left: 27,
-    zIndex: 1,
-  },
-
-  backIcon: {
-    width: 30,
-    height: 24,
-  },
-
   buttonText: {
     fontSize: 18,
     color: "#FFFFFF",
-    opacity: 0.7,
+    opacity: 0.9,
   },
 
   textInputContainer: {
@@ -226,6 +207,7 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 16,
     flex: 1,
+    outlineWidth: 0,
   },
 
   textInput2: {
@@ -233,6 +215,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     flex: 1,
     left: Platform.OS === "web" ? 33 : 10,
+    outlineWidth: 0,
   },
 
   icon: {

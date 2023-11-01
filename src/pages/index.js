@@ -1,28 +1,37 @@
-import React from 'react';
-import { StyleSheet, View, Text, Pressable, Dimensions, ImageBackground } from 'react-native';
-import * as Animatable from 'react-native-animatable';
+import React from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Pressable,
+  Dimensions,
+  ImageBackground,
+} from "react-native";
+import * as Animatable from "react-native-animatable";
 
 export default function Index({ navigation }) {
   const VamosLa = () => {
-    navigation.navigate('login');
+    navigation.navigate("login");
   };
 
   return (
     <ImageBackground
-      source={require('./img/telap.png')}
+      source={require("../assets/images/telap.png")}
       style={styles.container}
-      resizeMode="cover"
-    >
+      resizeMode="cover">
       <View style={styles.overlay}>
         <View style={styles.content}>
           <Animatable.Image
             animation="fadeInUp"
-            source={require('./img/logonv.png')}
+            source={require("../assets/images/logonv.png")}
             style={styles.logo}
           />
         </View>
 
-        <Animatable.View delay={700} animation="fadeInUp" style={styles.vamosLaButton}>
+        <Animatable.View
+          delay={700}
+          animation="fadeInUp"
+          style={styles.vamosLaButton}>
           <Pressable style={styles.button} onPress={VamosLa}>
             <Text style={styles.buttonText}>Vamos lá</Text>
           </Pressable>
@@ -32,43 +41,43 @@ export default function Index({ navigation }) {
   );
 }
 
-const windowHeight = Dimensions.get('window').height;
+const windowHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
 
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.01)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "rgba(0, 0, 0, 0.01)",
+    justifyContent: "center",
+    alignItems: "center",
     padding: 16,
   },
 
   content: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   button: {
-    backgroundColor: 'rgba(255, 1, 108, 0.4)',
+    backgroundColor: "rgba(255, 1, 108, 0.4)",
     paddingVertical: 14,
     paddingHorizontal: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 10,
-    position: 'absolute',
+    position: "absolute",
     bottom: windowHeight * 0.04,
   },
 
   buttonText: {
     fontSize: 18,
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     opacity: 0.9,
   },
 
@@ -79,10 +88,10 @@ const styles = StyleSheet.create({
   },
 
   vamosLaButton: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
   },
 });

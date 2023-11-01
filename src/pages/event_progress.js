@@ -14,7 +14,7 @@ import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
 import Backbutton from "../components/backbutton";
 
-export default function Comentario() {
+export default function Event_progress() {
   const navigation = useNavigation();
   const [isMenuVisible, setMenuVisible] = useState(false);
 
@@ -28,9 +28,15 @@ export default function Comentario() {
 
   return (
     <View style={styles.container}>
+      <Image
+        source={require("../assets/images/telap.png")}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      />
       <Backbutton/>
+
       <View style={styles.header}>
-        <Text style={styles.title}>Comentarios</Text>
+        <Text style={styles.title}>Eventos em andamento</Text>
       </View>
 
       <Pressable style={styles.button} onPress={menu}>
@@ -40,12 +46,6 @@ export default function Comentario() {
       </Pressable>
 
       <View style={styles.linha}></View>
-      <View style={styles.bottomImageContainer}>
-        <Image
-          source={require("../assets/images/img_borda_inicio.png")}
-          style={styles.bottomImage}
-        />
-      </View>
 
       <Modal
         transparent={true}
@@ -89,11 +89,21 @@ const styles = StyleSheet.create({
     padding: 16,
   },
 
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    top: 0,
+    left: 0,
+  },
+
   header: {
     flexDirection: "row",
     alignItems: "center",
     position: "absolute",
     top: windowHeight * 0.06,
+    left: 70,
     zIndex: 1,
   },
 
@@ -109,6 +119,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 19,
     color: "#FFFFFF",
+    marginLeft: 20,
   },
 
   linha: {

@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
-import {StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, Modal, TouchableWithoutFeedback,} from 'react-native';
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Pressable,
+  Image,
+  Platform,
+  Dimensions,
+  Modal,
+  TouchableWithoutFeedback,
+} from "react-native";
 
-import * as Animatable from 'react-native-animatable';
-import { useNavigation } from '@react-navigation/native';
+import * as Animatable from "react-native-animatable";
+import { useNavigation } from "@react-navigation/native";
+import Backbutton from "../components/backbutton";
+import Navbar from "../components/navbar";
 
 export default function Historicoevent() {
   const navigation = useNavigation();
-
-  const backbutton = () => {
-    navigation.goBack();
-  };
 
   const [isMenuVisible, setMenuVisible] = useState(false);
 
@@ -21,159 +29,192 @@ export default function Historicoevent() {
     setMenuVisible(false);
   };
 
+  const bttSair = () => {
+    navigation.navigate('index');
+    setMenuVisible(false);
+  };
+
+  const bttReport = () => {
+    navigation.navigate('report');
+    setMenuVisible(false);
+  };
+
+  const bttMyevent = () => {
+    navigation.navigate('myevent');
+    setMenuVisible(false);
+  };
+
+  const bttEventProgress = () => {
+    navigation.navigate('event_progress');
+    setMenuVisible(false);
+  };
+
+  const bttDashboard = () => {
+    navigation.navigate('dashboard');
+  };
+
   return (
     <View style={styles.container}>
+      <Backbutton/>
       <View style={styles.header}>
-
-        <Pressable style={styles.backButton} onPress={backbutton}>
-          <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
-        </Pressable>
-
-        <Text style={styles.title}>Histórico</Text>
-
-        <Pressable style={styles.button} onPress={menu}>
-          <View style={styles.bttbarra}></View>
-          <View style={styles.bttbarra}></View>
-          <View style={styles.bttbarra}></View>
-        </Pressable>
+        <Text style={styles.title}>Histórico</Text>  
       </View>
+
+      <Pressable style={styles.button} onPress={menu}>
+          <View style={styles.bttbarra}></View>
+          <View style={styles.bttbarra}></View>
+          <View style={styles.bttbarra}></View>
+      </Pressable>
 
       <View style={styles.linha}></View>
       <View style={styles.bottomImageContainer}>
         <Image
-          source={require('./img/img_borda_inicio.png')}
-          style={styles.bottomImage} 
+          source={require("../assets/images/img_borda_inicio.png")}
+          style={styles.bottomImage}
         />
       </View>
+
+      <Pressable style={styles.button} onPress={menu}>
+        <View style={styles.bttbarra}></View>
+        <View style={styles.bttbarra}></View>
+        <View style={styles.bttbarra}></View>
+      </Pressable>
 
       <Modal
         transparent={true}
         visible={isMenuVisible}
-        onRequestClose={closeMenu}
-      >
+        onRequestClose={closeMenu}>
         <TouchableWithoutFeedback onPress={closeMenu}>
           <View style={styles.modalBackground}>
             <Animatable.View
               style={styles.menuContainer}
-              animation={isMenuVisible ? 'slideInUp' : 'slideInDown'}
-              duration={500}
-            >
-              {''}
-              <Pressable style={styles.menubtt} onPress={() => console.log('Item 1 clicado')}>
-                <Text style={styles.menubtttext}>Item 1</Text>
+              animation={isMenuVisible ? "slideInUp" : "slideInDown"}
+              duration={250}>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttDashboard}>
+                <Text style={styles.menubtttext}>Dashboard</Text>
               </Pressable>
-              <Pressable style={styles.menubtt} onPress={() => console.log('Item 2 clicado')}>
-                <Text style={styles.menubtttext}>Item 2</Text>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttEventProgress}>
+                <Text style={styles.menubtttext}>Eventos em andamentos</Text>
               </Pressable>
-              <Pressable style={styles.menubtt} onPress={() => console.log('Item 3 clicado')}>
-                <Text style={styles.menubtttext}>Item 3</Text>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttMyevent}>
+                <Text style={styles.menubtttext}>Meus Eventos</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttReport}>
+                <Text style={styles.menubtttext}>Report</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => console.log("Item 5 clicado")}>
+                <Text style={styles.menubtttext}>Termos</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttSair}>
+                <Text style={styles.menubtttext}>Sair</Text>
               </Pressable>
             </Animatable.View>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
+      <Navbar/>
     </View>
   );
 }
 
-const windowHeight = Dimensions.get('window').height;
-
+const windowHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#260038',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#260038",
+    justifyContent: "center",
+    alignItems: "center",
     padding: 16,
   },
 
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    position: 'absolute',
+    flexDirection: "row",
+    alignItems: "center",
+    position: "absolute",
     top: windowHeight * 0.06,
-    left: 30,
     zIndex: 1,
-  },
-
-  backButton: {
-    marginRight: 10,
-  },
-
-  backIcon: {
-    width: 30,
-    height: 24,
   },
 
   title: {
     fontSize: 19,
-    color: '#FFFFFF',
-    marginLeft: 20,
+    color: "#FFFFFF",
   },
 
   linha: {
-    width: Platform.OS === 'web' ? '100%' : '108%',
+    width: Platform.OS === "web" ? "100%" : "108%",
     height: 1,
-    backgroundColor: '#FFFFFF',
-    position: 'absolute',
+    backgroundColor: "#FFFFFF",
+    position: "absolute",
     top: windowHeight * 0.12,
   },
 
   button: {
-    backgroundColor: 'transparent',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
+    position: "absolute",
+    justifyContent: "center",
+    backgroundColor: "transparent",
     width: 30,
     height: 18,
-    marginLeft: 150,
+    right: 20,
+    top: 50,
   },
 
   bttbarra: {
     width: 31,
     height: 4,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     borderRadius: 2,
     marginVertical: 3.5,
   },
 
   bottomImageContainer: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    height: '52%',
-    backgroundColor: 'transparent',
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "52%",
+    backgroundColor: "transparent",
   },
 
   bottomImage: {
-    width: Platform.OS === 'web' ? '100%' : '108%',
-    height: '100%',
+    width: Platform.OS === "web" ? "100%" : "108%",
+    height: "100%",
   },
 
   modalBackground: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'flex-end',
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "flex-end",
   },
 
   menuContainer: {
-    backgroundColor: '#470F62',
+    backgroundColor: "#470F62",
     padding: 16,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
   },
 
   menubtt: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     paddingVertical: 10,
   },
 
   menubtttext: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: 18,
   },
 });

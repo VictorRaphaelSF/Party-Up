@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, Pressable, Image, Platform, Dimensions, TextInput, ImageBackground, ScrowView } from 'react-native';
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Pressable,
+  Image,
+  Platform,
+  Dimensions,
+  TextInput,
+  ImageBackground,
+  ScrowView,
+} from "react-native";
 
-import * as Animatable from 'react-native-animatable';
-import * as ImagePicker from 'expo-image-picker';
-import { useNavigation } from '@react-navigation/native';
-import { useRoute } from '@react-navigation/native';
+import * as Animatable from "react-native-animatable";
+import * as ImagePicker from "expo-image-picker";
+import { useNavigation } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 
-import axios from 'axios';
+import axios from "axios";
+import Backbutton from "../components/backbutton";
 
 export default function Cadevento({route}) {
 
@@ -20,7 +32,7 @@ export default function Cadevento({route}) {
   const [numero, setNumero] = useState('');
 
   //Linha abaixo somente para validações.
-  const [erro, setErro] = useState('');
+  const [erro, setErro] = useState("");
   const [image, setImage] = useState(null);
   const navigation = useNavigation();
   const [imageData, setImageData] = useState("");
@@ -41,41 +53,41 @@ export default function Cadevento({route}) {
 
     console.log(result.assets[0].base64);
   };
-  
-  const backbutton = () => {
-    navigation.goBack();
-  };
-  
+
   const renderCaracteresRestantes = () => {
     const caracteresRestantes = 255 - descrição.length;
-    const corCaracteres = caracteresRestantes === 0 ? '#FF0000' : 'rgba(255, 255, 255, 0.5)';
-    return (
-      <Text style={{ color: corCaracteres }}>
-        {caracteresRestantes}
-      </Text>
-    );
+    const corCaracteres =
+      caracteresRestantes === 0 ? "#FF0000" : "rgba(255, 255, 255, 0.5)";
+    return <Text style={{ color: corCaracteres }}>{caracteresRestantes}</Text>;
   };
 
   const handleCepChange = async (newCep) => {
     try {
-      const response = await axios.get(`https://viacep.com.br/ws/${newCep}/json/`);
+      const response = await axios.get(
+        `https://viacep.com.br/ws/${newCep}/json/`
+      );
       const data = response.data;
-  
+
       setEstado(data.uf);
       setCidade(data.localidade);
       setBairro(data.bairro);
       setNmrua(data.logradouro);
     } catch (error) {
-      console.error('Erro ao consultar o CEP:', error);
+      console.error("Erro ao consultar o CEP:", error);
     }
   };
 
-  //const userData = route.params.userData;
-  
+  const InputNum = (value, setter) => {
+    const numericValue = value.replace(/[^0-9]/g, "");
+    setter(numericValue);
+  };
+
+  const userData = route.params.userData;
+
   // adicionando mais dados no objeto do cliente
-  //userData["nmUser"] = nmusuario;
-  //userData["descricao"] = descrição;
-  //userData["uri"] = "imagem.png";
+  userData["nmUser"] = nmusuario;
+  userData["descricao"] = descrição;
+  userData["uri"] = "imagem.png";
 
   const opa = useRoute();
   const { id } = opa.params;
@@ -94,33 +106,44 @@ export default function Cadevento({route}) {
   }
   
   const handleVamosLaPress = () => {
-    if (!nmevento || !descrição || !cep || !estado || !cidade || !bairro || !nmrua || !numero) {
-      setErro('Preencha todos os campos obrigatórios.');
+    if (
+      !nmevento ||
+      !descrição ||
+      !cep ||
+      !estado ||
+      !cidade ||
+      !bairro ||
+      !nmrua ||
+      !numero
+    ) {
+      setErro("Preencha todos os campos obrigatórios.");
       setTimeout(() => {
-        setErro('');
+        setErro("");
       }, 4000);
     } else {
-      setErro('');
-      navigation.navigate('cadevento2', { userImage: image, eventData: eventData, id: id});
+      setErro("");
+      navigation.navigate("cadevento2", {
+        userImage: image,
+        eventData: eventData,
+        id: id,
+      });
     }
   };
   // verificando pra ver se ta certo
-  
+
   return (
     <ImageBackground
-    source={require('./img/telap2.png')}
-    style={styles.container}
-    resizeMode="cover"
-    >
-
-      <Pressable style={styles.backButton} onPress={backbutton}>
-        <Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
-      </Pressable>
-
+      source={require("../assets/images/telap2.png")}
+      style={styles.container}
+      resizeMode="cover">
+        <Backbutton/>
       <View style={styles.overlay}>
         <View style={styles.content}>
           <View style={styles.textInputContainer}>
-            <Image source={require('./img/icons/Group.png')} style={styles.iconuser} />
+            <Image
+              source={require("../assets/images/icons/Group.png")}
+              style={styles.iconuser}
+            />
             <TextInput
               style={styles.textInput}
               placeholder="Nome do evento"
@@ -133,7 +156,10 @@ export default function Cadevento({route}) {
           </View>
 
           <View style={styles.textInputContainer}>
-            <Image source={require('./img/icons/page.png')} style={styles.icon} />
+            <Image
+              source={require("../assets/images/icons/page.png")}
+              style={styles.icon}
+            />
             <TextInput
               style={styles.textInput2}
               placeholder="Descrição"
@@ -149,20 +175,20 @@ export default function Cadevento({route}) {
           </View>
 
           <View style={styles.textInputContainerSmall}>
-          <TextInput
-            style={styles.textInput2}
-            placeholder="CEP"
-            placeholderTextColor="rgba(255, 255, 255, 0.5)"
-            underlineColorAndroid="transparent"
-            maxLength={15}
-            value={cep}
-            onChangeText={(newCep) => {
-              setCep(newCep);
-              if (newCep.length === 8) {
-                handleCepChange(newCep);
-              }
-            }}
-          />
+            <TextInput
+              style={styles.textInput2}
+              placeholder="CEP"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              underlineColorAndroid="transparent"
+              maxLength={15}
+              value={cep}
+              onChangeText={(newCep) => {
+                InputNum(newCep, setCep);
+                if (newCep.length === 8) {
+                  handleCepChange(newCep);
+                }
+              }}
+            />
           </View>
 
           <View style={styles.textInputContainerSmall}>
@@ -201,20 +227,23 @@ export default function Cadevento({route}) {
             />
           </View>
 
-          <View style={styles.textInputContainerSmall2}>
+          <View style={styles.textInputContainerSmallCenter}>
             <TextInput
               style={styles.textInput2}
               placeholder="Número"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               underlineColorAndroid="transparent"
-              maxLength={9}
+              maxLength={4}
               value={numero}
-              onChangeText={setNumero}
+              onChangeText={(text) => InputNum(text, setNumero)}
             />
           </View>
 
           <View style={styles.textInputContainerLow}>
-            <Image source={require('./img/icons/location.png')} style={styles.iconlocation} />
+            <Image
+              source={require("../assets/images/icons/location.png")}
+              style={styles.iconlocation}
+            />
             <TextInput
               style={styles.textInput}
               placeholder="Rua"
@@ -225,41 +254,40 @@ export default function Cadevento({route}) {
               onChangeText={setNmrua}
             />
           </View>
-
-               
         </View>
 
-        <Pressable onPress={handleImagePicker} style={{ top: -550 }}>
+        <Pressable onPress={handleImagePicker} style={{ top: -575 }}>
           <View style={styles.imageContainer}>
             <Image
-              source={image ? { uri: image } : require('./img/icons/layer1.png')}
+              source={
+                image
+                  ? { uri: image }
+                  : require("../assets/images/icons/layer1.png")
+              }
               style={styles.image}
             />
           </View>
         </Pressable>
 
-        <Text style={styles.textTitle}>
-          Adicionar foto
-        </Text>
+        <Text style={styles.textTitle}>Adicionar foto</Text>
 
         <Pressable style={styles.button} onPress={handleVamosLaPress}>
           <Text style={styles.buttonText}>Avançar</Text>
         </Pressable>
 
-        {erro !== '' && (
+        {erro !== "" && (
           <Animatable.View
             style={[
               styles.errorBanner,
               {
-                display: erro ? 'flex' : 'none',
+                display: erro ? "flex" : "none",
                 borderRadius: 10,
                 marginTop: erro ? 20 : 0,
               },
             ]}
             animation="shake"
             iterationCount={1}
-            duration={800}
-          >
+            duration={800}>
             <Text style={styles.errorMessage}>{erro}</Text>
           </Animatable.View>
         )}
@@ -268,120 +296,122 @@ export default function Cadevento({route}) {
   );
 }
 
-const windowHeight = Dimensions.get('window').height;
+const windowHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
 
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "rgba(0, 0, 0, 0.1)",
+    justifyContent: "center",
+    alignItems: "center",
     padding: 16,
   },
 
   content: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     top: 120,
   },
 
   button: {
-    position: 'absolute',
-    backgroundColor: 'rgba(255, 1, 108, 0.4)',
+    position: "absolute",
+    backgroundColor: "rgba(255, 1, 108, 0.50)",
     paddingVertical: 14,
     paddingHorizontal: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 10,
-    bottom: Platform.OS === 'web' ? 50 : 160,
-  },
-
-  backButton: {
-    position: 'absolute',
-    top: Platform.OS === 'web' ? 55 : 50,
-    left: 27,
-    zIndex: 1,
-  },
-
-  backIcon: {
-    width: 30,
-    height: 24,
+    bottom: Platform.OS === "web" ? 50 : 160,
   },
 
   buttonText: {
     fontSize: 18,
-    color: '#FFFFFF',
-    opacity: 0.7,
+    color: "#FFFFFF",
+    opacity: 0.9,
   },
 
   textInputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: Platform.OS === 'web' ? '130%' : '80%',
-    height: Platform.OS === 'web' ? 55 : 55,
+    flexDirection: "row",
+    alignItems: "center",
+    width: Platform.OS === "web" ? "130%" : "80%",
+    height: Platform.OS === "web" ? 55 : 55,
     borderBottomWidth: 1,
-    borderBottomColor: '#FFFFFF',
+    borderBottomColor: "#FFFFFF",
     marginBottom: 13,
-    justifyContent: 'center',
+    justifyContent: "center",
     top: 200,
   },
 
   textInputContainerSmall: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: Platform.OS === 'web' ? '45%' : '80%',
-    height: Platform.OS === 'web' ? 50 : 55,
+    flexDirection: "row",
+    alignItems: "center",
+    width: Platform.OS === "web" ? "45%" : "80%",
+    height: Platform.OS === "web" ? 50 : 55,
     borderBottomWidth: 1,
-    right: 84,  
-    borderBottomColor: '#FFFFFF',
+    right: 84,
+    borderBottomColor: "#FFFFFF",
     marginBottom: 13,
-    justifyContent: 'center',
-    top: 194,
+    justifyContent: "center",
+    top: 184,
   },
 
   textInputContainerSmall2: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: Platform.OS === 'web' ? '45%' : '80%',
-    height: Platform.OS === 'web' ? 50 : 55,
+    flexDirection: "row",
+    alignItems: "center",
+    width: Platform.OS === "web" ? "45%" : "80%",
+    height: Platform.OS === "web" ? 50 : 55,
     borderBottomWidth: 1,
-    left: 84,  
-    borderBottomColor: '#FFFFFF',
+    left: 84,
+    borderBottomColor: "#FFFFFF",
     marginBottom: 13,
-    justifyContent: 'center',
-    top: 68,
+    justifyContent: "center",
+    top: 58,
+  },
+
+  textInputContainerSmallCenter: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: Platform.OS === "web" ? "45%" : "80%",
+    height: Platform.OS === "web" ? 50 : 55,
+    borderBottomWidth: 1,
+    borderBottomColor: "#FFFFFF",
+    marginBottom: 13,
+    justifyContent: "center",
+    top: 58,
   },
 
   textInputContainerLow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: Platform.OS === 'web' ? '130%' : '80%',
-    height: Platform.OS === 'web' ? 55 : 55,
+    flexDirection: "row",
+    alignItems: "center",
+    width: Platform.OS === "web" ? "130%" : "80%",
+    height: Platform.OS === "web" ? 55 : 55,
     borderBottomWidth: 1,
-    borderBottomColor: '#FFFFFF',
+    borderBottomColor: "#FFFFFF",
     marginBottom: 13,
-    justifyContent: 'center',
-    top: 65,
+    justifyContent: "center",
+    top: 45,
   },
 
   textInput: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: 16,
     flex: 1,
+    outlineWidth: 0,
   },
 
   textInput2: {
-    maxWidth: '100%',
-    color: '#FFFFFF',
+    maxWidth: "100%",
+    color: "#FFFFFF",
     fontSize: 16,
     flex: 1,
-    left: Platform.OS === 'web' ? 50 : 10,
+    left: Platform.OS === "web" ? 50 : 10,
+    outlineWidth: 0,
   },
 
   icon: {
@@ -407,18 +437,18 @@ const styles = StyleSheet.create({
   },
 
   errorBanner: {
-    backgroundColor: '#FF0000',
+    backgroundColor: "#FF0000",
     padding: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
     top: 12,
     left: 0,
     right: 0,
   },
 
   errorMessage: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: 16,
   },
 
@@ -429,10 +459,10 @@ const styles = StyleSheet.create({
 
   imageContainer: {
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.5)',
+    borderColor: "rgba(255, 255, 255, 0.5)",
     borderRadius: 100,
-    overflow: 'hidden',
-    top: Platform.OS === 'web' ? 75 : 102,
+    overflow: "hidden",
+    top: Platform.OS === "web" ? 75 : 102,
   },
 
   image: {
@@ -441,10 +471,10 @@ const styles = StyleSheet.create({
   },
 
   textTitle: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: 22,
     bottom: 250,
     opacity: 0.6,
-    top  : -450,
+    top: -475,
   },
 });

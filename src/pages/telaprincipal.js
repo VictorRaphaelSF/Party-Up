@@ -12,11 +12,12 @@ import {
 
 import { useRoute, useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import Navbar from "../components/navbar";
+import Buttonprofile from "../components/buttonprofile";
 // import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
 
 export default function Telaprincipal() {
-  const [reload, setReload] = useState(0);
   const [imgProfile, setImgProfile] = useState("");
   const { params } = useRoute();
   const navigation = useNavigation();
@@ -48,10 +49,6 @@ export default function Telaprincipal() {
     console.log("Foto de perfil pressionada");
   };
 
-  useEffect(() => {
-    
-  })
-
   // axios
   //   .post("http://localhost:3003/viewEvent")
   //   .then((response) => {
@@ -62,9 +59,9 @@ export default function Telaprincipal() {
   //   });
 
   const eventosTemporarios = [
-    require("./img/Eventos(Temporarios)/Evento(1).png"),
-    require("./img/Eventos(Temporarios)/Evento(2).png"),
-    require("./img/Eventos(Temporarios)/Evento(3).png"),
+    require("../assets/images/Eventos(Temporarios)/Evento(1).png"),
+    require("../assets/images/Eventos(Temporarios)/Evento(2).png"),
+    require("../assets/images/Eventos(Temporarios)/Evento(3).png"),
   ];
 
 
@@ -90,22 +87,13 @@ export default function Telaprincipal() {
     <View style={styles.container}>
       <View style={styles.topBar}>
         <Image
-          source={require("./img/icons/sol.png")}
+          source={require("../assets/images/icons/sol.png")}
           style={styles.topIconSol}
         />
         <Image
-          source={require("./img/icons/partyuplg.png")}
+          source={require("../assets/images/icons/partyuplg.png")}
           style={styles.topIconPartyup}
         />
-      </View>
-
-      <View style={styles.topUser}>
-        <Pressable onPress={handleUserImagePress}>
-          <Image
-            source={`data:image/png;base64,${imgProfile}`}
-            style={styles.userImage}
-          />
-        </Pressable>
       </View>
 
       <Text style={styles.highlightsText}>Destaques</Text>
@@ -115,61 +103,20 @@ export default function Telaprincipal() {
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         horizontal
-        showsHorizontalScrollIndicator={false}
+        showsHorizontalScrollIndicator={true}
         contentContainerStyle={styles.carousel}
       />
 
       <Image
-        source={require("./img/Eventos(Temporarios)/EventoM(1).png")}
+        source={require("../assets/images/Eventos(Temporarios)/EventoM(1).png")}
         style={styles.backgroundImage}
       />
       <Image
-        source={require("./img/Eventos(Temporarios)/EventoM(2).png")}
+        source={require("../assets/images/Eventos(Temporarios)/EventoM(2).png")}
         style={styles.backgroundImage1}
       />
-
-      <View style={styles.navbar}>
-        <Pressable style={styles.navButton} onPress={handleButtonHome}>
-          <Image
-            source={require("./img/icons/home(g).png")}
-            style={styles.navButtonImage}
-          />
-        </Pressable>
-
-        <Pressable
-          style={[styles.navButton, { left: -15 }]}
-          onPress={handleButtonSearch}>
-          <Image
-            source={require("./img/icons/search(g).png")}
-            style={styles.navButtonImage}
-          />
-        </Pressable>
-
-        <Pressable
-          style={[styles.circleButton, { bottom: 30 }]}
-          onPress={handleButtonCenter}>
-          <Image
-            source={require("./img/icons/add(g).png")}
-            style={styles.circleButtonImage}
-          />
-        </Pressable>
-
-        <Pressable
-          style={[styles.navButton, { left: 15 }]}
-          onPress={handleButtonNotification}>
-          <Image
-            source={require("./img/icons/notification(g).png")}
-            style={styles.navButtonImage}
-          />
-        </Pressable>
-
-        <Pressable style={styles.navButton} onPress={handleButtonPeople}>
-          <Image
-            source={require("./img/icons/people(g).png")}
-            style={styles.navButtonImage}
-          />
-        </Pressable>
-      </View>
+      <Buttonprofile id={id} />
+      <Navbar />
     </View>
   );
 }
@@ -193,20 +140,6 @@ const styles = StyleSheet.create({
     right: 0,
     paddingHorizontal: 16,
     paddingTop: 8,
-  },
-
-  topUser: {
-    flexDirection: "row",
-    position: "absolute",
-    top: 33,
-    right: 22,
-    alignItems: "center",
-  },
-
-  userImage: {
-    width: 45,
-    height: 45,
-    borderRadius: 25,
   },
 
   topIconSol: {
@@ -241,8 +174,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 24,
     bottom: 170,
-    marginVertical: 0,
-    width: "100%",
   },
 
   carouselImage: {
@@ -250,7 +181,6 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 10,
     marginHorizontal: 12,
-    marginVertical: 0,
   },
 
   navbar: {

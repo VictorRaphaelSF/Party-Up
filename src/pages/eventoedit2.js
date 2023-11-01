@@ -1,47 +1,71 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, View, TextInput, Text, Image, ImageBackground, Pressable, Dimensions, Platform, Animated, Easing } from 'react-native';
-import axios from 'axios';
-import { ScrollView } from 'react-native-gesture-handler';
+import React, { useEffect, useState, useRef } from "react";
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Text,
+  Image,
+  ImageBackground,
+  Pressable,
+  Dimensions,
+  Platform,
+  Animated,
+  Easing,
+} from "react-native";
+import axios from "axios";
+import { ScrollView } from "react-native-gesture-handler";
+import Backbutton from "../components/backbutton";
 import { useRoute } from '@react-navigation/native';
 
-export default function Eventoedit2({ navigation }) {
-	const [backgroundImage, setBackgroundImage] = useState(null);
-	const [titulo, setTitulo] = useState('');
-	const [descricao, setDescricao] = useState('');
-	const [dataInicio, setDataInicio] = useState('');
-	const [dataFim, setDataFim] = useState('');
-	const [horaInicio, setHoraInicio] = useState('');
-	const [horaFim, setHoraFim] = useState('');
-	const [siteInfo, setSiteInfo] = useState('');
-	const [tags, setTags] = useState('');
-	const [tituloWidth, setTituloWidth] = useState(0);
-	const animatedValue = useRef(new Animated.Value(0)).current;
 
-	const [tituloNovo, setTituloNovo] = useState('');
-	const [descricaoNovo, setDescricaoNovo] = useState('');
-	const [dataInicioNovo, setDataInicioNovo] = useState('');
-	const [dataFimNovo, setDataFimNovo] = useState('');
-	const [horaInicioNovo, setHoraInicioNovo] = useState('');
-	const [horaFimNovo, setHoraFimNovo] = useState('');
-	const [siteInfoNovo, setSiteInfoNovo] = useState('');
-	const [tagsNovo, setTagsNovo] = useState('');
+export default function Eventoedit2({ navigation }) {
+  const [backgroundImage, setBackgroundImage] = useState(null);
+  const [titulo, setTitulo] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [dataInicio, setDataInicio] = useState("");
+  const [dataFim, setDataFim] = useState("");
+  const [horaInicio, setHoraInicio] = useState("");
+  const [horaFim, setHoraFim] = useState("");
+  const [siteInfo, setSiteInfo] = useState("");
+  const [tags, setTags] = useState("");
+  const [typeEvent, setTypeEvent] = useState("");
+  const [modalityEvent, setModality] = useState("");
+  const [classificationEvent, setClassication] = useState("");
+  const [moreInfo, setMoreInfo] = useState("");
+
+  const [statusEvent, setStatusEvent] = useState("");
+  const [tituloWidth, setTituloWidth] = useState(0);
+  const animatedValue = useRef(new Animated.Value(0)).current;
 
 	const route = useRoute();
   	const { id } = route.params;
+    
+  const [tituloNovo, setTituloNovo] = useState("");
+  const [descricaoNovo, setDescricaoNovo] = useState("");
+  const [dataInicioNovo, setDataInicioNovo] = useState("");
+  const [dataFimNovo, setDataFimNovo] = useState("");
+  const [horaInicioNovo, setHoraInicioNovo] = useState("");
+  const [horaFimNovo, setHoraFimNovo] = useState("");
+  const [siteInfoNovo, setSiteInfoNovo] = useState("");
+  const [tagsNovo, setTagsNovo] = useState("");
+  const [typeNovo, setTypeNovo] = useState("");
+  const [statusNovo, setStatusNOvo] = useState("");
+  const [modalityNovo, setModalityNovo] = useState("");
+  const [classificationNovo, setClassificationNovo] = useState("");
 
-	useEffect(() => {
-		Animated.timing(animatedValue, {
-			toValue: tituloWidth,
-			duration: 500,
-			easing: Easing.linear,
-			useNativeDriver: false,
-		}).start();
-	}, [tituloWidth]);
+  useEffect(() => {
+    Animated.timing(animatedValue, {
+      toValue: tituloWidth,
+      duration: 500,
+      easing: Easing.linear,
+      useNativeDriver: false,
+    }).start();
+  }, [tituloWidth]);
 
-	const imagemTituloLeft = animatedValue.interpolate({
-		inputRange: [0, tituloWidth],
-		outputRange: [0, tituloWidth + 15], // Ajuste conforme necessário
-	});
+  const imagemTituloLeft = animatedValue.interpolate({
+    inputRange: [0, tituloWidth],
+    outputRange: [0, tituloWidth + 15], // Ajuste conforme necessário
+  });
 
 	const idEvent = {
 		eventId_code: 1
@@ -54,83 +78,77 @@ export default function Eventoedit2({ navigation }) {
 				//nome
 				setTitulo(response.data[0].Nm_event);
 
-				//descrição
-				setDescricao(response.data[0].desc_event);
+        //descrição
+        setDescricao(response.data[0].desc_event);
 
-				//data início
-				const dataB = new Date(response.data[0].Dt_begin);
-				const anoB = dataB.getFullYear();
-				const mesB = String(dataB.getMonth() + 1).padStart(2, "0");
-				const diaB = String(dataB.getDate()).padStart(2, "0");
-				const horaB = String(dataB.getHours()).padStart(2, "0");
-				const minutoB = String(dataB.getMinutes()).padStart(2, "0");
+        //data início
+        const dataB = new Date(response.data[0].Dt_begin);
+        const anoB = dataB.getFullYear();
+        const mesB = String(dataB.getMonth() + 1).padStart(2, "0");
+        const diaB = String(dataB.getDate()).padStart(2, "0");
+        const horaB = String(dataB.getHours()).padStart(2, "0");
+        const minutoB = String(dataB.getMinutes()).padStart(2, "0");
 
-				const dtFormatB = (diaB + '-' + mesB + '-' + anoB);
-				const hrFormatB = (horaB + ':' + minutoB);
+        const dtFormatB = diaB + "-" + mesB + "-" + anoB;
+        const hrFormatB = horaB + ":" + minutoB;
 
-				setDataInicio(dtFormatB);
-				setHoraInicio(hrFormatB);
+        setDataInicio(dtFormatB);
+        setHoraInicio(hrFormatB);
 
-				//data fim
-				const dataE = new Date(response.data[0].Dt_end);
-				const anoE = String(dataE.getFullYear()).padStart(2, "0");
-				const mesE = String(dataE.getMonth() + 1).padStart(2, "0");
-				const diaE = String(dataE.getDate()).padStart(2, "0");
-				const horaE = String(dataE.getHours()).padStart(2, "0");
-				const minutoE = String(dataE.getMinutes()).padStart(2, "0");
+        //data fim
+        const dataE = new Date(response.data[0].Dt_end);
+        const anoE = String(dataE.getFullYear()).padStart(2, "0");
+        const mesE = String(dataE.getMonth() + 1).padStart(2, "0");
+        const diaE = String(dataE.getDate()).padStart(2, "0");
+        const horaE = String(dataE.getHours()).padStart(2, "0");
+        const minutoE = String(dataE.getMinutes()).padStart(2, "0");
 
-				const dtFormatE = (diaE + '-' + mesE + '-' + anoE);
-				const hrFormatE = (horaE + ':' + minutoE);
-				console.log(hrFormatE)
+        const dtFormatE = diaE + "-" + mesE + "-" + anoE;
+        const hrFormatE = horaE + ":" + minutoE;
 
-				setDataFim(dtFormatE);
-				setHoraFim(hrFormatE);
+        setDataFim(dtFormatE);
+        setHoraFim(hrFormatE);
 
-				//site
-				setSiteInfo(response.data[0].Site_contact);
+        //site
+        setSiteInfo(response.data[0].Site_contact);
 
-				//tag
-				setTags(response.data[0].Tag_event);
+        //tag
+        setTags(response.data[0].Tag_event);
 
+        //navigation.navigate('telaprincipal',{id: id});
+      })
+      .catch((error) => {
+        console.error("Erro ao enviar os dados para o backend:", error);
+      });
+  }, []);
 
-
-
-
-				//navigation.navigate('telaprincipal',{id: id});
-			})
-			.catch((error) => {
-				console.error('Erro ao enviar os dados para o backend:', error);
-			});
-
-		}, []);
-		
-		const updateEvent = {
-			up_name_event_code: titulo, //
-			up_desc_event_code: descricao,
-			up_Dt_begin_code: dataInicio,//
-			up_Hr_begin_code: horaInicio,//
-			up_Dt_end_code: dataFim,//
-			up_Hr_end_code: horaFim,//
-			up_Site_contact_code: siteInfo,//
-			tag_event_code: tags,// !!!!!
-			//up_Informative_Classification_code
-			//up_Event_classification_code :
-			//up_Telefone_event_code :
-			//up_Tp_Event_code :
-			//up_Tp_Modality_code :
-			//up_cd_cep_code :
-			//up_complemento_code :
-			//up_desc_event_code :
-			//up_instagram_user_code :
-			//up_more_info_code :
-			//up_nm_estado_code :
-			//up_nm_cidade_code :
-			//up_nm_bairro_code :
-			//up_nm_rua_code :
-			//up_num_residencia_code :
-			//up_num_complemento_code :
-			//up_img_Data_code :
-			up_Id_App_Events: idEvent.eventId_code
+  const updateEvent = {
+    up_name_event_code: titulo, //
+    up_desc_event_code: descricao,
+    up_Dt_begin_code: dataInicio,//
+    up_Hr_begin_code: horaInicio,//
+    up_Dt_end_code: dataFim,//
+    up_Hr_end_code: horaFim,//
+    up_Site_contact_code: siteInfo,//
+    tag_event_code: tags,// !!!!!
+    //up_Informative_Classification_code
+    //up_Event_classification_code :
+    //up_Telefone_event_code :
+    //up_Tp_Event_code :
+    //up_Tp_Modality_code :
+    //up_cd_cep_code :
+    //up_complemento_code :
+    //up_desc_event_code :
+    //up_instagram_user_code :
+    //up_more_info_code :
+    //up_nm_estado_code :
+    //up_nm_cidade_code :
+    //up_nm_bairro_code :
+    //up_nm_rua_code :
+    //up_num_residencia_code :
+    //up_num_complemento_code :
+    //up_img_Data_code :
+    up_Id_App_Events: idEvent.eventId_code
 
 
 
@@ -141,14 +159,20 @@ export default function Eventoedit2({ navigation }) {
 
 
 
-		}
-		// console.log(updateEvent);
+  }
+  // console.log(updateEvent);
 
-	const backbutton = () => {
-		navigation.goBack();
-	};
+  const [editDescription, setEditDescription] = useState(false);
+  const [editTitle, setEditTitle] = useState(false);
+  const [editSite, setEditSite] = useState(false);
+  const [editTags, setEditTags] = useState(false);
+  const [editData, setEditData] = useState(false);
+  const [editType, setEditType] = useState(false);
+  const [editStatus, setEditStatus] = useState(false);
+  const [editClassification, setEditClassification] = useState(false);
+  const [editModality, setEditModality] = useState(false);
 
-	const handleButtonHome = () => {
+  const handleButtonHome = () => {
 		navigation.navigate('telaprincipal',{id: id})
 	};
 
@@ -176,614 +200,666 @@ export default function Eventoedit2({ navigation }) {
 	const handleButtonPeople = () => {
 		navigation.navigate('telaprofile', {id : id});
 	};
+  return (
+    <View style={styles.container}>
+      <ImageBackground
+        source={backgroundImage || require("../assets/images/telanexist.png")}
+        style={styles.backgroundImage}
+        resizeMode="cover">
+          <Backbutton/>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.overlay}>
+            <View style={styles.descricaoContainer}>
+              <View style={styles.tituloContainer}>
+                <Text style={styles.descricaoTitulo}>Descrição</Text>
+                <Pressable
+                  onPress={() => {
+                    setEditDescription(!editDescription);
+                  }}>
+                  <Image
+                    source={require("../assets/images/icons/pencil(g).png")}
+                    style={styles.imagemTitulo}
+                  />
+                </Pressable>
+              </View>
+              {editDescription ? (
+                <TextInput
+                  style={styles.descricaoTexto}
+                  onChangeText={(e) => setDescricao(e)}
+                  value={descricao}
+                />
+              ) : (
+                <Text style={styles.descricaoTexto}>{descricao}</Text>
+              )}
+            </View>
+          </View>
 
-	const [editDescription, setEditDescription] = useState(false);
-	const [editTitle, setEditTitle] = useState(false);
-	const [editSite, setEditSite] = useState(false);
-	const [editTags, setEditTags] = useState(false);
-	const [editData, setEditData] = useState(false);
+          <View style={styles.background}></View>
 
+          <View style={styles.dataContainer}>
+            <View style={styles.tituloContainer}>
+              <Text style={styles.dataTitulo}>Data e horarios</Text>
+              <Pressable
+                onPress={() => {
+                  setEditData(!editData);
+                }}>
+                <Image
+                  source={require("../assets/images/icons/pencil(g).png")}
+                  style={styles.imagemTitulo}
+                />
+              </Pressable>
+            </View>
+            {editData ? (
+              <View>
+                <View style={styles.flexRow}>
+                  <Text style={styles.dataTexto}>Entre</Text>
+                  <TextInput
+                    style={styles.dataTexto}
+                    onChangeText={(e) => setDataInicio(e)}
+                    value={dataInicio}
+                  />
+                  <Text style={styles.dataTexto}>-</Text>
+                  <TextInput
+                    style={styles.dataTexto}
+                    onChangeText={(e) => setDataFim(e)}
+                    value={dataFim}
+                  />
+                </View>
 
-	
-	return (
-		<View style={styles.container}>
-			<ImageBackground
-				source={backgroundImage || require('./img/telanexist.png')}
-				style={styles.backgroundImage}
-				resizeMode="cover"
-			>
-				<ScrollView showsVerticalScrollIndicator={false}>
-					<View style={styles.overlay}>
-						<View style={styles.descricaoContainer}>
-							<View style={styles.tituloContainer}>
-								<Text style={styles.descricaoTitulo}>Descrição</Text>
-								<Pressable onPress={() => {
-									setEditDescription(!editDescription)
-								}}>
-									<Image
-										source={require('./img/icons/pencil(g).png')}
-										style={styles.imagemTitulo}
-									/>
-								</Pressable>
-							</View>
-							{
-								editDescription
-									? <TextInput
-										style={styles.descricaoTexto}
-										onChangeText={e => setDescricao(e)}
-										value={descricao}
-									/>
-									: <Text style={styles.descricaoTexto}>{descricao}</Text>
-							}
+                <View style={styles.flexRow}>
+                  <TextInput
+                    style={styles.dataTexto2}
+                    onChangeText={(e) => setHoraInicio(e)}
+                    value={horaInicio}
+                  />
 
-						</View>
-					</View>
+                  <Text style={styles.dataTexto2}>-</Text>
 
-					<View style={styles.background}>
+                  <TextInput
+                    style={styles.dataTexto2}
+                    onChangeText={(e) => setHoraFim(e)}
+                    value={horaFim}
+                  />
 
-					</View>
+                  <Text style={styles.dataTexto2}>- Entrada Padrão</Text>
+                </View>
+              </View>
+            ) : (
+              <View>
+                <Text style={styles.dataTexto}>
+                  Entre {dataInicio} - {dataFim}
+                </Text>
+                <Text style={styles.dataTexto2}>
+                  {horaInicio} - {horaFim} - Entrada Padrão
+                </Text>
+              </View>
+            )}
+          </View>
 
-					<View style={styles.dataContainer}>
-						<View style={styles.tituloContainer}>
-							<Text style={styles.dataTitulo}>Data e horarios</Text>
-							<Pressable onPress={() => {
-								setEditData(!editData)
+          <View style={styles.siteInfoContainer}>
+            <View style={styles.tituloContainer}>
+              <Text style={styles.siteInfoTitulo}>
+                Site para mais informações
+              </Text>
+              <Pressable
+                onPress={() => {
+                  setEditSite(!editSite);
+                }}>
+                <Image
+                  source={require("../assets/images/icons/pencil(g).png")}
+                  style={styles.imagemTitulo}
+                />
+              </Pressable>
+            </View>
+            {editSite ? (
+              <TextInput
+                style={styles.descricaoTexto}
+                onChangeText={(e) => setSiteInfo(e)}
+                value={siteInfo}
+              />
+            ) : (
+              <Text style={styles.descricaoTexto}>{siteInfo}</Text>
+            )}
+          </View>
 
-							}}>
-								<Image
-									source={require('./img/icons/pencil(g).png')}
-									style={styles.imagemTitulo}
-								/>
-							</Pressable>
-						</View>
-						{
-							editData
-								? <View>
-									<View style={styles.flexRow}>
-										<Text style={styles.dataTexto}>
-											Entre
-										</Text>
-										<TextInput
-											style={styles.dataTexto}
-											onChangeText={e => setDataInicio(e)}
-											value={dataInicio}
-										/>
-										<Text style={styles.dataTexto}>
-											-
-										</Text>
-										<TextInput
-											style={styles.dataTexto}
-											onChangeText={e => setDataFim(e)}
-											value={dataFim}
-										/>
-									</View>
+          <View style={styles.tagsContainer}>
+            <View style={styles.tituloContainer}>
+              <Text style={styles.tagsTitulo}>Tags Relacionadas</Text>
+              <Pressable
+                onPress={() => {
+                  setEditTags(!editTags);
+                }}>
+                <Image
+                  source={require("../assets/images/icons/pencil(g).png")}
+                  style={styles.imagemTitulo}
+                />
+              </Pressable>
+            </View>
+            {editTags ? (
+              <TextInput
+                style={styles.tagsTexto}
+                onChangeText={(e) => setTags(e)}
+                value={tags}
+              />
+            ) : (
+              <Text style={styles.tagsTexto}>{tags}</Text>
+            )}
+          </View>
 
+          <View style={styles.typeContainer}>
+            <View style={styles.tituloContainer}>
+              <Text style={styles.typeTitulo}>Tipo do evento</Text>
+              <Pressable
+                onPress={() => {
+                  setEditType(!editType);
+                }}>
+                <Image
+                  source={require("../assets/images/icons/pencil(g).png")}
+                  style={styles.imagemTitulo}
+                />
+              </Pressable>
+            </View>
+            {editTags ? (
+              <TextInput
+                style={styles.typeTexto}
+                onChangeText={(e) => setTypeEvent(e)}
+                value={typeEvent}
+              />
+            ) : (
+              <Text style={styles.typeTexto}>{typeEvent}</Text>
+            )}
+          </View>
 
+          <View style={styles.statusContainer}>
+            <View style={styles.tituloContainer}>
+              <Text style={styles.statusTitulo}>Status do evento</Text>
+              <Pressable
+                onPress={() => {
+                  setEditStatus(!editStatus);
+                }}>
+                <Image
+                  source={require("../assets/images/icons/pencil(g).png")}
+                  style={styles.imagemTitulo}
+                />
+              </Pressable>
+            </View>
+            {editTags ? (
+              <TextInput
+                style={styles.statusTexto}
+                onChangeText={(e) => setStatusEvent(e)}
+                value={statusEvent}
+              />
+            ) : (
+              <Text style={styles.statusTexto}>{statusEvent}</Text>
+            )}
+          </View>
 
-									<View style={styles.flexRow}>
-									<TextInput
-											style={styles.dataTexto2}
-											onChangeText={e => setHoraInicio(e)}
-											value={horaInicio}
-										/>
+          <View style={styles.modalidadeContainer}>
+            <View style={styles.tituloContainer}>
+              <Text style={styles.modalidadeTitulo}>Modalidade</Text>
+              <Pressable
+                onPress={() => {
+                  setEditModality(!editModality);
+                }}>
+                <Image
+                  source={require("../assets/images/icons/pencil(g).png")}
+                  style={styles.imagemTitulo}
+                />
+              </Pressable>
+            </View>
+            {editTags ? (
+              <TextInput
+                style={styles.statusTexto}
+                onChangeText={(e) => setModality(e)}
+                value={modalityEvent}
+              />
+            ) : (
+              <Text style={styles.modalidadeTexto}>{modalityEvent}</Text>
+            )}
+          </View>
 
-										<Text style={styles.dataTexto2}>
-											-
-										</Text>
+          <View style={styles.classificationContainer}>
+            <View style={styles.tituloContainer}>
+              <Text style={styles.classificationTitulo}>Classificação</Text>
+              <Pressable
+                onPress={() => {
+                  setEditClassification(!editClassification);
+                }}>
+                <Image
+                  source={require("../assets/images/icons/pencil(g).png")}
+                  style={styles.imagemTitulo}
+                />
+              </Pressable>
+            </View>
+            {editTags ? (
+              <TextInput
+                style={styles.statusTexto}
+                onChangeText={(e) => setClassication(e)}
+                value={classificationEvent}
+              />
+            ) : (
+              <Text style={styles.classificationTexto}>
+                {classificationEvent}
+              </Text>
+            )}
+          </View>
 
-										<TextInput
-											 style={styles.dataTexto2}
-											onChangeText={e => setHoraFim(e)}
-											value={horaFim}
-										/>
+          <View style={styles.line2} />
 
-										<Text style={styles.dataTexto2}>
-											- Entrada Padrão
-										</Text>
-									
-									</View>
-
-								</View>
-
-								: <View>
-									<Text style={styles.dataTexto}>
-										Entre {dataInicio} - {dataFim}
-									</Text>
-									<Text style={styles.dataTexto2}>
-										{horaInicio} - {horaFim} - Entrada Padrão
-									</Text>
-								</View>
-						}
-
-
-					</View>
-
-					<View style={styles.siteInfoContainer}>
-						<View style={styles.tituloContainer}>
-							<Text style={styles.siteInfoTitulo}>Site para mais informações</Text>
-							<Pressable onPress={() => {
-								setEditSite(!editSite)
-							}}>
-								<Image
-									source={require('./img/icons/pencil(g).png')}
-									style={styles.imagemTitulo}
-								/>
-							</Pressable>
-						</View>
-						{
-							editSite
-								? <TextInput
-									style={styles.descricaoTexto}
-									onChangeText={e => setSiteInfo(e)}
-									value={siteInfo}
-								/>
-								: <Text style={styles.descricaoTexto}>{siteInfo}</Text>
-						}
-
-					</View>
-
-					<View style={styles.tagsContainer}>
-						<View style={styles.tituloContainer}>
-							<Text style={styles.tagsTitulo}>Tags Relacionadas</Text>
-							<Pressable onPress={() => {
-								setEditTags(!editTags)
-							}}>
-								<Image
-									source={require('./img/icons/pencil(g).png')}
-									style={styles.imagemTitulo}
-								/>
-							</Pressable>
-						</View>
-						{
-							editTags
-								? <TextInput
-									style={styles.tagsTexto}
-									onChangeText={e => setTags(e)}
-									value={tags}
-								/>
-								: <Text style={styles.tagsTexto}>{tags}</Text>
-						}
-
-					</View>
-
-					<View style={styles.line} />
-
-					<View style={styles.comentariosContainer}>
-						<Text style={styles.comentariosTitulo}>Comentários</Text>
-						<Image
-							source={require('./img/icons/loading.png')}
-							style={styles.imagemComentarios}
-						/>
-						<Text style={styles.semComentarios}>Sem comentários disponíveis</Text>
-					</View>
-
-					<View style={styles.line3} />
-
-					<View style={styles.line2} />
-
-					<Pressable style={styles.backButton} onPress={backbutton}>
-						<Image source={require('./img/icons/backicon.png')} style={styles.backIcon} />
-					</Pressable>
-					<View style={styles.square}>
-						<View style={styles.flexRow}>
-							{
-								editTitle
-									? <TextInput
-										style={styles.titulo}
-										onChangeText={e => setTitulo(e)}
-										value={titulo}
-									/>
-									: <Text
-										style={styles.titulo}
-										ref={(ref) => {
-											if (ref) {
-												ref.measure((x, y, width, height, pageX, pageY) => {
-													setTituloWidth(width);
-												});
-											}
-										}}
-									>{titulo}</Text>
-							}
-							<Pressable onPress={() => {
-								setEditTitle(!editTitle)
-							}}>
-								<Image
-									source={require('./img/icons/pencil(g).png')}
-									style={[styles.imagemTitulo1, { left: imagemTituloLeft }]}
-								/>
-							</Pressable>
-
-						</View>
-
-					</View>
-
-				</ScrollView>
-			</ImageBackground>
-			<View style={styles.navbar} zIndex={2}>
-				<Pressable style={styles.navButton} onPress={handleButtonHome}>
-					<Image source={require('./img/icons/home(g).png')} style={styles.navButtonImage} />
-				</Pressable>
-
-				<Pressable style={[styles.navButton, { left: -15 }]} onPress={handleButtonSearch}>
-					<Image source={require('./img/icons/search(g).png')} style={styles.navButtonImage} />
-				</Pressable>
-
-				<Pressable style={[styles.circleButton, { bottom: 30 }]} onPress={handleButtonCenter}>
-					<Image source={require('./img/icons/add(g).png')} style={styles.circleButtonImage} />
-				</Pressable>
-
-				<Pressable style={[styles.navButton, { left: 15 }]} onPress={handleButtonNotification}>
-					<Image source={require('./img/icons/notification(g).png')} style={styles.navButtonImage} />
-				</Pressable>
-
-				<Pressable style={styles.navButton} onPress={handleButtonPeople}>
-					<Image source={require('./img/icons/people(g).png')} style={styles.navButtonImage} />
-				</Pressable>
-			</View>
-		</View>
-	);
+          <View style={styles.square}>
+            <View style={styles.flexRow}>
+              {editTitle ? (
+                <TextInput
+                  style={styles.titulo}
+                  onChangeText={(e) => setTitulo(e)}
+                  value={titulo}
+                />
+              ) : (
+                <Text
+                  style={styles.titulo}
+                  ref={(ref) => {
+                    if (ref) {
+                      ref.measure((x, y, width, height, pageX, pageY) => {
+                        setTituloWidth(width);
+                      });
+                    }
+                  }}>
+                  {titulo}
+                </Text>
+              )}
+              <Pressable
+                onPress={() => {
+                  setEditTitle(!editTitle);
+                }}>
+                <Image
+                  source={require("../assets/images/icons/pencil(g).png")}
+                  style={[styles.imagemTitulo2, { left: imagemTituloLeft }]}
+                />
+              </Pressable>
+            </View>
+          </View>
+        </ScrollView>
+      </ImageBackground>
+    </View>
+  );
 }
 
-const windowHeight = Dimensions.get('window').height;
+const windowHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		width: '100%',
-		height: '100%',
-	},
+  container: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+  },
 
-	backgroundImage: {
-		flex: 1,
-	},
+  backgroundImage: {
+    flex: 1,
+  },
 
-	overlay: {
-		flex: 1,
-		backgroundColor: 'transparent',
-		paddingTop: Platform.OS === 'ios' ? 20 : 0,
-		justifyContent: 'center',
-		alignItems: 'center',
-	},
+  overlay: {
+    flex: 1,
+    backgroundColor: "transparent",
+    paddingTop: Platform.OS === "ios" ? 20 : 0,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 
-	square: {
-		position: 'absolute',
-		top: 0,
-		left: 0,
-		right: 0,
-		height: 275,
-		backgroundColor: 'black',
-		zIndex: 0,
-		justifyContent: 'end',
-		alignItems: 'start',
-	},
+  square: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 275,
+    backgroundColor: "black",
+    zIndex: 0,
+    justifyContent: "end",
+    alignItems: "start",
+  },
 
-	titulo: {
-		// position: 'absolute',
-		left: 15,
-		bottom: 12,
-		color: 'white',
-		fontSize: 24,
-		fontWeight: 'inter',
-		textAlign: 'center',
-	},
+  titulo: {
+    // position: 'absolute',
+    left: 15,
+    bottom: 12,
+    color: "white",
+    fontSize: 24,
+    fontWeight: "inter",
+    textAlign: "center",
+  },
 
-	backButton: {
-		position: 'absolute',
-		top: 35,
-		left: 27,
-		zIndex: 1,
-	},
+  buttonContainer: {
+    position: "absolute",
+    top: 290,
+    left: 22,
+    flexDirection: "row",
+    zIndex: 1,
+  },
 
-	backIcon: {
-		width: 30,
-		height: 24,
-	},
+  buttonContainer2: {
+    position: "absolute",
+    top: 290,
+    right: 22,
+    flexDirection: "row",
+    zIndex: 1,
+  },
 
-	buttonContainer: {
-		position: 'absolute',
-		top: 290,
-		left: 22,
-		flexDirection: 'row',
-		zIndex: 1,
-	},
+  customButton: {
+    marginHorizontal: 10,
+  },
 
-	buttonContainer2: {
-		position: 'absolute',
-		top: 290,
-		right: 22,
-		flexDirection: 'row',
-		zIndex: 1,
-	},
+  icon: {
+    width: 65,
+    height: 65,
+  },
 
-	customButton: {
-		marginHorizontal: 10,
-	},
+  buttonTitle: {
+    position: "absolute",
+    right: 18,
+    top: 75,
+    color: "white",
+    fontSize: 12,
+    marginRight: -10,
+  },
 
-	icon: {
-		width: 65,
-		height: 65,
-	},
+  buttonTitle1: {
+    position: "absolute",
+    right: 124,
+    top: 75,
+    color: "white",
+    fontSize: 12,
+    marginRight: -10,
+  },
 
-	buttonTitle: {
-		position: 'absolute',
-		right: 18,
-		top: 75,
-		color: 'white',
-		fontSize: 12,
-		marginRight: -10,
-	},
+  buttonTitle2: {
+    position: "absolute",
+    right: 28,
+    top: 75,
+    color: "white",
+    fontSize: 12,
+    marginRight: -10,
+  },
 
-	buttonTitle1: {
-		position: 'absolute',
-		right: 124,
-		top: 75,
-		color: 'white',
-		fontSize: 12,
-		marginRight: -10,
-	},
+  buttonTitle3: {
+    position: "absolute",
+    right: 108,
+    top: 75,
+    color: "white",
+    fontSize: 12,
+    marginRight: -10,
+  },
 
-	buttonTitle2: {
-		position: 'absolute',
-		right: 28,
-		top: 75,
-		color: 'white',
-		fontSize: 12,
-		marginRight: -10,
-	},
+  buttonTitle4: {
+    position: "absolute",
+    right: 18,
+    top: 75,
+    color: "white",
+    fontSize: 12,
+    marginRight: -10,
+  },
 
-	buttonTitle3: {
-		position: 'absolute',
-		right: 108,
-		top: 75,
-		color: 'white',
-		fontSize: 12,
-		marginRight: -10,
-	},
+  descricaoContainer: {
+    marginVertical: 8,
+    position: "absolute",
+    top: windowHeight / 2 + -125,
+    left: 15,
+    zIndex: 1,
+  },
 
-	buttonTitle4: {
-		position: 'absolute',
-		right: 18,
-		top: 75,
-		color: 'white',
-		fontSize: 12,
-		marginRight: -10,
-	},
+  descricaoTitulo: {
+    position: "relative",
+    color: "white",
+    fontSize: 18,
+    fontWeight: "inter",
+    textAlign: "left",
+  },
 
+  descricaoTexto: {
+    position: "relative",
+    color: "white",
+    fontSize: 16,
+    marginTop: 10,
+    opacity: 0.5,
+  },
 
-	descricaoContainer: {
-		marginVertical: 8,
-		position: 'absolute',
-		top: windowHeight / 2 + -10,
-		left: 15,
-		zIndex: 1,
-	},
+  dataContainer: {
+    marginVertical: 54,
+    top: windowHeight / 2 + -75,
+    left: 15,
+    zIndex: 1,
+  },
 
-	descricaoTitulo: {
-		position: 'relative',
-		color: 'white',
-		fontSize: 18,
-		fontWeight: 'inter',
-		textAlign: 'left',
-	},
+  dataTitulo: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "inter",
+    textAlign: "left",
+  },
 
-	descricaoTexto: {
-		position: 'relative',
-		color: 'white',
-		fontSize: 16,
-		marginTop: 10,
-		opacity: 0.5,
-	},
+  dataTexto: {
+    color: "white",
+    fontSize: 16,
+    marginTop: 10,
+    opacity: 0.5,
+  },
 
-	dataContainer: {
-		marginVertical: 54,
-		top: windowHeight / 2 + 15 + 10,
-		left: 15,
-		zIndex: 1,
-	},
+  dataTexto2: {
+    color: "white",
+    fontSize: 16,
+    marginTop: 10,
+    opacity: 0.5,
+  },
 
-	dataTitulo: {
-		color: 'white',
-		fontSize: 18,
-		fontWeight: 'inter',
-		textAlign: 'left',
-	},
+  siteInfoContainer: {
+    marginVertical: 8,
+    position: "absolute",
+    top: windowHeight / 2 + 75,
+    left: 15,
+    zIndex: 1,
+  },
 
-	dataTexto: {
-		color: 'white',
-		fontSize: 16,
-		marginTop: 10,
-		opacity: 0.5,
-	},
+  siteInfoTitulo: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "inter",
+    textAlign: "left",
+  },
 
-	dataTexto2: {
-		color: 'white',
-		fontSize: 16,
-		marginTop: 10,
-		opacity: 0.5,
-	},
+  siteInfoTexto: {
+    color: "white",
+    fontSize: 16,
+    marginTop: 10,
+    opacity: 0.5,
+  },
 
-	siteInfoContainer: {
-		marginVertical: 8,
-		position: 'absolute',
-		top: windowHeight / 2 + 175,
-		left: 15,
-		zIndex: 1,
-	},
+  tagsContainer: {
+    marginVertical: 8,
+    position: "absolute",
+    top: windowHeight / 2 + 145,
+    left: 15,
+    zIndex: 1,
+  },
 
-	siteInfoTitulo: {
-		color: 'white',
-		fontSize: 18,
-		fontWeight: 'inter',
-		textAlign: 'left',
-	},
+  tagsTitulo: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "inter",
+    textAlign: "left",
+  },
 
-	siteInfoTexto: {
-		color: 'white',
-		fontSize: 16,
-		marginTop: 10,
-		opacity: 0.5,
-	},
+  tagsTexto: {
+    color: "white",
+    fontSize: 16,
+    marginTop: 10,
+    opacity: 0.5,
+  },
 
-	tagsContainer: {
-		marginVertical: 8,
-		position: 'absolute',
-		top: windowHeight / 2 + 250,
-		left: 15,
-		zIndex: 1,
-	},
+  typeContainer: {
+    marginVertical: 8,
+    position: "absolute",
+    top: windowHeight / 2 + 215,
+    left: 15,
+    zIndex: 1,
+  },
 
-	tagsTitulo: {
-		color: 'white',
-		fontSize: 18,
-		fontWeight: 'inter',
-		textAlign: 'left',
-	},
+  typeTitulo: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "inter",
+    textAlign: "left",
+  },
 
-	tagsTexto: {
-		color: 'white',
-		fontSize: 16,
-		marginTop: 10,
-		opacity: 0.5,
-	},
+  typeTexto: {
+    color: "white",
+    fontSize: 16,
+    marginTop: 10,
+    opacity: 0.5,
+  },
 
-	navbar: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'space-between',
-		backgroundColor: '#380053',
-		padding: 10,
-		position: 'absolute',
-		bottom: 0,
-		left: 0,
-		right: 0,
-	},
+  statusContainer: {
+    marginVertical: 8,
+    position: "absolute",
+    top: windowHeight / 2 + 280,
+    left: 15,
+    zIndex: 1,
+  },
 
-	navButton: {
-		flex: 1,
-		alignItems: 'center',
-		padding: 10,
-	},
+  statusTitulo: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "inter",
+    textAlign: "left",
+  },
 
-	navButtonImage: {
-		width: 20,
-		height: 20,
-	},
+  statusTexto: {
+    color: "white",
+    fontSize: 16,
+    marginTop: 10,
+    opacity: 0.5,
+  },
 
-	circleButton: {
-		width: 60,
-		height: 60,
-		backgroundColor: 'transparent',
-		alignItems: 'center',
-		justifyContent: 'center',
-		position: 'absolute',
-		bottom: 0,
-		left: '50%',
-		marginLeft: -27,
-	},
+  modalidadeContainer: {
+    marginVertical: 8,
+    position: "absolute",
+    top: windowHeight / 2 + 345,
+    left: 15,
+    zIndex: 1,
+  },
 
-	circleButtonImage: {
-		width: 70,
-		height: 75,
-	},
+  modalidadeTitulo: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "inter",
+    textAlign: "left",
+  },
 
-	line: {
-		position: 'absolute',
-		left: 0,
-		right: 0,
-		bottom: -550,
-		height: 2,
-		backgroundColor: 'white',
-		opacity: 0.6,
-	},
+  modalidadeTexto: {
+    color: "white",
+    fontSize: 16,
+    marginTop: 10,
+    opacity: 0.5,
+  },
 
-	line2: {
-		position: 'absolute',
-		left: 0,
-		right: 0,
-		bottom: -890,
-		height: 2,
-		backgroundColor: 'white',
-		opacity: 0.6,
-	},
+  classificationContainer: {
+    marginVertical: 8,
+    position: "absolute",
+    top: windowHeight / 2 + 410,
+    left: 15,
+    zIndex: 1,
+  },
 
-	line3: {
-		position: 'absolute',
-		left: 0,
-		right: 0,
-		bottom: -790,
-		height: 2,
-		backgroundColor: 'white',
-		opacity: 0.6,
-	},
+  classificationTitulo: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "inter",
+    textAlign: "left",
+  },
 
-	comentariosContainer: {
-		marginVertical: 8,
-		position: 'absolute',
-		top: windowHeight / 2 + 320,
-		left: 15,
-		zIndex: 1,
-	},
+  classificationTexto: {
+    color: "white",
+    fontSize: 16,
+    marginTop: 10,
+    opacity: 0.5,
+  },
 
-	comentariosTitulo: {
-		color: 'white',
-		fontSize: 18,
-		fontWeight: 'inter',
-		textAlign: 'left',
-	},
+  line2: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: -890,
+    height: 2,
+    backgroundColor: "white",
+    opacity: 0.6,
+  },
 
-	comentarioItem: {
-		marginTop: 10,
-		opacity: 0.5,
-	},
+  comentariosContainer: {
+    marginVertical: 8,
+    position: "absolute",
+    top: windowHeight / 2 + 300,
+    left: 15,
+    zIndex: 1,
+  },
 
-	comentarioTexto: {
-		color: 'white',
-		fontSize: 16,
-	},
+  comentariosTitulo: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "inter",
+    textAlign: "left",
+  },
 
-	imagemComentarios: {
-		width: 100,
-		height: 100,
-		left: 70,
-		alignSelf: 'center',
-		marginTop: 30,
-	},
+  comentarioItem: {
+    marginTop: 10,
+    opacity: 0.5,
+  },
 
-	semComentarios: {
-		color: 'white',
-		fontSize: 18,
-		fontWeight: 'inter',
-		textAlign: 'center',
-		left: 60,
-		marginTop: 25,
-		opacity: 0.7,
-	},
+  comentarioTexto: {
+    color: "white",
+    fontSize: 16,
+  },
 
-	imagemTitulo1: {
-		// position: 'absolute',
-		// left: 0,
-		// bottom: 12,
-		width: 30,
-		height: 30,
-	},
+  imagemComentarios: {
+    width: 100,
+    height: 100,
+    left: 70,
+    alignSelf: "center",
+    marginTop: 30,
+  },
 
-	tituloContainer: {
-		flexDirection: 'row',
-		alignItems: 'center',
-	},
+  semComentarios: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "inter",
+    textAlign: "center",
+    left: 60,
+    marginTop: 25,
+    opacity: 0.7,
+  },
 
-	imagemTitulo: {
-		marginLeft: 10, // Ajuste conforme necessário
-		width: 20, // Ajuste conforme necessário
-		height: 20, // Ajuste conforme necessário
-	},
+  imagemTitulo1: {
+    bottom: 12,
+    width: 30,
+    height: 30,
+  },
 
+  imagemTitulo2: {
+    bottom: 12,
+    width: 25,
+    height: 25,
+  },
 
-	flexRow: {
-		flexDirection: "row",
-		alignItems: "center",
-		gap: 12,
-	}
+  tituloContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
 
+  imagemTitulo: {
+    marginLeft: 10,
+    width: 20,
+    height: 20,
+  },
 
+  flexRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
 });
