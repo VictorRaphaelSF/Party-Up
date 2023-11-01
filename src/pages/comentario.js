@@ -8,6 +8,7 @@ import {
   Platform,
   Dimensions,
   Modal,
+  TouchableWithoutFeedback,
 } from "react-native";
 
 import * as Animatable from "react-native-animatable";
@@ -17,6 +18,9 @@ import Backbutton from "../components/backbutton";
 export default function Comentario() {
   const navigation = useNavigation();
   const [isMenuVisible, setMenuVisible] = useState(false);
+  const [name, setName] = useState("");
+  const [profileImage, setProfileImage] = useState("");
+  const [descComentario, setDescComentario] = useState("");
 
   const menu = () => {
     setMenuVisible(true);
@@ -26,18 +30,64 @@ export default function Comentario() {
     setMenuVisible(false);
   };
 
+  const bttSair = () => {
+    navigation.navigate('index');
+    setMenuVisible(false);
+  };
+
+  const bttReport = () => {
+    navigation.navigate('report');
+    setMenuVisible(false);
+  };
+
+  const bttMyevent = () => {
+    navigation.navigate('myevent');
+    setMenuVisible(false);
+  };
+
+  const bttEventProgress = () => {
+    navigation.navigate('event_progress');
+    setMenuVisible(false);
+  };
+
+  const bttDashboard = () => {
+    navigation.navigate('dashboard');
+  };
+
+    // const route = useRoute();
+  // const { id } = route.params;
+  // console.log(id);
+  // const idUser = {
+  // };
+
+  // useEffect(() => {
+  //   axios
+  //     .post('url do back', idUser)
+  //     .then((response) => {
+  //       setProfileImage(response.data.image_url);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Erro ao enviar ou retono de dados para o backend:', error);
+  //     });
+
+  //   axios
+  //     .post('http://localhost:3003/viewEventUser', /*idUser*/)
+  //     .then((response) => {
+  //       console.log(response)
+  //       console.log(response.data.results[0].Nm_event);
+  //       setEventData(response.data.results);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Erro ao enviar ou retono de dados para o backend:', error);
+  //     });
+  // }, []);
+
   return (
     <View style={styles.container}>
       <Backbutton/>
       <View style={styles.header}>
         <Text style={styles.title}>Comentarios</Text>
       </View>
-
-      <Pressable style={styles.button} onPress={menu}>
-        <View style={styles.bttbarra}></View>
-        <View style={styles.bttbarra}></View>
-        <View style={styles.bttbarra}></View>
-      </Pressable>
 
       <View style={styles.linha}></View>
       <View style={styles.bottomImageContainer}>
@@ -47,32 +97,55 @@ export default function Comentario() {
         />
       </View>
 
+      <Pressable style={styles.button} onPress={menu}>
+        <View style={styles.bttbarra}></View>
+        <View style={styles.bttbarra}></View>
+        <View style={styles.bttbarra}></View>
+      </Pressable>
+
       <Modal
         transparent={true}
         visible={isMenuVisible}
         onRequestClose={closeMenu}>
-        <Pressable onPress={closeMenu} style={styles.modalBackground}>
-          <Animatable.View
-            style={styles.menuContainer}
-            animation={isMenuVisible ? "slideInUp" : "slideInDown"}
-            duration={500}>
-            <Pressable
-              style={styles.menubtt}
-              onPress={() => console.log("Item 1 clicado")}>
-              <Text style={styles.menubtttext}>Item 1</Text>
-            </Pressable>
-            <Pressable
-              style={styles.menubtt}
-              onPress={() => console.log("Item 2 clicado")}>
-              <Text style={styles.menubtttext}>Item 2</Text>
-            </Pressable>
-            <Pressable
-              style={styles.menubtt}
-              onPress={() => console.log("Item 3 clicado")}>
-              <Text style={styles.menubtttext}>Item 3</Text>
-            </Pressable>
-          </Animatable.View>
-        </Pressable>
+        <TouchableWithoutFeedback onPress={closeMenu}>
+          <View style={styles.modalBackground}>
+            <Animatable.View
+              style={styles.menuContainer}
+              animation={isMenuVisible ? "slideInUp" : "slideInDown"}
+              duration={250}>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttDashboard}>
+                <Text style={styles.menubtttext}>Dashboard</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttEventProgress}>
+                <Text style={styles.menubtttext}>Eventos em andamentos</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttMyevent}>
+                <Text style={styles.menubtttext}>Meus Eventos</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttReport}>
+                <Text style={styles.menubtttext}>Report</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => console.log("Item 5 clicado")}>
+                <Text style={styles.menubtttext}>Termos</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttSair}>
+                <Text style={styles.menubtttext}>Sair</Text>
+              </Pressable>
+            </Animatable.View>
+          </View>
+        </TouchableWithoutFeedback>
       </Modal>
     </View>
   );

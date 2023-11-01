@@ -19,6 +19,7 @@ export default function Location() {
       resizeMode="cover">
       <View style={styles.overlay}>
       <Buttonprofile/>
+        
       </View>
     </ImageBackground>
 
