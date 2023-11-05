@@ -83,7 +83,7 @@ export default function Telaprofile() {
   };
 
   const { imgProfile } = route.params;
-  console.log(imgProfile);
+  //console.log(imgProfile);
 
   const handleEventImageClick = () => {
     if (eventId) {
@@ -91,7 +91,7 @@ export default function Telaprofile() {
     }
   };
 
-  // useEffect(() => {
+  useEffect(() => {
   //   axios
   //     .post('url do back', idUser)
   //     .then((response) => {
@@ -101,17 +101,18 @@ export default function Telaprofile() {
   //       console.error('Erro ao enviar ou retono de dados para o backend:', error);
   //     });
 
-  //   axios
-  //     .post('http://localhost:3003/viewEventUser', /*idUser*/)
-  //     .then((response) => {
-  //       console.log(response)
-  //       console.log(response.data.results[0].Nm_event);
-  //       setEventData(response.data.results);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Erro ao enviar ou retono de dados para o backend:', error);
-  //     });
-  // }, []);
+    axios
+      .post('http://localhost:3003/viewEventUser', idUser)
+      .then((response) => {
+        console.log(response)
+        console.log(response.data.results[0].Nm_event);
+        setEventData(response.data.results);
+      })
+      .catch((error) => {
+        console.error('Erro ao enviar ou retono de dados para o backend:', error);
+      });
+  }, []);
+  console.log(eventData);
 
   return (
     <View style={styles.container}>

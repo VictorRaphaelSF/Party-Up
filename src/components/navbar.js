@@ -9,11 +9,11 @@ export default function Navbar() {
   };
 
   const handleButtonSearch = () => {
-    navigation.navigate("search", { id : id });
+    navigation.navigate("search", { id : id, imgProfile: imgProfile });
   };
 
   const handleButtonCenter = () => {
-    navigation.navigate("cadevento", { id : id });
+    navigation.navigate("cadevento", { id : id, imgProfile: imgProfile });
   };
 
   const handleButtonNotification = () => {
@@ -26,6 +26,7 @@ export default function Navbar() {
 
   const route = useRoute();
   const { imgProfile } = route.params;
+  const { id } = route.params;
   
   return (
     <View style={styles.navbar}>

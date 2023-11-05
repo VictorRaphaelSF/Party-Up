@@ -85,9 +85,9 @@ export default function Cadevento({route}) {
   const userData = route.params.userData;
 
   // adicionando mais dados no objeto do cliente
-  userData["nmUser"] = nmusuario;
-  userData["descricao"] = descrição;
-  userData["uri"] = "imagem.png";
+  // userData["nmUser"] = nmusuario;
+  // userData["descricao"] = descrição;
+  // userData["uri"] = "imagem.png";
 
   const opa = useRoute();
   const { id } = opa.params;
