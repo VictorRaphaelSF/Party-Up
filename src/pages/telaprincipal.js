@@ -38,9 +38,7 @@ export default function Telaprincipal() {
     navigation.navigate("cadevento", { id: id });
   };
 
-  const handleButtonNotification = () => {
-    navigation.navigate("notificação", { id: id });
-  };
+
 
   const handleButtonPeople = () => {
     navigation.navigate("telaprofile");
@@ -81,6 +79,7 @@ export default function Telaprincipal() {
 
     
   }, [])
+  console.log()
 
   const renderItem = ({ item }) => (
     <Image style={styles.carouselImage} source={item} />

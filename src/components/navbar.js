@@ -5,11 +5,11 @@ export default function Navbar() {
   const navigation = useNavigation();
 
   const handleButtonHome = () => {
-    navigation.navigate("telaprincipal");
+    navigation.navigate("telaprincipal", { id : id, imgProfile: imgProfile });
   };
 
   const handleButtonSearch = () => {
-    navigation.navigate("search");
+    navigation.navigate("search", { id : id });
   };
 
   const handleButtonCenter = () => {
@@ -17,7 +17,7 @@ export default function Navbar() {
   };
 
   const handleButtonNotification = () => {
-    navigation.navigate("notificacao");
+    navigation.navigate("notificacao", { id : id, imgProfile: imgProfile });
   };
 
   const handleButtonPeople = () => {
@@ -25,8 +25,8 @@ export default function Navbar() {
   };
 
   const route = useRoute();
-  const { id } = route.params;
   const { imgProfile } = route.params;
+  
   return (
     <View style={styles.navbar}>
       <Pressable style={styles.navButton} onPress={handleButtonHome}>

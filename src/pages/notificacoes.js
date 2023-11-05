@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRoute } from "@react-navigation/native";
 import {
   StyleSheet,
   View,
@@ -51,7 +52,11 @@ export default function Notificações() {
   const bttDashboard = () => {
     navigation.navigate('dashboard');
   };
-
+  const route = useRoute();
+  const { imgProfile } = route.params;
+ 
+  //console.log(id);
+  console.log(imgProfile);
   return (
     <View style={styles.container}>
       <Image
