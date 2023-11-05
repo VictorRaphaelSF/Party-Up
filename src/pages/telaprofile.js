@@ -9,6 +9,7 @@ import {
   Dimensions,
   Modal,
   TouchableWithoutFeedback,
+  ScrollView,
 } from "react-native";
 
 import * as Animatable from "react-native-animatable";
@@ -17,6 +18,7 @@ import { useRoute } from "@react-navigation/native";
 import axios from "axios";
 import Navbar from "../components/navbar";
 import Backbutton from "../components/backbutton";
+import Myeventsbar from "../components/myeventsbar";
 
 export default function Telaprofile() {
   const navigation = useNavigation();
@@ -70,12 +72,6 @@ export default function Telaprofile() {
   // console.log(id);
   // const idUser = {
   // };
-
-  const handleEventImageClick = () => {
-    if (eventId) {
-      navigation.navigate("evento", { eventId });
-    }
-  };
 
   // useEffect(() => {
   //   axios
@@ -201,29 +197,12 @@ export default function Telaprofile() {
         </View>
       </View>
 
-      <View style={styles.line} />
-
       <Text style={styles.comentariosTitulo}>Meus eventos</Text>
-
-      <Pressable
-        style={styles.eventImagePlaceholder}
-        onPress={handleEventImageClick}>
-        <View style={styles.eventImagePlaceholderInner}>
-          {eventImage && (
-            <View style={{ width: "100%", height: 200 }}>
-              <Image
-                source={
-                  params?.userImage
-                    ? { uri: eventImage }
-                    : require("../assets/images/icons/people(f).png")
-                }
-                style={{ width: "100%", height: "100%", borderRadius: 8 }}
-              />
-            </View>
-          )}
-        </View>
-      </Pressable>
+      
+      <Myeventsbar/>
+      
       <Navbar/>
+
     </View>
   );
 }
@@ -431,21 +410,11 @@ const styles = StyleSheet.create({
   },
 
   comentariosTitulo: {
-    top: 100,
+    top: 470,
     color: "white",
     fontSize: 18,
     fontWeight: "inter",
     textAlign: "left",
-  },
-
-  eventImagePlaceholder: {
-    position: "absolute",
-    width: 150,
-    height: 100,
-    bottom: 175,
-    left: 12,
-    borderRadius: 8,
-    marginBottom: 16,
   },
 
   titlesContainer: {
