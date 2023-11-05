@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
@@ -14,8 +15,7 @@ import { useRoute, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import Navbar from "../components/navbar";
 import Buttonprofile from "../components/buttonprofile";
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
+import DestaqueBar from "../components/destaquebar";
 
 export default function Telaprincipal() {
   const [imgProfile, setImgProfile] = useState("");
@@ -23,13 +23,9 @@ export default function Telaprincipal() {
   const navigation = useNavigation();
   // const id = 1;
 
-  const route = useRoute();
-  const { id } = route.params;
-  console.log(id);
-
-  const handleUserImagePress = () => {
-    console.log("Foto de perfil pressionada");
-  };
+//   const route = useRoute();
+//   const { id } = route.params;
+//   console.log(id);
 
   // axios
   //   .post("http://localhost:3003/viewEvent")
@@ -40,15 +36,20 @@ export default function Telaprincipal() {
   //     console.error("Erro ao enviar ou retono de dados para o backend:", error);
   //   });
 
-  const eventosTemporarios = [
-    require("../assets/images/Eventos(Temporarios)/Evento(1).png"),
-    require("../assets/images/Eventos(Temporarios)/Evento(2).png"),
-    require("../assets/images/Eventos(Temporarios)/Evento(3).png"),
+  const eventImages = [
+    require("../assets/images/Eventos(Temporarios)/EventoM(1).png"),
+    require("../assets/images/Eventos(Temporarios)/EventoM(2).png"),
+    require("../assets/images/Eventos(Temporarios)/EventoM(1).png"),
+    require("../assets/images/Eventos(Temporarios)/EventoM(2).png"),
+    require("../assets/images/Eventos(Temporarios)/EventoM(1).png"),
+    require("../assets/images/Eventos(Temporarios)/EventoM(2).png"),
+    require("../assets/images/Eventos(Temporarios)/EventoM(1).png"),
+    require("../assets/images/Eventos(Temporarios)/EventoM(2).png"),
   ];
 
-  const renderItem = ({ item }) => (
-    <Image style={styles.carouselImage} source={item} />
-  );
+  const addNewImage = ({ image }) => {
+    <Image style={styles.carouselImage} source={image} />
+  };
 
   return (
     <View style={styles.container}>
@@ -65,24 +66,20 @@ export default function Telaprincipal() {
 
       <Text style={styles.highlightsText}>Destaques</Text>
 
-      <FlatList
-        data={eventosTemporarios}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
-        horizontal
-        showsHorizontalScrollIndicator={true}
-        contentContainerStyle={styles.carousel}
-      />
+      <DestaqueBar/>
 
-      <Image
-        source={require("../assets/images/Eventos(Temporarios)/EventoM(1).png")}
-        style={styles.backgroundImage}
-      />
-      <Image
-        source={require("../assets/images/Eventos(Temporarios)/EventoM(2).png")}
-        style={styles.backgroundImage1}
-      />
-      <Buttonprofile id={id} />
+        <View style={styles.eventContainer}>
+        <ScrollView
+            contentContainerStyle={styles.scrollViewContent}
+            showsVerticalScrollIndicator={false}
+            style={styles.scrollView}
+        >
+            {eventImages.map((image, index) => (
+            <Image key={index} source={image} style={styles.backgroundImage} />
+            ))}
+        </ScrollView>
+        </View>
+      <Buttonprofile />
       <Navbar />
     </View>
   );
@@ -95,8 +92,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#260038",
     justifyContent: "center",
-    alignItems: "center",
-    padding: 16,
   },
 
   topBar: {
@@ -137,74 +132,27 @@ const styles = StyleSheet.create({
     right: 115,
   },
 
-  carousel: {
-    alignItems: "center",
-    paddingVertical: 24,
-    bottom: 170,
-  },
-
-  carouselImage: {
-    width: 100,
-    height: 200,
-    borderRadius: 10,
-    marginHorizontal: 12,
-  },
-
-  navbar: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#380053",
-    padding: 10,
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
-
-  navButton: {
+  eventContainer: {
+    top: 50,
     flex: 1,
+    width: "100%",
+    maxHeight: 420,
+  },
+
+  scrollView: {
+    flex: 1,
+    width: "100%",
+  },
+
+  scrollViewContent: {
+    
     alignItems: "center",
-    padding: 10,
-  },
-
-  navButtonImage: {
-    width: 20,
-    height: 20,
-  },
-
-  circleButton: {
-    width: 60,
-    height: 60,
-    backgroundColor: "transparent",
-    alignItems: "center",
-    justifyContent: "center",
-    position: "absolute",
-    bottom: 0,
-    left: "50%",
-    marginLeft: -27,
-  },
-
-  circleButtonImage: {
-    width: 70,
-    height: 75,
   },
 
   backgroundImage: {
-    position: "absolute",
     width: "80%",
-    bottom: 250,
     height: 200,
-    marginTop: 20,
     borderRadius: 8,
-  },
-
-  backgroundImage1: {
-    position: "absolute",
-    width: "80%",
-    bottom: 25,
-    height: 200,
-    marginTop: 20,
-    borderRadius: 8,
+    marginBottom: 10,
   },
 });
