@@ -117,7 +117,6 @@ export default function Telaprofile() {
         )}
       </View>
 
-      
       <Pressable style={styles.button} onPress={menu}>
         <View style={styles.bttbarra}></View>
         <View style={styles.bttbarra}></View>
@@ -206,11 +205,8 @@ export default function Telaprofile() {
         source={require("../assets/images/icons/barra.png")}
         style={styles.comentariosTituloImage}
       />
-      
       <Myeventsbar/>
-      
       <Navbar/>
-
     </View>
   );
 }
@@ -374,8 +370,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "inter",
   },
-
-  nameContainer1: {},
 
   titulo1: {
     right: 130,

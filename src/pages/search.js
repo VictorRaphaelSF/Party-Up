@@ -83,9 +83,6 @@ export default function Search() {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1 }}>
       <View style={styles.container}>
         <Image
           source={require("../assets/images/telap.png")}
@@ -99,7 +96,7 @@ export default function Search() {
           />
           <TextInput
             style={styles.searchInput}
-            placeholder="Pesquisar"
+            placeholder="Pesuisar"
             placeholderTextColor="rgba(255, 255, 255, 0.5)"
             underlineColorAndroid="transparent"
             value={searchTerm}
@@ -205,7 +202,6 @@ export default function Search() {
         </Modal>
         <Navbar/>
       </View>
-    </KeyboardAvoidingView>
   );
 }
 
