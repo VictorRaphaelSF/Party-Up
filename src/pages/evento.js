@@ -121,10 +121,15 @@ export default function Evento({ navigation }) {
             <Text style={styles.tagsTexto}>{tags}</Text>
           </View>
 
-          <View style={styles.line} />
+          <Navbuttons/>
+
+          <Image
+              source={require("../assets/images/icons/comentario.png")}
+              style={styles.imagemComentarioBar}
+            />
 
           <View style={styles.comentariosContainer}>
-            <Text style={styles.comentariosTitulo}>Comentários</Text>
+            
             <Image
               source={require("../assets/images/icons/loading.png")}
               style={styles.imagemComentarios}
@@ -138,7 +143,7 @@ export default function Evento({ navigation }) {
 
           <View style={styles.line2} />
 
-          <Navbuttons/>
+          
 
           <View style={styles.square}>
             <Text style={styles.titulo}>{titulo}</Text>
@@ -325,9 +330,7 @@ const styles = StyleSheet.create({
 
   comentariosContainer: {
     marginVertical: 8,
-    position: "absolute",
-    top: windowHeight / 2 + 300,
-    left: 15,
+    top: windowHeight / 2 + 85,
     zIndex: 1,
   },
 
@@ -351,9 +354,15 @@ const styles = StyleSheet.create({
   imagemComentarios: {
     width: 100,
     height: 100,
-    left: 70,
     alignSelf: "center",
-    marginTop: 30,
+    marginVertical: 24,
+  },
+
+  imagemComentarioBar: {
+    width: '100%',
+    height: 50,
+    resizeMode: "contain",
+    top: 480,
   },
 
   semComentarios: {
@@ -361,8 +370,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "inter",
     textAlign: "center",
-    left: 60,
-    marginTop: 25,
+    alignSelf: 'center',
     opacity: 0.7,
   },
 });
