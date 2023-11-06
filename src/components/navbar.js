@@ -1,32 +1,29 @@
 import { StyleSheet, View, Pressable, Image } from "react-native";
-import { useRoute, useNavigation } from "@react-navigation/native";
+import {useNavigation } from "@react-navigation/native";
 
-export default function Navbar() {
+export default function Navbar(props) {
   const navigation = useNavigation();
 
   const handleButtonHome = () => {
-    navigation.navigate("telaprincipal", { id : id, imgProfile: imgProfile });
+    navigation.navigate("telaprincipal", { id : props.id, imgProfile: props.imgProfile });
   };
 
   const handleButtonSearch = () => {
-    navigation.navigate("search", { id : id, imgProfile: imgProfile });
+    navigation.navigate("search", { id : props.id, imgProfile: props.imgProfile });
   };
 
   const handleButtonCenter = () => {
-    navigation.navigate("cadevento", { id : id, imgProfile: imgProfile });
+    navigation.navigate("cadevento", { id : props.id, imgProfile: props.imgProfile });
   };
 
   const handleButtonNotification = () => {
-    navigation.navigate("notificacao", { id : id, imgProfile: imgProfile });
+    navigation.navigate("notificacao", { id : props.id, imgProfile: props.imgProfile });
   };
 
   const handleButtonPeople = () => {
-    navigation.navigate("telaprofile", { id: id, imgProfile: imgProfile});
+    navigation.navigate("telaprofile", { id: props.id, imgProfile: props.imgProfile});
   };
 
-  const route = useRoute();
-  const { imgProfile } = route.params;
-  const { id } = route.params;
   
   return (
     <View style={styles.navbar}>

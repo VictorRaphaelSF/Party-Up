@@ -9,10 +9,10 @@ export default function Backbutton() {
       };
 
 return (
-      <Pressable style={styles.backButton} onPress={backbutton}>
+      <Pressable style={styles.backIcon} onPress={backbutton}>
         <Image
           source={require("../assets/images/icons/backicon.png")}
-          style={styles.backIcon}
+          style={{width: "100%", height: "100%"}}
         />
        </Pressable>
   );
@@ -23,14 +23,12 @@ const windowHeight = Dimensions.get("window").height;
 const styles = StyleSheet.create({
 
     backButton: {
-        position: "absolute",
-        top: 50,
-        left: 27,
         zIndex: 1,
       },
     
       backIcon: {
         width: 30,
         height: 24,
+        backgroundColor: "transparent"
       },
 });

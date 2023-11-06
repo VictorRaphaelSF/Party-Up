@@ -41,7 +41,7 @@ export default function Login({ navigation }) {
 				.then(response => {
 					// Lidar com a resposta do servidor, se necessário
 					if (response.data.validateLogin) {
-						navigation.navigate('telaprincipal',{id: response.data.id});
+						navigation.navigate('telaprincipal',{id: response.data.id, userImage: response.data.userImage});
 					}
 					else {
 						console.log('Email ou senha inválido!')
@@ -138,6 +138,7 @@ export default function Login({ navigation }) {
 				underlineColorAndroid="transparent"
 				maxLength={50}
 				value={email}
+				// value={email}
 				onChangeText={setEmail}
 			  />
 			</View>

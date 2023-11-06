@@ -224,7 +224,7 @@ export default function Search() {
             </Animatable.View>
           </Pressable>
         </Modal>
-        <Navbar/>
+        <Navbar id={id} imgProfile= {imgProfile}/>
       </View>
     </KeyboardAvoidingView>
   );

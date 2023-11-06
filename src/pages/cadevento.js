@@ -104,7 +104,7 @@ export default function Cadevento({route}) {
     idUser_code: id
   
   }
-  
+  console.log(id)
   const handleVamosLaPress = () => {
     if (
       !nmevento ||

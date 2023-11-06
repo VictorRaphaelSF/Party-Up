@@ -31,9 +31,7 @@ export default function Telaprincipal() {
     navigation.navigate("search", { id: id });
   };
 
-  const route = useRoute();
-  const { id } = route.params;
-  console.log(id);
+
   const handleButtonCenter = () => {
     navigation.navigate("cadevento", { id: id });
   };
@@ -62,29 +60,42 @@ export default function Telaprincipal() {
     require("../assets/images/Eventos(Temporarios)/Evento(2).png"),
     require("../assets/images/Eventos(Temporarios)/Evento(3).png"),
   ];
-
-
+ 
+  const route = useRoute();
+  const { id } = route.params;
+  const { userImage } = route.params;
+  
+  const idUser = {
+    Id_user_code: id
+  }
   useEffect(() => {
-    axios
-      .post("http://localhost:3003/profileUser", {
-        userName_code: id,
-      })
-      .then((e) => {
-        console.log(e);
-        console.log('====================================');
-        console.log(id);
-        console.log('====================================');
-        setImgProfile(e.data.results[0].User_image);
-      });
+    setImgProfile(userImage)
+    // axios
+    //   .post("http://localhost:3003/dadosUser", idUser)
+    //   .then((e) => {
+    //     console.log(e);
+    //     console.log('====================================');
+    //     console.log(id);
+    //     console.log('====================================');
+    //     // setImgProfile(e.data.results[0].User_image);
+    //     console.log(id);
+       
+    //   })
+    //   .catch ((error) => {
+    //     console.error('Erro ao enviar ou retono de dados para o backend:', error);
+    // });
+
 
     
-  }, [])
-  console.log()
+  }, []);
+
 
   const renderItem = ({ item }) => (
     <Image style={styles.carouselImage} source={item} />
   );
-  console.log(imgProfile);
+
+
+  
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
@@ -117,7 +128,7 @@ export default function Telaprincipal() {
         source={require("../assets/images/Eventos(Temporarios)/EventoM(2).png")}
         style={styles.backgroundImage1}
       />
-      <Buttonprofile id={id} />
+      <Buttonprofile id={id} imgProfile= {imgProfile}/>
       <Navbar id={id} imgProfile= {imgProfile}/>
     </View>
   );
