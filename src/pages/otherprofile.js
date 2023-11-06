@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -9,18 +9,27 @@ import {
   Dimensions,
   Modal,
   TouchableWithoutFeedback,
+  ScrollView,
 } from "react-native";
 
 import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
+import axios from "axios";
+import Navbar from "../components/navbar";
 import Backbutton from "../components/backbutton";
+import Myeventsbar from "../components/myeventsbar";
 
-export default function Comentario() {
+export default function Otherprofile() {
   const navigation = useNavigation();
+  const [eventData, setEventData] = useState([]);
+  const [profileImage, setProfileImage] = useState(null);
   const [isMenuVisible, setMenuVisible] = useState(false);
   const [name, setName] = useState("");
-  const [profileImage, setProfileImage] = useState("");
-  const [descComentario, setDescComentario] = useState("");
+  const [idade, setIdade] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [eventImage, setEventImage] = useState(null);
+  const [eventId, setEventId] = useState(null);
 
   const menu = () => {
     setMenuVisible(true);
@@ -28,6 +37,10 @@ export default function Comentario() {
 
   const closeMenu = () => {
     setMenuVisible(false);
+  };
+
+  const handleButtonEdit = () => {
+    console.log("Botão edit pressionado");
   };
 
   const bttSair = () => {
@@ -58,7 +71,7 @@ export default function Comentario() {
     navigation.navigate('acesstermos');
   };
 
-    // const route = useRoute();
+  // const route = useRoute();
   // const { id } = route.params;
   // console.log(id);
   // const idUser = {
@@ -88,19 +101,22 @@ export default function Comentario() {
 
   return (
     <View style={styles.container}>
+      <Image
+        source={require("../assets/images/telap2.png")}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      />
       <Backbutton/>
-      <View style={styles.header}>
-        <Text style={styles.title}>Comentarios</Text>
+      <View style={styles.innerCircle}>
+        {profileImage && (
+          <Image
+            source={{ uri: profileImage }}
+            style={{ flex: 1, width: "100%", borderRadius: 105 }}
+          />
+        )}
       </View>
 
-      <View style={styles.linha}></View>
-      <View style={styles.bottomImageContainer}>
-        <Image
-          source={require("../assets/images/img_borda_inicio.png")}
-          style={styles.bottomImage}
-        />
-      </View>
-
+      
       <Pressable style={styles.button} onPress={menu}>
         <View style={styles.bttbarra}></View>
         <View style={styles.bttbarra}></View>
@@ -151,6 +167,49 @@ export default function Comentario() {
           </View>
         </TouchableWithoutFeedback>
       </Modal>
+
+      <View style={styles.titlesContainer}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Seguidores</Text>
+          <Text style={styles.number}>0</Text>
+        </View>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Seguindo</Text>
+          <Text style={styles.number}>0</Text>
+        </View>
+      </View>
+
+      <View style={styles.editButtonContainer}>
+        <Pressable style={styles.editButton} onPress={handleButtonEdit}>
+          <Text style={styles.editButtonText}>Seguir perfil</Text>
+        </Pressable>
+      </View>
+
+      <View style={styles.allContainer}>
+        <View styles={styles.nameContainer}>
+          <Text style={styles.titulo}>{name}</Text>
+        </View>
+
+        <View styles={styles.nameContainer1}>
+          <Text style={styles.titulo1}>{idade} Anos</Text>
+        </View>
+      </View>
+
+      <View style={styles.allContainerOne}>
+        <View styles={styles.descContainer}>
+          <Text style={styles.descricao}>{descricao}</Text>
+        </View>
+      </View>
+
+      <Image
+        source={require("../assets/images/icons/barralike.png")}
+        style={styles.comentariosTituloImage}
+      />
+      
+      <Myeventsbar/>
+      
+      <Navbar/>
+
     </View>
   );
 }
@@ -166,43 +225,68 @@ const styles = StyleSheet.create({
     padding: 16,
   },
 
+  circle: {
+    width: "100%",
+    height: 450,
+    borderRadius: 220 / 2,
+    backgroundColor: "rgba(123, 85, 85, 0.40)",
+    position: "absolute",
+    top: windowHeight * 0.06 - 397 / 2,
+    justifyContent: "center",
+  },
+
+  innerCircle: {
+    position: "absolute",
+    width: 90,
+    height: 90,
+    borderRadius: 105,
+    backgroundColor: "#FFFFFF",
+    overflow: "hidden",
+    left: 45,
+    top: 100,
+  },
+
+  textContainer: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+  },
+
+  textContainer1: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+  },
+
+  text: {
+    color: "#FFFFFF",
+    fontSize: 14,
+  },
+
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    top: 0,
+    left: 0,
+  },
+
   header: {
     flexDirection: "row",
     alignItems: "center",
     position: "absolute",
     top: windowHeight * 0.06,
+    left: 30,
     zIndex: 1,
-  },
-
-  header1: {
-    flexDirection: "row",
-    alignItems: "center",
-    position: "absolute",
-    top: windowHeight * 0.06,
-    right: 30,
-    zIndex: 1,
-  },
-
-  title: {
-    fontSize: 19,
-    color: "#FFFFFF",
-  },
-
-  linha: {
-    width: Platform.OS === "web" ? "100%" : "108%",
-    height: 1,
-    backgroundColor: "#FFFFFF",
-    position: "absolute",
-    top: windowHeight * 0.12,
   },
 
   button: {
     position: "absolute",
-    justifyContent: "center",
     backgroundColor: "transparent",
     width: 30,
     height: 18,
-    right: 20,
+    right: 50,
     top: 50,
   },
 
@@ -229,6 +313,10 @@ const styles = StyleSheet.create({
     height: "100%",
   },
 
+  modalContainer: {
+    left: 12,
+  },
+
   modalBackground: {
     flex: 1,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
@@ -251,5 +339,123 @@ const styles = StyleSheet.create({
   menubtttext: {
     color: "#FFFFFF",
     fontSize: 18,
+  },
+
+  editButtonContainer: {
+    position: "absolute",
+    top: 225,
+    alignItems: "center",
+    marginTop: 10,
+  },
+
+  editButton: {
+    backgroundColor: "#5E0389",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+  },
+
+  editButtonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "inter",
+    opacity: 0.8,
+  },
+
+  nameContainer: {
+    position: "absolute",
+  },
+
+  titulo: {
+    right: 135,
+    bottom: 55,
+    color: "white",
+    fontSize: 18,
+    fontWeight: "inter",
+  },
+
+  nameContainer1: {},
+
+  titulo1: {
+    right: 130,
+    bottom: 50,
+    color: "#919191",
+    fontSize: 14,
+    fontWeight: "inter",
+  },
+
+  descContainer: {},
+
+  descricao: {
+    top: -10,
+    color: "#919191",
+    fontSize: 14,
+    fontWeight: "inter",
+    maxWidth: 300,
+  },
+
+  allContainer: {
+    position: "absolute",
+    left: 152,
+    flexDirection: "row",
+    top: 440,
+  },
+
+  allContainerOne: {
+    position: "absolute",
+    left: 20,
+    flexDirection: "row",
+    top: 420,
+  },
+
+  line: {
+    left: 0,
+    right: 0,
+    bottom: 350,
+    height: 2,
+    backgroundColor: "white",
+    opacity: 0.6,
+  },
+
+  comentariosTitulo: {
+    top: 470,
+    color: "white",
+    fontSize: 18,
+    fontWeight: "inter",
+    textAlign: "left",
+  },
+
+  titlesContainer: {
+    position: "absolute",
+    top: 110,
+    right: 42,
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 10,
+  },
+
+  titleContainer: {
+    alignItems: "center",
+    marginHorizontal: 15,
+  },
+
+  title: {
+    color: "white",
+    fontSize: 14,
+    opacity: 0.5,
+  },
+
+  number: {
+    color: "#919191",
+    fontSize: 16,
+    fontWeight: "bold",
+    marginTop: 5,
+  },
+
+  comentariosTituloImage: {
+    width: '108%',
+    height: 50,
+    resizeMode: "contain",
+    top: 480,
   },
 });

@@ -67,6 +67,11 @@ export default function Telaprofile() {
     navigation.navigate('dashboard');
   };
 
+  const bttTermos = () => {
+    navigation.navigate('acesstermos');
+  };
+  
+
   // const route = useRoute();
   // const { id } = route.params;
   // console.log(id);
@@ -151,7 +156,7 @@ export default function Telaprofile() {
               </Pressable>
               <Pressable
                 style={styles.menubtt}
-                onPress={() => console.log("Item 5 clicado")}>
+                onPress={bttTermos}>
                 <Text style={styles.menubtttext}>Termos</Text>
               </Pressable>
               <Pressable
@@ -197,7 +202,10 @@ export default function Telaprofile() {
         </View>
       </View>
 
-      <Text style={styles.comentariosTitulo}>Meus eventos</Text>
+      <Image
+        source={require("../assets/images/icons/barra.png")}
+        style={styles.comentariosTituloImage}
+      />
       
       <Myeventsbar/>
       
@@ -342,7 +350,7 @@ const styles = StyleSheet.create({
   },
 
   editButton: {
-    backgroundColor: "#7E3CA7",
+    backgroundColor: "#5E0389",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
@@ -352,6 +360,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     fontWeight: "inter",
+    opacity: 0.8,
   },
 
   nameContainer: {
@@ -442,5 +451,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginTop: 5,
+  },
+
+  comentariosTituloImage: {
+    width: '108%',
+    height: 50,
+    resizeMode: "contain",
+    top: 480,
   },
 });
