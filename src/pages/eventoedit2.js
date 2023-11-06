@@ -59,7 +59,7 @@ export default function Eventoedit2({ navigation }) {
 
   const imagemTituloLeft = animatedValue.interpolate({
     inputRange: [0, tituloWidth],
-    outputRange: [0, tituloWidth + 15], // Ajuste conforme necessário
+    outputRange: [0, tituloWidth + 15],
   });
 
   const id = {
