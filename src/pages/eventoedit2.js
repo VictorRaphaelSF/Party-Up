@@ -480,6 +480,7 @@ export default function Eventoedit2({ navigation }) {
           </View>
         </ScrollView>
       </ImageBackground>
+      <Navbar id={id} imgProfile= {imgProfile}/>
     </View>
   );
 }

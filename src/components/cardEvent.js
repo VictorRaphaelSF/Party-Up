@@ -1,13 +1,20 @@
 import { useNavigation } from "@react-navigation/core";
 import { Image, Pressable, StyleSheet, Text } from "react-native"
 
-const CardEvent = ({Nm_event,Event_image}) => {
+const CardEvent = ({idUser, Nm_event, Event_image, Id_App_Events}) => {
     const navigation = useNavigation()
+    console.log(Id_App_Events);
+
+
+
+
+
+
     return (
         <Pressable 
             style={styles.containerEventos} 
             onPress={()=>{
-                navigation.navigate("evento", { id : props.id, imgProfile: props.imgProfile });
+                navigation.navigate("eventoedit", { idEvento: Id_App_Events, id : idUser, imgProfile: Event_image });
             }}
         >
             <Image

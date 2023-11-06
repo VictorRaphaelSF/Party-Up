@@ -16,6 +16,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import Navbar from "../components/navbar";
 import Backbutton from "../components/backbutton";
 import Navbuttons from "../components/navbuttons";
+import { useRoute } from "@react-navigation/native";
 
 export default function Evento({ navigation }) {
   const [backgroundImage, setBackgroundImage] = useState(null);
@@ -30,11 +31,12 @@ export default function Evento({ navigation }) {
 
   const route = useRoute();
   const { id } = route.params;
+  const { idEvento } = route.params;
   console.log(id);
 
   useEffect(() => {
     const idEvent ={
-      eventId_code: 1
+      eventId_code: idEvento
     }
     axios
       .post('http://localhost:3003/viewEvent',idEvent)
@@ -185,7 +187,7 @@ export default function Evento({ navigation }) {
           </View>
         </ScrollView>
       </ImageBackground>
-      <Navbar/>
+      <Navbar id={id} imgProfile= {imgProfile}/>
     </View>
   );
 }

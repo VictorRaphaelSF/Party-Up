@@ -124,7 +124,7 @@ export default function Historicoevent() {
           </View>
         </TouchableWithoutFeedback>
       </Modal>
-      <Navbar/>
+      <Navbar id={id} imgProfile= {imgProfile}/>
     </View>
   );
 }

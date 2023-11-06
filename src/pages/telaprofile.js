@@ -28,6 +28,7 @@ export default function Telaprofile() {
 	const [isMenuVisible, setMenuVisible] = useState(false);
 	const [name, setName] = useState("");
 	const [idade, setIdade] = useState("");
+	const [idEvent, setIdEvent] = useState("");
 	const [descricao, setDescricao] = useState("");
 	const [eventImage, setEventImage] = useState(null);
 	const [eventId, setEventId] = useState(null);
@@ -86,6 +87,7 @@ export default function Telaprofile() {
 	const idUser = {
 		userId_code: id
 	};
+	
 
 	//console.log(imgProfile);
 
@@ -111,7 +113,7 @@ export default function Telaprofile() {
 		axios
 			.post('http://localhost:3003/viewEventUser', idUser)
 			.then((response) => {
-				console.log(response)
+				setIdEvent(response.data.idEvent)
 				console.log(response.data.results[0].Nm_event);
 				setEventData(response.data.results);
 	
@@ -125,6 +127,9 @@ export default function Telaprofile() {
 	console.log(name);
 	console.log(idade);
 	console.log(descricao);
+	console.log(eventData);
+
+	
 
 	return (
 		<View style={styles.container}>
@@ -245,7 +250,7 @@ export default function Telaprofile() {
 					{
 						eventData.map((event,index) => {
 							return (
-								<CardEvent Event_image={event.Event_image} Nm_event={event.Nm_event} key={index}/>
+								<CardEvent idUser={id} Event_image={event.Event_image} Nm_event={event.Nm_event} Id_App_Events={idEvent} key={index}/>
 							)
 						})
 					}

@@ -15,9 +15,11 @@ import axios from "axios";
 import { ScrollView } from "react-native-gesture-handler";
 import Backbutton from "../components/backbutton";
 import Navbar from "../components/navbar";
+import { useRoute } from "@react-navigation/native";
 
 export default function Eventoedit({ navigation }) {
   const [backgroundImage, setBackgroundImage] = useState(null);
+
   const [titulo, setTitulo] = useState("");
   const [descricao, setDescricao] = useState("");
   const [dataInicio, setDataInicio] = useState("");
@@ -25,27 +27,37 @@ export default function Eventoedit({ navigation }) {
   const [horaInicio, setHoraInicio] = useState("");
   const [horaFim, setHoraFim] = useState("");
   const [siteInfo, setSiteInfo] = useState("");
+
+  
+
+
+
+
   const [tags, setTags] = useState("");
 
 
   const route = useRoute();
   const { id } = route.params;
-  console.log(id);
+  const { idEvento } = route.params;
+  const { imgProfile } = route.params;
+
+  console.log(idEvento);
   useEffect(() => {
     const idEvent ={
-      eventId_code: 1
+      eventId_code: idEvento
     }
     axios
       .post('http://localhost:3003/viewEvent',idEvent)
       .then((response) => {
+        console.log(response);
         console.log(response.data[0]);
         //nome
         setTitulo(response.data[0].Nm_event);
 
-        //descrição
+        // //descrição
         setDescricao(response.data[0].desc_event);
 
-        //data início
+
         const dataB = new Date(response.data[0].Dt_begin);
         const anoB = dataB.getFullYear();
         const mesB = String(dataB.getMonth() + 1).padStart(2, "0");
@@ -77,15 +89,19 @@ export default function Eventoedit({ navigation }) {
         setSiteInfo(response.data[0].Site_contact);
 
         //tag
-        setTags(response.data[0].Tag_event);
+        // setTags(response.data[0].Tag_event);
 
-        //navigation.navigate('telaprincipal',{id: id});
       })
       .catch((error) => {
         console.error("Erro ao enviar os dados para o backend:", error);
       });
   }, []);
 
+  
+
+  const handleButtonDelete = () => {
+    
+  }
   const handleButtonEdit = () => {
     navigation.navigate('eventoedit2',{id: id})
   }
@@ -177,7 +193,7 @@ export default function Eventoedit({ navigation }) {
           </View>
         </ScrollView>
       </ImageBackground>
-      <Navbar/>
+      <Navbar id={id} imgProfile= {imgProfile}/>
     </View>
   );
 }
