@@ -137,11 +137,7 @@ export default function Evento({ navigation }) {
             </Text>
           </View>
 
-          <View style={styles.line3} />
-
           <View style={styles.line2} />
-
-          
 
           <View style={styles.square}>
             <Text style={styles.titulo}>{titulo}</Text>
@@ -310,7 +306,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     right: 0,
-    bottom: -890,
+    bottom: -630,
     height: 2,
     backgroundColor: "white",
     opacity: 0.6,
