@@ -26,16 +26,28 @@ export default function Login({ navigation }) {
 			}, 4000);
 			setErro('');
 
-			if (errorRef.current) {
-				errorRef.current.shake(800);
-			}
-		} else {
-			//try {
-			const dataLogin = {
-				emailUser: email,
-				senhaUser: senha
-			};
-			console.log(dataLogin.emailUser, dataLogin.senhaUser)
+      axios
+        .post("http://localhost:3003/loginUser", dataLogin)
+        .then((response) => {
+          // Lidar com a resposta do servidor, se necessário
+          if (response.data.validateLogin) {
+            console.log(response);
+            navigation.navigate("telaprincipal", {
+              id: response.data.id,
+            });
+          } else {
+            console.log("Email ou senha inválido!");
+          }
+          console.log(response);
+        })
+        .catch((error) => {
+          //Lidar com erros, se houver algum
+          setMsgError({
+            msg: error.response.data.msg,
+            status: true,
+          });
+          console.error("Erro ao enviar os dados para o backend:", error);
+        });
 
 			axios.post('http://localhost:3003/loginUser', dataLogin)
 				.then(response => {
