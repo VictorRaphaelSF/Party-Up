@@ -142,7 +142,7 @@ export default function Eventoedit({ navigation }) {
       .post('http://localhost:3003/deleteEvent', idDeEvento)
       .then((response) => {
         console.log(response);
-        navigation.navigate('evento', { id: id });
+        navigation.navigate('telaprincipal', { id: id });
       })
       .catch((error) => {
         console.error('Erro ao enviar os dados para o backend:', error);
