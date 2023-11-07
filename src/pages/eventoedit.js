@@ -15,6 +15,7 @@ import axios from "axios";
 import { ScrollView } from "react-native-gesture-handler";
 import Backbutton from "../components/backbutton";
 import Navbar from "../components/navbar";
+import Comentbar from "../components/comentbar";
 
 export default function Eventoedit({ navigation }) {
   const [backgroundImage, setBackgroundImage] = useState(null);
@@ -126,10 +127,18 @@ export default function Eventoedit({ navigation }) {
             <Text style={styles.tagsTexto}>{tags}</Text>
           </View>
 
-          <View style={styles.line} />
+          <View style={styles.editButtonContainer}>
+            <Pressable style={styles.editButton} onPress={handleButtonDelete}>
+              <Text style={styles.editButtonText}>Excluir</Text>
+            </Pressable>
+            <Pressable style={styles.editButton} onPress={handleButtonEdit}>
+              <Text style={styles.editButtonText}>Editar evento</Text>
+            </Pressable>
+          </View>
+
+          <Comentbar/>
 
           <View style={styles.comentariosContainer}>
-            <Text style={styles.comentariosTitulo}>Comentários</Text>
             <Image
               source={require("../assets/images/icons/loading.png")}
               style={styles.imagemComentarios}
@@ -145,15 +154,6 @@ export default function Eventoedit({ navigation }) {
           <Backbutton/>
           <View style={styles.square}>
             <Text style={styles.titulo}>{titulo}</Text>
-          </View>
-
-          <View style={styles.editButtonContainer}>
-            <Pressable style={styles.editButton} onPress={handleButtonDelete}>
-              <Text style={styles.editButtonText}>Excluir</Text>
-            </Pressable>
-            <Pressable style={styles.editButton} onPress={handleButtonEdit}>
-              <Text style={styles.editButtonText}>Editar evento</Text>
-            </Pressable>
           </View>
         </ScrollView>
       </ImageBackground>

@@ -16,6 +16,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import Navbar from "../components/navbar";
 import Backbutton from "../components/backbutton";
 import Navbuttons from "../components/navbuttons";
+import Comentbar from "../components/comentbar";
 
 export default function Evento({ navigation }) {
   const [backgroundImage, setBackgroundImage] = useState(null);
@@ -123,10 +124,7 @@ export default function Evento({ navigation }) {
 
           <Navbuttons/>
 
-          <Image
-              source={require("../assets/images/icons/comentario.png")}
-              style={styles.imagemComentarioBar}
-            />
+          <Comentbar/>
 
           <View style={styles.comentariosContainer}>
             
@@ -356,13 +354,6 @@ const styles = StyleSheet.create({
     height: 100,
     alignSelf: "center",
     marginVertical: 24,
-  },
-
-  imagemComentarioBar: {
-    width: '100%',
-    height: 50,
-    resizeMode: "contain",
-    top: 480,
   },
 
   semComentarios: {

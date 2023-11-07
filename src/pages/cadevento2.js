@@ -41,13 +41,12 @@ export default function Cadevento2() {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const [isTypeMenuVisible, setTypeMenuVisible] = useState(false);
   const [isAccessTypeMenuVisible, setAccessTypeMenuVisible] = useState(false);
-  const [isClassificationTypeMenuVisible, setClassificationTypeMenuVisible] =
-    useState(false);
+  const [isClassificationTypeMenuVisible, setClassificationTypeMenuVisible] = useState(false);
+  const [selectedTags, setSelectedTags] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedEventType, setSelectedEventType] = useState(null);
   const [selectedAccessType, setSelectedAccessType] = useState(null);
-  const [selectedClassificationType, setSelectedClassificationType] =
-    useState(null);
+  const [selectedClassificationType, setSelectedClassificationType] = useState(null);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -57,8 +56,19 @@ export default function Cadevento2() {
     setSelectedOption(option);
     setSearchText(option);
     setSelectedEventType(option);
-    // toggleModal();
     setMenuVisible(false);
+  };
+
+  const handleTagSelect = (tag) => {
+    const isSelected = selectedTags.includes(tag);
+  
+    if (isSelected) {
+      const newTags = selectedTags.filter((selectedTag) => selectedTag !== tag);
+      setSelectedTags(newTags);
+    } else {
+      const newTags = [...selectedTags, tag];
+      setSelectedTags(newTags);
+    }
   };
 
   const openMenu = () => {
