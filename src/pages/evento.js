@@ -32,6 +32,7 @@ export default function Evento({ navigation }) {
   const route = useRoute();
   const { id } = route.params;
   const { idEvento } = route.params;
+  const { imgProfile } = route.params;
   console.log(id);
 
   useEffect(() => {
@@ -183,6 +184,10 @@ export default function Evento({ navigation }) {
           <Navbuttons/>
 
           <View style={styles.square}>
+            <Image
+              source={`data:image/png;base64,${imgProfile}`}
+              style={styles.square}
+            />
             <Text style={styles.titulo}>{titulo}</Text>
           </View>
         </ScrollView>

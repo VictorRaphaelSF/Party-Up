@@ -19,7 +19,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Navbar from "../components/navbar";
 import { useRoute } from '@react-navigation/native';
 import axios from "axios";
-import CardEvent from "../components/cardEvent";
+import CardEventUser from "../components/cardEventUser";
 
 export default function Search() {
   const [reload, setReload] = useState(0);
@@ -34,6 +34,7 @@ export default function Search() {
   const { id } = route.params;
   const { imgProfile } = route.params;
   console.log(id);
+
   useEffect(() => {
     const loadSearchHistory = async () => {
       try {
@@ -47,11 +48,14 @@ export default function Search() {
     };
 
     loadSearchHistory();
+ 
+    
   }, []);
 
   const handleSearch = () => {
     if (searchTerm.trim() !== "") {
       setSearchHistory([...searchHistory, searchTerm]);
+
 
       AsyncStorage.setItem(
         "searchHistory",
@@ -108,21 +112,39 @@ export default function Search() {
   };
  
 
+  console.log(eventData);
   console.log(userSearch_code);
   
   const pesquisaUser = {
     userSearch_code: userSearch_code
   }
-  axios
-    .post('http://localhost:3003/searchEvents', pesquisaUser)
-    .then((response) => {
-      setEventData(response.data.results);
 
-    })
-    .catch((error) => {
-      console.error('Erro ao enviar os dados para o backend:', error);
-  });
-
+  // useEffect(() => {
+  //   const delay = 500; // Atraso de 500ms
+  //   let timeoutId;
+  
+  //   // Função para fazer a chamada à API após o atraso
+  //   const fetchEventData = () => {
+  //     const pesquisaUser = {
+  //       userSearch_code: userSearch_code,
+  //     };
+  
+  //     axios
+  //       .post('http://localhost:3003/searchEvents', pesquisaUser)
+  //       .then((response) => {
+  //         setEventData(response.data.results);
+  //       })
+  //       .catch((error) => {
+  //         console.error('Erro ao enviar os dados para o backend:', error);
+  //       });
+  //   };
+  
+  //   // Usando um timeout para aguardar o término da digitação
+  //   if (userSearch_code.trim() !== '') {
+  //     clearTimeout(timeoutId);
+  //     timeoutId = setTimeout(fetchEventData, delay);
+  //   }
+  // }, [userSearch_code]);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -177,17 +199,17 @@ export default function Search() {
           ))}
         </ScrollView>
 
-        {/* <ScrollView style={{width: "100%", gap: 16}}>
+        <ScrollView style={{width: "100%", gap: 16}}>
 				<View style={{width: "100%", gap: 8, top: 100}}>
 					{
 						eventData.map((event,index) => {
 							return (
-								<CardEvent descricaoEvento={event.desc_event} idUser={id} Event_image={event.Event_image} Nm_event={event.Nm_event} Id_App_Events={idEvent} key={index}/>
+								<CardEventUser descricaoEvento={event.desc_event} idUser={id} Event_image={event.Event_image} Nm_event={event.Nm_event} Id_App_Events={event. Id_App_Events} key={index}/>
 							)
 						})
 					}
 				</View>
-			</ScrollView> */}
+			</ScrollView>
 
         <Modal
           transparent={true}
