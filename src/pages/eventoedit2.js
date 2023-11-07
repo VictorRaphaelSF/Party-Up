@@ -11,10 +11,12 @@ import {
   Platform,
   Animated,
   Easing,
+  Modal,
 } from "react-native";
 import axios from "axios";
 import { ScrollView } from "react-native-gesture-handler";
 import Backbutton from "../components/backbutton";
+import * as Animatable from "react-native-animatable";
 
 export default function Eventoedit2({ navigation }) {
   const [backgroundImage, setBackgroundImage] = useState(null);
@@ -34,6 +36,23 @@ export default function Eventoedit2({ navigation }) {
   const [statusEvent, setStatusEvent] = useState("");
   const [tituloWidth, setTituloWidth] = useState(0);
   const animatedValue = useRef(new Animated.Value(0)).current;
+
+  //importações do menu
+  const [searchText, setSearchText] = useState("");
+  const [eventtype, setEventtype] = useState("");
+  const [accessType, setAccessType] = useState("");
+  const [ClassificationType, setClassificationType] = useState("");
+  const [isMenuVisible, setMenuVisible] = useState(false);
+  const [isTypeMenuVisible, setTypeMenuVisible] = useState(false);
+  const [isStatusMenuVisible, setStatusMenuVisible] = useState(false);
+  const [isAccessTypeMenuVisible, setAccessTypeMenuVisible] = useState(false);
+  const [isClassificationTypeMenuVisible, setClassificationTypeMenuVisible] = useState(false);
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedStatusType, setSelectedStatusType] = useState(null);
+  const [selectedEventType, setSelectedEventType] = useState(null);
+  const [selectedAccessType, setSelectedAccessType] = useState(null);
+  const [selectedClassificationType, setSelectedClassificationType] = useState(null);
 
   const [tituloNovo, setTituloNovo] = useState("");
   const [descricaoNovo, setDescricaoNovo] = useState("");
@@ -143,6 +162,99 @@ export default function Eventoedit2({ navigation }) {
   const [editStatus, setEditStatus] = useState(false);
   const [editClassification, setEditClassification] = useState(false);
   const [editModality, setEditModality] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  const selectOption = (option) => {
+    setSelectedOption(option);
+    setTags(option);
+    setSelectedEventType(option);
+    setMenuVisible(false);
+  };
+
+  const handleTagSelect = (tag) => {
+    const isSelected = selectedTags.includes(tag);
+  
+    if (isSelected) {
+      const newTags = selectedTags.filter((selectedTag) => selectedTag !== tag);
+      setSelectedTags(newTags);
+    } else {
+      const newTags = [...selectedTags, tag];
+      setSelectedTags(newTags);
+    }
+  };
+
+  const openMenu = () => {
+    setMenuVisible(true);
+  };
+
+  const closeMenu = () => {
+    setMenuVisible(false);
+  };
+
+  const openTypeMenu = () => {
+    setTypeMenuVisible(true);
+  };
+
+  const openStatusMenu = () => {
+    setStatusMenuVisible(true);
+  };
+
+  const closeTypeMenu = () => {
+    setTypeMenuVisible(false);
+  };
+
+  const closeStatusMenu = () => {
+    setStatusMenuVisible(false);
+  };
+
+  const selectEventType = (type) => {
+    setSelectedEventType(type);
+    setTypeEvent(type);
+    closeTypeMenu();
+  };
+
+  const selectEventStatus = (status) => {
+    setSelectedStatusType(status);
+    setStatusEvent(status);
+    closeStatusMenu();
+  };
+
+  const openAccessTypeMenu = () => {
+    setAccessTypeMenuVisible(true);
+  };
+
+  const closeAccessTypeMenu = () => {
+    setAccessTypeMenuVisible(false);
+  };
+
+  const selectAccessType = (accessType) => {
+    setSelectedAccessType(accessType);
+    setModality(accessType);
+    closeAccessTypeMenu();
+  };
+
+  const openClassificationTypeMenu = () => {
+    setClassificationTypeMenuVisible(true);
+  };
+
+  const closeClassificationTypeMenu = () => {
+    setClassificationTypeMenuVisible(false);
+  };
+
+  const selectClassificationType = (ClassificationType) => {
+    setSelectedClassificationType(ClassificationType);
+    setClassication(ClassificationType);
+    closeClassificationTypeMenu();
+  };
+
+  const handleStatusSelect = (status) => {
+    setSelectedStatus(status);
+    setStatusEvent(status);
+    setEditStatus(false);
+  };
 
   return (
     <View style={styles.container}>
@@ -270,9 +382,7 @@ export default function Eventoedit2({ navigation }) {
             <View style={styles.tituloContainer}>
               <Text style={styles.tagsTitulo}>Tags Relacionadas</Text>
               <Pressable
-                onPress={() => {
-                  setEditTags(!editTags);
-                }}>
+                onPress={openMenu}>
                 <Image
                   source={require("../assets/images/icons/pencil(g).png")}
                   style={styles.imagemTitulo}
@@ -294,9 +404,7 @@ export default function Eventoedit2({ navigation }) {
             <View style={styles.tituloContainer}>
               <Text style={styles.typeTitulo}>Tipo do evento</Text>
               <Pressable
-                onPress={() => {
-                  setEditType(!editType);
-                }}>
+                onPress={openTypeMenu}>
                 <Image
                   source={require("../assets/images/icons/pencil(g).png")}
                   style={styles.imagemTitulo}
@@ -318,9 +426,7 @@ export default function Eventoedit2({ navigation }) {
             <View style={styles.tituloContainer}>
               <Text style={styles.statusTitulo}>Status do evento</Text>
               <Pressable
-                onPress={() => {
-                  setEditStatus(!editStatus);
-                }}>
+                onPress={openStatusMenu}>
                 <Image
                   source={require("../assets/images/icons/pencil(g).png")}
                   style={styles.imagemTitulo}
@@ -340,11 +446,9 @@ export default function Eventoedit2({ navigation }) {
 
           <View style={styles.modalidadeContainer}>
             <View style={styles.tituloContainer}>
-              <Text style={styles.modalidadeTitulo}>Modalidade</Text>
+              <Text style={styles.modalidadeTitulo}>Tipo de acesso</Text>
               <Pressable
-                onPress={() => {
-                  setEditModality(!editModality);
-                }}>
+                onPress={openAccessTypeMenu}>
                 <Image
                   source={require("../assets/images/icons/pencil(g).png")}
                   style={styles.imagemTitulo}
@@ -366,9 +470,7 @@ export default function Eventoedit2({ navigation }) {
             <View style={styles.tituloContainer}>
               <Text style={styles.classificationTitulo}>Classificação</Text>
               <Pressable
-                onPress={() => {
-                  setEditClassification(!editClassification);
-                }}>
+                onPress={openClassificationTypeMenu}>
                 <Image
                   source={require("../assets/images/icons/pencil(g).png")}
                   style={styles.imagemTitulo}
@@ -423,6 +525,153 @@ export default function Eventoedit2({ navigation }) {
             </View>
           </View>
         </ScrollView>
+        <Modal
+          style={styles.modalContainer}
+          transparent={true}
+          visible={isMenuVisible}
+          onRequestClose={closeMenu}>
+          <Pressable onPress={closeMenu} style={styles.modalBackground}>
+            <Animatable.View
+              style={styles.menuContainer}
+              animation={isMenuVisible ? "slideInUp" : "slideInDown"}
+              duration={500}>
+              <View style={styles.dragIndicator} />
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectOption("Rock")}>
+                <Text style={styles.menubtttext}>Rock</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectOption("Sertanejo")}>
+                <Text style={styles.menubtttext}>Sertanejo</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectOption("Dança")}>
+                <Text style={styles.menubtttext}>Dança</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectOption("Teatral")}>
+                <Text style={styles.menubtttext}>Teatral</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectOption("Religioso")}>
+                <Text style={styles.menubtttext}>Religioso</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectOption("Funk")}>
+                <Text style={styles.menubtttext}>Funk</Text>
+              </Pressable>
+            </Animatable.View>
+          </Pressable>
+        </Modal>
+        <Modal
+          style={styles.modalContainer}
+          transparent={true}
+          visible={isTypeMenuVisible}
+          onRequestClose={closeTypeMenu}>
+          <Pressable onPress={closeTypeMenu} style={styles.modalBackground}>
+            <Animatable.View
+              style={styles.menuContainer}
+              animation={isTypeMenuVisible ? "slideInUp" : "slideInDown"}
+              duration={500}>
+              <View style={styles.dragIndicator} />
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectEventType("Pago")}>
+                <Text style={styles.menubtttext}>Pago</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectEventType("Gratuito")}>
+                <Text style={styles.menubtttext}>Gratuito</Text>
+              </Pressable>
+            </Animatable.View>
+          </Pressable>
+        </Modal>
+        <Modal
+          style={styles.modalContainer}
+          transparent={true}
+          visible={isStatusMenuVisible}
+          onRequestClose={closeStatusMenu}>
+          <Pressable onPress={closeStatusMenu} style={styles.modalBackground}>
+            <Animatable.View
+              style={styles.menuContainer}
+              animation={isStatusMenuVisible ? "slideInUp" : "slideInDown"}
+              duration={500}>
+              <View style={styles.dragIndicator} />
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectEventStatus("Ativo")}>
+                <Text style={styles.menubtttext}>Pago</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectEventStatus("Inativo")}>
+                <Text style={styles.menubtttext}>Gratuito</Text>
+              </Pressable>
+            </Animatable.View>
+          </Pressable>
+        </Modal>
+        <Modal
+          style={styles.modalContainer}
+          transparent={true}
+          visible={isAccessTypeMenuVisible}
+          onRequestClose={closeAccessTypeMenu}>
+          <Pressable
+            onPress={closeAccessTypeMenu}
+            style={styles.modalBackground}>
+            <Animatable.View
+              style={styles.menuContainer}
+              animation={isAccessTypeMenuVisible ? "slideInUp" : "slideInDown"}
+              duration={500}>
+              <View style={styles.dragIndicator} />
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectAccessType("Presencial")}>
+                <Text style={styles.menubtttext}>Presencial</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectAccessType("Online")}>
+                <Text style={styles.menubtttext}>Online</Text>
+              </Pressable>
+            </Animatable.View>
+          </Pressable>
+        </Modal>
+
+        <Modal
+          style={styles.modalContainer}
+          transparent={true}
+          visible={isClassificationTypeMenuVisible}
+          onRequestClose={closeClassificationTypeMenu}>
+          <Pressable
+            onPress={closeClassificationTypeMenu}
+            style={styles.modalBackground}>
+            <Animatable.View
+              style={styles.menuContainer}
+              animation={
+                isClassificationTypeMenuVisible ? "slideInUp" : "slideInDown"
+              }
+              duration={500}>
+              <View style={styles.dragIndicator} />
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectClassificationType("Público")}>
+                <Text style={styles.menubtttext}>Público</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectClassificationType("Privado")}>
+                <Text style={styles.menubtttext}>Privado</Text>
+              </Pressable>
+            </Animatable.View>
+          </Pressable>
+        </Modal>
       </ImageBackground>
     </View>
   );
@@ -805,5 +1054,63 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 12,
+  },
+
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  modalContent: {
+    backgroundColor: "white",
+    padding: 22,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 4,
+    borderColor: "rgba(0, 0, 0, 0.1)",
+  },
+
+  modalText: {
+    fontSize: 22,
+    marginBottom: 12,
+    textAlign: "center",
+  },
+
+  modalBackground: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.1)",
+    justifyContent: "flex-end",
+  },
+
+  menuContainer: {
+    backgroundColor: "#470F62",
+    padding: 16,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+  },
+
+  dragIndicator: {
+    height: 8,
+    width: 50,
+    backgroundColor: "#000000",
+    alignSelf: "center",
+    marginBottom: 16,
+    borderRadius: 24,
+    opacity: 0.5,
+  },
+
+  menubtt: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: "rgba(255, 255, 255, 0.5)",
+  },
+
+  menubtttext: {
+    color: "#FFFFFF",
+    fontSize: 18,
+    opacity: 0.7,
   },
 });
