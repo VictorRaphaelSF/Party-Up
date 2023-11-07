@@ -51,10 +51,6 @@ export default function Tags() {
     navigation.navigate('dashboard');
   };
 
-  const bttTermos = () => {
-    navigation.navigate('acesstermos');
-  };
-
   return (
     <View style={styles.container}>
       <Image
@@ -108,7 +104,7 @@ export default function Tags() {
               </Pressable>
               <Pressable
                 style={styles.menubtt}
-                onPress={bttTermos}>
+                onPress={() => console.log("Item 5 clicado")}>
                 <Text style={styles.menubtttext}>Termos</Text>
               </Pressable>
               <Pressable

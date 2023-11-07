@@ -15,8 +15,8 @@ import axios from "axios";
 import { ScrollView } from "react-native-gesture-handler";
 import Backbutton from "../components/backbutton";
 import Navbar from "../components/navbar";
-import Comentbar from "../components/comentbar";
 import { useRoute } from "@react-navigation/native";
+import Comentbar from "../components/comentbar";
 
 export default function Eventoedit({ navigation }) {
   const [backgroundImage, setBackgroundImage] = useState(null);
@@ -133,14 +133,46 @@ export default function Eventoedit({ navigation }) {
       });
   }, []);
 
-  const handleButtonEdit = () => {
-    navigation.navigate("eventoedit2");
-  };
+
 
   const handleButtonDelete = () => {
-    console.log('Lógica para apagar')
+    const idDeEvento = {
+      idEvent: idEvento
+    }
+    axios
+      .post('http://localhost:3003/deleteEvent', idDeEvento)
+      .then((response) => {
+        console.log(response);
+        navigation.navigate('telaprincipal', { id: id });
+      })
+      .catch((error) => {
+        console.error('Erro ao enviar os dados para o backend:', error);
+      });
+  }
+  const handleButtonEdit = () => {
+    navigation.navigate('eventoedit2', { id: id, imgProfile: imgProfile, idEvento: idEvento })
+  }
+
+  const handleButtonHome = () => {
+    navigation.navigate('telaprincipal', { id: id, imgProfile: imgProfile })
   };
-  
+
+  const handleButtonSearch = () => {
+    navigation.navigate('search', { id: id, imgProfile: imgProfile });
+  };
+
+  const handleButtonCenter = () => {
+    navigation.navigate('cadevento', { id: id, imgProfile: imgProfile });
+  };
+
+  const handleButtonNotification = () => {
+    navigation.navigate('notificação', { id: id, imgProfile: imgProfile });
+  };
+
+  const handleButtonPeople = () => {
+    console.log('Botão perfil pressionado');
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -158,10 +190,10 @@ export default function Eventoedit({ navigation }) {
           <View style={styles.dataContainer}>
             <Text style={styles.dataTitulo}>Data e horarios</Text>
             <Text style={styles.dataTexto}>
-              Entre {dataInicio} - {dataFim}
+              {dataInicio} Entre {dataFim}
             </Text>
             <Text style={styles.dataTexto2}>
-              {horaInicio} - {horaFim} - Entrada Padrão
+              {horaInicio} - {horaFim}
             </Text>
           </View>
 
@@ -193,6 +225,7 @@ export default function Eventoedit({ navigation }) {
         </View>
 
           <Comentbar/>
+
           <View style={styles.comentariosContainer}>
             <Image
               source={require("../assets/images/icons/loading.png")}
@@ -202,10 +235,12 @@ export default function Eventoedit({ navigation }) {
               Sem comentários disponíveis
             </Text>
           </View>
+
+
           <View style={styles.line2} />
-          <Backbutton/>
+          <Backbutton />
           <View style={styles.square}>
-              <Image
+            <Image
               source={`data:image/png;base64,${imgProfile}`}
               style={styles.square}
             />
@@ -213,7 +248,7 @@ export default function Eventoedit({ navigation }) {
           </View>
         </ScrollView>
       </ImageBackground>
-      <Navbar id={id} imgProfile= {imgProfile}/>
+      <Navbar id={id} imgProfile={imgProfile} />
     </View>
   );
 }
@@ -441,9 +476,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     right: 0,
-    bottom: -790,
+    bottom: -735,
     height: 2,
-    backgroundColor: "white",
     opacity: 0.6,
   },
 

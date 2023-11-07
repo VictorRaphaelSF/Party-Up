@@ -41,12 +41,13 @@ export default function Cadevento2() {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const [isTypeMenuVisible, setTypeMenuVisible] = useState(false);
   const [isAccessTypeMenuVisible, setAccessTypeMenuVisible] = useState(false);
-  const [isClassificationTypeMenuVisible, setClassificationTypeMenuVisible] = useState(false);
-  const [selectedTags, setSelectedTags] = useState([]);
+  const [isClassificationTypeMenuVisible, setClassificationTypeMenuVisible] =
+    useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedEventType, setSelectedEventType] = useState(null);
   const [selectedAccessType, setSelectedAccessType] = useState(null);
-  const [selectedClassificationType, setSelectedClassificationType] = useState(null);
+  const [selectedClassificationType, setSelectedClassificationType] =
+    useState(null);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -56,19 +57,8 @@ export default function Cadevento2() {
     setSelectedOption(option);
     setSearchText(option);
     setSelectedEventType(option);
+    // toggleModal();
     setMenuVisible(false);
-  };
-
-  const handleTagSelect = (tag) => {
-    const isSelected = selectedTags.includes(tag);
-  
-    if (isSelected) {
-      const newTags = selectedTags.filter((selectedTag) => selectedTag !== tag);
-      setSelectedTags(newTags);
-    } else {
-      const newTags = [...selectedTags, tag];
-      setSelectedTags(newTags);
-    }
   };
 
   const openMenu = () => {
@@ -126,34 +116,37 @@ export default function Cadevento2() {
     setter(numericValue);
   };
 
-  // const route = useRoute();
-  // const { eventData, id } = route.params;
-  // console.log(eventData);
-  // eventData["Site_contact_code"] = sitectt;
-  // eventData["instagram_user_code"] = instagram;
-  // eventData["more_info_code"] = infoctt;
-  // eventData["telefone_event_code"] = nmtelefone;
-  // eventData["Tp_Event_code"] = eventtype;
-  // eventData["Tp_Modality_code"] = accessType;
-  // eventData["Event_classification_code"] = ClassificationType;
-  // eventData["Dt_begin_code"] = datainicio;
-  // eventData["Dt_end_code"] = datafinal;
-  // eventData["Hr_begin_code"] = horainicio;
-  // eventData["Hr_end_code"] = horafinal;
-  // eventData["Tag_event_code"] = searchText;
-
-  // Dt_end_code,
-  // Dt_creation_code,
-
-  // Status_event_code,
-  // Informative_Classification_code,
-  // Event_classification_code//,
-  // Tp_Event_code//,
-  // Tp_Modality_code//,
-  // Site_contact_code//,
-  // more_info_code//,
-  // instagram_user_code//,
-
+  
+  
+  
+  const route = useRoute();
+  const { eventData, id } = route.params;
+  console.log(eventData);
+  eventData["Site_contact_code"] = sitectt;
+  eventData["instagram_user_code"] = instagram;
+  eventData["more_info_code"] = infoctt;
+  eventData["telefone_event_code"] = nmtelefone;
+  eventData["Tp_Event_code"] = eventtype;
+  eventData["Tp_Modality_code"] = accessType;
+  eventData["Event_classification_code"] = ClassificationType;
+  eventData["Dt_begin_code"] = datainicio;
+  eventData["Dt_end_code"] = datafinal;
+  eventData["Hr_begin_code"] = horainicio;
+  eventData["Hr_end_code"] = horafinal;
+  eventData["Tag_event_code"] = searchText;
+ 
+		// Dt_end_code,
+		// Dt_creation_code,
+	
+		// Status_event_code,
+		// Informative_Classification_code,
+		// Event_classification_code//,
+		// Tp_Event_code//,
+		// Tp_Modality_code//,
+		// Site_contact_code//,
+		// more_info_code//,
+		// instagram_user_code//,
+  
   const bttCriarEvento = () => {
     const horaI = new Date("2000-01-01 " + horainicio);
     const horaF = new Date("2000-01-01 " + horafinal);
@@ -316,7 +309,7 @@ export default function Cadevento2() {
             />
           </Pressable>
         </View>
-        <View style={styles.searchBarContainerLowLowLow}>
+        <View style={styles.searchBarContainerLowLow1}>
           <Pressable onPress={openClassificationTypeMenu}>
             <TextInput
               style={styles.searchInput}

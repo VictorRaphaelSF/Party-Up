@@ -53,10 +53,6 @@ export default function Historicoevent() {
     navigation.navigate('dashboard');
   };
 
-  const bttTermos = () => {
-    navigation.navigate('acesstermos');
-  };
-
   return (
     <View style={styles.container}>
       <Backbutton/>
@@ -116,7 +112,7 @@ export default function Historicoevent() {
               </Pressable>
               <Pressable
                 style={styles.menubtt}
-                onPress={bttTermos}>
+                onPress={() => console.log("Item 5 clicado")}>
                 <Text style={styles.menubtttext}>Termos</Text>
               </Pressable>
               <Pressable
@@ -128,7 +124,7 @@ export default function Historicoevent() {
           </View>
         </TouchableWithoutFeedback>
       </Modal>
-      <Navbar id={id} imgProfile= {profileImage}/>
+      <Navbar id={id} imgProfile= {imgProfile}/>
     </View>
   );
 }

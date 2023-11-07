@@ -20,21 +20,22 @@ import { useRoute } from "@react-navigation/native";
 import axios from "axios";
 import Backbutton from "../components/backbutton";
 
-export default function Cadevento({ route }) {
-  const [nmevento, setNmevento] = useState("");
-  const [descrição, setDescrição] = useState("");
-  const [cep, setCep] = useState("");
-  const [estado, setEstado] = useState("");
-  const [cidade, setCidade] = useState("");
-  const [bairro, setBairro] = useState("");
-  const [nmrua, setNmrua] = useState("");
-  const [numero, setNumero] = useState("");
-  const [fileName, setFileName] = useState("");
+export default function Cadevento({route}) {
+
+  const [nmevento, setNmevento] = useState('');
+  const [descrição, setDescrição] = useState('');
+  const [cep, setCep] = useState('');
+  const [estado, setEstado] = useState('');
+  const [cidade, setCidade] = useState('');
+  const [bairro, setBairro] = useState('');
+  const [nmrua, setNmrua] = useState('');
+  const [numero, setNumero] = useState('');
 
   //Linha abaixo somente para validações.
   const [erro, setErro] = useState("");
   const [image, setImage] = useState(null);
   const navigation = useNavigation();
+  const [imageData, setImageData] = useState("");
 
   const handleImagePicker = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -103,7 +104,7 @@ export default function Cadevento({ route }) {
     idUser_code: id
   
   }
-
+  console.log(id)
   const handleVamosLaPress = () => {
     if (
       !nmevento ||

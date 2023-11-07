@@ -17,13 +17,23 @@ import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Navbar from "../components/navbar";
+import { useRoute } from '@react-navigation/native';
+import axios from "axios";
+import CardEventUser from "../components/cardEventUser";
 
 export default function Search() {
   const [reload, setReload] = useState(0);
   const navigation = useNavigation();
-  const [searchTerm, setSearchTerm] = useState("");
+  const [userSearch_code, setSearchTerm] = useState("");
   const [isMenuVisible, setMenuVisible] = useState(false);
   const [searchHistory, setSearchHistory] = useState([]);
+  const [eventData, setEventData] = useState([]);
+
+
+  const route = useRoute();
+  const { id } = route.params;
+  const { imgProfile } = route.params;
+  console.log(id);
 
   useEffect(() => {
     const loadSearchHistory = async () => {
@@ -38,11 +48,14 @@ export default function Search() {
     };
 
     loadSearchHistory();
+ 
+    
   }, []);
 
   const handleSearch = () => {
     if (searchTerm.trim() !== "") {
       setSearchHistory([...searchHistory, searchTerm]);
+
 
       AsyncStorage.setItem(
         "searchHistory",
@@ -52,7 +65,7 @@ export default function Search() {
       setReload(reload + 1);
     }
   };
-
+  
   const handleClearHistory = async () => {
     try {
       await AsyncStorage.removeItem("searchHistory");
@@ -64,6 +77,22 @@ export default function Search() {
 
   const handleButtonSearch = () => {
     handleSearch();
+  };
+
+  const handleButtonHome = () => {
+    navigation.navigate('telaprincipal', {id : id});
+  };
+
+  const handleButtonCenter = () => {
+    navigation.navigate('cadevento', {id : id});
+  };
+
+  const handleButtonNotification = () => {
+    navigation.navigate('notificação', {id : id});
+  };
+
+  const handleButtonPeople = () => {
+    navigation.navigate('telaprofile', {id : id})
   };
 
   const handleButtonSuge = () => {
@@ -81,8 +110,45 @@ export default function Search() {
   const closeMenu = () => {
     setMenuVisible(false);
   };
+ 
 
+  console.log(eventData);
+  console.log(userSearch_code);
+  
+  const pesquisaUser = {
+    userSearch_code: userSearch_code
+  }
+
+  // useEffect(() => {
+  //   const delay = 500; // Atraso de 500ms
+  //   let timeoutId;
+  
+  //   // Função para fazer a chamada à API após o atraso
+  //   const fetchEventData = () => {
+  //     const pesquisaUser = {
+  //       userSearch_code: userSearch_code,
+  //     };
+  
+  //     axios
+  //       .post('http://localhost:3003/searchEvents', pesquisaUser)
+  //       .then((response) => {
+  //         setEventData(response.data.results);
+  //       })
+  //       .catch((error) => {
+  //         console.error('Erro ao enviar os dados para o backend:', error);
+  //       });
+  //   };
+  
+  //   // Usando um timeout para aguardar o término da digitação
+  //   if (userSearch_code.trim() !== '') {
+  //     clearTimeout(timeoutId);
+  //     timeoutId = setTimeout(fetchEventData, delay);
+  //   }
+  // }, [userSearch_code]);
   return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}>
       <View style={styles.container}>
         <Image
           source={require("../assets/images/telap.png")}
@@ -96,11 +162,13 @@ export default function Search() {
           />
           <TextInput
             style={styles.searchInput}
-            placeholder="Pesuisar"
+            placeholder="Pesquisar"
             placeholderTextColor="rgba(255, 255, 255, 0.5)"
             underlineColorAndroid="transparent"
-            value={searchTerm}
-            onChangeText={setSearchTerm}
+            value={userSearch_code}
+            onChangeText={(text) => {
+              setSearchTerm(text);}}
+              
             onSubmitEditing={handleSearch}
           />
           <Pressable style={styles.button} onPress={menu}>
@@ -130,6 +198,18 @@ export default function Search() {
             </View>
           ))}
         </ScrollView>
+
+        <ScrollView style={{width: "100%", gap: 16}}>
+				<View style={{width: "100%", gap: 8, top: 100}}>
+					{
+						eventData.map((event,index) => {
+							return (
+								<CardEventUser descricaoEvento={event.desc_event} idUser={id} Event_image={event.Event_image} Nm_event={event.Nm_event} Id_App_Events={event. Id_App_Events} key={index}/>
+							)
+						})
+					}
+				</View>
+			</ScrollView>
 
         <Modal
           transparent={true}
@@ -200,8 +280,9 @@ export default function Search() {
             </Animatable.View>
           </Pressable>
         </Modal>
-        <Navbar/>
+        <Navbar id={id} imgProfile= {imgProfile}/>
       </View>
+    </KeyboardAvoidingView>
   );
 }
 
