@@ -26,11 +26,6 @@ export default function Myeventsbar() {
         navigation.navigate("eventoedit", { idEvento: Id_App_Events, id : idUser, imgProfile: Event_image });
    };
 
-   const Myeventbar = ({descricaoEvento, idUser, Nm_event, Event_image, Id_App_Events}) => {
-    const navigation = useNavigation()
-    console.log(Id_App_Events);
-   }
-
 return (
     <ScrollView
     horizontal

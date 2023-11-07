@@ -246,8 +246,8 @@ export default function Telaprofile() {
         source={require("../assets/images/icons/barra.png")}
         style={styles.comentariosTituloImage}
       />
-      <Myeventsbar/>
-      <Navbar id={id} imgProfile= {profileImage}/>
+      <CardEvent/>
+      <Navbar/>
     </View>
   );
 }
@@ -492,6 +492,6 @@ const styles = StyleSheet.create({
     width: '108%',
     height: 50,
     resizeMode: "contain",
-    top: 480,
+    bottom: -110,
   },
 });

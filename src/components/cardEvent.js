@@ -30,6 +30,8 @@ const styles = StyleSheet.create({
 		backgroundColor: "black",
 	},
 	containerEventos: {
+        right: 100,
+        top: 130,
 		flexDirection: "row",
 		gap: 8,
 	},
