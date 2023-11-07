@@ -81,6 +81,23 @@ export default function Eventoedit2({ navigation }) {
     outputRange: [0, tituloWidth + 15],
   });
 
+  const handleButtonEdit = () => {
+    axios
+      .post('http://localhost:3003/updateEvent', updateEvent)
+      .then((response) => {
+        console.log(response);
+        navigation.navigate('evento',{id: id});
+      })
+      .catch((error) => {
+        console.error('Erro ao enviar os dados para o backend:', error);
+      });
+		// navigation.navigate('cadevento');
+  };
+
+  const handleButtonDelete = () => {
+    console.log('Lógica para apagar')
+  };
+
   const id = {
     eventId_code: 1,
   };
@@ -298,7 +315,8 @@ export default function Eventoedit2({ navigation }) {
               <Pressable
                 onPress={() => {
                   setEditData(!editData);
-                }}>
+                }}
+                  >
                 <Image
                   source={require("../assets/images/icons/pencil(g).png")}
                   style={styles.imagemTitulo}
@@ -317,7 +335,7 @@ export default function Eventoedit2({ navigation }) {
                   <Text style={styles.dataTexto}>-</Text>
                   <TextInput
                     style={styles.dataTexto}
-                    onChangeText={(e) => setDataFim(e)}
+                    onChangeText={(e) => {setDataFim(e)}}
                     value={dataFim}
                   />
                 </View>
@@ -524,6 +542,20 @@ export default function Eventoedit2({ navigation }) {
               </Pressable>
             </View>
           </View>
+          <View style={styles.editButtonContainer}>
+          <Pressable onPress={handleButtonDelete}>
+            <Image
+              source={require('../assets/images/icons/bttdescarte.png')} 
+              style={styles.editButtonImage}
+            />
+          </Pressable>
+          <Pressable onPress={handleButtonEdit}>
+            <Image
+              source={require('../assets/images/icons/bttaplicar.png')}
+              style={styles.editButtonImage1}
+            />
+          </Pressable>
+        </View>
         </ScrollView>
         <Modal
           style={styles.modalContainer}
@@ -643,7 +675,6 @@ export default function Eventoedit2({ navigation }) {
             </Animatable.View>
           </Pressable>
         </Modal>
-
         <Modal
           style={styles.modalContainer}
           transparent={true}
@@ -672,6 +703,7 @@ export default function Eventoedit2({ navigation }) {
             </Animatable.View>
           </Pressable>
         </Modal>
+        
       </ImageBackground>
     </View>
   );
@@ -978,9 +1010,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     right: 0,
-    bottom: -890,
+    bottom: -790,
     height: 2,
-    backgroundColor: "white",
     opacity: 0.6,
   },
 
@@ -1112,5 +1143,41 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 18,
     opacity: 0.7,
+  },
+
+  editButtonContainer: {
+    flexDirection: 'row',
+    top: 725,
+    alignItems: "center",
+    marginTop: 10,
+    marginHorizontal: 12,
+    
+  },
+
+  editButton: {
+    backgroundColor: "#7E3CA7",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginHorizontal: 20,
+  },
+
+  editButtonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "inter",
+  },
+
+  editButtonImage: {
+    width: 170,
+    height: 50,
+    resizeMode: 'contain',
+    marginRight: 14,
+  },
+
+  editButtonImage1: {
+    width: 170,
+    height: 50,
+    resizeMode: 'contain',
   },
 });

@@ -128,16 +128,21 @@ export default function Eventoedit({ navigation }) {
           </View>
 
           <View style={styles.editButtonContainer}>
-            <Pressable style={styles.editButton} onPress={handleButtonDelete}>
-              <Text style={styles.editButtonText}>Excluir</Text>
-            </Pressable>
-            <Pressable style={styles.editButton} onPress={handleButtonEdit}>
-              <Text style={styles.editButtonText}>Editar evento</Text>
-            </Pressable>
-          </View>
+          <Pressable onPress={handleButtonDelete}>
+            <Image
+              source={require('../assets/images/icons/bttexcluir.png')} 
+              style={styles.editButtonImage}
+            />
+          </Pressable>
+          <Pressable onPress={handleButtonEdit}>
+            <Image
+              source={require('../assets/images/icons/btteditar.png')}
+              style={styles.editButtonImage1}
+            />
+          </Pressable>
+        </View>
 
           <Comentbar/>
-
           <View style={styles.comentariosContainer}>
             <Image
               source={require("../assets/images/icons/loading.png")}
@@ -147,9 +152,6 @@ export default function Eventoedit({ navigation }) {
               Sem comentários disponíveis
             </Text>
           </View>
-
-          <View style={styles.line3} />
-
           <View style={styles.line2} />
           <Backbutton/>
           <View style={styles.square}>
@@ -385,16 +387,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     right: 0,
-    bottom: -890,
-    height: 2,
-    backgroundColor: "white",
-    opacity: 0.6,
-  },
-
-  line3: {
-    position: "absolute",
-    left: 0,
-    right: 0,
     bottom: -790,
     height: 2,
     backgroundColor: "white",
@@ -452,7 +444,8 @@ const styles = StyleSheet.create({
     top: 115,
     alignItems: "center",
     marginTop: 10,
-    marginHorizontal:  50,
+    marginHorizontal: 12,
+    
   },
 
   editButton: {
@@ -468,4 +461,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "inter",
   },
+
+  editButtonImage: {
+    width: 170,
+    height: 50,
+    resizeMode: 'contain',
+    marginRight: 14,
+  },
+
+  editButtonImage1: {
+    width: 170,
+    height: 50,
+    resizeMode: 'contain',
+  },
+  
 });
