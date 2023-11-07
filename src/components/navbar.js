@@ -1,29 +1,39 @@
 import { StyleSheet, View, Pressable, Image } from "react-native";
-import { useRoute, useNavigation } from "@react-navigation/native";
+import {useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
-export default function Navbar() {
+export default function Navbar(props) {
   const navigation = useNavigation();
 
   const handleButtonHome = () => {
-    navigation.navigate("telaprincipal");
+    navigation.navigate("telaprincipal", { id : props.id, imgProfile: props.imgProfile });
   };
 
   const handleButtonSearch = () => {
-    navigation.navigate("search");
+    navigation.navigate("search", { id : props.id, imgProfile: props.imgProfile });
   };
 
   const handleButtonCenter = () => {
-    navigation.navigate("cadevento", { id : id });
+    // axios.post('http://localhost:3003/updateEvent', props.updateEvent )
+		// 	.then((response)=> {
+		// 		console.log(response);
+    //     navigation.navigate("telaprincipal", { id : props.id, imgProfile: props.imgProfile });
+		// 	})
+		// 	.catch ((error) => {
+		// 		console.error('Erro ao enviar ou retono de dados para o backend:', error);
+		// })
+    navigation.navigate("cadevento", { id : props.id, imgProfile: props.imgProfile });
   };
 
   const handleButtonNotification = () => {
-    navigation.navigate("notificacao");
+    navigation.navigate("notificacao", { id : props.id, imgProfile: props.imgProfile });
   };
 
   const handleButtonPeople = () => {
-    navigation.navigate("telaprofile");
+    navigation.navigate("telaprofile", { id: props.id, imgProfile: props.imgProfile});
   };
 
+  
   return (
     <View style={styles.navbar}>
       <Pressable style={styles.navButton} onPress={handleButtonHome}>
