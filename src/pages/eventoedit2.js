@@ -11,6 +11,7 @@ import {
   Platform,
   Animated,
   Easing,
+  Modal,
 } from "react-native";
 import axios from "axios";
 import { ScrollView } from "react-native-gesture-handler";
@@ -205,13 +206,95 @@ export default function Eventoedit2({ navigation }) {
   const [editClassification, setEditClassification] = useState(false);
   const [editModality, setEditModality] = useState(false);
 
-  const handleButtonHome = () => {
-		navigation.navigate('telaprincipal',{id: id})
-	};
+  const selectOption = (option) => {
+    setSelectedOption(option);
+    setTags(option);
+    setSelectedEventType(option);
+    setMenuVisible(false);
+  };
 
-	const handleButtonSearch = () => {
-		navigation.navigate('search', {id : id});
-	};
+  const handleTagSelect = (tag) => {
+    const isSelected = selectedTags.includes(tag);
+  
+    if (isSelected) {
+      const newTags = selectedTags.filter((selectedTag) => selectedTag !== tag);
+      setSelectedTags(newTags);
+    } else {
+      const newTags = [...selectedTags, tag];
+      setSelectedTags(newTags);
+    }
+  };
+
+  const openMenu = () => {
+    setMenuVisible(true);
+  };
+
+  const closeMenu = () => {
+    setMenuVisible(false);
+  };
+
+  const openTypeMenu = () => {
+    setTypeMenuVisible(true);
+  };
+
+  const openStatusMenu = () => {
+    setStatusMenuVisible(true);
+  };
+
+  const closeTypeMenu = () => {
+    setTypeMenuVisible(false);
+  };
+
+  const closeStatusMenu = () => {
+    setStatusMenuVisible(false);
+  };
+
+  const selectEventType = (type) => {
+    setSelectedEventType(type);
+    setTypeEvent(type);
+    closeTypeMenu();
+  };
+
+  const selectEventStatus = (status) => {
+    setSelectedStatusType(status);
+    setStatusEvent(status);
+    closeStatusMenu();
+  };
+
+  const openAccessTypeMenu = () => {
+    setAccessTypeMenuVisible(true);
+  };
+
+  const closeAccessTypeMenu = () => {
+    setAccessTypeMenuVisible(false);
+  };
+
+  const selectAccessType = (accessType) => {
+    setSelectedAccessType(accessType);
+    setModality(accessType);
+    closeAccessTypeMenu();
+  };
+
+  const openClassificationTypeMenu = () => {
+    setClassificationTypeMenuVisible(true);
+  };
+
+  const closeClassificationTypeMenu = () => {
+    setClassificationTypeMenuVisible(false);
+  };
+
+  const selectClassificationType = (ClassificationType) => {
+    setSelectedClassificationType(ClassificationType);
+    setClassication(ClassificationType);
+    closeClassificationTypeMenu();
+  };
+
+  const handleStatusSelect = (status) => {
+    setSelectedStatus(status);
+    setStatusEvent(status);
+    setEditStatus(false);
+  };
+
 
 	const handleButtonCenter = () => {
 		axios
@@ -226,13 +309,7 @@ export default function Eventoedit2({ navigation }) {
 		// navigation.navigate('cadevento');
 	};
 
-	const handleButtonNotification = () => {
-		navigation.navigate('notificação', {id : id});
-	};
 
-	const handleButtonPeople = () => {
-		navigation.navigate('telaprofile', {id : id});
-	};
   return (
     <View style={styles.container}>
       <ImageBackground
