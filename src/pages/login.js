@@ -52,7 +52,7 @@ export default function Login({ navigation }) {
           if (response.data.validateLogin) {
             console.log(response);
             navigation.navigate("telaprincipal", {
-              id: response.data.results[0].Id_user,
+              id: response.data.id,
             });
           } else {
             console.log("Email ou senha inválido!");
@@ -60,7 +60,7 @@ export default function Login({ navigation }) {
           console.log(response);
         })
         .catch((error) => {
-          // Lidar com erros, se houver algum
+          //Lidar com erros, se houver algum
           setMsgError({
             msg: error.response.data.msg,
             status: true,
