@@ -17,7 +17,6 @@ import Navbar from "../components/navbar";
 import Backbutton from "../components/backbutton";
 import Navbuttons from "../components/navbuttons";
 import Comentbar from "../components/comentbar";
-import { useRoute } from "@react-navigation/native";
 
 export default function Evento({ navigation }) {
   const [backgroundImage, setBackgroundImage] = useState(null);
@@ -31,17 +30,12 @@ export default function Evento({ navigation }) {
   const [siteInfo, setSiteInfo] = useState("");
   const [tags, setTags] = useState("");
 
-  const route = useRoute();
-  const { id } = route.params;
-  const { idEvento } = route.params;
-  console.log(id);
-
   useEffect(() => {
-    const idEvent ={
-      eventId_code: idEvento
-    }
+    const id = {
+      eventId_code: 1,
+    };
     axios
-      .post('http://localhost:3003/viewEvent',idEvent)
+      .post("http://localhost:3003/viewEvent", id)
       .then((response) => {
         console.log(response.data[0]);
         //nome
@@ -91,42 +85,6 @@ export default function Evento({ navigation }) {
       });
   }, []);
 
-  const handleButtonPress = () => {
-    setIsButtonPressed(true);
-    startAnimation();
-  };
-
-  const handleSecondButtonPress = () => {
-    navigation.navigate('comentario');
-  };
-
-  const handleThirdButtonPress = () => {
-    console.log('Terceiro botão pressionado')
-  };
-
-  const handleFourthButtonPress = () => {
-    console.log('Quarto botão pressionado')
-  };
-
-  const handleButtonHome = () => {
-    navigation.navigate('telaprincipal',{id: id})
-  };
-
-  const handleButtonSearch = () => {
-    navigation.navigate('search',{id: id});
-  };
-
-  const handleButtonCenter = () => {
-    navigation.navigate('cadevento', {id : id});
-  };
-
-  const handleButtonNotification = () => {
-    navigation.navigate('notificação',{id: id});
-  };
-
-  const handleButtonPeople = () => {
-    navigation.navigate('telaprofile',{id: id});
-  };
 
   return (
     <View style={styles.container}>
@@ -191,7 +149,7 @@ export default function Evento({ navigation }) {
           </View>
         </ScrollView>
       </ImageBackground>
-      <Navbar id={id} imgProfile= {imgProfile}/>
+      <Navbar/>
     </View>
   );
 }
@@ -343,7 +301,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     right: 0,
-    bottom: -550,
+    bottom: -530,
     height: 2,
     backgroundColor: "white",
     opacity: 0.6,

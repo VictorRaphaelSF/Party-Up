@@ -16,11 +16,9 @@ import { ScrollView } from "react-native-gesture-handler";
 import Backbutton from "../components/backbutton";
 import Navbar from "../components/navbar";
 import Comentbar from "../components/comentbar";
-import { useRoute } from "@react-navigation/native";
 
 export default function Eventoedit({ navigation }) {
   const [backgroundImage, setBackgroundImage] = useState(null);
-
   const [titulo, setTitulo] = useState("");
   const [descricao, setDescricao] = useState("");
   const [dataInicio, setDataInicio] = useState("");
@@ -28,58 +26,23 @@ export default function Eventoedit({ navigation }) {
   const [horaInicio, setHoraInicio] = useState("");
   const [horaFim, setHoraFim] = useState("");
   const [siteInfo, setSiteInfo] = useState("");
-
-  const [telefone, setTelefone] = useState("");
-  const [tpEvent, setTpEvent] = useState("");
-  const [tpModality, setTpModality] = useState("");
-  const [cep, setCep] = useState("");
-  const [complemento, setComplemento] = useState("");
-  const [instagram, setIntagram] = useState("");
-  const [moreInfo, setMoreInfo] = useState("");
-  const [bairro, setBairro] = useState("");
-  const [cidade, setCidade] = useState("");
-  const [estado, setEstado] = useState("");
-  const [rua, setRua] = useState("");
-  const [numeroRes, setNumeroRes] = useState("");
-
-  console.log(telefone);
-  console.log(tpEvent);
-  console.log(tpModality);
-  console.log(cep);
-  console.log(complemento);
-  console.log(instagram);
-  console.log(moreInfo);
-  console.log(bairro);
-  console.log(cidade);
-  console.log(estado);
-  console.log(rua);
-  console.log(numeroRes);
-
   const [tags, setTags] = useState("");
 
-
-  const route = useRoute();
-  const { id } = route.params;
-  const { idEvento } = route.params;
-  const { imgProfile } = route.params;
-
-  console.log(idEvento);
   useEffect(() => {
-    const idEvent = {
-      eventId_code: idEvento
-    }
+    const id = {
+      eventId_code: 1,
+    };
     axios
-      .post('http://localhost:3003/viewEvent', idEvent)
+      .post("http://localhost:3003/viewEvent", id)
       .then((response) => {
-        console.log(response);
         console.log(response.data[0]);
         //nome
         setTitulo(response.data[0].Nm_event);
 
-        // //descrição
+        //descrição
         setDescricao(response.data[0].desc_event);
 
-
+        //data início
         const dataB = new Date(response.data[0].Dt_begin);
         const anoB = dataB.getFullYear();
         const mesB = String(dataB.getMonth() + 1).padStart(2, "0");
@@ -110,69 +73,24 @@ export default function Eventoedit({ navigation }) {
         //site
         setSiteInfo(response.data[0].Site_contact);
 
-
-        setTelefone(response.data[0].Telefone_event)
-        setTpEvent(response.data[0].Tp_Event)
-        setTpModality(response.data[0].Tp_Modality)
-        setCep(response.data[0].cd_cep)
-        setComplemento(response.data[0].complemento)
-        setIntagram(response.data[0].instagram_user)
-        setMoreInfo(response.data[0].more_info)
-        setBairro(response.data[0].nm_bairro)
-        setCidade(response.data[0].nm_cidade)
-        setEstado(response.data[0].nm_estado)
-        setRua(response.data[0].nm_rua)
-        setNumeroRes(response.data[0].num_residencia)
-
         //tag
-        // setTags(response.data[0].Tag_event);
+        setTags(response.data[0].Tag_event);
 
+        //navigation.navigate('telaprincipal',{id: id});
       })
       .catch((error) => {
         console.error("Erro ao enviar os dados para o backend:", error);
       });
   }, []);
 
-
+  const handleButtonEdit = () => {
+    navigation.navigate("eventoedit2");
+  };
 
   const handleButtonDelete = () => {
-    const idDeEvento = {
-      idEvent: idEvento
-    }
-    axios
-      .post('http://localhost:3003/deleteEvent', idDeEvento)
-      .then((response) => {
-        console.log(response);
-        navigation.navigate('telaprincipal', { id: id });
-      })
-      .catch((error) => {
-        console.error('Erro ao enviar os dados para o backend:', error);
-      });
-  }
-  const handleButtonEdit = () => {
-    navigation.navigate('eventoedit2', { id: id, imgProfile: imgProfile, idEvento: idEvento })
-  }
-
-  const handleButtonHome = () => {
-    navigation.navigate('telaprincipal', { id: id, imgProfile: imgProfile })
+    console.log('Lógica para apagar')
   };
-
-  const handleButtonSearch = () => {
-    navigation.navigate('search', { id: id, imgProfile: imgProfile });
-  };
-
-  const handleButtonCenter = () => {
-    navigation.navigate('cadevento', { id: id, imgProfile: imgProfile });
-  };
-
-  const handleButtonNotification = () => {
-    navigation.navigate('notificação', { id: id, imgProfile: imgProfile });
-  };
-
-  const handleButtonPeople = () => {
-    console.log('Botão perfil pressionado');
-  };
-
+  
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -190,10 +108,10 @@ export default function Eventoedit({ navigation }) {
           <View style={styles.dataContainer}>
             <Text style={styles.dataTitulo}>Data e horarios</Text>
             <Text style={styles.dataTexto}>
-              {dataInicio} Entre {dataFim}
+              Entre {dataInicio} - {dataFim}
             </Text>
             <Text style={styles.dataTexto2}>
-              {horaInicio} - {horaFim}
+              {horaInicio} - {horaFim} - Entrada Padrão
             </Text>
           </View>
 
@@ -235,17 +153,17 @@ export default function Eventoedit({ navigation }) {
             </Text>
           </View>
           <View style={styles.line2} />
-          <Backbutton />
+          <Backbutton/>
           <View style={styles.square}>
-            <Image
-              source={`data:image/png;base64,${imgProfile}`}
+              <Image
+              source={`data:image/png;base64,${/*imgProfile*/setBackgroundImage}`}
               style={styles.square}
             />
             <Text style={styles.titulo}>{titulo}</Text>
           </View>
         </ScrollView>
       </ImageBackground>
-      <Navbar id={id} imgProfile={imgProfile} />
+      <Navbar/>
     </View>
   );
 }
@@ -463,7 +381,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     right: 0,
-    bottom: -550,
+    bottom: -530,
     height: 2,
     backgroundColor: "white",
     opacity: 0.6,

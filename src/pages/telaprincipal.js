@@ -1,6 +1,5 @@
 
 import React, { useEffect, useState } from "react";
-
 import {
   StyleSheet,
   View,
@@ -22,29 +21,11 @@ export default function Telaprincipal() {
   const [imgProfile, setImgProfile] = useState("");
   const { params } = useRoute();
   const navigation = useNavigation();
+  // const id = 1;
 
-  const handleButtonHome = () => {
-    setReload(reload + 1);
-  };
-
-  const handleButtonSearch = () => {
-    navigation.navigate("search", { id: id });
-  };
-
-
-  const handleButtonCenter = () => {
-    navigation.navigate("cadevento", { id: id });
-  };
-
-
-
-  const handleButtonPeople = () => {
-    navigation.navigate("telaprofile");
-  };
-
-  const handleUserImagePress = () => {
-    console.log("Foto de perfil pressionada");
-  };
+//   const route = useRoute();
+//   const { id } = route.params;
+//   console.log(id);
 
   // axios
   //   .post("http://localhost:3003/viewEvent")
@@ -65,42 +46,11 @@ export default function Telaprincipal() {
     require("../assets/images/Eventos(Temporarios)/EventoM(1).png"),
     require("../assets/images/Eventos(Temporarios)/EventoM(2).png"),
   ];
- 
-  const route = useRoute();
-  const { id } = route.params;
-  const { userImage } = route.params;
-  
-  const idUser = {
-    Id_user_code: id
-  }
-  useEffect(() => {
-    setImgProfile(userImage)
-    // axios
-    //   .post("http://localhost:3003/dadosUser", idUser)
-    //   .then((e) => {
-    //     console.log(e);
-    //     console.log('====================================');
-    //     console.log(id);
-    //     console.log('====================================');
-    //     // setImgProfile(e.data.results[0].User_image);
-    //     console.log(id);
-       
-    //   })
-    //   .catch ((error) => {
-    //     console.error('Erro ao enviar ou retono de dados para o backend:', error);
-    // });
-
-
-    
-  }, []);
-
 
   const addNewImage = ({ image }) => {
     <Image style={styles.carouselImage} source={image} />
   };
 
-
-  
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>

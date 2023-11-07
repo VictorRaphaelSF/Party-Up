@@ -25,7 +25,7 @@ export default function Emailvalidation() {
 
   const handleCode = () => {
     axios
-      .post("http://localhost:3003/verifyAuthCode", {
+      .post("http://localhost:3003/authCode", {
         code: code,
       })
       .then((e) => {

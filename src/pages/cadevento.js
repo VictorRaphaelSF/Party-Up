@@ -20,22 +20,21 @@ import { useRoute } from "@react-navigation/native";
 import axios from "axios";
 import Backbutton from "../components/backbutton";
 
-export default function Cadevento({route}) {
-
-  const [nmevento, setNmevento] = useState('');
-  const [descrição, setDescrição] = useState('');
-  const [cep, setCep] = useState('');
-  const [estado, setEstado] = useState('');
-  const [cidade, setCidade] = useState('');
-  const [bairro, setBairro] = useState('');
-  const [nmrua, setNmrua] = useState('');
-  const [numero, setNumero] = useState('');
+export default function Cadevento({ route }) {
+  const [nmevento, setNmevento] = useState("");
+  const [descrição, setDescrição] = useState("");
+  const [cep, setCep] = useState("");
+  const [estado, setEstado] = useState("");
+  const [cidade, setCidade] = useState("");
+  const [bairro, setBairro] = useState("");
+  const [nmrua, setNmrua] = useState("");
+  const [numero, setNumero] = useState("");
+  const [fileName, setFileName] = useState("");
 
   //Linha abaixo somente para validações.
   const [erro, setErro] = useState("");
   const [image, setImage] = useState(null);
   const navigation = useNavigation();
-  const [imageData, setImageData] = useState("");
 
   const handleImagePicker = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -44,14 +43,11 @@ export default function Cadevento({route}) {
       base64: true,
       quality: 1,
     });
-
     if (!result.canceled) {
-      const imageB64 = result.assets[0].base64;
+      const nomeDoArquivo = result.assets[0].uri.split("/").pop();
       setImage(result.assets[0].uri);
-      setImageData(imageB64);
+      setFileName(nomeDoArquivo);
     }
-
-    console.log(result.assets[0].base64);
   };
 
   const renderCaracteresRestantes = () => {
@@ -85,26 +81,25 @@ export default function Cadevento({route}) {
   const userData = route.params.userData;
 
   // adicionando mais dados no objeto do cliente
-  // userData["nmUser"] = nmusuario;
-  // userData["descricao"] = descrição;
-  // userData["uri"] = "imagem.png";
+  userData["nmUser"] = nmusuario;
+  userData["descricao"] = descrição;
+  userData["uri"] = "imagem.png";
 
   const opa = useRoute();
   const { id } = opa.params;
   const eventData = {
-    name_event_code : nmevento,
-		desc_event_code : descrição,
-    nm_estado_code : estado,
-		nm_cidade_code : cidade,
-		nm_bairro_code: bairro,
-		cd_cep_code: cep,
-		nm_rua_code: nmrua,
-		num_residencia_code: numero,
-    img_Data: imageData,
-    idUser_code: id
-  
-  }
-  console.log(id)
+    name_event_code: nmevento,
+    desc_event_code: descrição,
+    nm_estado_code: estado,
+    nm_cidade_code: cidade,
+    nm_bairro_code: bairro,
+    cd_cep_code: cep,
+    nm_rua_code: nmrua,
+    num_residencia_code: numero,
+    nm_image: fileName,
+    idUser_code: id,
+  };
+
   const handleVamosLaPress = () => {
     if (
       !nmevento ||

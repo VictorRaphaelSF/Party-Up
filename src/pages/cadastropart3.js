@@ -9,7 +9,7 @@ import {
   Pressable,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
-import { useRoute } from "@react-navigation/native";
+
 export default function Cadastropart3() {
   return (
     <ImageBackground

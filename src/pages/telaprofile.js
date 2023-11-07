@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useRoute } from "@react-navigation/native";
 import {
   StyleSheet,
   View,
@@ -15,277 +14,194 @@ import {
 
 import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
-
+import { useRoute } from "@react-navigation/native";
 import axios from "axios";
 import Navbar from "../components/navbar";
 import Backbutton from "../components/backbutton";
-import CardEvent from "../components/cardEvent";
+import Myeventsbar from "../components/myeventsbar";
 
 export default function Telaprofile() {
-	const navigation = useNavigation();
-	const [eventData, setEventData] = useState([]);
-	const [profileImage, setProfileImage] = useState(null);
-	const [isMenuVisible, setMenuVisible] = useState(false);
-	const [name, setName] = useState("");
-	const [idade, setIdade] = useState("");
-	const [idEvent, setIdEvent] = useState("");
-	const [descricao, setDescricao] = useState("");
-	const [eventImage, setEventImage] = useState(null);
-	const [eventId, setEventId] = useState(null);
+  const navigation = useNavigation();
+  const [eventData, setEventData] = useState([]);
+  const [profileImage, setProfileImage] = useState(null);
+  const [isMenuVisible, setMenuVisible] = useState(false);
+  const [name, setName] = useState("");
+  const [idade, setIdade] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [eventImage, setEventImage] = useState(null);
+  const [eventId, setEventId] = useState(null);
 
-	const [seguidores, setSeguidores] = useState("");
-	const [seguindo, setSeguindo] = useState("");
+  const menu = () => {
+    setMenuVisible(true);
+  };
 
-	const menu = () => {
-		setMenuVisible(true);
-	};
+  const closeMenu = () => {
+    setMenuVisible(false);
+  };
 
-	const closeMenu = () => {
-		setMenuVisible(false);
-	};
+  const handleButtonEdit = () => {
+    console.log("Botão edit pressionado");
+  };
 
-	const handleButtonEdit = () => {
-		console.log('Botão edit pressionado')
-	}
+  const bttSair = () => {
+    navigation.navigate('index');
+    setMenuVisible(false);
+  };
 
-	const handleButtonHome = () => {
-		navigation.navigate('telaprincipal', { id: id });
-	};
+  const bttReport = () => {
+    navigation.navigate('report');
+    setMenuVisible(false);
+  };
 
-	const handleButtonSearch = () => {
-		navigation.navigate('search', { id: id });
-		console.log("Botão edit pressionado");
-	};
+  const bttMyevent = () => {
+    navigation.navigate('myevent');
+    setMenuVisible(false);
+  };
 
-	const bttSair = () => {
-		navigation.navigate('index');
-		setMenuVisible(false);
-	};
+  const bttEventProgress = () => {
+    navigation.navigate('event_progress');
+    setMenuVisible(false);
+  };
 
-	const bttReport = () => {
-		navigation.navigate('report');
-		setMenuVisible(false);
-	};
+  const bttDashboard = () => {
+    navigation.navigate('dashboard');
+  };
 
-	const bttMyevent = () => {
-		navigation.navigate('myevent',{ id: id });
-		setMenuVisible(false);
-	};
+  const bttTermos = () => {
+    navigation.navigate('acesstermos');
+  };
+  
 
-	const bttEventProgress = () => {
-		navigation.navigate('event_progress');
-		setMenuVisible(false);
-	};
+  // const route = useRoute();
+  // const { id } = route.params;
+  // console.log(id);
+  // const idUser = {
+  // };
 
-	const bttDashboard = () => {
-		navigation.navigate('dashboard');
-	};
+  // useEffect(() => {
+  //   axios
+  //     .post('url do back', idUser)
+  //     .then((response) => {
+  //       setProfileImage(response.data.image_url);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Erro ao enviar ou retono de dados para o backend:', error);
+  //     });
 
-	const route = useRoute();
-	const { id } = route.params;
-	const { imgProfile } = route.params;
-	
-	const idUser = {
-		userId_code: id
-	};
-	
+  //   axios
+  //     .post('http://localhost:3003/viewEventUser', /*idUser*/)
+  //     .then((response) => {
+  //       console.log(response)
+  //       console.log(response.data.results[0].Nm_event);
+  //       setEventData(response.data.results);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Erro ao enviar ou retono de dados para o backend:', error);
+  //     });
+  // }, []);
 
-	//console.log(imgProfile);
+  return (
+    <View style={styles.container}>
+      <Image
+        source={require("../assets/images/telap2.png")}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      />
+      <Backbutton/>
+      <View style={styles.innerCircle}>
+        {profileImage && (
+          <Image
+            source={{ uri: profileImage }}
+            style={{ flex: 1, width: "100%", borderRadius: 105 }}
+          />
+        )}
+      </View>
 
-	const handleEventImageClick = () => {
-		if (eventId) {
-			navigation.navigate("evento", { eventId });
-		}
-	};
+      <Pressable style={styles.button} onPress={menu}>
+        <View style={styles.bttbarra}></View>
+        <View style={styles.bttbarra}></View>
+        <View style={styles.bttbarra}></View>
+      </Pressable>
 
-	useEffect(() => {
-		axios.post('http://localhost:3003/profileUser', idUser )
-			.then((response)=> {
-				console.log(response.data.results[0])
-				setName(response.data.results[0].User_name)
-				setIdade(response.data.results[0].idade)
-				setDescricao(response.data.results[0].User_description)
-				setProfileImage(response.data.results[0].User_image)
+      <Modal
+        transparent={true}
+        visible={isMenuVisible}
+        onRequestClose={closeMenu}>
+        <TouchableWithoutFeedback onPress={closeMenu}>
+          <View style={styles.modalBackground}>
+            <Animatable.View
+              style={styles.menuContainer}
+              animation={isMenuVisible ? "slideInUp" : "slideInDown"}
+              duration={250}>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttDashboard}>
+                <Text style={styles.menubtttext}>Dashboard</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttEventProgress}>
+                <Text style={styles.menubtttext}>Eventos em andamentos</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttMyevent}>
+                <Text style={styles.menubtttext}>Meus Eventos</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttReport}>
+                <Text style={styles.menubtttext}>Report</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttTermos}>
+                <Text style={styles.menubtttext}>Termos</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttSair}>
+                <Text style={styles.menubtttext}>Sair</Text>
+              </Pressable>
+            </Animatable.View>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
 
-			})
-			.catch ((error) => {
-				console.error('Erro ao enviar ou retono de dados para o backend:', error);
-		})
-
-		axios.post('http://localhost:3003/followCount', idUser )
-			.then((response)=> {
-				setSeguidores(response.data.seguidores)
-				setSeguindo(response.data.seguindo)
-			})
-			.catch ((error) => {
-				console.error('Erro ao enviar ou retono de dados para o backend:', error);
-		})
-
-		
-		axios
-			.post('http://localhost:3003/viewEventUser', idUser)
-			.then((response) => {
-				setIdEvent(response.data.idEvent)
-				console.log(response.data.results[0].Nm_event);
-				setEventData(response.data.results);
-	
-			})
-			.catch((error) => {
-				console.error('Erro ao enviar ou retono de dados para o backend:', error);
-			});
-			console.log(id);
-
-	}, []);
-	console.log(name);
-	console.log(idade);
-	console.log(descricao);
-	console.log(eventData);
-
-
-	return (
-		<View style={styles.container}>
-
-			<Image
-				source={require("../assets/images/telap2.png")}
-				style={styles.backgroundImage}
-				resizeMode="cover"
-			/>
-			<View style={{ flexDirection: "row", justifyContent: "space-between", gap: 32, width: "100%" }}>
-				<Backbutton />
-
-				<Pressable style={styles.button} onPress={menu}>
-					<View style={styles.bttbarra} />
-					<View style={styles.bttbarra} />
-					<View style={styles.bttbarra} />
-				</Pressable>
-			</View>
-
-			<Modal
-				transparent={true}
-				visible={isMenuVisible}
-				onRequestClose={closeMenu}>
-				<TouchableWithoutFeedback onPress={closeMenu}>
-					<View style={styles.modalBackground}>
-						<Animatable.View
-							style={styles.menuContainer}
-							animation={isMenuVisible ? "slideInUp" : "slideInDown"}
-							duration={250}>
-							<Pressable
-								style={styles.menubtt}
-								onPress={bttDashboard}>
-								<Text style={styles.menubtttext}>Dashboard</Text>
-							</Pressable>
-							<Pressable
-								style={styles.menubtt}
-								onPress={bttEventProgress}>
-								<Text style={styles.menubtttext}>Eventos em andamentos</Text>
-							</Pressable>
-							<Pressable
-								style={styles.menubtt}
-								onPress={bttMyevent}>
-								<Text style={styles.menubtttext}>Meus Eventos</Text>
-							</Pressable>
-							<Pressable
-								style={styles.menubtt}
-								onPress={bttReport}>
-								<Text style={styles.menubtttext}>Report</Text>
-							</Pressable>
-							<Pressable
-								style={styles.menubtt}
-								onPress={() => console.log("Item 5 clicado")}>
-								<Text style={styles.menubtttext}>Termos</Text>
-							</Pressable>
-							<Pressable
-								style={styles.menubtt}
-								onPress={bttSair}>
-								<Text style={styles.menubtttext}>Sair</Text>
-							</Pressable>
-						</Animatable.View>
-					</View>
-				</TouchableWithoutFeedback>
-			</Modal>
-
-			<View style={{marginTop: 40, marginBottom: 40}}>
-				<View style={{ justifyContent: "space-between", gap: 20, flexDirection: "row" }}>
-					<View style={styles.innerCircle}>
-							<Image
-								source={`data:image/png;base64,${profileImage}`}
-								style={{ flex: 1, width: "100%", borderRadius: 105 }}
-							/>
-				
-					</View>
-					<View style={styles.titleContainer}>
-						<Text style={styles.title}>Seguidores</Text>
-						<Text style={styles.number}>{seguidores}</Text>
-					</View>
-					<View style={styles.titleContainer}>
-						<Text style={styles.title}>Seguindo</Text>
-						<Text style={styles.number}>{seguindo}</Text>
-					</View>
-				</View>
-
-				<View style={styles.editButtonContainer}>
-					<Pressable style={styles.editButton} onPress={handleButtonEdit}>
-						<Text style={styles.editButtonText}>Editar perfil</Text>
-					</Pressable>
-				</View>
-
-				{/* <View style={styles.line} /> */}
-			</View>
-
-
-			<View style={{marginTop: 40, marginBottom: 24, width: "100%", alignItems: "flex-start", gap: 8}}>
-				<View style={{flexDirection: "row", alignItems: "center", gap: 4}}>
-					<View>
-						<Text style={styles.titulo}>{name}</Text>
-					</View>
-
-					<View>
-						<Text style={styles.titulo1}>{idade} Anos</Text>
-					</View>
-				</View>
-
-				<View style={styles.allContainerOne}>
-					<View>
-						<Text style={styles.descricao}>{descricao}</Text>
-					</View>
-				</View>
-			</View>
-
-
-			<Text style={styles.comentariosTitulo}>Meus eventos</Text>
-			<ScrollView style={{width: "100%", gap: 16}}>
-
-				<View style={{width: "100%", gap: 8, marginBottom: 120}}>
-					{
-						eventData.map((event,index) => {
-							return (
-								<CardEvent descricaoEvento={event.desc_event} idUser={id} Event_image={event.Event_image} Nm_event={event.Nm_event} Id_App_Events={idEvent} key={index}/>
-							)
-						})
-					}
-				</View>
-			</ScrollView>
-
-			{/* <Pressable
-        style={styles.eventImagePlaceholder}
-        onPress={handleEventImageClick}>
-        <View style={styles.eventImagePlaceholderInner}>
-          {eventImage && (
-            <View style={{ width: "100%", height: 200 }}>
-              <Image
-                source={
-                  params?.userImage
-                    ? { uri: eventImage }
-                    : require("../assets/images/icons/people(f).png")
-                }
-                style={{ width: "100%", height: "100%", borderRadius: 8 }}
-              />
-            </View>
-          )}
+      <View style={styles.titlesContainer}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Seguidores</Text>
+          <Text style={styles.number}>0</Text>
         </View>
-      </Pressable> */}
-		<Image
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Seguindo</Text>
+          <Text style={styles.number}>0</Text>
+        </View>
+      </View>
+
+      <View style={styles.editButtonContainer}>
+        <Pressable style={styles.editButton} onPress={handleButtonEdit}>
+          <Text style={styles.editButtonText}>Editar perfil</Text>
+        </Pressable>
+      </View>
+
+      <View style={styles.allContainer}>
+        <View styles={styles.nameContainer}>
+          <Text style={styles.titulo}>{name}</Text>
+        </View>
+
+        <View styles={styles.nameContainer1}>
+          <Text style={styles.titulo1}>{idade} Anos</Text>
+        </View>
+      </View>
+
+      <View style={styles.allContainerOne}>
+        <View styles={styles.descContainer}>
+          <Text style={styles.descricao}>{descricao}</Text>
+        </View>
+      </View>
+
+      <Image
         source={require("../assets/images/icons/barra.png")}
         style={styles.comentariosTituloImage}
       />
@@ -298,113 +214,136 @@ export default function Telaprofile() {
 const windowHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#260038",
-		alignItems: "center",
-		padding: 16,
-	},
+  container: {
+    flex: 1,
+    backgroundColor: "#260038",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 16,
+  },
 
+  circle: {
+    width: "100%",
+    height: 450,
+    borderRadius: 220 / 2,
+    backgroundColor: "rgba(123, 85, 85, 0.40)",
+    position: "absolute",
+    top: windowHeight * 0.06 - 397 / 2,
+    justifyContent: "center",
+  },
 
-	innerCircle: {
+  innerCircle: {
+    position: "absolute",
+    width: 90,
+    height: 90,
+    borderRadius: 105,
+    backgroundColor: "#FFFFFF",
+    overflow: "hidden",
+    left: 45,
+    top: 100,
+  },
 
-		width: 90,
-		height: 90,
-		borderRadius: 105,
-		backgroundColor: "#FFFFFF",
-		overflow: "hidden",
-	},
+  textContainer: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+  },
 
-	textContainer: {
-		position: "absolute",
-		top: 0,
-		right: 0,
-	},
+  textContainer1: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+  },
 
-	textContainer1: {
-		position: "absolute",
-		top: 0,
-		left: 0,
-	},
+  text: {
+    color: "#FFFFFF",
+    fontSize: 14,
+  },
 
-	text: {
-		color: "#FFFFFF",
-		fontSize: 14,
-	},
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    top: 0,
+    left: 0,
+  },
 
-	backgroundImage: {
-		flex: 1,
-		width: "100%",
-		height: "100%",
-		position: "absolute",
-		top: 0,
-		left: 0,
-	},
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    position: "absolute",
+    top: windowHeight * 0.06,
+    left: 30,
+    zIndex: 1,
+  },
 
-	header: {
-		flexDirection: "row",
-		alignItems: "center",
-		position: "absolute",
-		top: windowHeight * 0.06,
-		left: 30,
-		zIndex: 1,
-	},
+  button: {
+    position: "absolute",
+    backgroundColor: "transparent",
+    width: 30,
+    height: 18,
+    right: 50,
+    top: 50,
+  },
 
-	button: {
-		backgroundColor: "transparent",
-		width: 30,
-	},
+  bttbarra: {
+    width: 31,
+    height: 4,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 2,
+    marginVertical: 3.5,
+  },
 
-	bttbarra: {
-		width: "100%",
-		height: 4,
-		backgroundColor: "#FFFFFF",
-		borderRadius: 2,
-		marginVertical: 3.5,
-	},
+  bottomImageContainer: {
+    position: "absolute",
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "52%",
+    backgroundColor: "transparent",
+  },
 
-	bottomImageContainer: {
-		position: "absolute",
-		bottom: 0,
-		justifyContent: "center",
-		alignItems: "center",
-		width: "100%",
-		height: "52%",
-		backgroundColor: "transparent",
-	},
+  bottomImage: {
+    width: Platform.OS === "web" ? "100%" : "108%",
+    height: "100%",
+  },
 
-	bottomImage: {
-		width: Platform.OS === "web" ? "100%" : "108%",
-		height: "100%",
-	},
+  modalContainer: {
+    left: 12,
+  },
 
-	modalContainer: {
-		left: 12,
-	},
+  modalBackground: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "flex-end",
+  },
 
-	modalBackground: {
-		flex: 1,
-		backgroundColor: "rgba(0, 0, 0, 0.5)",
-		justifyContent: "flex-end",
-	},
+  menuContainer: {
+    backgroundColor: "#470F62",
+    padding: 16,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
 
-	menuContainer: {
-		backgroundColor: "#470F62",
-		padding: 16,
-		borderTopLeftRadius: 15,
-		borderTopRightRadius: 15,
-	},
+  menubtt: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 10,
+  },
 
-	menubtt: {
-		alignItems: "center",
-		justifyContent: "center",
-		paddingVertical: 10,
-	},
+  menubtttext: {
+    color: "#FFFFFF",
+    fontSize: 18,
+  },
 
-	menubtttext: {
-		color: "#FFFFFF",
-		fontSize: 18,
-	},
+  editButtonContainer: {
+    position: "absolute",
+    top: 225,
+    alignItems: "center",
+    marginTop: 10,
+  },
 
   editButton: {
     backgroundColor: "#5E0389",
@@ -420,12 +359,17 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
 
-	editButtonText: {
-		color: "white",
-		fontSize: 16,
-		fontWeight: "inter",
-	},
+  nameContainer: {
+    position: "absolute",
+  },
 
+  titulo: {
+    right: 135,
+    bottom: 55,
+    color: "white",
+    fontSize: 18,
+    fontWeight: "inter",
+  },
 
   titulo1: {
     right: 130,
@@ -435,22 +379,38 @@ const styles = StyleSheet.create({
     fontWeight: "inter",
   },
 
+  descContainer: {},
 
-	titulo1: {
-		color: "#919191",
-		fontSize: 14,
-		fontWeight: "inter",
-	},
+  descricao: {
+    top: -10,
+    color: "#919191",
+    fontSize: 14,
+    fontWeight: "inter",
+    maxWidth: 300,
+  },
 
+  allContainer: {
+    position: "absolute",
+    left: 152,
+    flexDirection: "row",
+    top: 440,
+  },
 
-	descricao: {
-		top: -10,
-		color: "#919191",
-		fontSize: 14,
-		fontWeight: "inter",
-		maxWidth: 300,
-	},
+  allContainerOne: {
+    position: "absolute",
+    left: 20,
+    flexDirection: "row",
+    top: 420,
+  },
 
+  line: {
+    left: 0,
+    right: 0,
+    bottom: 350,
+    height: 2,
+    backgroundColor: "white",
+    opacity: 0.6,
+  },
 
   comentariosTitulo: {
     top: 470,
@@ -469,25 +429,16 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 
-	comentariosTitulo: {
-		color: "white",
-		fontSize: 18,
-		fontWeight: "800",
-		textAlign: "left",
-		alignItems: "flex-start",
-		marginBottom: 24,
-		width: "100%"
-	},
+  titleContainer: {
+    alignItems: "center",
+    marginHorizontal: 15,
+  },
 
-	eventImagePlaceholder: {
-		position: "absolute",
-		width: 150,
-		height: 100,
-		bottom: 175,
-		left: 12,
-		borderRadius: 8,
-		marginBottom: 16,
-	},
+  title: {
+    color: "white",
+    fontSize: 14,
+    opacity: 0.5,
+  },
 
   number: {
     color: "#919191",

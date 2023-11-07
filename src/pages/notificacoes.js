@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useRoute } from "@react-navigation/native";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -16,7 +15,6 @@ import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
 import Navbar from "../components/navbar";
 import Backbutton from "../components/backbutton";
-import axios from "axios";
 
 export default function Notificações() {
   const navigation = useNavigation();
@@ -53,25 +51,6 @@ export default function Notificações() {
   const bttDashboard = () => {
     navigation.navigate('dashboard');
   };
-  const route = useRoute();
-  const { id } = route.params;
-  const { imgProfile } = route.params;
- 
-  console.log(id);
-  //console.log(imgProfile);
-
-
-  useEffect(() => {
-    axios
-      .post('http://localhost:3003/viewNotificacao', id)
-      .then((response) => {
-        console.log(response)
-      })
-      .catch((error) => {
-        console.error('Erro ao enviar ou retono de dados para o backend:', error);
-      });
-  }, []);
-  
 
   const bttTermos = () => {
     navigation.navigate('acesstermos');
@@ -141,7 +120,7 @@ export default function Notificações() {
           </View>
         </TouchableWithoutFeedback>
       </Modal>
-      <Navbar id={id} imgProfile= {imgProfile}/>
+      <Navbar/>
     </View>
   );
 }
