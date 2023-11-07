@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import * as Animatable from "react-native-animatable";
 import {
   StyleSheet,
   View,
@@ -16,7 +17,9 @@ import {
 import axios from "axios";
 import { ScrollView } from "react-native-gesture-handler";
 import Backbutton from "../components/backbutton";
-import * as Animatable from "react-native-animatable";
+import { useRoute } from '@react-navigation/native';
+import Navbar from "../components/navbar";
+
 
 export default function Eventoedit2({ navigation }) {
   const [backgroundImage, setBackgroundImage] = useState(null);
@@ -31,7 +34,6 @@ export default function Eventoedit2({ navigation }) {
   const [typeEvent, setTypeEvent] = useState("");
   const [modalityEvent, setModality] = useState("");
   const [classificationEvent, setClassication] = useState("");
-  const [moreInfo, setMoreInfo] = useState("");
 
   const [statusEvent, setStatusEvent] = useState("");
   const [tituloWidth, setTituloWidth] = useState(0);
@@ -67,91 +69,130 @@ export default function Eventoedit2({ navigation }) {
   const [modalityNovo, setModalityNovo] = useState("");
   const [classificationNovo, setClassificationNovo] = useState("");
 
-  useEffect(() => {
-    Animated.timing(animatedValue, {
-      toValue: tituloWidth,
-      duration: 500,
-      easing: Easing.linear,
-      useNativeDriver: false,
-    }).start();
-  }, [tituloWidth]);
+	// const route = useRoute();
+  // 	const { id } = route.params;
+  //   const { imgProfile } = route.params;
+  //   const { idEvento } = route.params;
+    
+  //   console.log(typeEvent);
+  //   console.log(modalityEvent);
+  //   console.log(classificationEvent);
+  //   // console.log(tpEvent);
+  //   // console.log(tpModality);
+  //   // console.log(cep);
+  //   // console.log(complemento);
+  //   // console.log(instagram);
+  //   // console.log(moreInfo);
+  //   // console.log(bairro);
+  //   // console.log(cidade);
+  //   // console.log(estado);
+  //   // console.log(rua);
+  //   // console.log(numeroRes);
+
+  // useEffect(() => {
+  //   Animated.timing(animatedValue, {
+  //     toValue: tituloWidth,
+  //     duration: 500,
+  //     easing: Easing.linear,
+  //     useNativeDriver: false,
+  //   }).start();
+  // }, [tituloWidth]);
 
   const imagemTituloLeft = animatedValue.interpolate({
     inputRange: [0, tituloWidth],
-    outputRange: [0, tituloWidth + 15],
+    outputRange: [0, tituloWidth + 15], // Ajuste conforme necessário
   });
 
-  const id = {
-    eventId_code: 1,
-  };
-  useEffect(() => {
-    axios
-      .post("http://localhost:3003/viewEvent", id)
-      .then((response) => {
-        console.log(response.data[0]);
-        //nome
-        setTitulo(response.data[0].Nm_event);
+	// const idEvent = {
+	// 	eventId_code: idEvento
+	// }
+	// useEffect(() => {
+  //   const idEvent ={
+  //     eventId_code: idEvento
+  //   }
+  //   axios
+  //     .post('http://localhost:3003/viewEvent',idEvent)
+  //     .then((response) => {
+  //       console.log(response);
+  //       console.log(response.data[0]);
+  //       //nome
+  //       setTitulo(response.data[0].Nm_event);
 
-        //descrição
-        setDescricao(response.data[0].desc_event);
+  //       // //descrição
+  //       setDescricao(response.data[0].desc_event);
 
-        //data início
-        const dataB = new Date(response.data[0].Dt_begin);
-        const anoB = dataB.getFullYear();
-        const mesB = String(dataB.getMonth() + 1).padStart(2, "0");
-        const diaB = String(dataB.getDate()).padStart(2, "0");
-        const horaB = String(dataB.getHours()).padStart(2, "0");
-        const minutoB = String(dataB.getMinutes()).padStart(2, "0");
 
-        const dtFormatB = diaB + "-" + mesB + "-" + anoB;
-        const hrFormatB = horaB + ":" + minutoB;
+  //       const dataB = new Date(response.data[0].Dt_begin);
+  //       const anoB = dataB.getFullYear();
+  //       const mesB = String(dataB.getMonth() + 1).padStart(2, "0");
+  //       const diaB = String(dataB.getDate()).padStart(2, "0");
+  //       const horaB = String(dataB.getHours()).padStart(2, "0");
+  //       const minutoB = String(dataB.getMinutes()).padStart(2, "0");
 
-        setDataInicio(dtFormatB);
-        setHoraInicio(hrFormatB);
+  //       const dtFormatB = diaB + "-" + mesB + "-" + anoB;
+  //       const hrFormatB = horaB + ":" + minutoB;
 
-        //data fim
-        const dataE = new Date(response.data[0].Dt_end);
-        const anoE = String(dataE.getFullYear()).padStart(2, "0");
-        const mesE = String(dataE.getMonth() + 1).padStart(2, "0");
-        const diaE = String(dataE.getDate()).padStart(2, "0");
-        const horaE = String(dataE.getHours()).padStart(2, "0");
-        const minutoE = String(dataE.getMinutes()).padStart(2, "0");
+  //       setDataInicio(dtFormatB);
+  //       setHoraInicio(hrFormatB);
 
-        const dtFormatE = diaE + "-" + mesE + "-" + anoE;
-        const hrFormatE = horaE + ":" + minutoE;
+  //       //data fim
+  //       const dataE = new Date(response.data[0].Dt_end);
+  //       const anoE = String(dataE.getFullYear()).padStart(2, "0");
+  //       const mesE = String(dataE.getMonth() + 1).padStart(2, "0");
+  //       const diaE = String(dataE.getDate()).padStart(2, "0");
+  //       const horaE = String(dataE.getHours()).padStart(2, "0");
+  //       const minutoE = String(dataE.getMinutes()).padStart(2, "0");
 
-        setDataFim(dtFormatE);
-        setHoraFim(hrFormatE);
+  //       const dtFormatE = diaE + "-" + mesE + "-" + anoE;
+  //       const hrFormatE = horaE + ":" + minutoE;
 
-        //site
-        setSiteInfo(response.data[0].Site_contact);
+  //       setDataFim(dtFormatE);
+  //       setHoraFim(hrFormatE);
 
-        //tag
-        setTags(response.data[0].Tag_event);
+  //       //site
+  //       setSiteInfo(response.data[0].Site_contact);
 
-        //navigation.navigate('telaprincipal',{id: id});
-      })
-      .catch((error) => {
-        console.error("Erro ao enviar os dados para o backend:", error);
-      });
-  }, []);
 
-  const updateEvent = {
-    up_name_event_code: titulo,
-    up_desc_event_code: descricao,
-    up_Dt_begin_code: dataInicio,
-    up_Hr_begin_code: horaInicio,
-    up_Dt_end_code: dataFim,
-    up_Hr_end_code: horaFim,
-    up_Site_contact_code: siteInfo,
-    tag_event_code: tags,
-    up_Id_App_Events: id.eventId_code,
-    tp_Event_code: typeEvent,
-    up_Status_event_code: statusEvent,
-    up_Informative_Classification_code: classificationEvent,
-    up_Tp_Modality_code: modalityEvent,
-  };
-  console.log(updateEvent);
+  //       setTypeEvent(response.data[0].Tp_Event)
+  //       setClassication(response.data[0].Event_classification)
+  //       setModality(response.data[0].Tp_Modality)
+
+  //       setTelefone(response.data[0].Telefone_event)
+  //       setIntagram(response.data[0].instagram_user)
+  //       setMoreInfo(response.data[0].more_info)
+  //       setCep(response.data[0].cd_cep)
+  //       setComplemento(response.data[0].complemento)
+  //       setBairro(response.data[0].nm_bairro)
+  //       setCidade(response.data[0].nm_cidade)
+  //       setEstado(response.data[0].nm_estado)
+  //       setRua(response.data[0].nm_rua)
+  //       setNumeroRes(response.data[0].num_residencia)
+
+  //       //tag
+  //       // setTags(response.data[0].Tag_event);
+
+  //     })
+  //     .catch((error) => {
+  //       console.error("Erro ao enviar os dados para o backend:", error);
+  //     });
+  // }, []);
+
+  // const updateEvent = {
+  //   up_name_event_code: titulo,
+  //   up_desc_event_code: descricao,
+  //   up_Dt_begin_code: dataInicio,
+  //   up_Hr_begin_code: horaInicio,
+  //   up_Dt_end_code: dataFim,
+  //   up_Hr_end_code: horaFim,
+  //   up_Site_contact_code: siteInfo,
+  //   tag_event_code: tags,
+  //   up_Id_App_Events: id.eventId_code,
+  //   tp_Event_code: typeEvent,
+  //   up_Status_event_code: statusEvent,
+  //   up_Informative_Classification_code: classificationEvent,
+  //   up_Tp_Modality_code: modalityEvent,
+  // };
+  // console.log(updateEvent);
 
   const [editDescription, setEditDescription] = useState(false);
   const [editTitle, setEditTitle] = useState(false);
@@ -256,6 +297,14 @@ export default function Eventoedit2({ navigation }) {
     setEditStatus(false);
   };
 
+  const  handleButtonEdit = () => {
+    navigation.goBack();
+  };
+
+  const  handleButtonDelete = () => {
+    console.log("testepressionado")
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -298,7 +347,8 @@ export default function Eventoedit2({ navigation }) {
               <Pressable
                 onPress={() => {
                   setEditData(!editData);
-                }}>
+                }}
+                  >
                 <Image
                   source={require("../assets/images/icons/pencil(g).png")}
                   style={styles.imagemTitulo}
@@ -317,7 +367,7 @@ export default function Eventoedit2({ navigation }) {
                   <Text style={styles.dataTexto}>-</Text>
                   <TextInput
                     style={styles.dataTexto}
-                    onChangeText={(e) => setDataFim(e)}
+                    onChangeText={(e) => {setDataFim(e)}}
                     value={dataFim}
                   />
                 </View>
@@ -493,6 +543,10 @@ export default function Eventoedit2({ navigation }) {
           <View style={styles.line2} />
 
           <View style={styles.square}>
+              <Image
+              source={`data:image/png;base64,${imgProfile}`}
+              style={styles.square}
+            />
             <View style={styles.flexRow}>
               {editTitle ? (
                 <TextInput
@@ -524,6 +578,20 @@ export default function Eventoedit2({ navigation }) {
               </Pressable>
             </View>
           </View>
+          <View style={styles.editButtonContainer}>
+          <Pressable onPress={handleButtonDelete}>
+            <Image
+              source={require('../assets/images/icons/bttdescarte.png')} 
+              style={styles.editButtonImage}
+            />
+          </Pressable>
+          <Pressable onPress={handleButtonEdit}>
+            <Image
+              source={require('../assets/images/icons/bttaplicar.png')}
+              style={styles.editButtonImage1}
+            />
+          </Pressable>
+        </View>
         </ScrollView>
         <Modal
           style={styles.modalContainer}
@@ -643,7 +711,6 @@ export default function Eventoedit2({ navigation }) {
             </Animatable.View>
           </Pressable>
         </Modal>
-
         <Modal
           style={styles.modalContainer}
           transparent={true}
@@ -671,7 +738,7 @@ export default function Eventoedit2({ navigation }) {
               </Pressable>
             </Animatable.View>
           </Pressable>
-        </Modal>
+        </Modal>  
       </ImageBackground>
     </View>
   );
@@ -978,9 +1045,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     right: 0,
-    bottom: -890,
+    bottom: -790,
     height: 2,
-    backgroundColor: "white",
     opacity: 0.6,
   },
 
@@ -1112,5 +1178,41 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 18,
     opacity: 0.7,
+  },
+
+  editButtonContainer: {
+    flexDirection: 'row',
+    top: 725,
+    alignItems: "center",
+    marginTop: 10,
+    marginHorizontal: 12,
+    
+  },
+
+  editButton: {
+    backgroundColor: "#7E3CA7",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginHorizontal: 20,
+  },
+
+  editButtonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "inter",
+  },
+
+  editButtonImage: {
+    width: 170,
+    height: 50,
+    resizeMode: 'contain',
+    marginRight: 14,
+  },
+
+  editButtonImage1: {
+    width: 170,
+    height: 50,
+    resizeMode: 'contain',
   },
 });

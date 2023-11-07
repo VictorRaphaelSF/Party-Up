@@ -20,13 +20,16 @@ import axios from "axios";
 export default function Myeventsbar() {
     const navigation = useNavigation();
     const [eventImage, setEventImage] = useState(null);
-  const [eventId, setEventId] = useState(null);
+    const [eventId, setEventId] = useState(null);
 
     const handleEventImageClick = () => {
-      if (eventId) {
-       navigation.navigate("evento", { eventId });
-      }
+        navigation.navigate("eventoedit", { idEvento: Id_App_Events, id : idUser, imgProfile: Event_image });
    };
+
+   const Myeventbar = ({descricaoEvento, idUser, Nm_event, Event_image, Id_App_Events}) => {
+    const navigation = useNavigation()
+    console.log(Id_App_Events);
+   }
 
 return (
     <ScrollView
@@ -42,12 +45,8 @@ return (
         {eventImage && (
           <View style={{ width: "100%", height: 200 }}>
             <Image
-              source={
-                params?.userImage
-                  ? { uri: eventImage }
-                  : require("../assets/images/Eventos(Temporarios)/Evento(1).png")
-              }
-              style={{ width: "100%", height: "100%", borderRadius: 8 }}
+                source={`data:image/png;base64,${Event_image}`}
+                style={styles.userImage}
             />
           </View>
         )}

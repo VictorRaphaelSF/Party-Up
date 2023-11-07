@@ -95,7 +95,7 @@ export default function Acesstermos() {
           </Text>
           <View style={styles.acceptButton}>
             <Pressable onPress={acceptTerms}>
-              <Text style={styles.acceptButtonText}>Aceitar Termos</Text>
+              <Text style={styles.acceptButtonText}>Compreendido</Text>
             </Pressable>
           </View>
         </ScrollView>

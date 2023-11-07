@@ -207,9 +207,7 @@ export default function Otherprofile() {
       />
       
       <Myeventsbar/>
-      
-      <Navbar/>
-
+      <Navbar id={id} imgProfile= {profileImage}/>
     </View>
   );
 }

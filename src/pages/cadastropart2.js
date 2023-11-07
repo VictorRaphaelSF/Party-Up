@@ -10,7 +10,7 @@ import {
   TextInput,
   ImageBackground,
 } from "react-native";
-
+import { useRoute } from "@react-navigation/native";
 import * as Animatable from "react-native-animatable";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";

@@ -20,6 +20,7 @@ import Comentbar from "../components/comentbar";
 
 export default function Evento({ navigation }) {
   const [backgroundImage, setBackgroundImage] = useState(null);
+  const [eventoImagem, setEventoImagem] = useState("");
   const [titulo, setTitulo] = useState("");
   const [descricao, setDescricao] = useState("");
   const [dataInicio, setDataInicio] = useState("");
@@ -29,12 +30,18 @@ export default function Evento({ navigation }) {
   const [siteInfo, setSiteInfo] = useState("");
   const [tags, setTags] = useState("");
 
+  const route = useRoute();
+  const { id } = route.params;
+  const { idEvento } = route.params;
+  const { imgProfile } = route.params;
+  console.log(id);
+
   useEffect(() => {
-    const id = {
-      eventId_code: 1,
-    };
+    const idEvent ={
+      eventId_code: idEvento
+    }
     axios
-      .post("http://localhost:3003/viewEvent", id)
+      .post('http://localhost:3003/viewEvent',idEvent)
       .then((response) => {
         console.log(response.data[0]);
         //nome
@@ -137,18 +144,18 @@ export default function Evento({ navigation }) {
             </Text>
           </View>
 
-          <View style={styles.line3} />
-
           <View style={styles.line2} />
 
-          
-
           <View style={styles.square}>
+              <Image
+              source={`data:image/png;base64,${imgProfile}`}
+              style={styles.square}
+            />
             <Text style={styles.titulo}>{titulo}</Text>
           </View>
         </ScrollView>
       </ImageBackground>
-      <Navbar/>
+      <Navbar id={id} imgProfile= {imgProfile}/>
     </View>
   );
 }
@@ -310,7 +317,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     right: 0,
-    bottom: -890,
+    bottom: -630,
     height: 2,
     backgroundColor: "white",
     opacity: 0.6,
