@@ -42,7 +42,7 @@ export default function Termos() {
 
   const acceptTerms = () => {
     axios
-      .post("http://localhost:3003/cadUser", userData)
+      .post('http://localhost:3003/cadUser', userData)
       .then((response) => {
         console.log(response);
         setTermsAccepted(true); // Marcando os termos como aceitos
@@ -51,7 +51,7 @@ export default function Termos() {
         });
       })
       .catch((error) => {
-        console.error("Erro ao enviar os dados para o backend:", error);
+        console.error('Erro ao enviar os dados para o backend:', error);
       });
   };
 

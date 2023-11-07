@@ -1,14 +1,5 @@
-import React, { useState, useRef } from "react";
-import {
-  StyleSheet,
-  View,
-  Image,
-  Pressable,
-  Text,
-  TextInput,
-  Platform,
-  Dimensions,
-} from "react-native";
+import React, { useState, useRef } from 'react';
+import { StyleSheet, View, Image, Pressable, Text, TextInput, Platform, Dimensions } from 'react-native';
 
 import * as Animatable from "react-native-animatable";
 import axios from "axios";
@@ -26,80 +17,82 @@ export default function Login({ navigation }) {
     require("../assets/images/icons/eye.png")
   );
 
-  const Entrar = async () => {
-    if (!email || !senha) {
-      setEmptyFieldError("Preencha todos os campos.");
-      setTimeout(() => {
-        setEmptyFieldError("");
-      }, 4000);
-      setErro("");
+	const Entrar = async () => {
 
-      if (errorRef.current) {
-        errorRef.current.shake(800);
-      }
-    } else {
-      //try {
-      const dataLogin = {
-        emailUser: email,
-        senhaUser: senha,
-      };
-      console.log(dataLogin.emailUser, dataLogin.senhaUser);
+		if (!email || !senha) {
+			setEmptyFieldError('Preencha todos os campos.');
+			setTimeout(() => {
+				setEmptyFieldError('');
+			}, 4000);
+			setErro('');
 
-      axios
-        .post("http://localhost:3003/loginUser", dataLogin)
-        .then((response) => {
-          // Lidar com a resposta do servidor, se necessário
-          if (response.data.validateLogin) {
-            console.log(response);
-            navigation.navigate("telaprincipal", {
-              id: response.data.results[0].Id_user,
-            });
-          } else {
-            console.log("Email ou senha inválido!");
-          }
-          console.log(response);
-        })
-        .catch((error) => {
-          // Lidar com erros, se houver algum
-          setMsgError({
-            msg: error.response.data.msg,
-            status: true,
-          });
-          console.error("Erro ao enviar os dados para o backend:", error);
-        });
+			if (errorRef.current) {
+				errorRef.current.shake(800);
+			}
+		} else {
+			//try {
+			const dataLogin = {
+				emailUser: email,
+				senhaUser: senha
+			};
+			console.log(dataLogin.emailUser, dataLogin.senhaUser)
 
-      //   if (response.status === 200 && response.data.validateLogin) {
-      //     console.log(response.data.message);
-      //     navigation.navigate('telaprincipal');
-      //   } else {
-      //     setEmptyFieldError('');
-      //     setErro('Email ou senha incorretos, tente novamente.');
-      //     setSenha('');
-      //     if (errorRef.current) {
-      //       errorRef.current.shake(800);
-      //     }
-      //     setTimeout(() => {
-      //       setErro('');
-      //     }, 4000);
-      //   }
-      // } catch (error) {
-      //   console.error('Erro ao enviar os dados para o backend:', error);
-      //   setEmptyFieldError('');
-      //   setErro('Erro ao enviar os dados para o backend:');
-      //   setSenha('');
-      //   if (errorRef.current) {
-      //     errorRef.current.shake(800);
-      //   }
-      //   setTimeout(() => {
-      //     setErro('');
-      //   }, 4000);
-      //}
-    }
-  };
+			axios.post('http://localhost:3003/loginUser', dataLogin)
+				.then(response => {
+					// Lidar com a resposta do servidor, se necessário
+					if (response.data.validateLogin) {
+						navigation.navigate('telaprincipal',{id: response.data.id, userImage: response.data.userImage});
+					}
+					else {
+						console.log('Email ou senha inválido!')
+					}
+					console.log(response);
+				})
+				.catch(error => {
+					// Lidar com erros, se houver algum
+					setMsgError({
+						msg: error.response.data.msg,
+						status: true
+					})
+					console.error('Erro ao enviar os dados para o backend:', error);
+				});
 
-  const bttnvconta = () => {
-    navigation.navigate("cadastro");
-  };
+							//   if (response.status === 200 && response.data.validateLogin) {
+			//     console.log(response.data.message);
+			//     navigation.navigate('telaprincipal');
+			//   } else {
+			//     setEmptyFieldError('');
+			//     setErro('Email ou senha incorretos, tente novamente.');
+			//     setSenha('');
+			//     if (errorRef.current) {
+			//       errorRef.current.shake(800);
+			//     }
+			//     setTimeout(() => {
+			//       setErro('');
+			//     }, 4000);
+			//   }
+			// } catch (error) {
+			//   console.error('Erro ao enviar os dados para o backend:', error);
+			//   setEmptyFieldError('');
+			//   setErro('Erro ao enviar os dados para o backend:');
+			//   setSenha('');
+			//   if (errorRef.current) {
+			//     errorRef.current.shake(800);
+			//   }
+			//   setTimeout(() => {
+			//     setErro('');
+			//   }, 4000);
+			//}
+		}
+	};
+
+	const backbutton = () => {
+		navigation.goBack();
+	};
+
+	const bttnvconta = () => {
+		navigation.navigate('cadastro');
+	};
 
   return (
     <View style={styles.container}>
