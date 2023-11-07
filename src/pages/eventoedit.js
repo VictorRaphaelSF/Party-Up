@@ -40,7 +40,7 @@ export default function Eventoedit({ navigation }) {
   const [estado, setEstado] = useState("");
   const [rua, setRua] = useState("");
   const [numeroRes, setNumeroRes] = useState("");
-  
+
   console.log(telefone);
   console.log(tpEvent);
   console.log(tpModality);
@@ -53,7 +53,7 @@ export default function Eventoedit({ navigation }) {
   console.log(estado);
   console.log(rua);
   console.log(numeroRes);
-  
+
   const [tags, setTags] = useState("");
 
 
@@ -64,11 +64,11 @@ export default function Eventoedit({ navigation }) {
 
   console.log(idEvento);
   useEffect(() => {
-    const idEvent ={
+    const idEvent = {
       eventId_code: idEvento
     }
     axios
-      .post('http://localhost:3003/viewEvent',idEvent)
+      .post('http://localhost:3003/viewEvent', idEvent)
       .then((response) => {
         console.log(response);
         console.log(response.data[0]);
@@ -132,29 +132,40 @@ export default function Eventoedit({ navigation }) {
       });
   }, []);
 
-  
+
 
   const handleButtonDelete = () => {
-    
+    const idDeEvento = {
+      idEvent: idEvento
+    }
+    axios
+      .post('http://localhost:3003/deleteEvent', idDeEvento)
+      .then((response) => {
+        console.log(response);
+        navigation.navigate('evento', { id: id });
+      })
+      .catch((error) => {
+        console.error('Erro ao enviar os dados para o backend:', error);
+      });
   }
   const handleButtonEdit = () => {
-    navigation.navigate('eventoedit2',{id: id, imgProfile: imgProfile, idEvento: idEvento})
+    navigation.navigate('eventoedit2', { id: id, imgProfile: imgProfile, idEvento: idEvento })
   }
 
   const handleButtonHome = () => {
-    navigation.navigate('telaprincipal',{id: id, imgProfile: imgProfile})
+    navigation.navigate('telaprincipal', { id: id, imgProfile: imgProfile })
   };
 
   const handleButtonSearch = () => {
-    navigation.navigate('search',{id: id, imgProfile: imgProfile});
+    navigation.navigate('search', { id: id, imgProfile: imgProfile });
   };
 
   const handleButtonCenter = () => {
-    navigation.navigate('cadevento', {id : id, imgProfile: imgProfile});
+    navigation.navigate('cadevento', { id: id, imgProfile: imgProfile });
   };
 
   const handleButtonNotification = () => {
-    navigation.navigate('notificação',{id: id, imgProfile: imgProfile});
+    navigation.navigate('notificação', { id: id, imgProfile: imgProfile });
   };
 
   const handleButtonPeople = () => {
@@ -178,7 +189,7 @@ export default function Eventoedit({ navigation }) {
           <View style={styles.dataContainer}>
             <Text style={styles.dataTitulo}>Data e horarios</Text>
             <Text style={styles.dataTexto}>
-               {dataInicio} Entre {dataFim}
+              {dataInicio} Entre {dataFim}
             </Text>
             <Text style={styles.dataTexto2}>
               {horaInicio} - {horaFim}
@@ -213,8 +224,12 @@ export default function Eventoedit({ navigation }) {
           <View style={styles.line3} />
 
           <View style={styles.line2} />
-          <Backbutton/>
+          <Backbutton />
           <View style={styles.square}>
+            <Image
+              source={`data:image/png;base64,${imgProfile}`}
+              style={styles.square}
+            />
             <Text style={styles.titulo}>{titulo}</Text>
           </View>
 
@@ -228,7 +243,7 @@ export default function Eventoedit({ navigation }) {
           </View>
         </ScrollView>
       </ImageBackground>
-      <Navbar id={id} imgProfile= {imgProfile}/>
+      <Navbar id={id} imgProfile={imgProfile} />
     </View>
   );
 }
@@ -523,7 +538,7 @@ const styles = StyleSheet.create({
     top: 115,
     alignItems: "center",
     marginTop: 10,
-    marginHorizontal:  50,
+    marginHorizontal: 50,
   },
 
   editButton: {

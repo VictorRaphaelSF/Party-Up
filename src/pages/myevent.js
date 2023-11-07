@@ -80,11 +80,11 @@ export default function Myevent() {
         />
       </View>
       <ScrollView style={{width: "100%", gap: 16}}>
-				<View style={{width: "100%", gap: 8, marginBottom: 120}}>
+				<View style={{width: "100%", gap: 8, top: 100}}>
 					{
 						eventData.map((event,index) => {
 							return (
-								<CardEvent idUser={id} Event_image={event.Event_image} Nm_event={event.Nm_event} Id_App_Events={idEvent} key={index}/>
+								<CardEvent descricaoEvento={event.desc_event} idUser={id} Event_image={event.Event_image} Nm_event={event.Nm_event} Id_App_Events={idEvent} key={index}/>
 							)
 						})
 					}

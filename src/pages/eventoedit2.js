@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import * as Animatable from "react-native-animatable";
 import {
   StyleSheet,
   View,
@@ -44,31 +45,21 @@ export default function Eventoedit2({ navigation }) {
     const { idEvento } = route.params;
     
     
-    const [telefone, setTelefone] = useState("");
-    const [tpEvent, setTpEvent] = useState("");
-    const [tpModality, setTpModality] = useState("");
-    const [cep, setCep] = useState("");
-    const [complemento, setComplemento] = useState("");
-    const [instagram, setIntagram] = useState("");
-    const [moreInfo, setMoreInfo] = useState("");
-    const [bairro, setBairro] = useState("");
-    const [cidade, setCidade] = useState("");
-    const [estado, setEstado] = useState("");
-    const [rua, setRua] = useState("");
-    const [numeroRes, setNumeroRes] = useState("");
     
-    console.log(telefone);
-    console.log(tpEvent);
-    console.log(tpModality);
-    console.log(cep);
-    console.log(complemento);
-    console.log(instagram);
-    console.log(moreInfo);
-    console.log(bairro);
-    console.log(cidade);
-    console.log(estado);
-    console.log(rua);
-    console.log(numeroRes);
+    console.log(typeEvent);
+    console.log(modalityEvent);
+    console.log(classificationEvent);
+    // console.log(tpEvent);
+    // console.log(tpModality);
+    // console.log(cep);
+    // console.log(complemento);
+    // console.log(instagram);
+    // console.log(moreInfo);
+    // console.log(bairro);
+    // console.log(cidade);
+    // console.log(estado);
+    // console.log(rua);
+    // console.log(numeroRes);
 
   useEffect(() => {
     Animated.timing(animatedValue, {
@@ -134,13 +125,15 @@ export default function Eventoedit2({ navigation }) {
         setSiteInfo(response.data[0].Site_contact);
 
 
+        setTypeEvent(response.data[0].Tp_Event)
+        setClassication(response.data[0].Event_classification)
+        setModality(response.data[0].Tp_Modality)
+
         setTelefone(response.data[0].Telefone_event)
-        setTpEvent(response.data[0].Tp_Event)
-        setTpModality(response.data[0].Tp_Modality)
-        setCep(response.data[0].cd_cep)
-        setComplemento(response.data[0].complemento)
         setIntagram(response.data[0].instagram_user)
         setMoreInfo(response.data[0].more_info)
+        setCep(response.data[0].cd_cep)
+        setComplemento(response.data[0].complemento)
         setBairro(response.data[0].nm_bairro)
         setCidade(response.data[0].nm_cidade)
         setEstado(response.data[0].nm_estado)
@@ -166,15 +159,14 @@ export default function Eventoedit2({ navigation }) {
     up_Site_contact_code: siteInfo,//
     tag_event_code: tags,// !!!!!
     //up_Informative_Classification_code
-    //up_Event_classification_code :
+    up_Event_classification_code : classificationEvent,
+    up_Tp_Event_code : typeEvent,
+    up_Tp_Modality_code : modalityEvent,
+    
     //up_Telefone_event_code :
-    //up_Tp_Event_code :
-    //up_Tp_Modality_code :
-    up_cd_cep_code : 11325010,
-    //up_complemento_code :
-    //up_desc_event_code :
     //up_instagram_user_code :
     //up_more_info_code :
+    up_cd_cep_code : 11325010,
     up_nm_estado_code : "sc", // não pode ser nula
     up_nm_cidade_code : "londrina", // não pode ser nula
     up_nm_bairro_code : "bairro zika", // não pode ser nula
@@ -205,6 +197,19 @@ export default function Eventoedit2({ navigation }) {
   const [editStatus, setEditStatus] = useState(false);
   const [editClassification, setEditClassification] = useState(false);
   const [editModality, setEditModality] = useState(false);
+
+  const [isMenuVisible, setMenuVisible] = useState(false);
+  const [isTypeMenuVisible, setTypeMenuVisible] = useState(false);
+  const [isStatusMenuVisible, setStatusMenuVisible] = useState(false);
+  const [isAccessTypeMenuVisible, setAccessTypeMenuVisible] = useState(false);
+  const [isClassificationTypeMenuVisible, setClassificationTypeMenuVisible] = useState(false);
+  const [selectedTags, setSelectedTags] = useState([]);
+
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedStatusType, setSelectedStatusType] = useState(null);
+  const [selectedEventType, setSelectedEventType] = useState(null);
+  const [selectedAccessType, setSelectedAccessType] = useState(null);
+  const [selectedClassificationType, setSelectedClassificationType] = useState(null);
 
   const selectOption = (option) => {
     setSelectedOption(option);
@@ -391,7 +396,6 @@ export default function Eventoedit2({ navigation }) {
                     value={horaFim}
                   />
 
-                  <Text style={styles.dataTexto2}>- Entrada Padrão</Text>
                 </View>
               </View>
             ) : (
@@ -547,6 +551,11 @@ export default function Eventoedit2({ navigation }) {
           <View style={styles.line2} />
 
           <View style={styles.square}>
+            <Image
+              source={`data:image/png;base64,${imgProfile}`}
+              style={styles.square}
+            />
+          
             <View style={styles.flexRow}>
               {editTitle ? (
                 <TextInput
@@ -661,12 +670,12 @@ export default function Eventoedit2({ navigation }) {
               <Pressable
                 style={styles.menubtt}
                 onPress={() => selectEventStatus("Ativo")}>
-                <Text style={styles.menubtttext}>Pago</Text>
+                <Text style={styles.menubtttext}>Ativo</Text>
               </Pressable>
               <Pressable
                 style={styles.menubtt}
                 onPress={() => selectEventStatus("Inativo")}>
-                <Text style={styles.menubtttext}>Gratuito</Text>
+                <Text style={styles.menubtttext}>Inativo</Text>
               </Pressable>
             </Animatable.View>
           </Pressable>
@@ -1108,5 +1117,66 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 12,
+  },
+  
+
+
+
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  modalContent: {
+    backgroundColor: "white",
+    padding: 22,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 4,
+    borderColor: "rgba(0, 0, 0, 0.1)",
+  },
+
+  modalText: {
+    fontSize: 22,
+    marginBottom: 12,
+    textAlign: "center",
+  },
+
+  modalBackground: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.1)",
+    justifyContent: "flex-end",
+  },
+
+  menuContainer: {
+    backgroundColor: "#470F62",
+    padding: 16,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+  },
+
+  dragIndicator: {
+    height: 8,
+    width: 50,
+    backgroundColor: "#000000",
+    alignSelf: "center",
+    marginBottom: 16,
+    borderRadius: 24,
+    opacity: 0.5,
+  },
+
+  menubtt: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: "rgba(255, 255, 255, 0.5)",
+  },
+
+  menubtttext: {
+    color: "#FFFFFF",
+    fontSize: 18,
+    opacity: 0.7,
   },
 });

@@ -14,15 +14,15 @@ export default function Navbar(props) {
   };
 
   const handleButtonCenter = () => {
-    axios.post('http://localhost:3003/updateEvent', props.updateEvent )
-			.then((response)=> {
-				console.log(response);
-        navigation.navigate("telaprincipal", { id : props.id, imgProfile: props.imgProfile });
-			})
-			.catch ((error) => {
-				console.error('Erro ao enviar ou retono de dados para o backend:', error);
-		})
-    // navigation.navigate("cadevento", { id : props.id, imgProfile: props.imgProfile });
+    // axios.post('http://localhost:3003/updateEvent', props.updateEvent )
+		// 	.then((response)=> {
+		// 		console.log(response);
+    //     navigation.navigate("telaprincipal", { id : props.id, imgProfile: props.imgProfile });
+		// 	})
+		// 	.catch ((error) => {
+		// 		console.error('Erro ao enviar ou retono de dados para o backend:', error);
+		// })
+    navigation.navigate("cadevento", { id : props.id, imgProfile: props.imgProfile });
   };
 
   const handleButtonNotification = () => {

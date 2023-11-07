@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/core";
 import { Image, Pressable, StyleSheet, Text } from "react-native"
 
-const CardEvent = ({idUser, Nm_event, Event_image, Id_App_Events}) => {
+const CardEvent = ({descricaoEvento, idUser, Nm_event, Event_image, Id_App_Events}) => {
     const navigation = useNavigation()
     console.log(Id_App_Events);
 
@@ -22,6 +22,7 @@ const CardEvent = ({idUser, Nm_event, Event_image, Id_App_Events}) => {
                 style={styles.userImage}
             />
             <Text style={styles.containerEventosText}>{Nm_event}</Text>
+            <Text style={styles.containerEventosText}>{descricaoEvento}</Text>
 
         </Pressable>
     )
