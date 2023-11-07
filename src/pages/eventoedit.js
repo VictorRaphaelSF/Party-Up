@@ -155,6 +155,10 @@ export default function Eventoedit({ navigation }) {
           <View style={styles.line2} />
           <Backbutton/>
           <View style={styles.square}>
+              <Image
+              source={`data:image/png;base64,${/*imgProfile*/setBackgroundImage}`}
+              style={styles.square}
+            />
             <Text style={styles.titulo}>{titulo}</Text>
           </View>
         </ScrollView>

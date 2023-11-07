@@ -511,6 +511,10 @@ export default function Eventoedit2({ navigation }) {
           <View style={styles.line2} />
 
           <View style={styles.square}>
+              <Image
+              source={`data:image/png;base64,${/*imgProfile*/setBackgroundImage}`}
+              style={styles.square}
+            />
             <View style={styles.flexRow}>
               {editTitle ? (
                 <TextInput
@@ -702,8 +706,7 @@ export default function Eventoedit2({ navigation }) {
               </Pressable>
             </Animatable.View>
           </Pressable>
-        </Modal>
-        
+        </Modal>  
       </ImageBackground>
     </View>
   );

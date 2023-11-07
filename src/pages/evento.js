@@ -20,6 +20,7 @@ import Comentbar from "../components/comentbar";
 
 export default function Evento({ navigation }) {
   const [backgroundImage, setBackgroundImage] = useState(null);
+  const [eventoImagem, setEventoImagem] = useState("");
   const [titulo, setTitulo] = useState("");
   const [descricao, setDescricao] = useState("");
   const [dataInicio, setDataInicio] = useState("");
@@ -140,6 +141,10 @@ export default function Evento({ navigation }) {
           <View style={styles.line2} />
 
           <View style={styles.square}>
+              <Image
+              source={`data:image/png;base64,${/*imgProfile*/setBackgroundImage}`}
+              style={styles.square}
+            />
             <Text style={styles.titulo}>{titulo}</Text>
           </View>
         </ScrollView>
