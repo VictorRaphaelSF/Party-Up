@@ -285,6 +285,7 @@ export default function Eventoedit2({ navigation }) {
             {editData ? (
               <View>
                 <View style={styles.flexRow}>
+                  <Text style={styles.dataTexto}>Entre</Text>
                   <TextInput
                     style={styles.dataTexto}
                     onChangeText={(e) => setDataInicio(e)}
@@ -319,10 +320,10 @@ export default function Eventoedit2({ navigation }) {
             ) : (
               <View>
                 <Text style={styles.dataTexto}>
-                   {dataInicio} Entre {dataFim}
+                  Entre {dataInicio} - {dataFim}
                 </Text>
                 <Text style={styles.dataTexto2}>
-                  {horaInicio} - {horaFim}
+                  {horaInicio} - {horaFim} - Entrada Padrão
                 </Text>
               </View>
             )}
@@ -358,9 +359,7 @@ export default function Eventoedit2({ navigation }) {
             <View style={styles.tituloContainer}>
               <Text style={styles.tagsTitulo}>Tags Relacionadas</Text>
               <Pressable
-                onPress={() => {
-                  setEditTags(!editTags);
-                }}>
+                onPress={openMenu}>
                 <Image
                   source={require("../assets/images/icons/pencil(g).png")}
                   style={styles.imagemTitulo}
@@ -382,23 +381,21 @@ export default function Eventoedit2({ navigation }) {
             <View style={styles.tituloContainer}>
               <Text style={styles.typeTitulo}>Tipo do evento</Text>
               <Pressable
-                onPress={() => {
-                  setEditType(!editType);
-                }}>
+                onPress={openTypeMenu}>
                 <Image
                   source={require("../assets/images/icons/pencil(g).png")}
                   style={styles.imagemTitulo}
                 />
               </Pressable>
             </View>
-            {editType ? (
+            {editTags ? (
               <TextInput
                 style={styles.typeTexto}
-                onChangeText={(e) => setTpEvent(e)}
-                value={tpEvent}
+                onChangeText={(e) => setTypeEvent(e)}
+                value={typeEvent}
               />
             ) : (
-              <Text style={styles.typeTexto}>{tpEvent}</Text>
+              <Text style={styles.typeTexto}>{typeEvent}</Text>
             )}
           </View>
 
@@ -406,9 +403,7 @@ export default function Eventoedit2({ navigation }) {
             <View style={styles.tituloContainer}>
               <Text style={styles.statusTitulo}>Status do evento</Text>
               <Pressable
-                onPress={() => {
-                  setEditStatus(!editStatus);
-                }}>
+                onPress={openStatusMenu}>
                 <Image
                   source={require("../assets/images/icons/pencil(g).png")}
                   style={styles.imagemTitulo}
@@ -428,11 +423,9 @@ export default function Eventoedit2({ navigation }) {
 
           <View style={styles.modalidadeContainer}>
             <View style={styles.tituloContainer}>
-              <Text style={styles.modalidadeTitulo}>Modalidade</Text>
+              <Text style={styles.modalidadeTitulo}>Tipo de acesso</Text>
               <Pressable
-                onPress={() => {
-                  setEditModality(!editModality);
-                }}>
+                onPress={openAccessTypeMenu}>
                 <Image
                   source={require("../assets/images/icons/pencil(g).png")}
                   style={styles.imagemTitulo}
@@ -454,9 +447,7 @@ export default function Eventoedit2({ navigation }) {
             <View style={styles.tituloContainer}>
               <Text style={styles.classificationTitulo}>Classificação</Text>
               <Pressable
-                onPress={() => {
-                  setEditClassification(!editClassification);
-                }}>
+                onPress={openClassificationTypeMenu}>
                 <Image
                   source={require("../assets/images/icons/pencil(g).png")}
                   style={styles.imagemTitulo}
@@ -511,8 +502,154 @@ export default function Eventoedit2({ navigation }) {
             </View>
           </View>
         </ScrollView>
+        <Modal
+          style={styles.modalContainer}
+          transparent={true}
+          visible={isMenuVisible}
+          onRequestClose={closeMenu}>
+          <Pressable onPress={closeMenu} style={styles.modalBackground}>
+            <Animatable.View
+              style={styles.menuContainer}
+              animation={isMenuVisible ? "slideInUp" : "slideInDown"}
+              duration={500}>
+              <View style={styles.dragIndicator} />
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectOption("Rock")}>
+                <Text style={styles.menubtttext}>Rock</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectOption("Sertanejo")}>
+                <Text style={styles.menubtttext}>Sertanejo</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectOption("Dança")}>
+                <Text style={styles.menubtttext}>Dança</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectOption("Teatral")}>
+                <Text style={styles.menubtttext}>Teatral</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectOption("Religioso")}>
+                <Text style={styles.menubtttext}>Religioso</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectOption("Funk")}>
+                <Text style={styles.menubtttext}>Funk</Text>
+              </Pressable>
+            </Animatable.View>
+          </Pressable>
+        </Modal>
+        <Modal
+          style={styles.modalContainer}
+          transparent={true}
+          visible={isTypeMenuVisible}
+          onRequestClose={closeTypeMenu}>
+          <Pressable onPress={closeTypeMenu} style={styles.modalBackground}>
+            <Animatable.View
+              style={styles.menuContainer}
+              animation={isTypeMenuVisible ? "slideInUp" : "slideInDown"}
+              duration={500}>
+              <View style={styles.dragIndicator} />
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectEventType("Pago")}>
+                <Text style={styles.menubtttext}>Pago</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectEventType("Gratuito")}>
+                <Text style={styles.menubtttext}>Gratuito</Text>
+              </Pressable>
+            </Animatable.View>
+          </Pressable>
+        </Modal>
+        <Modal
+          style={styles.modalContainer}
+          transparent={true}
+          visible={isStatusMenuVisible}
+          onRequestClose={closeStatusMenu}>
+          <Pressable onPress={closeStatusMenu} style={styles.modalBackground}>
+            <Animatable.View
+              style={styles.menuContainer}
+              animation={isStatusMenuVisible ? "slideInUp" : "slideInDown"}
+              duration={500}>
+              <View style={styles.dragIndicator} />
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectEventStatus("Ativo")}>
+                <Text style={styles.menubtttext}>Pago</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectEventStatus("Inativo")}>
+                <Text style={styles.menubtttext}>Gratuito</Text>
+              </Pressable>
+            </Animatable.View>
+          </Pressable>
+        </Modal>
+        <Modal
+          style={styles.modalContainer}
+          transparent={true}
+          visible={isAccessTypeMenuVisible}
+          onRequestClose={closeAccessTypeMenu}>
+          <Pressable
+            onPress={closeAccessTypeMenu}
+            style={styles.modalBackground}>
+            <Animatable.View
+              style={styles.menuContainer}
+              animation={isAccessTypeMenuVisible ? "slideInUp" : "slideInDown"}
+              duration={500}>
+              <View style={styles.dragIndicator} />
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectAccessType("Presencial")}>
+                <Text style={styles.menubtttext}>Presencial</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectAccessType("Online")}>
+                <Text style={styles.menubtttext}>Online</Text>
+              </Pressable>
+            </Animatable.View>
+          </Pressable>
+        </Modal>
+
+        <Modal
+          style={styles.modalContainer}
+          transparent={true}
+          visible={isClassificationTypeMenuVisible}
+          onRequestClose={closeClassificationTypeMenu}>
+          <Pressable
+            onPress={closeClassificationTypeMenu}
+            style={styles.modalBackground}>
+            <Animatable.View
+              style={styles.menuContainer}
+              animation={
+                isClassificationTypeMenuVisible ? "slideInUp" : "slideInDown"
+              }
+              duration={500}>
+              <View style={styles.dragIndicator} />
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectClassificationType("Público")}>
+                <Text style={styles.menubtttext}>Público</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => selectClassificationType("Privado")}>
+                <Text style={styles.menubtttext}>Privado</Text>
+              </Pressable>
+            </Animatable.View>
+          </Pressable>
+        </Modal>
       </ImageBackground>
-      <Navbar id={id} imgProfile= {imgProfile} updateEvent={updateEvent}/>
     </View>
   );
 }
