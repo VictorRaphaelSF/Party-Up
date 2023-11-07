@@ -116,7 +116,7 @@ export default function Search() {
   axios
     .post('http://localhost:3003/searchEvents', pesquisaUser)
     .then((response) => {
-       set(response.data.results);
+      setEventData(response.data.results);
 
     })
     .catch((error) => {
@@ -177,7 +177,7 @@ export default function Search() {
           ))}
         </ScrollView>
 
-        <ScrollView style={{width: "100%", gap: 16}}>
+        {/* <ScrollView style={{width: "100%", gap: 16}}>
 				<View style={{width: "100%", gap: 8, top: 100}}>
 					{
 						eventData.map((event,index) => {
@@ -187,7 +187,7 @@ export default function Search() {
 						})
 					}
 				</View>
-			</ScrollView>
+			</ScrollView> */}
 
         <Modal
           transparent={true}
