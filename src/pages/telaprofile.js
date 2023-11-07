@@ -1,104 +1,145 @@
 import React, { useState, useEffect } from "react";
+import { useRoute } from "@react-navigation/native";
 import {
-  StyleSheet,
-  View,
-  Text,
-  Pressable,
-  Image,
-  Platform,
-  Dimensions,
-  Modal,
-  TouchableWithoutFeedback,
-  ScrollView,
+	StyleSheet,
+	View,
+	Text,
+	Pressable,
+	Image,
+	Platform,
+	Dimensions,
+	Modal,
+	TouchableWithoutFeedback,
+	ScrollView,
 } from "react-native";
 
 import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
-import { useRoute } from "@react-navigation/native";
 import axios from "axios";
 import Navbar from "../components/navbar";
 import Backbutton from "../components/backbutton";
 import Myeventsbar from "../components/myeventsbar";
+import CardEvent from "../components/cardEvent";
 
 export default function Telaprofile() {
-  const navigation = useNavigation();
-  const [eventData, setEventData] = useState([]);
-  const [profileImage, setProfileImage] = useState(null);
-  const [isMenuVisible, setMenuVisible] = useState(false);
-  const [name, setName] = useState("");
-  const [idade, setIdade] = useState("");
-  const [descricao, setDescricao] = useState("");
-  const [eventImage, setEventImage] = useState(null);
-  const [eventId, setEventId] = useState(null);
+	const navigation = useNavigation();
+	const [eventData, setEventData] = useState([]);
+	const [profileImage, setProfileImage] = useState(null);
+	const [isMenuVisible, setMenuVisible] = useState(false);
+	const [name, setName] = useState("");
+	const [idade, setIdade] = useState("");
+	const [idEvent, setIdEvent] = useState("");
+	const [descricao, setDescricao] = useState("");
+	const [eventImage, setEventImage] = useState(null);
+	const [eventId, setEventId] = useState(null);
 
-  const menu = () => {
-    setMenuVisible(true);
-  };
+	const [seguidores, setSeguidores] = useState("");
+	const [seguindo, setSeguindo] = useState("");
 
-  const closeMenu = () => {
-    setMenuVisible(false);
-  };
+	const menu = () => {
+		setMenuVisible(true);
+	};
 
-  const handleButtonEdit = () => {
-    console.log("Botão edit pressionado");
-  };
+	const closeMenu = () => {
+		setMenuVisible(false);
+	};
 
-  const bttSair = () => {
-    navigation.navigate('index');
-    setMenuVisible(false);
-  };
+	const handleButtonEdit = () => {
+		console.log('Botão edit pressionado')
+	}
 
-  const bttReport = () => {
-    navigation.navigate('report');
-    setMenuVisible(false);
-  };
+	const handleButtonHome = () => {
+		navigation.navigate('telaprincipal', { id: id });
+	};
 
-  const bttMyevent = () => {
-    navigation.navigate('myevent');
-    setMenuVisible(false);
-  };
+	const handleButtonSearch = () => {
+		navigation.navigate('search', { id: id });
+		console.log("Botão edit pressionado");
+	};
 
-  const bttEventProgress = () => {
-    navigation.navigate('event_progress');
-    setMenuVisible(false);
-  };
+	const bttSair = () => {
+		navigation.navigate('index');
+		setMenuVisible(false);
+	};
 
-  const bttDashboard = () => {
-    navigation.navigate('dashboard');
-  };
+	const bttReport = () => {
+		navigation.navigate('report');
+		setMenuVisible(false);
+	};
 
-  const bttTermos = () => {
-    navigation.navigate('acesstermos');
-  };
-  
+	const bttMyevent = () => {
+		navigation.navigate('myevent',{ id: id });
+		setMenuVisible(false);
+	};
 
-  // const route = useRoute();
-  // const { id } = route.params;
-  // console.log(id);
-  // const idUser = {
-  // };
+	const bttEventProgress = () => {
+		navigation.navigate('event_progress');
+		setMenuVisible(false);
+	};
+	const bttTermos = () => {
+		navigation.navigate('acesstermos');
+		setMenuVisible(false);
+	};
 
-  // useEffect(() => {
-  //   axios
-  //     .post('url do back', idUser)
-  //     .then((response) => {
-  //       setProfileImage(response.data.image_url);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Erro ao enviar ou retono de dados para o backend:', error);
-  //     });
+	const bttDashboard = () => {
+		navigation.navigate('dashboard');
+	};
 
-  //   axios
-  //     .post('http://localhost:3003/viewEventUser', /*idUser*/)
-  //     .then((response) => {
-  //       console.log(response)
-  //       console.log(response.data.results[0].Nm_event);
-  //       setEventData(response.data.results);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Erro ao enviar ou retono de dados para o backend:', error);
-  //     });
-  // }, []);
+	// const route = useRoute();
+	// const { id } = route.params;
+	// const { imgProfile } = route.params;
+	
+	// const idUser = {
+	// 	userId_code: id
+	// };
+	
+
+	// //console.log(imgProfile);
+
+	// const handleEventImageClick = () => {
+	// 	if (eventId) {
+	// 		navigation.navigate("evento", { eventId });
+	// 	}
+	// };
+
+	// useEffect(() => {
+	// 	axios.post('http://localhost:3003/profileUser', idUser )
+	// 		.then((response)=> {
+	// 			console.log(response.data.results[0])
+	// 			setName(response.data.results[0].User_name)
+	// 			setIdade(response.data.results[0].idade)
+	// 			setDescricao(response.data.results[0].User_description)
+	// 			setProfileImage(response.data.results[0].User_image)
+
+	// 		})
+	// 		.catch ((error) => {
+	// 			console.error('Erro ao enviar ou retono de dados para o backend:', error);
+	// 	})
+
+	// 	axios.post('http://localhost:3003/followCount', idUser )
+	// 		.then((response)=> {
+	// 			setSeguidores(response.data.seguidores)
+	// 			setSeguindo(response.data.seguindo)
+	// 		})
+	// 		.catch ((error) => {
+	// 			console.error('Erro ao enviar ou retono de dados para o backend:', error);
+	// 	})
+
+		
+	// 	axios
+	// 		.post('http://localhost:3003/viewEventUser', idUser)
+	// 		.then((response) => {
+	// 			setIdEvent(response.data.idEvent)
+	// 			console.log(response.data.results[0].Nm_event);
+	// 			setEventData(response.data.results);
+	
+	// 		})
+	// 		.catch((error) => {
+	// 			console.error('Erro ao enviar ou retono de dados para o backend:', error);
+	// 		});
+	// 		console.log(id);
+
+	// }, []);
 
   return (
     <View style={styles.container}>
@@ -111,9 +152,9 @@ export default function Telaprofile() {
       <View style={styles.innerCircle}>
         {profileImage && (
           <Image
-            source={{ uri: profileImage }}
-            style={{ flex: 1, width: "100%", borderRadius: 105 }}
-          />
+          source={`data:image/png;base64,${profileImage}`}
+          style={{ flex: 1, width: "100%", borderRadius: 105 }}
+        />
         )}
       </View>
 
@@ -206,7 +247,7 @@ export default function Telaprofile() {
         style={styles.comentariosTituloImage}
       />
       <Myeventsbar/>
-      <Navbar/>
+      <Navbar id={id} imgProfile= {profileImage}/>
     </View>
   );
 }

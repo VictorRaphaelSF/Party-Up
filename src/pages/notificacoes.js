@@ -120,7 +120,7 @@ export default function Notificações() {
           </View>
         </TouchableWithoutFeedback>
       </Modal>
-      <Navbar/>
+      <Navbar id={id} imgProfile= {profileImage}/>
     </View>
   );
 }

@@ -8,7 +8,6 @@ import {
   Dimensions,
   Text,
   ScrollView,
-  FlatList,
 } from "react-native";
 
 import { useRoute, useNavigation } from "@react-navigation/native";
@@ -80,7 +79,7 @@ export default function Telaprincipal() {
         </ScrollView>
         </View>
       <Buttonprofile />
-      <Navbar />
+      <Navbar id={id} imgProfile= {profileImage}/>
     </View>
   );
 }

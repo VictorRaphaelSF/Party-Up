@@ -30,12 +30,18 @@ export default function Evento({ navigation }) {
   const [siteInfo, setSiteInfo] = useState("");
   const [tags, setTags] = useState("");
 
+  const route = useRoute();
+  const { id } = route.params;
+  const { idEvento } = route.params;
+  const { imgProfile } = route.params;
+  console.log(id);
+
   useEffect(() => {
-    const id = {
-      eventId_code: 1,
-    };
+    const idEvent ={
+      eventId_code: idEvento
+    }
     axios
-      .post("http://localhost:3003/viewEvent", id)
+      .post('http://localhost:3003/viewEvent',idEvent)
       .then((response) => {
         console.log(response.data[0]);
         //nome
@@ -142,14 +148,14 @@ export default function Evento({ navigation }) {
 
           <View style={styles.square}>
               <Image
-              source={`data:image/png;base64,${/*imgProfile*/setBackgroundImage}`}
+              source={`data:image/png;base64,${imgProfile}`}
               style={styles.square}
             />
             <Text style={styles.titulo}>{titulo}</Text>
           </View>
         </ScrollView>
       </ImageBackground>
-      <Navbar/>
+      <Navbar id={id} imgProfile= {imgProfile}/>
     </View>
   );
 }
