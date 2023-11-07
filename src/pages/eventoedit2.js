@@ -16,6 +16,7 @@ import axios from "axios";
 import { ScrollView } from "react-native-gesture-handler";
 import Backbutton from "../components/backbutton";
 import { useRoute } from '@react-navigation/native';
+import Navbar from "../components/navbar";
 
 
 export default function Eventoedit2({ navigation }) {
@@ -31,7 +32,6 @@ export default function Eventoedit2({ navigation }) {
   const [typeEvent, setTypeEvent] = useState("");
   const [modalityEvent, setModality] = useState("");
   const [classificationEvent, setClassication] = useState("");
-  const [moreInfo, setMoreInfo] = useState("");
 
   const [statusEvent, setStatusEvent] = useState("");
   const [tituloWidth, setTituloWidth] = useState(0);
@@ -39,19 +39,35 @@ export default function Eventoedit2({ navigation }) {
 
 	const route = useRoute();
   	const { id } = route.params;
+    const { imgProfile } = route.params;
+    const { idEvento } = route.params;
     
-  const [tituloNovo, setTituloNovo] = useState("");
-  const [descricaoNovo, setDescricaoNovo] = useState("");
-  const [dataInicioNovo, setDataInicioNovo] = useState("");
-  const [dataFimNovo, setDataFimNovo] = useState("");
-  const [horaInicioNovo, setHoraInicioNovo] = useState("");
-  const [horaFimNovo, setHoraFimNovo] = useState("");
-  const [siteInfoNovo, setSiteInfoNovo] = useState("");
-  const [tagsNovo, setTagsNovo] = useState("");
-  const [typeNovo, setTypeNovo] = useState("");
-  const [statusNovo, setStatusNOvo] = useState("");
-  const [modalityNovo, setModalityNovo] = useState("");
-  const [classificationNovo, setClassificationNovo] = useState("");
+    
+    const [telefone, setTelefone] = useState("");
+    const [tpEvent, setTpEvent] = useState("");
+    const [tpModality, setTpModality] = useState("");
+    const [cep, setCep] = useState("");
+    const [complemento, setComplemento] = useState("");
+    const [instagram, setIntagram] = useState("");
+    const [moreInfo, setMoreInfo] = useState("");
+    const [bairro, setBairro] = useState("");
+    const [cidade, setCidade] = useState("");
+    const [estado, setEstado] = useState("");
+    const [rua, setRua] = useState("");
+    const [numeroRes, setNumeroRes] = useState("");
+    
+    console.log(telefone);
+    console.log(tpEvent);
+    console.log(tpModality);
+    console.log(cep);
+    console.log(complemento);
+    console.log(instagram);
+    console.log(moreInfo);
+    console.log(bairro);
+    console.log(cidade);
+    console.log(estado);
+    console.log(rua);
+    console.log(numeroRes);
 
   useEffect(() => {
     Animated.timing(animatedValue, {
@@ -68,20 +84,24 @@ export default function Eventoedit2({ navigation }) {
   });
 
 	const idEvent = {
-		eventId_code: 1
+		eventId_code: idEvento
 	}
 	useEffect(() => {
-		axios
-			.post('http://localhost:3003/viewEvent', idEvent)
-			.then((response) => {
-				console.log(response.data[0])
-				//nome
-				setTitulo(response.data[0].Nm_event);
+    const idEvent ={
+      eventId_code: idEvento
+    }
+    axios
+      .post('http://localhost:3003/viewEvent',idEvent)
+      .then((response) => {
+        console.log(response);
+        console.log(response.data[0]);
+        //nome
+        setTitulo(response.data[0].Nm_event);
 
-        //descrição
+        // //descrição
         setDescricao(response.data[0].desc_event);
 
-        //data início
+
         const dataB = new Date(response.data[0].Dt_begin);
         const anoB = dataB.getFullYear();
         const mesB = String(dataB.getMonth() + 1).padStart(2, "0");
@@ -112,10 +132,23 @@ export default function Eventoedit2({ navigation }) {
         //site
         setSiteInfo(response.data[0].Site_contact);
 
-        //tag
-        setTags(response.data[0].Tag_event);
 
-        //navigation.navigate('telaprincipal',{id: id});
+        setTelefone(response.data[0].Telefone_event)
+        setTpEvent(response.data[0].Tp_Event)
+        setTpModality(response.data[0].Tp_Modality)
+        setCep(response.data[0].cd_cep)
+        setComplemento(response.data[0].complemento)
+        setIntagram(response.data[0].instagram_user)
+        setMoreInfo(response.data[0].more_info)
+        setBairro(response.data[0].nm_bairro)
+        setCidade(response.data[0].nm_cidade)
+        setEstado(response.data[0].nm_estado)
+        setRua(response.data[0].nm_rua)
+        setNumeroRes(response.data[0].num_residencia)
+
+        //tag
+        // setTags(response.data[0].Tag_event);
+
       })
       .catch((error) => {
         console.error("Erro ao enviar os dados para o backend:", error);
@@ -136,17 +169,17 @@ export default function Eventoedit2({ navigation }) {
     //up_Telefone_event_code :
     //up_Tp_Event_code :
     //up_Tp_Modality_code :
-    //up_cd_cep_code :
+    up_cd_cep_code : 11325010,
     //up_complemento_code :
     //up_desc_event_code :
     //up_instagram_user_code :
     //up_more_info_code :
-    //up_nm_estado_code :
-    //up_nm_cidade_code :
-    //up_nm_bairro_code :
-    //up_nm_rua_code :
-    //up_num_residencia_code :
-    //up_num_complemento_code :
+    up_nm_estado_code : "sc", // não pode ser nula
+    up_nm_cidade_code : "londrina", // não pode ser nula
+    up_nm_bairro_code : "bairro zika", // não pode ser nula
+    up_nm_rua_code : "rua chave", // não pode ser nula
+    up_num_residencia_code : 11, // não pode ser nula
+    //up_nm_complemento_code :
     //up_img_Data_code :
     up_Id_App_Events: idEvent.eventId_code
 
@@ -252,7 +285,6 @@ export default function Eventoedit2({ navigation }) {
             {editData ? (
               <View>
                 <View style={styles.flexRow}>
-                  <Text style={styles.dataTexto}>Entre</Text>
                   <TextInput
                     style={styles.dataTexto}
                     onChangeText={(e) => setDataInicio(e)}
@@ -287,10 +319,10 @@ export default function Eventoedit2({ navigation }) {
             ) : (
               <View>
                 <Text style={styles.dataTexto}>
-                  Entre {dataInicio} - {dataFim}
+                   {dataInicio} Entre {dataFim}
                 </Text>
                 <Text style={styles.dataTexto2}>
-                  {horaInicio} - {horaFim} - Entrada Padrão
+                  {horaInicio} - {horaFim}
                 </Text>
               </View>
             )}
@@ -359,14 +391,14 @@ export default function Eventoedit2({ navigation }) {
                 />
               </Pressable>
             </View>
-            {editTags ? (
+            {editType ? (
               <TextInput
                 style={styles.typeTexto}
-                onChangeText={(e) => setTypeEvent(e)}
-                value={typeEvent}
+                onChangeText={(e) => setTpEvent(e)}
+                value={tpEvent}
               />
             ) : (
-              <Text style={styles.typeTexto}>{typeEvent}</Text>
+              <Text style={styles.typeTexto}>{tpEvent}</Text>
             )}
           </View>
 
@@ -480,7 +512,7 @@ export default function Eventoedit2({ navigation }) {
           </View>
         </ScrollView>
       </ImageBackground>
-      <Navbar id={id} imgProfile= {imgProfile}/>
+      <Navbar id={id} imgProfile= {imgProfile} updateEvent={updateEvent}/>
     </View>
   );
 }

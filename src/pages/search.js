@@ -29,6 +29,7 @@ export default function Search() {
 
   const route = useRoute();
   const { id } = route.params;
+  const { imgProfile } = route.params;
   console.log(id);
   useEffect(() => {
     const loadSearchHistory = async () => {

@@ -33,7 +33,8 @@ export default function Telaprofile() {
 	const [eventImage, setEventImage] = useState(null);
 	const [eventId, setEventId] = useState(null);
 
-
+	const [seguidores, setSeguidores] = useState("");
+	const [seguindo, setSeguindo] = useState("");
 
 	const menu = () => {
 		setMenuVisible(true);
@@ -67,7 +68,7 @@ export default function Telaprofile() {
 	};
 
 	const bttMyevent = () => {
-		navigation.navigate('myevent');
+		navigation.navigate('myevent',{ id: id });
 		setMenuVisible(false);
 	};
 
@@ -104,6 +105,17 @@ export default function Telaprofile() {
 				setName(response.data.results[0].User_name)
 				setIdade(response.data.results[0].idade)
 				setDescricao(response.data.results[0].User_description)
+				setProfileImage(response.data.results[0].User_image)
+
+			})
+			.catch ((error) => {
+				console.error('Erro ao enviar ou retono de dados para o backend:', error);
+		})
+
+		axios.post('http://localhost:3003/followCount', idUser )
+			.then((response)=> {
+				setSeguidores(response.data.seguidores)
+				setSeguindo(response.data.seguindo)
 			})
 			.catch ((error) => {
 				console.error('Erro ao enviar ou retono de dados para o backend:', error);
@@ -122,7 +134,7 @@ export default function Telaprofile() {
 				console.error('Erro ao enviar ou retono de dados para o backend:', error);
 			});
 			console.log(id);
-			console.log(imgProfile);
+
 	}, []);
 	console.log(name);
 	console.log(idade);
@@ -197,20 +209,19 @@ export default function Telaprofile() {
 			<View style={{marginTop: 40, marginBottom: 40}}>
 				<View style={{ justifyContent: "space-between", gap: 20, flexDirection: "row" }}>
 					<View style={styles.innerCircle}>
-						{profileImage && (
 							<Image
-								source={`data:image/png;base64,${imgProfile}`}
+								source={`data:image/png;base64,${profileImage}`}
 								style={{ flex: 1, width: "100%", borderRadius: 105 }}
 							/>
-						)}
+				
 					</View>
 					<View style={styles.titleContainer}>
 						<Text style={styles.title}>Seguidores</Text>
-						<Text style={styles.number}>0</Text>
+						<Text style={styles.number}>{seguidores}</Text>
 					</View>
 					<View style={styles.titleContainer}>
 						<Text style={styles.title}>Seguindo</Text>
-						<Text style={styles.number}>0</Text>
+						<Text style={styles.number}>{seguindo}</Text>
 					</View>
 				</View>
 
@@ -276,7 +287,7 @@ export default function Telaprofile() {
         </View>
       </Pressable> */}
 	  
-		<Navbar id={id} imgProfile= {imgProfile}/>
+		<Navbar id={id} imgProfile= {profileImage}/>
 		</View>
 	);
 }
