@@ -90,7 +90,6 @@ export default function Telaprincipal() {
     //   .catch ((error) => {
     //     console.error('Erro ao enviar ou retono de dados para o backend:', error);
     // });
-
   }, []);
 
 

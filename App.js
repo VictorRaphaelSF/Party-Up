@@ -33,6 +33,7 @@ import Eventoedit2 from "./src/pages/eventoedit2";
 import Event_progress from "./src/pages/event_progress";
 import Emailvalidation from "./src/pages/emailvalidation";
 import Location from "./src/pages/location";
+import Forgotpassword from "./src/pages/forgotpassword";
 
 const Stack = createNativeStackNavigator();
 
@@ -235,6 +236,13 @@ export default function App() {
           }}
           name="dashboard"
           component={Dashboard}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="forgotpassword"
+          component={Forgotpassword}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -233,7 +233,7 @@ export default function Cadastro({ navigation }) {
             placeholder="E-mail"
             placeholderTextColor="rgba(255, 255, 255, 0.5)"
             underlineColorAndroid="transparent"
-            maxLength={255}
+            maxLength={100}
             value={email}
             onChangeText={setEmail}
             onBlur={() => {
