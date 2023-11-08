@@ -15,6 +15,7 @@ import { useRoute, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import Navbar from "../components/navbar";
 import Buttonprofile from "../components/buttonprofile";
+import Destaquebar from "../components/destaquebar";
 // import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
 
@@ -55,10 +56,15 @@ export default function Telaprincipal() {
   //     console.error("Erro ao enviar ou retono de dados para o backend:", error);
   //   });
 
-  const eventosTemporarios = [
-    require("../assets/images/Eventos(Temporarios)/Evento(1).png"),
-    require("../assets/images/Eventos(Temporarios)/Evento(2).png"),
-    require("../assets/images/Eventos(Temporarios)/Evento(3).png"),
+  const eventImages = [
+    require("../assets/images/Eventos(Temporarios)/EventoM(1).png"),
+    require("../assets/images/Eventos(Temporarios)/EventoM(2).png"),
+    require("../assets/images/Eventos(Temporarios)/EventoM(1).png"),
+    require("../assets/images/Eventos(Temporarios)/EventoM(2).png"),
+    require("../assets/images/Eventos(Temporarios)/EventoM(1).png"),
+    require("../assets/images/Eventos(Temporarios)/EventoM(2).png"),
+    require("../assets/images/Eventos(Temporarios)/EventoM(1).png"),
+    require("../assets/images/Eventos(Temporarios)/EventoM(2).png"),
   ];
  
   const route = useRoute();
@@ -85,8 +91,6 @@ export default function Telaprincipal() {
     //     console.error('Erro ao enviar ou retono de dados para o backend:', error);
     // });
 
-
-    
   }, []);
 
 
@@ -111,7 +115,7 @@ export default function Telaprincipal() {
 
       <Text style={styles.highlightsText}>Destaques</Text>
 
-      <DestaqueBar/>
+      <Destaquebar/>
 
         <View style={styles.eventContainer}>
         <ScrollView

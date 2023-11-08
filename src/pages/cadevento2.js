@@ -115,9 +115,6 @@ export default function Cadevento2() {
     const numericValue = value.replace(/[^0-9]/g, "");
     setter(numericValue);
   };
-
-  
-  
   
   const route = useRoute();
   const { eventData, id } = route.params;
@@ -309,7 +306,7 @@ export default function Cadevento2() {
             />
           </Pressable>
         </View>
-        <View style={styles.searchBarContainerLowLow1}>
+        <View style={styles.searchBarContainerLowLowLow}>
           <Pressable onPress={openClassificationTypeMenu}>
             <TextInput
               style={styles.searchInput}
@@ -583,7 +580,8 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 16,
     flex: 1,
-  },
+    outlineWidth: 0,
+    },
 
   icon: {
     width: 24,

@@ -21,10 +21,30 @@ export default function Myeventsbar() {
     const navigation = useNavigation();
     const [eventImage, setEventImage] = useState(null);
     const [eventId, setEventId] = useState(null);
+    const [eventData, setEventData] = useState([]);
 
     const handleEventImageClick = () => {
         navigation.navigate("eventoedit", { idEvento: Id_App_Events, id : idUser, imgProfile: Event_image });
    };
+
+   useEffect(() => {
+      axios
+        .post('http://localhost:3003/viewEventUser', idUser)
+        .then((response) => {
+          setIdEvent(response.data.idEvent)
+          console.log(response.data.results[0].Nm_event);
+          setEventData(response.data.results);
+    
+        })
+        .catch((error) => {
+          console.error('Erro ao enviar ou retono de dados para o backend:', error);
+        });
+        console.log(id);
+
+    }, []);
+    console.log(eventData);
+
+   
 
 return (
     <ScrollView

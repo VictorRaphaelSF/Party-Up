@@ -21,6 +21,7 @@ import Navbar from "../components/navbar";
 import Backbutton from "../components/backbutton";
 import CardEvent from "../components/cardEvent";
 import CardEventUser from "../components/cardEventUser";
+import Myeventsbar from "../components/myeventsbar";
 
 export default function Telaprofile() {
 	const navigation = useNavigation();
@@ -48,15 +49,6 @@ export default function Telaprofile() {
 	const handleButtonEdit = () => {
 		console.log('Botão edit pressionado')
 	}
-
-	const handleButtonHome = () => {
-		navigation.navigate('telaprincipal', { id: id });
-	};
-
-	const handleButtonSearch = () => {
-		navigation.navigate('search', { id: id });
-		console.log("Botão edit pressionado");
-	};
 
 	const bttSair = () => {
 		navigation.navigate('index');
@@ -91,7 +83,7 @@ export default function Telaprofile() {
 	};
 	
 
-	console.log(imgProfile);
+	// console.log(imgProfile);
 
 	const handleEventImageClick = () => {
 		if (eventId) {
@@ -121,28 +113,10 @@ export default function Telaprofile() {
 			.catch ((error) => {
 				console.error('Erro ao enviar ou retono de dados para o backend:', error);
 		})
-
-		
-		axios
-			.post('http://localhost:3003/viewEventUser', idUser)
-			.then((response) => {
-				setIdEvent(response.data.idEvent)
-				console.log(response.data.results[0].Nm_event);
-				setEventData(response.data.results);
-	
-			})
-			.catch((error) => {
-				console.error('Erro ao enviar ou retono de dados para o backend:', error);
-			});
-			console.log(id);
-
 	}, []);
 	console.log(name);
 	console.log(idade);
 	console.log(descricao);
-	console.log(eventData);
-
-	
 
 	return (
 		<View style={styles.container}>
@@ -266,15 +240,7 @@ export default function Telaprofile() {
         style={styles.comentariosTituloImage}
       />
 
-			<View style={{width: "100%", gap: 8, marginBottom: 50}}>
-					{
-						eventData.map((event,index) => {
-							return (
-								<CardEvent descricaoEvento={event.desc_event} idUser={id} Event_image={event.Event_image} Nm_event={event.Nm_event} Id_App_Events={idEvent} key={index}/>
-							)
-						})
-					}
-				</View>
+		<Myeventsbar/>
 
 			{/* <Pressable
         style={styles.eventImagePlaceholder}
@@ -294,7 +260,7 @@ export default function Telaprofile() {
           )}
         </View>
       </Pressable> */}
-		<Navbar id={id} imgProfile= {profileImage}/>
+		<Navbar id={id} imgProfile= {imgProfile}/>
 		</View>
 	);
 }
@@ -539,6 +505,6 @@ const styles = StyleSheet.create({
 		width: '108%',
 		height: 50,
 		resizeMode: "contain",
-		bottom: -110,
+		top: 480,
 	  },
 	});

@@ -12,7 +12,7 @@ import {
 import { useRoute, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 
-export default function DestaqueBar() {
+export default function Destaquebar() {
 
     const eventosTemporarios = [
         require("../assets/images/Eventos(Temporarios)/Evento(1).png"),

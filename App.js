@@ -39,7 +39,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="telaprofile">
+      <Stack.Navigator initialRouteName="index">
         <Stack.Screen
           options={{
             headerShown: false,
