@@ -113,38 +113,34 @@ export default function Search() {
  
 
   console.log(eventData);
-  console.log(userSearch_code);
+  
   
   const pesquisaUser = {
     userSearch_code: userSearch_code
   }
 
-  // useEffect(() => {
-  //   const delay = 500; // Atraso de 500ms
-  //   let timeoutId;
+  useEffect(() => {
+    console.log(userSearch_code);
+    const delay = 500; // Atraso de 500ms
+    let timeoutId;
   
-  //   // Função para fazer a chamada à API após o atraso
-  //   const fetchEventData = () => {
-  //     const pesquisaUser = {
-  //       userSearch_code: userSearch_code,
-  //     };
   
-  //     axios
-  //       .post('http://localhost:3003/searchEvents', pesquisaUser)
-  //       .then((response) => {
-  //         setEventData(response.data.results);
-  //       })
-  //       .catch((error) => {
-  //         console.error('Erro ao enviar os dados para o backend:', error);
-  //       });
-  //   };
+    const pesquisaUser = {
+      userSearch_code: userSearch_code,
+    };
+    console.log("opa");
+    axios
+      .post('http://localhost:3003/searchEvents', pesquisaUser)
+      .then((response) => {
+        setEventData(response.data.results);
+      })
+      .catch((error) => {
+        console.error('Erro ao enviar os dados para o backend:', error);
+        
+      });
   
-  //   // Usando um timeout para aguardar o término da digitação
-  //   if (userSearch_code.trim() !== '') {
-  //     clearTimeout(timeoutId);
-  //     timeoutId = setTimeout(fetchEventData, delay);
-  //   }
-  // }, [userSearch_code]);
+  
+  }, [userSearch_code]);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -199,7 +195,7 @@ export default function Search() {
           ))}
         </ScrollView>
 
-        <ScrollView style={{width: "100%", gap: 16}}>
+        {/* <ScrollView style={{width: "100%", gap: 16}}>
 				<View style={{width: "100%", gap: 8, top: 100}}>
 					{
 						eventData.map((event,index) => {
@@ -209,7 +205,7 @@ export default function Search() {
 						})
 					}
 				</View>
-			</ScrollView>
+			</ScrollView> */}
 
         <Modal
           transparent={true}
