@@ -25,6 +25,7 @@ export default function Search() {
   const [reload, setReload] = useState(0);
   const navigation = useNavigation();
   const [userSearch_code, setSearchTerm] = useState("");
+  const [error, setError] = useState("");
   const [isMenuVisible, setMenuVisible] = useState(false);
   const [searchHistory, setSearchHistory] = useState([]);
   const [eventData, setEventData] = useState([]);
@@ -132,7 +133,15 @@ export default function Search() {
     axios
       .post('http://localhost:3003/searchEvents', pesquisaUser)
       .then((response) => {
-        setEventData(response.data.results);
+        console.log(response);
+        if(response.data.msg){
+          console.log("deu cie");
+          setError(response.data.msg)
+
+        }else{
+          setEventData(response.data.results);
+
+        }
       })
       .catch((error) => {
         console.error('Erro ao enviar os dados para o backend:', error);
@@ -195,17 +204,17 @@ export default function Search() {
           ))}
         </ScrollView>
 
-        {/* <ScrollView style={{width: "100%", gap: 16}}>
-				<View style={{width: "100%", gap: 8, top: 100}}>
+				<View style={{width: "100%", gap: 8}}>
 					{
+
 						eventData.map((event,index) => {
 							return (
 								<CardEventUser descricaoEvento={event.desc_event} idUser={id} Event_image={event.Event_image} Nm_event={event.Nm_event} Id_App_Events={event. Id_App_Events} key={index}/>
 							)
 						})
 					}
+          {error && <Text style={styles.searchHistoryItem}>{error}</Text>}
 				</View>
-			</ScrollView> */}
 
         <Modal
           transparent={true}
