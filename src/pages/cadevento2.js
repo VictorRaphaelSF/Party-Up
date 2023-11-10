@@ -549,7 +549,7 @@ const styles = StyleSheet.create({
 
   button: {
     position: "absolute",
-    backgroundColor: "rgba(255, 1, 108, 0.4)",
+    backgroundColor: "#95003F",
     paddingVertical: 14,
     paddingHorizontal: 100,
     justifyContent: "center",

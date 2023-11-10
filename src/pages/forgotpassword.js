@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
 
   button: {
     position: "absolute",
-    backgroundColor: "rgba(255, 1, 108, 0.50)",
+    backgroundColor: "#95003F",
     paddingVertical: 14,
     paddingHorizontal: 100,
     alignSelf: "center",

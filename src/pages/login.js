@@ -214,7 +214,7 @@ export default function Login({ navigation }) {
 	  },
 	
 	  button: {
-		backgroundColor: "rgba(255, 1, 108, 0.4)",
+		backgroundColor: "#95003F",
 		maxWidth: "80%",
 		paddingVertical: 14,
 		paddingHorizontal: Platform.OS === "web" ? 100 : 110,
