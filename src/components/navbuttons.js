@@ -12,6 +12,7 @@ import {
   Animated,
   Easing,
 } from "react-native";
+import axios from "axios";
 
 export default function Navbuttons() {
   const [buttonVisible, setButtonVisible] = useState(true);
@@ -21,46 +22,91 @@ export default function Navbuttons() {
   const [likeImage, setLikeImage] = useState(
     require("../assets/images/icons/like.png")
   );
+  const [numCurtida, setNumCurtida] = useState("");
     
-    const spin = spinValue.interpolate({
-        inputRange: [0, 1],
-        outputRange: ["0deg", "360deg"],
-      });
+  const spin = spinValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["0deg", "360deg"],
+  });
     
-      const startAnimation = () => {
-        Animated.timing(spinValue, {
-          toValue: 1,
-          duration: 100,
-          easing: Easing.linear,
-          useNativeDriver: true,
-        }).start(() => {
-          setIsButtonPressed(false);
-          setLikeImage((prev) =>
-            prev === require("../assets/images/icons/like.png")
-              ? require("../assets/images/icons/liked.png")
-              : require("../assets/images/icons/like.png")
-          );
-          spinValue.setValue(0);
-        });
-      };
+  const startAnimation = () => {
+    Animated.timing(spinValue, {
+      toValue: 1,
+      duration: 100,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    }).start(() => {
+      setIsButtonPressed(false);
+      setLikeImage((prev) =>
+        prev === require("../assets/images/icons/like.png")
+          ? require("../assets/images/icons/liked.png")
+          : require("../assets/images/icons/like.png")
+      );
+      spinValue.setValue(0);
+    });
+  };
 
-    const handleButtonPress = () => {
-        setIsButtonPressed(true);
-        startAnimation();
-      };
+  const route = useRoute();
+	const { id } = route.params;
+	const { idEvento } = route.params;
+  console.log(id, idEvento);
+
+  const like = {
+    Id_user_code : id, 
+    Id_App_Events_code : idEvento
+  }
+
+  const handleButtonPress = () => {
+      setIsButtonPressed(true);
+      startAnimation();
+      axios
+      .post('http://localhost:3003/likeEvent', like)
+      .then((response) => {
+        console.log(response);
+        axios
+        .post('http://localhost:3003/likeCount', like)
+        .then((response) => {
+        console.log(response);
+        setNumCurtida(response.data.numberLikes)
+        }).then(()=>{
+          console.log("funfo "+ numCurtida);
+        })
+        .catch((error) => {
+          console.error('Erro ao enviar os dados para o backend:', error);
+        
+        });
+      })
+      .catch((error) => {
+        console.error('Erro ao enviar os dados para o backend:', error);
+      
+      });
+  };
     
-      const handleSecondButtonPress = () => {
-        navigation.navigate("comentario");
-      };
-    
-      const handleThirdButtonPress = () => {
-        console.log("Terceiro botão pressionado");
-      };
-    
-      const handleFourthButtonPress = () => {
-        console.log("Quarto botão pressionado");
-    };
-    
+  const handleSecondButtonPress = () => {
+    navigation.navigate("comentario");
+  };
+
+  const handleThirdButtonPress = () => {
+    console.log("Terceiro botão pressionado");
+  };
+
+  const handleFourthButtonPress = () => {
+    console.log("Quarto botão pressionado");
+  };
+
+  useEffect(() => {0,
+    axios
+      .post('http://localhost:3003/likeCount', like)
+      .then((response) => {
+      console.log(response);
+      setNumCurtida(response.data.numberLikes)
+      })
+      .catch((error) => {
+        console.error('Erro ao enviar os dados para o backend:', error);
+      
+      });
+    console.log("funfo "+ numCurtida);
+  }, []);
 return (
     <View>
             {buttonVisible && (
@@ -73,6 +119,7 @@ return (
                   style={[styles.icon, { transform: [{ rotate: spin }] }]}
                 />
                 <Text style={styles.buttonTitle}>Curtir</Text>
+                <Text style={styles.buttonTitle}>{numCurtida}</Text>
               </Pressable>
               
               <Pressable

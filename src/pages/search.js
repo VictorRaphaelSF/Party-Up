@@ -29,6 +29,7 @@ export default function Search() {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const [searchHistory, setSearchHistory] = useState([]);
   const [eventData, setEventData] = useState([]);
+  const [eventResult, setEventResult] = useState(false);
 
 
   const route = useRoute();
@@ -135,10 +136,11 @@ export default function Search() {
       .then((response) => {
         console.log(response);
         if(response.data.msg){
-          console.log("deu cie");
+          setEventResult(false)
           setError(response.data.msg)
-
+          
         }else{
+          setEventResult(true)
           setEventData(response.data.results);
 
         }
@@ -204,17 +206,20 @@ export default function Search() {
           ))}
         </ScrollView>
 
-				<View style={{width: "100%", gap: 8}}>
+        {eventResult ?
+          (<View style={{width: "100%", gap: 8}}>
 					{
-
+            
 						eventData.map((event,index) => {
 							return (
 								<CardEventUser descricaoEvento={event.desc_event} idUser={id} Event_image={event.Event_image} Nm_event={event.Nm_event} Id_App_Events={event. Id_App_Events} key={index}/>
 							)
 						})
 					}
-          {error && <Text style={styles.searchHistoryItem}>{error}</Text>}
-				</View>
+          
+				  </View>):
+          (error && <Text style={styles.searchHistoryItem}>{error}</Text>)}
+				
 
         <Modal
           transparent={true}

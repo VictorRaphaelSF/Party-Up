@@ -90,42 +90,6 @@ export default function Evento({ navigation }) {
       });
   }, []);
 
-  const handleButtonPress = () => {
-    setIsButtonPressed(true);
-    startAnimation();
-  };
-
-  const handleSecondButtonPress = () => {
-    navigation.navigate('comentario');
-  };
-
-  const handleThirdButtonPress = () => {
-    console.log('Terceiro botão pressionado')
-  };
-
-  const handleFourthButtonPress = () => {
-    console.log('Quarto botão pressionado')
-  };
-
-  const handleButtonHome = () => {
-    navigation.navigate('telaprincipal',{id: id})
-  };
-
-  const handleButtonSearch = () => {
-    navigation.navigate('search',{id: id});
-  };
-
-  const handleButtonCenter = () => {
-    navigation.navigate('cadevento', {id : id});
-  };
-
-  const handleButtonNotification = () => {
-    navigation.navigate('notificação',{id: id});
-  };
-
-  const handleButtonPeople = () => {
-    navigation.navigate('telaprofile',{id: id});
-  };
 
   return (
     <View style={styles.container}>
