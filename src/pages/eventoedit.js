@@ -16,7 +16,6 @@ import { ScrollView } from "react-native-gesture-handler";
 import Backbutton from "../components/backbutton";
 import Navbar from "../components/navbar";
 import { useRoute } from "@react-navigation/native";
-import Comentbar from "../components/comentbar";
 
 export default function Eventoedit({ navigation }) {
   const [backgroundImage, setBackgroundImage] = useState(null);
@@ -133,8 +132,6 @@ export default function Eventoedit({ navigation }) {
       });
   }, []);
 
-
-
   const handleButtonDelete = () => {
     const idDeEvento = {
       idEvent: idEvento
@@ -149,29 +146,10 @@ export default function Eventoedit({ navigation }) {
         console.error('Erro ao enviar os dados para o backend:', error);
       });
   }
+
   const handleButtonEdit = () => {
-    navigation.navigate('eventoedit2', { id: id, imgProfile: imgProfile, idEvento: idEvento })
+    navigation.navigate('eventoedit2',)
   }
-
-  const handleButtonHome = () => {
-    navigation.navigate('telaprincipal', { id: id, imgProfile: imgProfile })
-  };
-
-  const handleButtonSearch = () => {
-    navigation.navigate('search', { id: id, imgProfile: imgProfile });
-  };
-
-  const handleButtonCenter = () => {
-    navigation.navigate('cadevento', { id: id, imgProfile: imgProfile });
-  };
-
-  const handleButtonNotification = () => {
-    navigation.navigate('notificação', { id: id, imgProfile: imgProfile });
-  };
-
-  const handleButtonPeople = () => {
-    console.log('Botão perfil pressionado');
-  };
 
   return (
     <View style={styles.container}>
@@ -212,13 +190,13 @@ export default function Eventoedit({ navigation }) {
           <View style={styles.editButtonContainer}>
           <Pressable onPress={handleButtonDelete}>
             <Image
-              source={require('../assets/images/icons/bttexcluir.png')} 
+              source={require('../assets/images/icons/bttexcluirnew.png')} 
               style={styles.editButtonImage}
             />
           </Pressable>
           <Pressable onPress={handleButtonEdit}>
             <Image
-              source={require('../assets/images/icons/btteditar.png')}
+              source={require('../assets/images/icons/btteditarnew.png')}
               style={styles.editButtonImage1}
             />
           </Pressable>
@@ -236,7 +214,6 @@ export default function Eventoedit({ navigation }) {
             </Text>
           </View>
 
-
           <View style={styles.line2} />
           <Backbutton />
           <View style={styles.square}>
@@ -248,7 +225,7 @@ export default function Eventoedit({ navigation }) {
           </View>
         </ScrollView>
       </ImageBackground>
-      <Navbar id={id} imgProfile={imgProfile} />
+      <Navbar id={id} imgProfile= {imgProfile}/>
     </View>
   );
 }
@@ -476,7 +453,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     right: 0,
-    bottom: -735,
+    bottom: -770,
     height: 2,
     opacity: 0.6,
   },
@@ -551,16 +528,15 @@ const styles = StyleSheet.create({
   },
 
   editButtonImage: {
-    width: 170,
-    height: 50,
+    width: 175,
+    height: 60,
     resizeMode: 'contain',
     marginRight: 14,
   },
 
   editButtonImage1: {
-    width: 170,
-    height: 50,
+    width: 175,
+    height: 60,
     resizeMode: 'contain',
-  },
-  
+  },  
 });
