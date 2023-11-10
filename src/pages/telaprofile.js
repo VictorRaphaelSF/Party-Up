@@ -20,8 +20,6 @@ import axios from "axios";
 import Navbar from "../components/navbar";
 import Backbutton from "../components/backbutton";
 import CardEvent from "../components/cardEvent";
-import CardEventUser from "../components/cardEventUser";
-import Myeventsbar from "../components/myeventsbar";
 
 export default function Telaprofile() {
 	const navigation = useNavigation();
@@ -113,10 +111,26 @@ export default function Telaprofile() {
 			.catch ((error) => {
 				console.error('Erro ao enviar ou retono de dados para o backend:', error);
 		})
+
+		
+		axios
+			.post('http://localhost:3003/viewEventUser', idUser)
+			.then((response) => {
+				setIdEvent(response.data.idEvent)
+				console.log(response.data.results[0].Nm_event);
+				setEventData(response.data.results);
+	
+			})
+			.catch((error) => {
+				console.error('Erro ao enviar ou retono de dados para o backend:', error);
+			});
+			console.log(id);
+
 	}, []);
 	console.log(name);
 	console.log(idade);
 	console.log(descricao);
+	console.log(eventData);
 
 	return (
 		<View style={styles.container}>
@@ -133,8 +147,7 @@ export default function Telaprofile() {
 					<View style={styles.bttbarra} />
 					<View style={styles.bttbarra} />
 					<View style={styles.bttbarra} />
-				</Pressable>
-			
+				</Pressable>		
 
 			<Modal
 				transparent={true}
@@ -219,14 +232,14 @@ export default function Telaprofile() {
 
 
 			<View style={styles.allContainer}>
-        <View styles={styles.nameContainer}>
-          <Text style={styles.titulo}>{name}</Text>
-        </View>
+			<View styles={styles.nameContainer}>
+			<Text style={styles.titulo}>{name}</Text>
+			</View>
 
-        <View styles={styles.nameContainer1}>
-          <Text style={styles.titulo1}>{idade} Anos</Text>
-        </View>
-      </View>
+			<View styles={styles.nameContainer1}>
+			<Text style={styles.titulo1}>{idade} Anos</Text>
+			</View>
+		</View>
 
       <View style={styles.allContainerOne}>
         <View styles={styles.descContainer}>
@@ -234,13 +247,22 @@ export default function Telaprofile() {
         </View>
       </View>
 	
-
 	  <Image
         source={require("../assets/images/icons/barra.png")}
         style={styles.comentariosTituloImage}
       />
 
-		<Myeventsbar/>
+		<ScrollView style={{width: "100%", gap: 16, top: 200, maxHeight: "14%" }}>
+		<View style={{width: "100%", gap: 8,}}>
+			{
+				eventData.map((event,index) => {
+					return (
+						<CardEvent descricaoEvento={event.desc_event} idUser={id} Event_image={event.Event_image} Nm_event={event.Nm_event} Id_App_Events={idEvent} key={index}/>
+					)
+				})
+			}
+		</View>
+		</ScrollView> 
 
 			{/* <Pressable
         style={styles.eventImagePlaceholder}
@@ -414,7 +436,6 @@ const styles = StyleSheet.create({
 	  },
 	
 	  nameContainer: {
-		position: "absolute",
 	  },
 	
 	  titulo: {
@@ -433,14 +454,17 @@ const styles = StyleSheet.create({
 		fontWeight: "inter",
 	  },
 	
-	  descContainer: {},
+	  descContainer: {
+
+	  },
 	
 	  descricao: {
-		top: -10,
+		bottom: 10,
 		color: "#919191",
 		fontSize: 14,
 		fontWeight: "inter",
-		maxWidth: 300,
+		maxWidth: 350,
+		marginBottom: -80,
 	  },
 	
 	  allContainer: {
@@ -451,10 +475,10 @@ const styles = StyleSheet.create({
 	  },
 	
 	  allContainerOne: {
-		position: "absolute",
-		left: 20,
+		display: "flex",
+		right: 2,
 		flexDirection: "row",
-		top: 420,
+		top: 100,
 	  },
 	
 	  line: {
@@ -500,11 +524,21 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		marginTop: 5,
 	  },
+
+	  comentariosTitulo: {
+		color: "white",
+		fontSize: 18,
+		fontWeight: "800",
+		textAlign: "left",
+		alignItems: "flex-start",
+		marginBottom: 24,
+		width: "100%"
+	},
 	
 	  comentariosTituloImage: {
 		width: '108%',
 		height: 50,
 		resizeMode: "contain",
-		top: 480,
+		top: 195,
 	  },
 	});
