@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -115,9 +115,11 @@ export default function Cadevento2() {
     const numericValue = value.replace(/[^0-9]/g, "");
     setter(numericValue);
   };
-  
+
   const route = useRoute();
-  const { eventData, id } = route.params;
+  // const { eventData, id } = route.params;
+  const eventData = [];
+  const id = 1;
   console.log(eventData);
   eventData["Site_contact_code"] = sitectt;
   eventData["instagram_user_code"] = instagram;
@@ -131,29 +133,33 @@ export default function Cadevento2() {
   eventData["Hr_begin_code"] = horainicio;
   eventData["Hr_end_code"] = horafinal;
   eventData["Tag_event_code"] = searchText;
- 
-		// Dt_end_code,
-		// Dt_creation_code,
-	
-		// Status_event_code,
-		// Informative_Classification_code,
-		// Event_classification_code//,
-		// Tp_Event_code//,
-		// Tp_Modality_code//,
-		// Site_contact_code//,
-		// more_info_code//,
-		// instagram_user_code//,
-  
+
+  // Dt_end_code,
+  // Dt_creation_code,
+
+  // Status_event_code,
+  // Informative_Classification_code,
+  // Event_classification_code//,
+  // Tp_Event_code//,
+  // Tp_Modality_code//,
+  // Site_contact_code//,
+  // more_info_code//,
+  // instagram_user_code//,
+
   const bttCriarEvento = () => {
     const horaI = new Date("2000-01-01 " + horainicio);
     const horaF = new Date("2000-01-01 " + horafinal);
     const dataInicioFormatada = new Date(
-      `${datainicio.split("/")[2]}-${datainicio.split("/")[1]}-${datainicio.split("/")[0]}`
+      `${datainicio.split("/")[2]}-${datainicio.split("/")[1]}-${
+        datainicio.split("/")[0]
+      }`
     );
     const dataFinalFormatada = new Date(
-      `${datafinal.split("/")[2]}-${datafinal.split("/")[1]}-${datafinal.split("/")[0]}`
+      `${datafinal.split("/")[2]}-${datafinal.split("/")[1]}-${
+        datafinal.split("/")[0]
+      }`
     );
-  
+
     if (
       !nmtelefone ||
       !sitectt ||
@@ -190,7 +196,7 @@ export default function Cadevento2() {
         });
     }
   };
-  
+
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
@@ -203,12 +209,24 @@ export default function Cadevento2() {
     })
   ).current;
 
+  const [tags, setTags] = useState([]);
+  useEffect(() => {
+    axios
+      .post("http://localhost:3003/pesquisarTags")
+      .then((e) => {
+        setTags(e.data.results);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <ImageBackground
       source={require("../assets/images/telap.png")}
       style={styles.container}
       resizeMode="cover">
-        <Backbutton/>
+      <Backbutton />
       <View style={styles.overlay} {...panResponder.panHandlers}>
         <View style={styles.content}>
           <View style={styles.textInputContainer}>
@@ -327,36 +345,16 @@ export default function Cadevento2() {
               animation={isMenuVisible ? "slideInUp" : "slideInDown"}
               duration={500}>
               <View style={styles.dragIndicator} />
-              <Pressable
-                style={styles.menubtt}
-                onPress={() => selectOption("Rock")}>
-                <Text style={styles.menubtttext}>Rock</Text>
-              </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={() => selectOption("Sertanejo")}>
-                <Text style={styles.menubtttext}>Sertanejo</Text>
-              </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={() => selectOption("Dança")}>
-                <Text style={styles.menubtttext}>Dança</Text>
-              </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={() => selectOption("Teatral")}>
-                <Text style={styles.menubtttext}>Teatral</Text>
-              </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={() => selectOption("Religioso")}>
-                <Text style={styles.menubtttext}>Religioso</Text>
-              </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={() => selectOption("Funk")}>
-                <Text style={styles.menubtttext}>Funk</Text>
-              </Pressable>
+              {tags
+                .sort((a, b) => a.nm_tag.localeCompare(b.nm_tag))
+                .map((e, i) => (
+                  <Pressable
+                    style={styles.menubtt}
+                    key={i}
+                    onPress={() => selectOption(e.nm_tag)}>
+                    <Text style={styles.menubtttext}>{e.nm_tag}</Text>
+                  </Pressable>
+                ))}
             </Animatable.View>
           </Pressable>
         </Modal>
@@ -581,7 +579,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     flex: 1,
     outlineWidth: 0,
-    },
+  },
 
   icon: {
     width: 24,
@@ -669,6 +667,8 @@ const styles = StyleSheet.create({
   },
 
   menuContainer: {
+    maxHeight: 400,
+    overflow: "scroll",
     backgroundColor: "#470F62",
     padding: 16,
     borderTopLeftRadius: 24,
