@@ -24,25 +24,6 @@ export default function Telaprincipal() {
   const { params } = useRoute();
   const navigation = useNavigation();
 
-  const handleButtonHome = () => {
-    setReload(reload + 1);
-  };
-
-  const handleButtonSearch = () => {
-    navigation.navigate("search", { id: id });
-  };
-
-
-  const handleButtonCenter = () => {
-    navigation.navigate("cadevento", { id: id });
-  };
-
-
-
-  const handleButtonPeople = () => {
-    navigation.navigate("telaprofile");
-  };
-
   const handleUserImagePress = () => {
     console.log("Foto de perfil pressionada");
   };
@@ -66,16 +47,16 @@ export default function Telaprincipal() {
     require("../assets/images/Eventos(Temporarios)/EventoM(1).png"),
     require("../assets/images/Eventos(Temporarios)/EventoM(2).png"),
   ];
- 
+
   const route = useRoute();
   const { id } = route.params;
   const { userImage } = route.params;
-  
+
   const idUser = {
-    Id_user_code: id
-  }
+    Id_user_code: id,
+  };
   useEffect(() => {
-    setImgProfile(userImage)
+    setImgProfile(userImage);
     // axios
     //   .post("http://localhost:3003/dadosUser", idUser)
     //   .then((e) => {
@@ -85,20 +66,17 @@ export default function Telaprincipal() {
     //     console.log('====================================');
     //     // setImgProfile(e.data.results[0].User_image);
     //     console.log(id);
-       
+
     //   })
     //   .catch ((error) => {
     //     console.error('Erro ao enviar ou retono de dados para o backend:', error);
     // });
   }, []);
 
-
   const renderItem = ({ item }) => (
     <Image style={styles.carouselImage} source={item} />
   );
 
-
-  
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
@@ -114,21 +92,20 @@ export default function Telaprincipal() {
 
       <Text style={styles.highlightsText}>Destaques</Text>
 
-      <Destaquebar/>
+      <Destaquebar />
 
-        <View style={styles.eventContainer}>
+      <View style={styles.eventContainer}>
         <ScrollView
-            contentContainerStyle={styles.scrollViewContent}
-            showsVerticalScrollIndicator={false}
-            style={styles.scrollView}
-        >
-            {eventImages.map((image, index) => (
+          contentContainerStyle={styles.scrollViewContent}
+          showsVerticalScrollIndicator={false}
+          style={styles.scrollView}>
+          {eventImages.map((image, index) => (
             <Image key={index} source={image} style={styles.backgroundImage} />
-            ))}
+          ))}
         </ScrollView>
-        </View>
-      <Buttonprofile id={id} imgProfile= {imgProfile}/>
-      <Navbar id={id} imgProfile= {imgProfile}/>
+      </View>
+      <Buttonprofile id={id} imgProfile={imgProfile} />
+      <Navbar id={id} imgProfile={imgProfile} />
     </View>
   );
 }
@@ -193,7 +170,6 @@ const styles = StyleSheet.create({
   },
 
   scrollViewContent: {
-    
     alignItems: "center",
   },
 

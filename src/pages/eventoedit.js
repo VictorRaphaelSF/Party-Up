@@ -56,7 +56,6 @@ export default function Eventoedit({ navigation }) {
 
   const [tags, setTags] = useState("");
 
-
   const route = useRoute();
   const { id } = route.params;
   const { idEvento } = route.params;
@@ -65,10 +64,10 @@ export default function Eventoedit({ navigation }) {
   console.log(idEvento);
   useEffect(() => {
     const idEvent = {
-      eventId_code: idEvento
-    }
+      eventId_code: idEvento,
+    };
     axios
-      .post('http://localhost:3003/viewEvent', idEvent)
+      .post("http://localhost:3003/viewEvent", idEvent)
       .then((response) => {
         console.log(response);
         console.log(response.data[0]);
@@ -77,7 +76,6 @@ export default function Eventoedit({ navigation }) {
 
         // //descrição
         setDescricao(response.data[0].desc_event);
-
 
         const dataB = new Date(response.data[0].Dt_begin);
         const anoB = dataB.getFullYear();
@@ -109,23 +107,21 @@ export default function Eventoedit({ navigation }) {
         //site
         setSiteInfo(response.data[0].Site_contact);
 
-
-        setTelefone(response.data[0].Telefone_event)
-        setTpEvent(response.data[0].Tp_Event)
-        setTpModality(response.data[0].Tp_Modality)
-        setCep(response.data[0].cd_cep)
-        setComplemento(response.data[0].complemento)
-        setIntagram(response.data[0].instagram_user)
-        setMoreInfo(response.data[0].more_info)
-        setBairro(response.data[0].nm_bairro)
-        setCidade(response.data[0].nm_cidade)
-        setEstado(response.data[0].nm_estado)
-        setRua(response.data[0].nm_rua)
-        setNumeroRes(response.data[0].num_residencia)
+        setTelefone(response.data[0].Telefone_event);
+        setTpEvent(response.data[0].Tp_Event);
+        setTpModality(response.data[0].Tp_Modality);
+        setCep(response.data[0].cd_cep);
+        setComplemento(response.data[0].complemento);
+        setIntagram(response.data[0].instagram_user);
+        setMoreInfo(response.data[0].more_info);
+        setBairro(response.data[0].nm_bairro);
+        setCidade(response.data[0].nm_cidade);
+        setEstado(response.data[0].nm_estado);
+        setRua(response.data[0].nm_rua);
+        setNumeroRes(response.data[0].num_residencia);
 
         //tag
         // setTags(response.data[0].Tag_event);
-
       })
       .catch((error) => {
         console.error("Erro ao enviar os dados para o backend:", error);
@@ -134,22 +130,22 @@ export default function Eventoedit({ navigation }) {
 
   const handleButtonDelete = () => {
     const idDeEvento = {
-      idEvent: idEvento
-    }
+      idEvent: idEvento,
+    };
     axios
-      .post('http://localhost:3003/deleteEvent', idDeEvento)
+      .post("http://localhost:3003/deleteEvent", idDeEvento)
       .then((response) => {
         console.log(response);
-        navigation.navigate('telaprincipal', { id: id });
+        navigation.navigate("telaprincipal", { id: id });
       })
       .catch((error) => {
-        console.error('Erro ao enviar os dados para o backend:', error);
+        console.error("Erro ao enviar os dados para o backend:", error);
       });
-  }
+  };
 
   const handleButtonEdit = () => {
-    navigation.navigate('eventoedit2',)
-  }
+    navigation.navigate("eventoedit2");
+  };
 
   return (
     <View style={styles.container}>
@@ -188,21 +184,21 @@ export default function Eventoedit({ navigation }) {
           </View>
 
           <View style={styles.editButtonContainer}>
-          <Pressable onPress={handleButtonDelete}>
-            <Image
-              source={require('../assets/images/icons/bttexcluirnew.png')} 
-              style={styles.editButtonImage}
-            />
-          </Pressable>
-          <Pressable onPress={handleButtonEdit}>
-            <Image
-              source={require('../assets/images/icons/btteditarnew.png')}
-              style={styles.editButtonImage1}
-            />
-          </Pressable>
-        </View>
+            <Pressable onPress={handleButtonDelete}>
+              <Image
+                source={require("../assets/images/icons/bttexcluirnew.png")}
+                style={styles.editButtonImage}
+              />
+            </Pressable>
+            <Pressable onPress={handleButtonEdit}>
+              <Image
+                source={require("../assets/images/icons/btteditarnew.png")}
+                style={styles.editButtonImage1}
+              />
+            </Pressable>
+          </View>
 
-          <Comentbar/>
+          <Comentbar />
 
           <View style={styles.comentariosContainer}>
             <Image
@@ -225,7 +221,7 @@ export default function Eventoedit({ navigation }) {
           </View>
         </ScrollView>
       </ImageBackground>
-      <Navbar id={id} imgProfile= {imgProfile}/>
+      <Navbar id={id} imgProfile={imgProfile} />
     </View>
   );
 }
@@ -505,12 +501,11 @@ const styles = StyleSheet.create({
   },
 
   editButtonContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     top: 115,
     alignItems: "center",
     marginTop: 10,
     marginHorizontal: 12,
-    
   },
 
   editButton: {
@@ -530,13 +525,13 @@ const styles = StyleSheet.create({
   editButtonImage: {
     width: 175,
     height: 60,
-    resizeMode: 'contain',
+    resizeMode: "contain",
     marginRight: 14,
   },
 
   editButtonImage1: {
     width: 175,
     height: 60,
-    resizeMode: 'contain',
-  },  
+    resizeMode: "contain",
+  },
 });

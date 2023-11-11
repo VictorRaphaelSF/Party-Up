@@ -22,7 +22,7 @@ export default function Report({ navigation }) {
       source={require("../assets/images/telanexist.png")}
       style={styles.container}
       resizeMode="cover">
-        <Backbutton/>
+      <Backbutton />
       <View style={styles.overlay}>
         <View style={styles.content}>
           <Animatable.Image

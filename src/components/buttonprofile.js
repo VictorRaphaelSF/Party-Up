@@ -16,9 +16,11 @@ export default function Buttonprofile(props) {
   const navigation = useNavigation();
 
   const handleUserImagePress = () => {
-    navigation.navigate("telaprofile");
+    navigation.navigate("telaprofile", {
+      id: props.id,
+      imgProfile: props.imgProfile,
+    });
   };
-
 
   return (
     <View style={styles.topUser}>

@@ -20,16 +20,15 @@ import { useRoute } from "@react-navigation/native";
 import axios from "axios";
 import Backbutton from "../components/backbutton";
 
-export default function Cadevento({route}) {
-
-  const [nmevento, setNmevento] = useState('');
-  const [descrição, setDescrição] = useState('');
-  const [cep, setCep] = useState('');
-  const [estado, setEstado] = useState('');
-  const [cidade, setCidade] = useState('');
-  const [bairro, setBairro] = useState('');
-  const [nmrua, setNmrua] = useState('');
-  const [numero, setNumero] = useState('');
+export default function Cadevento({ route }) {
+  const [nmevento, setNmevento] = useState("");
+  const [descrição, setDescrição] = useState("");
+  const [cep, setCep] = useState("");
+  const [estado, setEstado] = useState("");
+  const [cidade, setCidade] = useState("");
+  const [bairro, setBairro] = useState("");
+  const [nmrua, setNmrua] = useState("");
+  const [numero, setNumero] = useState("");
 
   //Linha abaixo somente para validações.
   const [erro, setErro] = useState("");
@@ -92,19 +91,18 @@ export default function Cadevento({route}) {
   const opa = useRoute();
   const { id } = opa.params;
   const eventData = {
-    name_event_code : nmevento,
-		desc_event_code : descrição,
-    nm_estado_code : estado,
-		nm_cidade_code : cidade,
-		nm_bairro_code: bairro,
-		cd_cep_code: cep,
-		nm_rua_code: nmrua,
-		num_residencia_code: numero,
+    name_event_code: nmevento,
+    desc_event_code: descrição,
+    nm_estado_code: estado,
+    nm_cidade_code: cidade,
+    nm_bairro_code: bairro,
+    cd_cep_code: cep,
+    nm_rua_code: nmrua,
+    num_residencia_code: numero,
     img_Data: imageData,
-    idUser_code: id
-  
-  }
-  console.log(id)
+    idUser_code: id,
+  };
+  console.log(id);
   const handleVamosLaPress = () => {
     if (
       !nmevento ||
@@ -136,7 +134,7 @@ export default function Cadevento({route}) {
       source={require("../assets/images/telap2.png")}
       style={styles.container}
       resizeMode="cover">
-        <Backbutton/>
+      <Backbutton />
       <View style={styles.overlay}>
         <View style={styles.content}>
           <View style={styles.textInputContainer}>

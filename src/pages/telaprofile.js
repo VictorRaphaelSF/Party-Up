@@ -191,12 +191,10 @@ export default function Telaprofile() {
       </Modal>
 
       <View style={styles.innerCircle}>
-        {profileImage && (
-          <Image
-            source={`data:image/png;base64,${profileImage}`}
-            style={{ flex: 1, width: "100%", borderRadius: 105 }}
-          />
-        )}
+        <Image
+          source={`data:image/png;base64,${imgProfile}`}
+          style={{ flex: 1, width: "100%", borderRadius: 105 }}
+        />
       </View>
 
       <View style={styles.titlesContainer}>

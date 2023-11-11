@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -14,6 +14,7 @@ import {
 import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
 import Backbutton from "../components/backbutton";
+import axios from "axios";
 
 export default function Tags() {
   const navigation = useNavigation();
@@ -22,35 +23,51 @@ export default function Tags() {
   const menu = () => {
     setMenuVisible(true);
   };
- 
+
   const closeMenu = () => {
     setMenuVisible(false);
   };
-  
+
   const bttSair = () => {
-    navigation.navigate('index');
+    navigation.navigate("index");
     setMenuVisible(false);
   };
 
   const bttReport = () => {
-    navigation.navigate('report');
+    navigation.navigate("report");
     setMenuVisible(false);
   };
 
   const bttMyevent = () => {
-    navigation.navigate('myevent');
+    navigation.navigate("myevent");
     setMenuVisible(false);
   };
 
   const bttEventProgress = () => {
-    navigation.navigate('event_progress');
+    navigation.navigate("event_progress");
     setMenuVisible(false);
   };
 
   const bttDashboard = () => {
-    navigation.navigate('dashboard');
+    navigation.navigate("dashboard");
   };
-
+  const [tags, setTags] = useState([]);
+  const [category, setCategory] = useState([]);
+  useEffect(() => {
+    axios
+      .post("http://localhost:3003/pesquisarTags")
+      .then((e) => {
+        console.log(e);
+        setTags(e.data.results);
+        console.log(tags);
+        const categories = e.data.results.map((e) => e.nm_category);
+        setCategory([...new Set(categories)]);
+        console.log(category);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <View style={styles.container}>
       <Image
@@ -58,7 +75,7 @@ export default function Tags() {
         style={styles.backgroundImage}
         resizeMode="cover"
       />
-      <Backbutton/>
+      <Backbutton />
 
       <View style={styles.header}>
         <Text style={styles.title}>Buscar tags</Text>
@@ -82,24 +99,16 @@ export default function Tags() {
               style={styles.menuContainer}
               animation={isMenuVisible ? "slideInUp" : "slideInDown"}
               duration={250}>
-              <Pressable
-                style={styles.menubtt}
-                onPress={bttDashboard}>
+              <Pressable style={styles.menubtt} onPress={bttDashboard}>
                 <Text style={styles.menubtttext}>Dashboard</Text>
               </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={bttEventProgress}>
+              <Pressable style={styles.menubtt} onPress={bttEventProgress}>
                 <Text style={styles.menubtttext}>Eventos em andamentos</Text>
               </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={bttMyevent}>
+              <Pressable style={styles.menubtt} onPress={bttMyevent}>
                 <Text style={styles.menubtttext}>Meus Eventos</Text>
               </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={bttReport}>
+              <Pressable style={styles.menubtt} onPress={bttReport}>
                 <Text style={styles.menubtttext}>Report</Text>
               </Pressable>
               <Pressable
@@ -107,15 +116,36 @@ export default function Tags() {
                 onPress={() => console.log("Item 5 clicado")}>
                 <Text style={styles.menubtttext}>Termos</Text>
               </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={bttSair}>
+              <Pressable style={styles.menubtt} onPress={bttSair}>
                 <Text style={styles.menubtttext}>Sair</Text>
               </Pressable>
             </Animatable.View>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
+      <View style={styles.tagHeader}>
+        {category
+          .sort((a, b) => a.localeCompare(b))
+          .map((cc, cci) => (
+            <>
+              <Text style={styles.tagTitle} key={cci}>
+                {cc}
+              </Text>
+              <View style={styles.tagNameContaineer} key={cci}>
+                <View style={styles.tagNameContainer} key={cci}>
+                  {tags
+                    .filter((e) => e.nm_category === cc)
+                    .sort((a, b) => a.nm_tag.localeCompare(b.nm_tag))
+                    .map((e, i) => (
+                      <Text style={styles.tagName} key={i}>
+                        #{e.nm_tag}
+                      </Text>
+                    ))}
+                </View>
+              </View>
+            </>
+          ))}
+      </View>
     </View>
   );
 }
@@ -141,7 +171,7 @@ const styles = StyleSheet.create({
   },
 
   header: {
-    position: 'absolute',
+    position: "absolute",
     top: windowHeight * 0.06,
     zIndex: 1,
   },
@@ -153,6 +183,39 @@ const styles = StyleSheet.create({
     top: windowHeight * 0.06,
     right: 30,
     zIndex: 1,
+  },
+  tagHeader: {
+    marginTop: 80,
+    maxHeight: windowHeight * 0.8,
+    overflow: "scroll",
+  },
+  tagNameContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    flexWrap: "wrap",
+    gap: 5,
+  },
+  tagName: {
+    flexDirection: "row",
+    alignSelf: "center",
+    marginTop: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderRadius: 20,
+    backgroundColor: "#7d4897",
+    color: "#FFF",
+  },
+  tagTitle: {
+    marginTop: 40,
+    marginBottom: 15,
+    paddingHorizontal: 40,
+    paddingVertical: 10,
+    borderRadius: 20,
+    backgroundColor: "#75289b",
+    fontSize: 18,
+    margin: "auto",
+    color: "#FFF",
   },
 
   title: {

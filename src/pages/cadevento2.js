@@ -20,6 +20,7 @@ import { TextInputMask } from "react-native-masked-text";
 
 import axios from "axios";
 import Backbutton from "../components/backbutton";
+import Tags from "../components/tags";
 
 export default function Cadevento2() {
   const [nmtelefone, setTelefone] = useState("");
@@ -53,16 +54,16 @@ export default function Cadevento2() {
     setModalVisible(!isModalVisible);
   };
 
+  const openMenu = () => {
+    setMenuVisible(true);
+  };
+
   const selectOption = (option) => {
     setSelectedOption(option);
     setSearchText(option);
     setSelectedEventType(option);
     // toggleModal();
     setMenuVisible(false);
-  };
-
-  const openMenu = () => {
-    setMenuVisible(true);
   };
 
   const closeMenu = () => {
@@ -117,9 +118,9 @@ export default function Cadevento2() {
   };
 
   const route = useRoute();
-  // const { eventData, id } = route.params;
-  const eventData = [];
-  const id = 1;
+  const { eventData, id } = route.params;
+  // const eventData = [];
+  // const id = 1;
   console.log(eventData);
   eventData["Site_contact_code"] = sitectt;
   eventData["instagram_user_code"] = instagram;
@@ -209,18 +210,6 @@ export default function Cadevento2() {
     })
   ).current;
 
-  const [tags, setTags] = useState([]);
-  useEffect(() => {
-    axios
-      .post("http://localhost:3003/pesquisarTags")
-      .then((e) => {
-        setTags(e.data.results);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
   return (
     <ImageBackground
       source={require("../assets/images/telap.png")}
@@ -301,6 +290,7 @@ export default function Cadevento2() {
               placeholder="Selecione tags"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               value={searchText}
+              editable={false}
             />
           </Pressable>
         </View>
@@ -311,6 +301,7 @@ export default function Cadevento2() {
               placeholder="Selecionar tipo de evento"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               value={eventtype}
+              editable={false}
             />
           </Pressable>
         </View>
@@ -321,6 +312,7 @@ export default function Cadevento2() {
               placeholder="Definir tipo de acesso"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               value={accessType}
+              editable={false}
             />
           </Pressable>
         </View>
@@ -331,33 +323,15 @@ export default function Cadevento2() {
               placeholder="Definir classificação do evento"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               value={ClassificationType}
+              editable={false}
             />
           </Pressable>
         </View>
-        <Modal
-          style={styles.modalContainer}
-          transparent={true}
-          visible={isMenuVisible}
-          onRequestClose={closeMenu}>
-          <Pressable onPress={closeMenu} style={styles.modalBackground}>
-            <Animatable.View
-              style={styles.menuContainer}
-              animation={isMenuVisible ? "slideInUp" : "slideInDown"}
-              duration={500}>
-              <View style={styles.dragIndicator} />
-              {tags
-                .sort((a, b) => a.nm_tag.localeCompare(b.nm_tag))
-                .map((e, i) => (
-                  <Pressable
-                    style={styles.menubtt}
-                    key={i}
-                    onPress={() => selectOption(e.nm_tag)}>
-                    <Text style={styles.menubtttext}>{e.nm_tag}</Text>
-                  </Pressable>
-                ))}
-            </Animatable.View>
-          </Pressable>
-        </Modal>
+        <Tags
+          isMenuVisible={isMenuVisible}
+          setMenuVisible={setMenuVisible}
+          selectOption={selectOption}
+        />
         <Modal
           style={styles.modalContainer}
           transparent={true}
