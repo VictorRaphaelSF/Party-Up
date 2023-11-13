@@ -60,10 +60,14 @@ export default function Notificações() {
   console.log(id);
   //console.log(imgProfile);
 
+  const idUser = {
+    id : id
+  }
+
 
   useEffect(() => {
     axios
-      .post('http://localhost:3003/viewNotificacao', id)
+      .post('http://localhost:3003/viewNotificacao', idUser)
       .then((response) => {
         console.log(response)
       })
@@ -92,6 +96,8 @@ export default function Notificações() {
         <View style={styles.bttbarra}></View>
         <View style={styles.bttbarra}></View>
       </Pressable>
+
+      {/* colocar aqui o map de notificações */}
 
       <Modal
         transparent={true}

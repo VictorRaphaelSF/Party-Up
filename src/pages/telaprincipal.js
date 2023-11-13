@@ -65,25 +65,17 @@ export default function Telaprincipal() {
   const { id } = route.params;
   const { userImage } = route.params;
   
-  const idUser = {
-    Id_user_code: id
-  }
   useEffect(() => {
     setImgProfile(userImage)
-    // axios
-    //   .post("http://localhost:3003/dadosUser", idUser)
-    //   .then((e) => {
-    //     console.log(e);
-    //     console.log('====================================');
-    //     console.log(id);
-    //     console.log('====================================');
-    //     // setImgProfile(e.data.results[0].User_image);
-    //     console.log(id);
-       
-    //   })
-    //   .catch ((error) => {
-    //     console.error('Erro ao enviar ou retono de dados para o backend:', error);
-    // });
+    axios
+      .post("http://localhost:3003/viewDestaquesHighlights")
+      .then((e) => {
+        console.log(e);
+
+      })
+      .catch ((error) => {
+        console.error('Erro ao enviar ou retono de dados para o backend:', error);
+    });
 
 
     
