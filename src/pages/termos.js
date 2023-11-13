@@ -16,11 +16,6 @@ export default function Termos() {
   const scrollViewRef = useRef(null);
   const [termsAccepted, setTermsAccepted] = useState(false);
 
-
-  const backbutton = () => {
-    navigation.goBack();
-  };
-
   const handleScroll = (event) => {
     const position = event.nativeEvent.contentOffset.y;
     const contentHeight = event.nativeEvent.contentSize.height;

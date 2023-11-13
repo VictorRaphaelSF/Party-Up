@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -21,6 +21,11 @@ import * as Animatable from "react-native-animatable";
 import Backbutton from "../components/backbutton";
 
 export default function Report({ navigation }) {
+  const [curtidas, setCurtidas] = useState("");
+  const [presence, setPresence] = useState("");
+  const [comentario, setComentarios] = useState("");
+  const [shared, setShared] = useState("");
+
   const VamosLa = () => {
     navigation.navigate("report2");
   };
@@ -28,37 +33,30 @@ export default function Report({ navigation }) {
 
   const data = [
     {
-      name: "Seoul",
-      population: 21500000,
+      name: "Curtidas",
+      qtd: 12,
       color: "rgba(211, 141, 231, 1)",
       legendFontColor: "#FFFFFF",
       legendFontSize: 15,
     },
     {
-      name: "Toronto",
-      population: 2800000,
-      color: "#F00",
+      name: "Presenças",
+      qtd: presence,
+      color: "blue",
       legendFontColor: "#FFFFFF",
       legendFontSize: 15,
     },
     {
-      name: "Beijing",
-      population: 527612,
+      name: "Comentarios",
+      qtd: comentario,
       color: "red",
       legendFontColor: "#FFFFFF",
       legendFontSize: 15,
     },
     {
-      name: "New York",
-      population: 8538000,
+      name: "Compartilhamentos",
+      qtd: shared,
       color: "#ffffff",
-      legendFontColor: "#FFFFFF",
-      legendFontSize: 15,
-    },
-    {
-      name: "Moscow",
-      population: 11920000,
-      color: "rgb(0, 0, 255)",
       legendFontColor: "#FFFFFF",
       legendFontSize: 15,
     },
@@ -70,9 +68,9 @@ export default function Report({ navigation }) {
     backgroundGradientTo: "#08130D",
     backgroundGradientToOpacity: 0.5,
     color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-    strokeWidth: 2, // optional, default 3
+    strokeWidth: 2,
     barPercentage: 0.5,
-    useShadowColorFromDataset: false, // optional
+    useShadowColorFromDataset: false,
   };
 
   return (
@@ -84,31 +82,18 @@ export default function Report({ navigation }) {
       <View style={styles.overlay}>
         <View style={styles.content}>
           <View>
-            <Text>Bezier Line Chart</Text>
             <PieChart
               data={data}
               width={screenWidth}
-              height={300}
+              height={175}
               chartConfig={chartConfig}
-              accessor={"population"}
+              accessor={"qtd"}
               backgroundColor={"transparent"}
-              paddingLeft={"15"}
-              center={[10, 50]}
+              center={[10, 10]}
               absolute
             />
           </View>
         </View>
-      </View>
-
-      <View style={styles.overlaybtt}>
-        <Animatable.View
-          delay={700}
-          animation="fadeInUp"
-          style={styles.vamosLaButton}>
-          <Pressable style={styles.button} onPress={VamosLa}>
-            <Text style={styles.buttonText}>Avançar</Text>
-          </Pressable>
-        </Animatable.View>
       </View>
     </ImageBackground>
   );
@@ -127,8 +112,6 @@ const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     backgroundColor: "rgba(0, 0, 0, 0.01)",
-    justifyContent: "flex-start",
-    top: 24,
     alignItems: "center",
     padding: 16,
   },
@@ -136,6 +119,7 @@ const styles = StyleSheet.create({
   content: {
     justifyContent: "flex-start",
     alignItems: "center",
+    top: 32,
   },
 
   header: {
@@ -178,28 +162,6 @@ const styles = StyleSheet.create({
   topicText: {
     fontSize: 16,
     color: "#FFFFFF",
-  },
-
-  button: {
-    backgroundColor: "rgba(255, 1, 108, 0.4)",
-    paddingVertical: 14,
-    paddingHorizontal: 100,
-    borderRadius: 10,
-    position: "absolute",
-    bottom: windowHeight * 0.04,
-  },
-
-  buttonText: {
-    fontSize: 18,
-    color: "#FFFFFF",
-    opacity: 0.9,
-  },
-
-  vamosLaButton: {
-    position: "absolute",
-    bottom: 20,
-    alignItems: "center",
-    width: "100%",
   },
 
   overlaybtt: {
