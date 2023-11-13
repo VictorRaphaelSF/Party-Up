@@ -5,6 +5,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
+import Acesstermos from "./src/pages/acesstermos";
 import Index from "./src/pages/index";
 import Login from "./src/pages/login";
 import Cadastro from "./src/pages/cadastro";
@@ -243,6 +244,13 @@ export default function App() {
           }}
           name="forgotpassword"
           component={Forgotpassword}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="acesstermos"
+          component={Acesstermos}
         />
       </Stack.Navigator>
     </NavigationContainer>

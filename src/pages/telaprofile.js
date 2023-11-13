@@ -42,6 +42,11 @@ export default function Telaprofile() {
     setMenuVisible(true);
   };
 
+  const bttTermos = () => {
+    navigation.navigate("acesstermos");
+    setMenuVisible(false);
+  };
+
   const closeMenu = () => {
     setMenuVisible(false);
   };
@@ -177,9 +182,7 @@ export default function Telaprofile() {
               <Pressable style={styles.menubtt} onPress={bttReport}>
                 <Text style={styles.menubtttext}>Report</Text>
               </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={() => console.log("Item 5 clicado")}>
+              <Pressable style={styles.menubtt} onPress={bttTermos}>
                 <Text style={styles.menubtttext}>Termos</Text>
               </Pressable>
               <Pressable style={styles.menubtt} onPress={bttSair}>

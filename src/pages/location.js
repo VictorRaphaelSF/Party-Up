@@ -21,8 +21,6 @@ export default function Location() {
       <Buttonprofile/>
       </View>
     </ImageBackground>
-
-    
   );
 }
 

@@ -93,9 +93,7 @@ export default function Login({ navigation }) {
 	const bttnvconta = () => {
 		navigation.navigate('cadastro');
 	};
-
-
-
+	
 	return (
 		<View style={styles.container}>
 		  <Image

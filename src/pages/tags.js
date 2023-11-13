@@ -33,6 +33,11 @@ export default function Tags() {
     setMenuVisible(false);
   };
 
+  const bttTermos = () => {
+    navigation.navigate("acesstermos");
+    setMenuVisible(false);
+  };
+
   const bttReport = () => {
     navigation.navigate("report");
     setMenuVisible(false);
@@ -51,6 +56,7 @@ export default function Tags() {
   const bttDashboard = () => {
     navigation.navigate("dashboard");
   };
+  
   const [tags, setTags] = useState([]);
   const [category, setCategory] = useState([]);
   useEffect(() => {
@@ -111,9 +117,7 @@ export default function Tags() {
               <Pressable style={styles.menubtt} onPress={bttReport}>
                 <Text style={styles.menubtttext}>Report</Text>
               </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={() => console.log("Item 5 clicado")}>
+              <Pressable style={styles.menubtt} onPress={bttTermos}>
                 <Text style={styles.menubtttext}>Termos</Text>
               </Pressable>
               <Pressable style={styles.menubtt} onPress={bttSair}>

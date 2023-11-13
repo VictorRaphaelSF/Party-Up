@@ -24,10 +24,6 @@ export default function Telaprincipal() {
   const { params } = useRoute();
   const navigation = useNavigation();
 
-  const handleUserImagePress = () => {
-    console.log("Foto de perfil pressionada");
-  };
-
   // axios
   //   .post("http://localhost:3003/viewEvent")
   //   .then((response) => {

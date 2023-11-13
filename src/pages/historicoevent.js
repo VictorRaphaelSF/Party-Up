@@ -34,6 +34,11 @@ export default function Historicoevent() {
     setMenuVisible(false);
   };
 
+  const bttTermos = () => {
+    navigation.navigate("acesstermos");
+    setMenuVisible(false);
+  };
+
   const bttReport = () => {
     navigation.navigate('report');
     setMenuVisible(false);
@@ -110,9 +115,7 @@ export default function Historicoevent() {
                 onPress={bttReport}>
                 <Text style={styles.menubtttext}>Report</Text>
               </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={() => console.log("Item 5 clicado")}>
+              <Pressable style={styles.menubtt} onPress={bttTermos}>
                 <Text style={styles.menubtttext}>Termos</Text>
               </Pressable>
               <Pressable

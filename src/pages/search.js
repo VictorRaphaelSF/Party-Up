@@ -75,26 +75,6 @@ export default function Search() {
     }
   };
 
-  const handleButtonSearch = () => {
-    handleSearch();
-  };
-
-  const handleButtonHome = () => {
-    navigation.navigate('telaprincipal', {id : id});
-  };
-
-  const handleButtonCenter = () => {
-    navigation.navigate('cadevento', {id : id});
-  };
-
-  const handleButtonNotification = () => {
-    navigation.navigate('notificação', {id : id});
-  };
-
-  const handleButtonPeople = () => {
-    navigation.navigate('telaprofile', {id : id})
-  };
-
   const handleButtonSuge = () => {
     console.log("Botão Sugestão Pressionado");
   };
