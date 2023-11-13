@@ -15,6 +15,7 @@ import axios from "axios";
 import { ScrollView } from "react-native-gesture-handler";
 import Backbutton from "../components/backbutton";
 import Navbar from "../components/navbar";
+import Comentbar from "../components/comentbar";
 import { useRoute } from "@react-navigation/native";
 
 export default function Eventoedit({ navigation }) {
@@ -126,7 +127,7 @@ export default function Eventoedit({ navigation }) {
       .catch((error) => {
         console.error("Erro ao enviar os dados para o backend:", error);
       });
-  }, []);
+  }, []);  
 
   const handleButtonDelete = () => {
     const idDeEvento = {
@@ -198,7 +199,7 @@ export default function Eventoedit({ navigation }) {
             </Pressable>
           </View>
 
-          <Comentbar />
+          <Comentbar/>
 
           <View style={styles.comentariosContainer}>
             <Image
@@ -221,7 +222,7 @@ export default function Eventoedit({ navigation }) {
           </View>
         </ScrollView>
       </ImageBackground>
-      <Navbar id={id} imgProfile={imgProfile} />
+      <Navbar id={id} imgProfile={imgProfile}/>
     </View>
   );
 }
