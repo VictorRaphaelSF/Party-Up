@@ -329,7 +329,6 @@ export default function Cadastro({ navigation }) {
             onChangeText={(text) => setCpfCnpj(text)}
           />
         </View>
-        {Platform.OS === "web" ? (
           <View style={styles.textInputContainer}>
             <Image
               source={require("../assets/images/icons/Vector.png")}
@@ -348,14 +347,7 @@ export default function Cadastro({ navigation }) {
               onChangeText={(text) => setYearOfBirth(text)}
             />
           </View>
-        ) : (
-          <View style={styles.textInputContainer}>
-            <Image
-              source={require("../assets/images/icons/Vector.png")}
-              style={styles.lockIcon}
-            />
-          </View>
-        )}
+        
         <View style={styles.textInputContainer}>
           <Image
             source={require("../assets/images/icons/uil_padlock.png")}
@@ -416,7 +408,6 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    position: 'absolute',
     backgroundColor: "#95003F",
     maxWidth: "80%",
     paddingVertical: 14,

@@ -290,7 +290,7 @@ export default function Cadevento2() {
               placeholder="Selecione tags"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               value={searchText}
-              editable={false}
+              readOnly={false}
             />
           </Pressable>
         </View>
@@ -301,7 +301,7 @@ export default function Cadevento2() {
               placeholder="Selecionar tipo de evento"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               value={eventtype}
-              editable={false}
+              readOnly={false}
             />
           </Pressable>
         </View>
@@ -312,7 +312,7 @@ export default function Cadevento2() {
               placeholder="Definir tipo de acesso"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               value={accessType}
-              editable={false}
+              readOnly={false}
             />
           </Pressable>
         </View>
@@ -323,7 +323,7 @@ export default function Cadevento2() {
               placeholder="Definir classificação do evento"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               value={ClassificationType}
-              editable={false}
+              readOnly={false}
             />
           </Pressable>
         </View>
