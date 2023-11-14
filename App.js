@@ -48,7 +48,7 @@ export default function App() {
             headerShown: false,
           }}
           name="index"
-          component={Evento}
+          component={Index}
         />
         <Stack.Screen
           options={{

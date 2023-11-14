@@ -38,6 +38,7 @@ export default function Cadastro({ navigation }) {
   const [confirmarSenhaErro, setConfirmarSenhaErro] = useState(false);
   const [emailValido, setEmailValido] = useState(true);
   const [emailInvalido, setEmailInvalido] = useState(false);
+  const moment = require('moment');
   const [senhaFraca, setSenhaFraca] = useState(false);
   const [mostrarMensagemSenhaFraca, setMostrarMensagemSenhaFraca] =
     useState(false);
@@ -50,14 +51,19 @@ export default function Cadastro({ navigation }) {
   const validarIdade = (dataNascimento) => {
     const regex = /^\d{2}\/\d{2}\/\d{4}$/;
     if (!regex.test(dataNascimento)) {
-      setErro("Formato de data inválido. Use dd/mm/aaaa.");
-      return false;
+        setErro("Formato de data inválido. Use dd/mm/aaaa.");
+        return false;
     }
-  
-    const parts = dataNascimento.split("/");
-    const data = new Date(parts[2], parts[1] - 1, parts[0]);
-    const idade = new Date().getFullYear() - data.getFullYear();
-    
+    const data = moment(dataNascimento, 'DD/MM/YYYY');
+    if (!data.isValid()) {
+        setErro("Data de nascimento inválida.");
+        return false;
+    }
+    if (data.isAfter(moment())) {
+        setErro("Data de nascimento no futuro não é válida.");
+        return false;
+    }
+    const idade = moment().diff(data, 'years');
     return idade >= 18 && idade <= 102;
 };
 
@@ -170,6 +176,11 @@ export default function Cadastro({ navigation }) {
       setTimeout(() => {
         setErro("Insira uma data de nascimento válida");
       }, 0);
+      setTimeout(() => {
+        setErro("");
+      }, 4000);
+    } else if (telefone.length < 10) {
+      setErro("Digite um número de telefone(cel) válido");
       setTimeout(() => {
         setErro("");
       }, 4000);
