@@ -4,12 +4,13 @@ import {
   View,
   Text,
   Image,
+  Share,
   Pressable,
   Animated,
   Easing,
 } from "react-native";
 
-export default function Navbuttons() {
+export default function Navbuttons({ siteInfo }) {
   const [buttonVisible, setButtonVisible] = useState(true);
   const [likeButtonText, setLikeButtonText] = useState("Curtir");
   const [presenceButtonText, setPresenceButtonText] = useState("Agendar");
@@ -48,10 +49,10 @@ export default function Navbuttons() {
           : require("../assets/images/icons/like.png")
       );
       spinValueLike.setValue(0);
-      setLikeButtonText(prev => prev === "Curtir" ? "Curtido" : "Curtir");
+      setLikeButtonText((prev) => (prev === "Curtir" ? "Curtido" : "Curtir"));
     });
   };
-  
+
   const startPresenceAnimation = () => {
     Animated.timing(spinValuePresence, {
       toValue: 1,
@@ -66,10 +67,11 @@ export default function Navbuttons() {
           : require("../assets/images/icons/calendar_time.png")
       );
       spinValuePresence.setValue(0);
-      setPresenceButtonText(prev => prev === "Agendar" ? "Agendado" : "Agendar");
+      setPresenceButtonText((prev) =>
+        prev === "Agendar" ? "Agendado" : "Agendar"
+      );
     });
   };
-  
 
   const handleLikeButtonPress = () => {
     setIsLikeButtonPressed(true);
@@ -78,7 +80,11 @@ export default function Navbuttons() {
 
   const handlePresenceButtonPress = () => {
     setIsPresenceButtonPressed(true);
-    startPresenceAnimation(spinValuePresence, setIsPresenceButtonPressed, setPresenceImage);
+    startPresenceAnimation(
+      spinValuePresence,
+      setIsPresenceButtonPressed,
+      setPresenceImage
+    );
   };
 
   const handleThirdButtonPress = () => {
@@ -89,39 +95,64 @@ export default function Navbuttons() {
     console.log("Quarto botão pressionado");
   };
 
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: `Venha conhecer nosso evento!\n${siteInfo}`,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  };
+
   return (
     <View>
       {buttonVisible && (
         <View style={styles.buttonContainer}>
-          <Pressable style={styles.customButton} onPress={handleLikeButtonPress}>
+          <Pressable
+            style={styles.customButton}
+            onPress={handleLikeButtonPress}>
             <Animated.Image
               source={likeImage}
               style={[
-                styles.icon, 
-                { 
+                styles.icon,
+                {
                   transform: [{ rotate: `${spinLike._value}deg` }],
                   transition: "transform 0.3s ease-in-out",
-                }
+                },
               ]}
             />
             <Text style={styles.buttonTitle}>{likeButtonText}</Text>
           </Pressable>
 
-          <Pressable style={styles.customButton} onPress={handlePresenceButtonPress}>
+          <Pressable
+            style={styles.customButton}
+            onPress={handlePresenceButtonPress}>
             <Animated.Image
               source={presenceImage}
               style={[
-                styles.icon, 
-                { 
+                styles.icon,
+                {
                   transform: [{ rotate: `${spinPresence._value}deg` }],
                   transition: "transform 0.3s ease-in-out",
-                }
+                },
               ]}
             />
             <Text style={styles.buttonTitle}>{presenceButtonText}</Text>
           </Pressable>
 
-          <Pressable style={styles.customButton} onPress={handleThirdButtonPress}>
+          <Pressable
+            style={styles.customButton}
+            onPress={handleThirdButtonPress}>
             <Image
               source={require("../assets/images/icons/locate.png")}
               style={styles.icon}
@@ -129,9 +160,7 @@ export default function Navbuttons() {
             <Text style={styles.buttonTitle}>Localização</Text>
           </Pressable>
 
-          <Pressable
-            style={styles.customButton}
-            onPress={handleFourthButtonPress}>
+          <Pressable style={styles.customButton} onPress={onShare}>
             <Image
               source={require("../assets/images/icons/share.png")}
               style={styles.icon}

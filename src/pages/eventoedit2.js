@@ -39,9 +39,12 @@ export default function Eventoedit2({ navigation }) {
   const animatedValue = useRef(new Animated.Value(0)).current;
 
   const route = useRoute();
-  const { id } = route.params;
-  const { imgProfile } = route.params;
-  const { idEvento } = route.params;
+  // const { id } = route.params;
+  // const { idEvento } = route.params;
+  // const { imgProfile } = route.params;
+  const id = 1;
+  const idEvento = 1;
+  const imgProfile = null;
 
   console.log(typeEvent);
   console.log(modalityEvent);

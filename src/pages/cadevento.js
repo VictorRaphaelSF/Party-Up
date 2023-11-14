@@ -19,6 +19,7 @@ import { useRoute } from "@react-navigation/native";
 
 import axios from "axios";
 import Backbutton from "../components/backbutton";
+import CardDescarte from "../components/cardDescarte";
 
 export default function Cadevento({ route }) {
   const [nmevento, setNmevento] = useState("");
@@ -33,6 +34,7 @@ export default function Cadevento({ route }) {
   //Linha abaixo somente para validações.
   const [erro, setErro] = useState("");
   const [image, setImage] = useState(null);
+  const [confirmExit, setConfirmExit] = useState(false);
   const navigation = useNavigation();
   const [imageData, setImageData] = useState("");
 
@@ -84,9 +86,9 @@ export default function Cadevento({ route }) {
   const userData = route.params.userData;
 
   // adicionando mais dados no objeto do cliente
-  userData["nmUser"] = nmusuario;
-  userData["descricao"] = descrição;
-  userData["uri"] = "imagem.png";
+  // userData["nmUser"] = nmusuario;
+  // userData["descricao"] = descrição;
+  // userData["uri"] = "imagem.png";
 
   const opa = useRoute();
   const { id } = opa.params;
@@ -127,6 +129,23 @@ export default function Cadevento({ route }) {
       });
     }
   };
+
+  const backbutton = () => {
+    if (
+      nmevento ||
+      descrição ||
+      cep ||
+      estado ||
+      cidade ||
+      bairro ||
+      nmrua ||
+      numero
+    ) {
+      setConfirmExit(true);
+    } else {
+      navigation.goBack();
+    }
+  };
   // verificando pra ver se ta certo
 
   return (
@@ -134,7 +153,13 @@ export default function Cadevento({ route }) {
       source={require("../assets/images/telap2.png")}
       style={styles.container}
       resizeMode="cover">
-      <Backbutton />
+      {/* <Backbutton /> */}
+      <Pressable style={styles.backButton} onPress={backbutton}>
+        <Image
+          source={require("../assets/images/icons/backicon.png")}
+          style={styles.backIcon}
+        />
+      </Pressable>
       <View style={styles.overlay}>
         <View style={styles.content}>
           <View style={styles.textInputContainer}>
@@ -171,6 +196,8 @@ export default function Cadevento({ route }) {
               {renderCaracteresRestantes()}
             </Text>
           </View>
+
+          {confirmExit && <CardDescarte setDescarte={setConfirmExit} />}
 
           <View style={styles.textInputContainerSmall}>
             <TextInput
@@ -432,6 +459,18 @@ const styles = StyleSheet.create({
     height: 28,
     marginRight: 14,
     opacity: 0.8,
+  },
+
+  backButton: {
+    position: "absolute",
+    top: 50,
+    left: 27,
+    zIndex: 1,
+  },
+
+  backIcon: {
+    width: 30,
+    height: 24,
   },
 
   errorBanner: {

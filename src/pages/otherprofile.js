@@ -17,6 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import axios from "axios";
 import Navbar from "../components/navbar";
+import MenuBar from "../components/menubar";
 import Backbutton from "../components/backbutton";
 import Myeventsbar from "../components/myeventsbar";
 
@@ -44,31 +45,31 @@ export default function Otherprofile() {
   };
 
   const bttSair = () => {
-    navigation.navigate('index');
+    navigation.navigate("index");
     setMenuVisible(false);
   };
 
   const bttReport = () => {
-    navigation.navigate('report');
+    navigation.navigate("report");
     setMenuVisible(false);
   };
 
   const bttMyevent = () => {
-    navigation.navigate('myevent');
+    navigation.navigate("myevent");
     setMenuVisible(false);
   };
 
   const bttEventProgress = () => {
-    navigation.navigate('event_progress');
+    navigation.navigate("event_progress");
     setMenuVisible(false);
   };
 
   const bttDashboard = () => {
-    navigation.navigate('dashboard');
+    navigation.navigate("dashboard");
   };
 
   const bttTermos = () => {
-    navigation.navigate('acesstermos');
+    navigation.navigate("acesstermos");
   };
 
   // const route = useRoute();
@@ -106,7 +107,7 @@ export default function Otherprofile() {
         style={styles.backgroundImage}
         resizeMode="cover"
       />
-      <Backbutton/>
+      <Backbutton />
       <View style={styles.innerCircle}>
         {profileImage && (
           <Image
@@ -116,57 +117,17 @@ export default function Otherprofile() {
         )}
       </View>
 
-      
       <Pressable style={styles.button} onPress={menu}>
         <View style={styles.bttbarra}></View>
         <View style={styles.bttbarra}></View>
         <View style={styles.bttbarra}></View>
       </Pressable>
 
-      <Modal
-        transparent={true}
-        visible={isMenuVisible}
-        onRequestClose={closeMenu}>
-        <TouchableWithoutFeedback onPress={closeMenu}>
-          <View style={styles.modalBackground}>
-            <Animatable.View
-              style={styles.menuContainer}
-              animation={isMenuVisible ? "slideInUp" : "slideInDown"}
-              duration={250}>
-              <Pressable
-                style={styles.menubtt}
-                onPress={bttDashboard}>
-                <Text style={styles.menubtttext}>Dashboard</Text>
-              </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={bttEventProgress}>
-                <Text style={styles.menubtttext}>Eventos em andamentos</Text>
-              </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={bttMyevent}>
-                <Text style={styles.menubtttext}>Meus Eventos</Text>
-              </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={bttReport}>
-                <Text style={styles.menubtttext}>Report</Text>
-              </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={bttTermos}>
-                <Text style={styles.menubtttext}>Termos</Text>
-              </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={bttSair}>
-                <Text style={styles.menubtttext}>Sair</Text>
-              </Pressable>
-            </Animatable.View>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
+      <MenuBar
+        isMenuVisible={isMenuVisible}
+        setMenuVisible={setMenuVisible}
+        menu={menu}
+      />
 
       <View style={styles.titlesContainer}>
         <View style={styles.titleContainer}>
@@ -205,9 +166,9 @@ export default function Otherprofile() {
         source={require("../assets/images/icons/barralike.png")}
         style={styles.comentariosTituloImage}
       />
-      
-      <Myeventsbar/>
-      <Navbar id={id} imgProfile= {profileImage}/>
+
+      <Myeventsbar />
+      <Navbar id={id} imgProfile={profileImage} />
     </View>
   );
 }
@@ -451,7 +412,7 @@ const styles = StyleSheet.create({
   },
 
   comentariosTituloImage: {
-    width: '108%',
+    width: "108%",
     height: 50,
     resizeMode: "contain",
     top: 480,

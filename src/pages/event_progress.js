@@ -13,6 +13,7 @@ import {
 import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
 import Backbutton from "../components/backbutton";
+import MenuBar from "../components/menubar";
 
 export default function Event_progress() {
   const navigation = useNavigation();
@@ -22,39 +23,6 @@ export default function Event_progress() {
     setMenuVisible(true);
   };
 
-  const closeMenu = () => {
-    setMenuVisible(false);
-  };
-
-  const bttSair = () => {
-    navigation.navigate("index");
-    setMenuVisible(false);
-  };
-
-  const bttTermos = () => {
-    navigation.navigate("acesstermos");
-    setMenuVisible(false);
-  };
-
-  const bttReport = () => {
-    navigation.navigate("report");
-    setMenuVisible(false);
-  };
-
-  const bttMyevent = () => {
-    navigation.navigate("myevent");
-    setMenuVisible(false);
-  };
-
-  const bttEventProgress = () => {
-    navigation.navigate("event_progress");
-    setMenuVisible(false);
-  };
-
-  const bttDashboard = () => {
-    navigation.navigate("dashboard");
-  };
-
   return (
     <View style={styles.container}>
       <Image
@@ -62,7 +30,7 @@ export default function Event_progress() {
         style={styles.backgroundImage}
         resizeMode="cover"
       />
-      <Backbutton/>
+      <Backbutton />
 
       <View style={styles.header}>
         <Text style={styles.title}>Eventos em andamento</Text>
@@ -76,38 +44,11 @@ export default function Event_progress() {
 
       <View style={styles.linha}></View>
 
-      <Modal
-        transparent={true}
-        visible={isMenuVisible}
-        onRequestClose={closeMenu}>
-        <TouchableWithoutFeedback onPress={closeMenu}>
-          <View style={styles.modalBackground}>
-            <Animatable.View
-              style={styles.menuContainer}
-              animation={isMenuVisible ? "slideInUp" : "slideInDown"}
-              duration={250}>
-              <Pressable style={styles.menubtt} onPress={bttDashboard}>
-                <Text style={styles.menubtttext}>Dashboard</Text>
-              </Pressable>
-              <Pressable style={styles.menubtt} onPress={bttEventProgress}>
-                <Text style={styles.menubtttext}>Eventos em andamentos</Text>
-              </Pressable>
-              <Pressable style={styles.menubtt} onPress={bttMyevent}>
-                <Text style={styles.menubtttext}>Meus Eventos</Text>
-              </Pressable>
-              <Pressable style={styles.menubtt} onPress={bttReport}>
-                <Text style={styles.menubtttext}>Report</Text>
-              </Pressable>
-              <Pressable style={styles.menubtt} onPress={bttTermos}>
-                <Text style={styles.menubtttext}>Termos</Text>
-              </Pressable>
-              <Pressable style={styles.menubtt} onPress={bttSair}>
-                <Text style={styles.menubtttext}>Sair</Text>
-              </Pressable>
-            </Animatable.View>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
+      <MenuBar
+        isMenuVisible={isMenuVisible}
+        setMenuVisible={setMenuVisible}
+        menu={menu}
+      />
     </View>
   );
 }

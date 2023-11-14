@@ -31,21 +31,27 @@ export default function Evento({ navigation }) {
   const [tags, setTags] = useState("");
 
   const route = useRoute();
-  const { id } = route.params;
-  const { idEvento } = route.params;
-  const { imgProfile } = route.params;
+  // const { id } = route.params;
+  // const { idEvento } = route.params;
+  // const { imgProfile } = route.params;
+  const id = 1;
+  const idEvento = 1;
+  const imgProfile = null;
   console.log(id);
 
   useEffect(() => {
-    const idEvent ={
-      eventId_code: idEvento
-    }
+    const idEvent = {
+      eventId_code: idEvento,
+    };
     axios
-      .post('http://localhost:3003/viewEvent',idEvent)
+      .post("http://localhost:3003/viewEvent", idEvent)
       .then((response) => {
         console.log(response.data[0]);
         //nome
         setTitulo(response.data[0].Nm_event);
+
+        //image
+        setImgProfile(response.data[0].Event_image);
 
         //descrição
         setDescricao(response.data[0].desc_event);
@@ -97,7 +103,7 @@ export default function Evento({ navigation }) {
         source={backgroundImage || require("../assets/images/telanexist.png")}
         style={styles.backgroundImage}
         resizeMode="cover">
-        <Backbutton/>
+        <Backbutton />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.overlay}>
             <View style={styles.descricaoContainer}>
@@ -128,9 +134,9 @@ export default function Evento({ navigation }) {
             <Text style={styles.tagsTexto}>{tags}</Text>
           </View>
 
-          <Navbuttons/>
+          <Navbuttons siteInfo={siteInfo} />
 
-          <Comentbar/>
+          <Comentbar />
 
           <View style={styles.comentariosContainer}>
             <Image
@@ -153,7 +159,7 @@ export default function Evento({ navigation }) {
           </View>
         </ScrollView>
       </ImageBackground>
-      <Navbar id={id} imgProfile= {imgProfile}/>
+      <Navbar id={id} imgProfile={imgProfile} />
     </View>
   );
 }
@@ -284,7 +290,7 @@ const styles = StyleSheet.create({
   },
 
   navButton: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
 
   tagsTitulo: {
@@ -365,7 +371,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "inter",
     textAlign: "center",
-    alignSelf: 'center',
+    alignSelf: "center",
     opacity: 0.7,
   },
 });

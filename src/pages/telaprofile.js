@@ -20,6 +20,7 @@ import axios from "axios";
 import Navbar from "../components/navbar";
 import Backbutton from "../components/backbutton";
 import CardEvent from "../components/cardEvent";
+import MenuBar from "../components/menubar";
 import CardSair from "../components/cardSair";
 
 export default function Telaprofile() {
@@ -42,42 +43,8 @@ export default function Telaprofile() {
     setMenuVisible(true);
   };
 
-  const bttTermos = () => {
-    navigation.navigate("acesstermos");
-    setMenuVisible(false);
-  };
-
-  const closeMenu = () => {
-    setMenuVisible(false);
-  };
-
   const handleButtonEdit = () => {
     console.log("Botão edit pressionado");
-  };
-
-  const bttSair = () => {
-    // navigation.navigate("index");
-    setSair(true);
-    setMenuVisible(false);
-  };
-
-  const bttReport = () => {
-    navigation.navigate("report");
-    setMenuVisible(false);
-  };
-
-  const bttMyevent = () => {
-    navigation.navigate("myevent", { id: id });
-    setMenuVisible(false);
-  };
-
-  const bttEventProgress = () => {
-    navigation.navigate("event_progress");
-    setMenuVisible(false);
-  };
-
-  const bttDashboard = () => {
-    navigation.navigate("dashboard");
   };
 
   const route = useRoute();
@@ -160,38 +127,11 @@ export default function Telaprofile() {
         <View style={styles.bttbarra} />
       </Pressable>
 
-      <Modal
-        transparent={true}
-        visible={isMenuVisible}
-        onRequestClose={closeMenu}>
-        <TouchableWithoutFeedback onPress={closeMenu}>
-          <View style={styles.modalBackground}>
-            <Animatable.View
-              style={styles.menuContainer}
-              animation={isMenuVisible ? "slideInUp" : "slideInDown"}
-              duration={250}>
-              <Pressable style={styles.menubtt} onPress={bttDashboard}>
-                <Text style={styles.menubtttext}>Dashboard</Text>
-              </Pressable>
-              <Pressable style={styles.menubtt} onPress={bttEventProgress}>
-                <Text style={styles.menubtttext}>Eventos em andamentos</Text>
-              </Pressable>
-              <Pressable style={styles.menubtt} onPress={bttMyevent}>
-                <Text style={styles.menubtttext}>Meus Eventos</Text>
-              </Pressable>
-              <Pressable style={styles.menubtt} onPress={bttReport}>
-                <Text style={styles.menubtttext}>Report</Text>
-              </Pressable>
-              <Pressable style={styles.menubtt} onPress={bttTermos}>
-                <Text style={styles.menubtttext}>Termos</Text>
-              </Pressable>
-              <Pressable style={styles.menubtt} onPress={bttSair}>
-                <Text style={styles.menubtttext}>Sair</Text>
-              </Pressable>
-            </Animatable.View>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
+      <MenuBar
+        isMenuVisible={isMenuVisible}
+        setMenuVisible={setMenuVisible}
+        menu={menu}
+      />
 
       <View style={styles.innerCircle}>
         <Image

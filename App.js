@@ -27,6 +27,7 @@ import Report2 from "./src/pages/report2";
 import Report3 from "./src/pages/report3";
 import Evento from "./src/pages/evento";
 import Eventoedit from "./src/pages/eventoedit";
+import Settings from "./src/pages/settings";
 import Tags from "./src/pages/tags";
 import Comentario from "./src/pages/comentario";
 import Myevent from "./src/pages/myevent";
@@ -47,7 +48,7 @@ export default function App() {
             headerShown: false,
           }}
           name="index"
-          component={Index}
+          component={Evento}
         />
         <Stack.Screen
           options={{
@@ -209,6 +210,13 @@ export default function App() {
           }}
           name="eventoedit2"
           component={Eventoedit2}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="settings"
+          component={Settings}
         />
         <Stack.Screen
           options={{

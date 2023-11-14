@@ -61,6 +61,9 @@ export default function Eventoedit({ navigation }) {
   const { id } = route.params;
   const { idEvento } = route.params;
   const { imgProfile } = route.params;
+  // const id = 1;
+  // const idEvento = 1;
+  // const imgProfile = null;
 
   console.log(idEvento);
   useEffect(() => {
@@ -127,7 +130,7 @@ export default function Eventoedit({ navigation }) {
       .catch((error) => {
         console.error("Erro ao enviar os dados para o backend:", error);
       });
-  }, []);  
+  }, []);
 
   const handleButtonDelete = () => {
     const idDeEvento = {
@@ -199,7 +202,7 @@ export default function Eventoedit({ navigation }) {
             </Pressable>
           </View>
 
-          <Comentbar/>
+          <Comentbar />
 
           <View style={styles.comentariosContainer}>
             <Image
@@ -222,7 +225,7 @@ export default function Eventoedit({ navigation }) {
           </View>
         </ScrollView>
       </ImageBackground>
-      <Navbar id={id} imgProfile={imgProfile}/>
+      <Navbar id={id} imgProfile={imgProfile} />
     </View>
   );
 }

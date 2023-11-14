@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useRoute } from "@react-navigation/native";
 import {
   StyleSheet,
   View,
@@ -13,52 +14,43 @@ import {
 
 import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
-import Backbutton from "../components/backbutton";
 import Navbar from "../components/navbar";
-import MenuBar from "../components/menubar";
+import Backbutton from "../components/backbutton";
+import Icon from "react-native-vector-icons/FontAwesome";
+import axios from "axios";
 
-export default function Historicoevent() {
+export default function Settings() {
   const navigation = useNavigation();
-
   const [isMenuVisible, setMenuVisible] = useState(false);
 
   const menu = () => {
     setMenuVisible(true);
   };
 
+  const route = useRoute();
+
   return (
     <View style={styles.container}>
+      <Image
+        source={require("../assets/images/telap.png")}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      />
       <Backbutton />
       <View style={styles.header}>
-        <Text style={styles.title}>Histórico</Text>
+        <Text style={styles.title}>Configurações</Text>
       </View>
-
-      <Pressable style={styles.button} onPress={menu}>
-        <View style={styles.bttbarra}></View>
-        <View style={styles.bttbarra}></View>
-        <View style={styles.bttbarra}></View>
-      </Pressable>
-
       <View style={styles.linha}></View>
-      <View style={styles.bottomImageContainer}>
-        <Image
-          source={require("../assets/images/img_borda_inicio.png")}
-          style={styles.bottomImage}
-        />
+
+      <View style={styles.optionsContainer}>
+        <Icon style={styles.option} name="envelope-o" color={"#fff"} size={20}>
+          <Text style={styles.optionText}>Alteral email</Text>
+        </Icon>
+        <Icon style={styles.option} name="trash-o" color={"#ca3f3f"} size={20}>
+          <Text style={styles.optionExcluir}>Excluir conta</Text>
+        </Icon>
       </View>
-
-      <Pressable style={styles.button} onPress={menu}>
-        <View style={styles.bttbarra}></View>
-        <View style={styles.bttbarra}></View>
-        <View style={styles.bttbarra}></View>
-      </Pressable>
-
-      <MenuBar
-        isMenuVisible={isMenuVisible}
-        setMenuVisible={setMenuVisible}
-        menu={menu}
-      />
-      <Navbar id={id} imgProfile={imgProfile} />
+      <Navbar />
     </View>
   );
 }
@@ -74,6 +66,15 @@ const styles = StyleSheet.create({
     padding: 16,
   },
 
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    top: 0,
+    left: 0,
+  },
+
   header: {
     flexDirection: "row",
     alignItems: "center",
@@ -87,12 +88,50 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
 
+  header1: {
+    flexDirection: "row",
+    alignItems: "center",
+    position: "absolute",
+    top: windowHeight * 0.06,
+    right: 30,
+    zIndex: 1,
+  },
+
   linha: {
     width: Platform.OS === "web" ? "100%" : "108%",
     height: 1,
     backgroundColor: "#FFFFFF",
     position: "absolute",
     top: windowHeight * 0.12,
+  },
+
+  optionsContainer: {
+    width: "100%",
+    paddingVertical: 20,
+    marginTop: -450,
+  },
+
+  option: {
+    display: "flex",
+    marginVertical: 14,
+    borderBottomWidth: 1,
+    borderBottomColor: "#FFF",
+    paddingLeft: 30,
+    paddingVertical: 20,
+    margin: -20,
+    alignItems: "center",
+  },
+
+  optionText: {
+    fontFamily: "Arial",
+    fontSize: 15,
+    marginHorizontal: 10,
+  },
+  optionExcluir: {
+    color: "#ca3f3f",
+    fontFamily: "Arial",
+    fontSize: 15,
+    marginHorizontal: 10,
   },
 
   button: {

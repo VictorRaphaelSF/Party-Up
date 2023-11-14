@@ -15,6 +15,7 @@ import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
 import Backbutton from "../components/backbutton";
 import axios from "axios";
+import MenuBar from "../components/menubar";
 
 export default function Tags() {
   const navigation = useNavigation();
@@ -56,7 +57,7 @@ export default function Tags() {
   const bttDashboard = () => {
     navigation.navigate("dashboard");
   };
-  
+
   const [tags, setTags] = useState([]);
   const [category, setCategory] = useState([]);
   useEffect(() => {
@@ -95,38 +96,11 @@ export default function Tags() {
         <View style={styles.bttbarra}></View>
       </Pressable>
 
-      <Modal
-        transparent={true}
-        visible={isMenuVisible}
-        onRequestClose={closeMenu}>
-        <TouchableWithoutFeedback onPress={closeMenu}>
-          <View style={styles.modalBackground}>
-            <Animatable.View
-              style={styles.menuContainer}
-              animation={isMenuVisible ? "slideInUp" : "slideInDown"}
-              duration={250}>
-              <Pressable style={styles.menubtt} onPress={bttDashboard}>
-                <Text style={styles.menubtttext}>Dashboard</Text>
-              </Pressable>
-              <Pressable style={styles.menubtt} onPress={bttEventProgress}>
-                <Text style={styles.menubtttext}>Eventos em andamentos</Text>
-              </Pressable>
-              <Pressable style={styles.menubtt} onPress={bttMyevent}>
-                <Text style={styles.menubtttext}>Meus Eventos</Text>
-              </Pressable>
-              <Pressable style={styles.menubtt} onPress={bttReport}>
-                <Text style={styles.menubtttext}>Report</Text>
-              </Pressable>
-              <Pressable style={styles.menubtt} onPress={bttTermos}>
-                <Text style={styles.menubtttext}>Termos</Text>
-              </Pressable>
-              <Pressable style={styles.menubtt} onPress={bttSair}>
-                <Text style={styles.menubtttext}>Sair</Text>
-              </Pressable>
-            </Animatable.View>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
+      <MenuBar
+        isMenuVisible={isMenuVisible}
+        setMenuVisible={setMenuVisible}
+        menu={menu}
+      />
       <View style={styles.tagHeader}>
         {category
           .sort((a, b) => a.localeCompare(b))

@@ -9,7 +9,7 @@ import {
   Platform,
   Dimensions,
   Modal,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
 } from "react-native";
 
 import * as Animatable from "react-native-animatable";
@@ -17,6 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import Navbar from "../components/navbar";
 import Backbutton from "../components/backbutton";
 import axios from "axios";
+import MenuBar from "../components/menubar";
 
 export default function Notificações() {
   const navigation = useNavigation();
@@ -26,52 +27,26 @@ export default function Notificações() {
     setMenuVisible(true);
   };
 
-  const closeMenu = () => {
-    setMenuVisible(false);
-  };
-
-  const bttSair = () => {
-    navigation.navigate('index');
-    setMenuVisible(false);
-  };
-
-  const bttReport = () => {
-    navigation.navigate('report');
-    setMenuVisible(false);
-  };
-
-  const bttMyevent = () => {
-    navigation.navigate('myevent');
-    setMenuVisible(false);
-  };
-
-  const bttEventProgress = () => {
-    navigation.navigate('event_progress');
-    setMenuVisible(false);
-  };
-
-  const bttDashboard = () => {
-    navigation.navigate('dashboard');
-  };
   const route = useRoute();
   const { id } = route.params;
   const { imgProfile } = route.params;
- 
+
   console.log(id);
   //console.log(imgProfile);
 
-
   useEffect(() => {
     axios
-      .post('http://localhost:3003/viewNotificacao', id)
+      .post("http://localhost:3003/viewNotificacao", id)
       .then((response) => {
-        console.log(response)
+        console.log(response);
       })
       .catch((error) => {
-        console.error('Erro ao enviar ou retono de dados para o backend:', error);
+        console.error(
+          "Erro ao enviar ou retono de dados para o backend:",
+          error
+        );
       });
   }, []);
-  
 
   return (
     <View style={styles.container}>
@@ -80,7 +55,7 @@ export default function Notificações() {
         style={styles.backgroundImage}
         resizeMode="cover"
       />
-      <Backbutton/>
+      <Backbutton />
       <View style={styles.header}>
         <Text style={styles.title}>Notificações</Text>
       </View>
@@ -93,51 +68,13 @@ export default function Notificações() {
         <View style={styles.bttbarra}></View>
       </Pressable>
 
-      <Modal
-        transparent={true}
-        visible={isMenuVisible}
-        onRequestClose={closeMenu}>
-        <TouchableWithoutFeedback onPress={closeMenu}>
-          <View style={styles.modalBackground}>
-            <Animatable.View
-              style={styles.menuContainer}
-              animation={isMenuVisible ? "slideInUp" : "slideInDown"}
-              duration={250}>
-              <Pressable
-                style={styles.menubtt}
-                onPress={bttDashboard}>
-                <Text style={styles.menubtttext}>Dashboard</Text>
-              </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={bttEventProgress}>
-                <Text style={styles.menubtttext}>Eventos em andamentos</Text>
-              </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={bttMyevent}>
-                <Text style={styles.menubtttext}>Meus Eventos</Text>
-              </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={bttReport}>
-                <Text style={styles.menubtttext}>Report</Text>
-              </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={() => console.log("Item 5 clicado")}>
-                <Text style={styles.menubtttext}>Termos</Text>
-              </Pressable>
-              <Pressable
-                style={styles.menubtt}
-                onPress={bttSair}>
-                <Text style={styles.menubtttext}>Sair</Text>
-              </Pressable>
-            </Animatable.View>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
-      <Navbar id={id} imgProfile= {imgProfile}/>
+      <MenuBar
+        isMenuVisible={isMenuVisible}
+        setMenuVisible={setMenuVisible}
+        menu={menu}
+      />
+
+      <Navbar id={id} imgProfile={imgProfile} />
     </View>
   );
 }
@@ -183,7 +120,7 @@ const styles = StyleSheet.create({
     right: 30,
     zIndex: 1,
   },
-  
+
   linha: {
     width: Platform.OS === "web" ? "100%" : "108%",
     height: 1,
