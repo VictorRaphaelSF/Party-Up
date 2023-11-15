@@ -12,7 +12,7 @@ import {
 import { useRoute, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 
-export default function Destaquebar() {
+export default function Destaquebar({eventsData}) {
 
     const eventosTemporarios = [
         require("../assets/images/Eventos(Temporarios)/Evento(1).png"),
@@ -34,10 +34,18 @@ return (
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.scrollViewContent}
     >
-      {eventosTemporarios.map((item, index) => (
+      {/* {eventosTemporarios.map((item, index) => (
         <View key={index} style={styles.carouselItem}>
           <Image style={styles.carouselImage} source={item} />
         </View>
+      ))} */}
+      {eventsData.map((e, index) => (
+          <View key={index} style={styles.carouselItem}>
+            <Image
+              source={`data:image/png;base64,${e.Event_image}`}
+              style={styles.carouselImage}
+            />
+          </View>
       ))}
     </ScrollView>
     </View>

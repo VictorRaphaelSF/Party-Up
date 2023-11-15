@@ -20,18 +20,10 @@ import Destaquebar from "../components/destaquebar";
 // import "slick-carousel/slick/slick-theme.css";
 
 export default function Telaprincipal() {
-  const [imgProfile, setImgProfile] = useState("");
+  const [eventsData, setEventsData] = useState([]);
+  // const [imgProfile, setImgProfile] = useState("");
   const { params } = useRoute();
   const navigation = useNavigation();
-
-  // axios
-  //   .post("http://localhost:3003/viewEvent")
-  //   .then((response) => {
-  //     console.log(response);
-  //   })
-  //   .catch((error) => {
-  //     console.error("Erro ao enviar ou retono de dados para o backend:", error);
-  //   });
 
   const eventImages = [
     require("../assets/images/Eventos(Temporarios)/EventoM(1).png"),
@@ -46,13 +38,25 @@ export default function Telaprincipal() {
 
   const route = useRoute();
   const { id } = route.params;
-  const { userImage } = route.params;
+  const { imgProfile } = route.params;
 
   const idUser = {
     Id_user_code: id,
   };
   useEffect(() => {
-    setImgProfile(userImage);
+    axios
+      .get("http://localhost:3003/viewAllEvent")
+      .then((response) => {
+        console.log(response);
+        setEventsData(response.data.results);
+      })
+      .catch((error) => {
+        console.error(
+          "Erro ao enviar ou retornar de dados para o backend:",
+          error
+        );
+      });
+    // setImgProfile(userImage);
     // axios
     //   .post("http://localhost:3003/dadosUser", idUser)
     //   .then((e) => {
@@ -88,15 +92,24 @@ export default function Telaprincipal() {
 
       <Text style={styles.highlightsText}>Destaques</Text>
 
-      <Destaquebar />
+      <Destaquebar eventsData={eventsData} />
 
       <View style={styles.eventContainer}>
         <ScrollView
           contentContainerStyle={styles.scrollViewContent}
           showsVerticalScrollIndicator={false}
           style={styles.scrollView}>
-          {eventImages.map((image, index) => (
+          {/* {eventImages.map((image, index) => (
             <Image key={index} source={image} style={styles.backgroundImage} />
+          ))} */}
+          {eventsData.map((e, index) => (
+            <>
+              <Image
+                source={`data:image/png;base64,${e.Event_image}`}
+                style={styles.backgroundImage}
+              />
+              <Text style={styles.descEvent}>{e.desc_event}</Text>
+            </>
           ))}
         </ScrollView>
       </View>
@@ -158,6 +171,14 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     maxHeight: 420,
+  },
+
+  descEvent: {
+    fontSize: 15,
+    position: "relative",
+    maxWidth: 250,
+    bottom: 70,
+    color: "#FFF",
   },
 
   scrollView: {

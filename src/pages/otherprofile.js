@@ -36,40 +36,8 @@ export default function Otherprofile() {
     setMenuVisible(true);
   };
 
-  const closeMenu = () => {
-    setMenuVisible(false);
-  };
-
   const handleButtonEdit = () => {
     console.log("Botão edit pressionado");
-  };
-
-  const bttSair = () => {
-    navigation.navigate("index");
-    setMenuVisible(false);
-  };
-
-  const bttReport = () => {
-    navigation.navigate("report");
-    setMenuVisible(false);
-  };
-
-  const bttMyevent = () => {
-    navigation.navigate("myevent");
-    setMenuVisible(false);
-  };
-
-  const bttEventProgress = () => {
-    navigation.navigate("event_progress");
-    setMenuVisible(false);
-  };
-
-  const bttDashboard = () => {
-    navigation.navigate("dashboard");
-  };
-
-  const bttTermos = () => {
-    navigation.navigate("acesstermos");
   };
 
   // const route = useRoute();

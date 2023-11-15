@@ -53,7 +53,7 @@ export default function Telaprofile() {
   const { imgProfile } = route.params;
 
   const idUser = {
-    userName_code: 1,
+    userId_code: 1,
   };
 
   // console.log(imgProfile);
@@ -68,6 +68,7 @@ export default function Telaprofile() {
     axios
       .post("http://localhost:3003/profileUser", idUser)
       .then((response) => {
+        console.log(response.data.results);
         console.log(response.data.results[0]);
         setName(response.data.results[0].User_name);
         setIdade(response.data.results[0].idade);

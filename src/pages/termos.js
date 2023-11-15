@@ -41,7 +41,7 @@ export default function Termos() {
         console.log(response);
         setTermsAccepted(true); // Marcando os termos como aceitos
         navigation.navigate("emailvalidation", {
-          userImage: route.params.userImage,
+          imgProfile: route.params.userImage,
         });
       })
       .catch((error) => {

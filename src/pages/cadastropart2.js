@@ -64,7 +64,7 @@ export default function Logado({ route }) {
       }, 4000);
     } else {
       console.log(image);
-      navigation.navigate("termos", { userImage: image, userData: userData });
+      navigation.navigate("termos", { imgProfile: image, userData: userData });
     }
   };
 

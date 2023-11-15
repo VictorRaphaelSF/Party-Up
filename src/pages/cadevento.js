@@ -123,7 +123,7 @@ export default function Cadevento({ route }) {
     } else {
       setErro("");
       navigation.navigate("cadevento2", {
-        userImage: image,
+        imgProfile: image,
         eventData: eventData,
         id: id,
       });

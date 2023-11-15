@@ -17,6 +17,7 @@ import Backbutton from "../components/backbutton";
 import Navbar from "../components/navbar";
 import Comentbar from "../components/comentbar";
 import { useRoute } from "@react-navigation/native";
+import CardExcluir from "../components/cardExcluir";
 
 export default function Eventoedit({ navigation }) {
   const [backgroundImage, setBackgroundImage] = useState(null);
@@ -42,6 +43,10 @@ export default function Eventoedit({ navigation }) {
   const [rua, setRua] = useState("");
   const [numeroRes, setNumeroRes] = useState("");
 
+  const [excluir, setExcluir] = useState(false);
+
+  const [nomeEvento, setNomeEvento] = useState("");
+
   console.log(telefone);
   console.log(tpEvent);
   console.log(tpModality);
@@ -62,7 +67,7 @@ export default function Eventoedit({ navigation }) {
   const { idEvento } = route.params;
   const { imgProfile } = route.params;
   // const id = 1;
-  // const idEvento = 1;
+  // const idEvento = 6;
   // const imgProfile = null;
 
   console.log(idEvento);
@@ -132,27 +137,21 @@ export default function Eventoedit({ navigation }) {
       });
   }, []);
 
-  const handleButtonDelete = () => {
-    const idDeEvento = {
-      idEvent: idEvento,
-    };
-    axios
-      .post("http://localhost:3003/deleteEvent", idDeEvento)
-      .then((response) => {
-        console.log(response);
-        navigation.navigate("telaprincipal", { id: id });
-      })
-      .catch((error) => {
-        console.error("Erro ao enviar os dados para o backend:", error);
-      });
-  };
-
   const handleButtonEdit = () => {
     navigation.navigate("eventoedit2");
   };
 
   return (
     <View style={styles.container}>
+      {excluir && (
+        <CardExcluir
+          setExcluir={setExcluir}
+          nomeEvento={nomeEvento}
+          setNomeEvento={setNomeEvento}
+          titulo={titulo}
+          idEvento={idEvento}
+        />
+      )}
       <ImageBackground
         source={backgroundImage || require("../assets/images/telanexist.png")}
         style={styles.backgroundImage}
@@ -188,7 +187,7 @@ export default function Eventoedit({ navigation }) {
           </View>
 
           <View style={styles.editButtonContainer}>
-            <Pressable onPress={handleButtonDelete}>
+            <Pressable onPress={() => setExcluir(true)}>
               <Image
                 source={require("../assets/images/icons/bttexcluirnew.png")}
                 style={styles.editButtonImage}

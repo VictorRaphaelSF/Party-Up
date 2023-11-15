@@ -31,7 +31,7 @@ export default function Emailvalidation() {
       .then((e) => {
         setCodeError(false);
         navigation.navigate("login", {
-          userImage: route.params.userImage,
+          imgProfile: route.params.userImage,
         });
       })
       .catch((err) => {
