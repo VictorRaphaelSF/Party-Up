@@ -18,6 +18,7 @@ import Navbar from "../components/navbar";
 import Backbutton from "../components/backbutton";
 import Icon from "react-native-vector-icons/FontAwesome";
 import axios from "axios";
+import CardDeletar from "../components/cardDeletar";
 
 export default function Settings() {
   const navigation = useNavigation();
@@ -29,8 +30,12 @@ export default function Settings() {
 
   const route = useRoute();
 
+  const [senha, setSenha] = useState("")
+  const [deletar, setDeletar] = useState(false)
+
   return (
     <View style={styles.container}>
+      {deletar && <CardDeletar setDeletar={setDeletar} senha={senha} setSenha={setSenha} />}
       <Image
         source={require("../assets/images/telap.png")}
         style={styles.backgroundImage}
@@ -44,11 +49,13 @@ export default function Settings() {
 
       <View style={styles.optionsContainer}>
         <Icon style={styles.option} name="envelope-o" color={"#fff"} size={20}>
-          <Text style={styles.optionText}>Alteral email</Text>
+          <Text style={styles.optionText}>Alterar email</Text>
         </Icon>
-        <Icon style={styles.option} name="trash-o" color={"#ca3f3f"} size={20}>
-          <Text style={styles.optionExcluir}>Excluir conta</Text>
-        </Icon>
+        <Pressable onPress={() => setDeletar(true)}>
+          <Icon style={styles.option} name="trash-o" color={"#ca3f3f"} size={20}>
+            <Text style={styles.optionExcluir}>Deletar conta</Text>
+          </Icon>
+        </Pressable>
       </View>
       <Navbar />
     </View>
