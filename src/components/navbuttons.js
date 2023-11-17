@@ -13,6 +13,9 @@ import {
 	Easing,
 } from "react-native";
 import axios from "axios";
+import Like from "../assets/images/icons/liked.png"
+import Liked from "../assets/images/icons/like.png"
+
 
 export default function Navbuttons() {
 	const [buttonVisible, setButtonVisible] = useState(true);
@@ -22,19 +25,23 @@ export default function Navbuttons() {
 	const [likeImage, setLikeImage] = useState("");
 	const [numCurtida, setNumCurtida] = useState("");
 
+	const [toggleLikeControll, setToggleLikeControll] = useState(false)
+
 	const spin = spinValue.interpolate({
 		inputRange: [0, 1],
 		outputRange: ["0deg", "360deg"],
 	});
 
-	const startAnimation = (image) => {
-		console.log(image);
+	const startAnimation = (toggleLike) => {
+		const image = toggleLike ? Like : Liked
+		console.log(toggleLike);
 		Animated.timing(spinValue, {
 			toValue: 1,
 			duration: 100,
 			easing: Easing.linear,
 			useNativeDriver: true,
 		}).start(() => {
+
 			setIsButtonPressed(false);
 			setLikeImage(image);
 			spinValue.setValue(0);
@@ -51,7 +58,23 @@ export default function Navbuttons() {
 		Id_App_Events_code: idEvento
 	}
 
+
+	
+	useEffect(()=>{
+		axios.post('http://localhost:3003/heartLikeEvent', like)
+		.then((response) => {
+			console.log(response)
+			setToggleLikeControll(response.data.heartLikeEvent)
+			startAnimation(response.data.heartLikeEvent)
+		})
+		.catch((error) => {
+			console.error("Erro ao enviar os dados para o backend:", error);
+		})
+	},[])
+
 	const handleButtonPress = () => {
+		startAnimation(!toggleLikeControll)
+		setToggleLikeControll(!toggleLikeControll)
 
 		axios.post('http://localhost:3003/likeEvent', like)
 			.then((response) => {
@@ -71,24 +94,7 @@ export default function Navbuttons() {
 			})
 			.catch((error) => {
 				console.error('Erro ao enviar os dados para o backend:', error);
-
-		}).then((axios.post('http://localhost:3003/heartLikeEvent', like)
-		.then((response) => {
-			console.log(response)
-			if (response.data.heartLikeEvent) {
-				startAnimation(require("../assets/images/icons/liked.png"));
-			}
-			else {
-				startAnimation(require("../assets/images/icons/like.png"))
-			}
-		})
-		.catch((error) => {
-			console.error("Erro ao enviar os dados para o backend:", error);
-		})))
-
-
-
-		
+			})
 	};
 
 	const handleSecondButtonPress = () => {
