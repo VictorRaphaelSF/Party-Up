@@ -39,6 +39,13 @@ export default function Evento({ navigation }) {
     const idEvent ={
       eventId_code: idEvento
     }
+
+
+    const likeAnimation = {
+      Id_user_code: id,
+      Id_App_Events_code : idEvento
+
+    }
     axios
       .post('http://localhost:3003/viewEvent',idEvent)
       .then((response) => {
@@ -88,6 +95,11 @@ export default function Evento({ navigation }) {
       .catch((error) => {
         console.error("Erro ao enviar os dados para o backend:", error);
       });
+
+
+      
+      
+    
   }, []);
 
 
