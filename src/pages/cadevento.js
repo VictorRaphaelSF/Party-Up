@@ -205,7 +205,7 @@ export default function Cadevento({ route }) {
               placeholder="CEP"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               underlineColorAndroid="transparent"
-              maxLength={15}
+              maxLength={8}
               value={cep}
               onChangeText={(newCep) => {
                 InputNum(newCep, setCep);
