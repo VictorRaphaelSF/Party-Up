@@ -25,9 +25,11 @@ export default function Search() {
   const [reload, setReload] = useState(0);
   const navigation = useNavigation();
   const [userSearch_code, setSearchTerm] = useState("");
+  const [error, setError] = useState("");
   const [isMenuVisible, setMenuVisible] = useState(false);
   const [searchHistory, setSearchHistory] = useState([]);
   const [eventData, setEventData] = useState([]);
+  const [eventResult, setEventResult] = useState(false);
 
 
   const route = useRoute();
@@ -75,14 +77,6 @@ export default function Search() {
     }
   };
 
-  const handleButtonSuge = () => {
-    console.log("Botão Sugestão Pressionado");
-  };
-
-  const handleButtonView = () => {
-    console.log("Botão View Pressionado.");
-  };
-
   const menu = () => {
     setMenuVisible(true);
   };
@@ -93,38 +87,43 @@ export default function Search() {
  
 
   console.log(eventData);
-  console.log(userSearch_code);
+  
   
   const pesquisaUser = {
     userSearch_code: userSearch_code
   }
 
-  // useEffect(() => {
-  //   const delay = 500; // Atraso de 500ms
-  //   let timeoutId;
+  useEffect(() => {
+    console.log(userSearch_code);
+    const delay = 500; // Atraso de 500ms
+    let timeoutId;
   
-  //   // Função para fazer a chamada à API após o atraso
-  //   const fetchEventData = () => {
-  //     const pesquisaUser = {
-  //       userSearch_code: userSearch_code,
-  //     };
   
-  //     axios
-  //       .post('http://localhost:3003/searchEvents', pesquisaUser)
-  //       .then((response) => {
-  //         setEventData(response.data.results);
-  //       })
-  //       .catch((error) => {
-  //         console.error('Erro ao enviar os dados para o backend:', error);
-  //       });
-  //   };
+    const pesquisaUser = {
+      userSearch_code: userSearch_code,
+    };
+    console.log("opa");
+    axios
+      .post('http://localhost:3003/searchEvents', pesquisaUser)
+      .then((response) => {
+        console.log(response);
+        if(response.data.msg){
+          setEventResult(false)
+          setError(response.data.msg)
+          
+        }else{
+          setEventResult(true)
+          setEventData(response.data.results);
+
+        }
+      })
+      .catch((error) => {
+        console.error('Erro ao enviar os dados para o backend:', error);
+        
+      });
   
-  //   // Usando um timeout para aguardar o término da digitação
-  //   if (userSearch_code.trim() !== '') {
-  //     clearTimeout(timeoutId);
-  //     timeoutId = setTimeout(fetchEventData, delay);
-  //   }
-  // }, [userSearch_code]);
+  
+  }, [userSearch_code]);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -179,8 +178,10 @@ export default function Search() {
           ))}
         </ScrollView>
 
-        <ScrollView style={{width: "100%", gap: 16}}>
-				<View style={{width: "100%", gap: 8, top: 100}}>
+        <ScrollView
+        style={{ width: "100%", gap: 16, top: 10, maxHeight: "77%" }}>
+        {eventResult ?
+          (<View style={{width: "100%", gap: 8, backgroundColor: "black"}}>
 					{
 						eventData.map((event,index) => {
 							return (
@@ -188,8 +189,10 @@ export default function Search() {
 							)
 						})
 					}
-				</View>
-			</ScrollView>
+          
+				  </View>):
+          (error && <Text Text style={styles.searchHistoryItem}>{error}</Text>)}
+				</ScrollView>
 
         <Modal
           transparent={true}
@@ -260,7 +263,7 @@ export default function Search() {
             </Animatable.View>
           </Pressable>
         </Modal>
-        <Navbar id={id} imgProfile= {imgProfile}/>
+        <Navbar id={id} imgProfile={imgProfile}/>
       </View>
     </KeyboardAvoidingView>
   );
