@@ -21,10 +21,10 @@ import * as Animatable from "react-native-animatable";
 import Backbutton from "../components/backbutton";
 
 export default function Report({ navigation }) {
-  const [curtidas, setCurtidas] = useState("");
-  const [presence, setPresence] = useState("");
-  const [comentario, setComentarios] = useState("");
-  const [shared, setShared] = useState("");
+  const [curtidas, setCurtidas] = useState(4);
+  const [presence, setPresence] = useState(12);
+  const [comentario, setComentarios] = useState(3);
+  const [shared, setShared] = useState(7);
 
   const VamosLa = () => {
     navigation.navigate("report2");
@@ -34,29 +34,29 @@ export default function Report({ navigation }) {
   const data = [
     {
       name: "Curtidas",
-      qtd: 12,
-      color: "rgba(211, 141, 231, 1)",
+      qtd: curtidas,  
+      color: "rgba(255, 255, 255, 1)",
       legendFontColor: "#FFFFFF",
       legendFontSize: 15,
     },
     {
       name: "Presenças",
       qtd: presence,
-      color: "blue",
+      color: "rgba(66, 66, 66, 1)",
       legendFontColor: "#FFFFFF",
       legendFontSize: 15,
     },
     {
       name: "Comentarios",
       qtd: comentario,
-      color: "red",
+      color: "rgba(159, 159, 159, 1)" ,
       legendFontColor: "#FFFFFF",
       legendFontSize: 15,
     },
     {
       name: "Compartilhamentos",
       qtd: shared,
-      color: "#ffffff",
+      color: "rgba(233, 233, 233, 1)",
       legendFontColor: "#FFFFFF",
       legendFontSize: 15,
     },
@@ -80,19 +80,19 @@ export default function Report({ navigation }) {
       resizeMode="cover">
       <Backbutton />
       <View style={styles.overlay}>
+        <Text style={styles.title}>Dashboard</Text>
         <View style={styles.content}>
-          <View>
             <PieChart
               data={data}
-              width={screenWidth}
-              height={175}
+              width={Dimensions.get('window').width / 1.1}
+              height={180}
               chartConfig={chartConfig}
+              paddingLeft="-30"
+              center={[20, 0]}
               accessor={"qtd"}
               backgroundColor={"transparent"}
-              center={[10, 10]}
-              absolute
+              style={styles.chart}
             />
-          </View>
         </View>
       </View>
     </ImageBackground>
@@ -113,13 +113,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgba(0, 0, 0, 0.01)",
     alignItems: "center",
-    padding: 16,
+    padding: 1,
+    marginTop: 50,
+    overflow: "hidden"
   },
 
   content: {
-    justifyContent: "flex-start",
-    alignItems: "center",
     top: 32,
+  },
+
+  chart: {
+    fontSize: 40,
   },
 
   header: {
@@ -127,7 +131,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "absolute",
     top: windowHeight * 0.06,
-    left: 30,
+    left: 0,
     zIndex: 1,
   },
 
@@ -138,7 +142,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 20,
+    fontSize: 30,
     fontWeight: "bold",
     marginBottom: 10,
     textAlign: "center",
@@ -168,6 +172,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgba(0, 0, 0, 0.01)",
     alignItems: "center",
-    padding: 16,
+    padding: 0,
   },
 });
