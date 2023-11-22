@@ -23,28 +23,6 @@ export default function Telaprincipal() {
   const { params } = useRoute();
   const navigation = useNavigation();
 
-  const handleButtonHome = () => {
-    setReload(reload + 1);
-  };
-
-  const handleButtonSearch = () => {
-    navigation.navigate("search", { id: id });
-  };
-
-
-  const handleButtonCenter = () => {
-    navigation.navigate("cadevento", { id: id });
-  };
-
-
-
-  const handleButtonPeople = () => {
-    navigation.navigate("telaprofile");
-  };
-
-  const handleUserImagePress = () => {
-    console.log("Foto de perfil pressionada");
-  };
 
   // axios
   //   .post("http://localhost:3003/viewEvent")
