@@ -24,20 +24,20 @@ export default function Emailvalidation() {
   const [codeError, setCodeError] = useState(null);
 
   const handleCode = () => {
-    axios
-      .post("http://localhost:3003/authCode", {
-        code: code,
-      })
-      .then((e) => {
-        setCodeError(false);
-        navigation.navigate("login", {
+    // axios
+    //   .post("http://localhost:3003/authCode", {
+    //     code: code,
+    //   })
+    //   .then((e) => {
+    //     setCodeError(false);
+        navigation.navigate("login",/* {
           imgProfile: route.params.userImage,
         });
-      })
-      .catch((err) => {
-        console.log(err);
-        setCodeError(true);
-      });
+      }*/)
+      // .catch((err) => {
+      //   console.log(err);
+      //   setCodeError(true);
+      // });
   };
 
   const InputNum = (value, setter) => {

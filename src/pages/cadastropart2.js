@@ -39,7 +39,7 @@ export default function Logado({ route }) {
       setImageData(imageB64);
     }
 
-    console.log(result.assets[0].base64);
+    // console.log(result.assets[0].base64);
   };
 
   const renderCaracteresRestantes = () => {
