@@ -16,10 +16,7 @@ export default function Buttonprofile(props) {
   const navigation = useNavigation();
 
   const handleUserImagePress = () => {
-    navigation.navigate("telaprofile", {
-      id: props.id,
-      imgProfile: props.imgProfile,
-    });
+    navigation.navigate("telaprofile",{id : props.id, imgProfile : props.imgProfile});
   };
 
   return (

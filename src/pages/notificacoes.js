@@ -34,9 +34,14 @@ export default function Notificações() {
   console.log(id);
   //console.log(imgProfile);
 
+  const idUser = {
+    id : id
+  }
+
+
   useEffect(() => {
     axios
-      .post("http://localhost:3003/viewNotificacao", id)
+      .post('http://localhost:3003/viewNotificacao', idUser)
       .then((response) => {
         console.log(response);
       })
@@ -75,6 +80,53 @@ export default function Notificações() {
       />
 
       <Navbar id={id} imgProfile={imgProfile} />
+      {/* colocar aqui o map de notificações
+
+      <Modal
+        transparent={true}
+        visible={isMenuVisible}
+        onRequestClose={closeMenu}>
+        <TouchableWithoutFeedback onPress={closeMenu}>
+          <View style={styles.modalBackground}>
+            <Animatable.View
+              style={styles.menuContainer}
+              animation={isMenuVisible ? "slideInUp" : "slideInDown"}
+              duration={250}>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttDashboard}>
+                <Text style={styles.menubtttext}>Dashboard</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttEventProgress}>
+                <Text style={styles.menubtttext}>Eventos em andamentos</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttMyevent}>
+                <Text style={styles.menubtttext}>Meus Eventos</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttReport}>
+                <Text style={styles.menubtttext}>Report</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={() => console.log("Item 5 clicado")}>
+                <Text style={styles.menubtttext}>Termos</Text>
+              </Pressable>
+              <Pressable
+                style={styles.menubtt}
+                onPress={bttSair}>
+                <Text style={styles.menubtttext}>Sair</Text>
+              </Pressable>
+            </Animatable.View>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+      <Navbar id={id} imgProfile= {imgProfile}/> */}
     </View>
   );
 }

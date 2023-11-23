@@ -734,6 +734,7 @@ export default function Eventoedit2({ navigation }) {
             </Animatable.View>
           </Pressable>
         </Modal>
+        <Navbar id={id} imgProfile= {imgProfile}/>
       </ImageBackground>
     </View>
   );

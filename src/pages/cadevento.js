@@ -258,7 +258,7 @@ export default function Cadevento({ route }) {
               placeholder="Número"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               underlineColorAndroid="transparent"
-              maxLength={4}
+              maxLength={7}
               value={numero}
               onChangeText={(text) => InputNum(text, setNumero)}
             />

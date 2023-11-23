@@ -183,6 +183,7 @@ export default function Search() {
         {eventResult ?
           (<View style={{width: "100%", gap: 8, backgroundColor: "black"}}>
 					{
+            
 						eventData.map((event,index) => {
 							return (
 								<CardEventUser descricaoEvento={event.desc_event} idUser={id} Event_image={event.Event_image} Nm_event={event.Nm_event} Id_App_Events={event. Id_App_Events} key={index}/>

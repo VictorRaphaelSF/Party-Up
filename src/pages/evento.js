@@ -31,18 +31,22 @@ export default function Evento({ navigation }) {
   const [tags, setTags] = useState("");
 
   const route = useRoute();
-  // const { id } = route.params;
-  // const { idEvento } = route.params;
-  // const { imgProfile } = route.params;
-  const id = 1;
-  const idEvento = 1;
-  const imgProfile = null;
+  const { id } = route.params;
+  const { idEvento } = route.params;
+  const { imgProfile } = route.params;
   console.log(id);
 
   useEffect(() => {
-    const idEvent = {
-      eventId_code: idEvento,
-    };
+    const idEvent ={
+      eventId_code: idEvento
+    }
+
+
+    const likeAnimation = {
+      Id_user_code: id,
+      Id_App_Events_code : idEvento
+
+    }
     axios
       .post("http://localhost:3003/viewEvent", idEvent)
       .then((response) => {
@@ -95,6 +99,11 @@ export default function Evento({ navigation }) {
       .catch((error) => {
         console.error("Erro ao enviar os dados para o backend:", error);
       });
+
+
+      
+      
+    
   }, []);
 
   return (
