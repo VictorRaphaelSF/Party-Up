@@ -9,7 +9,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   Text,
-  Modal,
   ScrollView,
 } from "react-native";
 
@@ -17,11 +16,19 @@ import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Navbar from "../components/navbar";
+import Modal from "react-native-modal";                
 import { useRoute } from '@react-navigation/native';
 import axios from "axios";
 import CardEventUser from "../components/cardEventUser";
 
 export default function Search() {
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [isModalityModalVisible, setModalityModalVisible] = useState(false);
+  const [isTypeModalVisible, setTypeModalVisible] = useState(false);
+  const [classificarPor, setClassificarPor] = useState("Editar");
+  const [modalidadeOpcao, setModalidadeOpcao] = useState("Editar");
+  const [tipoEventoOpcao, setTipoEventoOpcao] = useState("Editar");
+
   const [reload, setReload] = useState(0);
   const navigation = useNavigation();
   const [userSearch_code, setSearchTerm] = useState("");
@@ -32,27 +39,27 @@ export default function Search() {
   const [eventResult, setEventResult] = useState(false);
 
 
-  const route = useRoute();
-  const { id } = route.params;
-  const { imgProfile } = route.params;
-  console.log(id);
+  // const route = useRoute();
+  // const { id } = route.params;
+  // const { imgProfile } = route.params;
+  // console.log(id);
 
-  useEffect(() => {
-    const loadSearchHistory = async () => {
-      try {
-        const storedSearchHistory = await AsyncStorage.getItem("searchHistory");
-        if (storedSearchHistory !== null) {
-          setSearchHistory(JSON.parse(storedSearchHistory));
-        }
-      } catch (e) {
-        console.error("Erro ao carregar histórico de pesquisa:", e);
-      }
-    };
+  // useEffect(() => {
+  //   const loadSearchHistory = async () => {
+  //     try {
+  //       const storedSearchHistory = await AsyncStorage.getItem("searchHistory");
+  //       if (storedSearchHistory !== null) {
+  //         setSearchHistory(JSON.parse(storedSearchHistory));
+  //       }
+  //     } catch (e) {
+  //       console.error("Erro ao carregar histórico de pesquisa:", e);
+  //     }
+  //   };
 
-    loadSearchHistory();
+  //   loadSearchHistory();
  
     
-  }, []);
+  // }, []);
 
   const handleSearch = () => {
     if (searchTerm.trim() !== "") {
@@ -85,6 +92,24 @@ export default function Search() {
     setMenuVisible(false);
   };
  
+  const handleModalType = () => {
+    setModalVisible(true);
+  };
+
+  const handleModalityModalType = () => {
+    setModalityModalVisible(true);
+  };
+
+  const handleClassificar = (opcao) => {
+    setModalVisible(false);
+    setClassificarPor(opcao);
+  };
+
+  const handleModality = (opcao) => {
+    setModalityModalVisible(false);
+    setModalidadeOpcao(opcao);
+  };
+
 
   console.log(eventData);
   
@@ -93,37 +118,36 @@ export default function Search() {
     userSearch_code: userSearch_code
   }
 
-  useEffect(() => {
-    console.log(userSearch_code);
-    const delay = 500; // Atraso de 500ms
-    let timeoutId;
+  // useEffect(() => {
+  //   console.log(userSearch_code);
+  //   const delay = 500; // Atraso de 500ms
+  //   let timeoutId;
   
   
-    const pesquisaUser = {
-      userSearch_code: userSearch_code,
-    };
-    console.log("opa");
-    axios
-      .post('http://localhost:3003/searchEvents', pesquisaUser)
-      .then((response) => {
-        console.log(response);
-        if(response.data.msg){
-          setEventResult(false)
-          setError(response.data.msg)
+  //   const pesquisaUser = {
+  //     userSearch_code: userSearch_code,
+  //   };
+  //   console.log("opa");
+  //   axios
+  //     .post('http://localhost:3003/searchEvents', pesquisaUser)
+  //     .then((response) => {
+  //       console.log(response);
+  //       if(response.data.msg){
+  //         setEventResult(false)
+  //         setError(response.data.msg)
           
-        }else{
-          setEventResult(true)
-          setEventData(response.data.results);
+  //       }else{
+  //         setEventResult(true)
+  //         setEventData(response.data.results);
 
-        }
-      })
-      .catch((error) => {
-        console.error('Erro ao enviar os dados para o backend:', error);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error('Erro ao enviar os dados para o backend:', error);
         
-      });
-  
-  
-  }, [userSearch_code]);
+  //     });
+  //  }, [userSearch_code]);
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -192,7 +216,7 @@ export default function Search() {
 					}
           
 				  </View>):
-          (error && <Text Text style={styles.searchHistoryItem}>{error}</Text>)}
+          (error && <Text style={styles.searchHistoryItem}>{error}</Text>)}
 				</ScrollView>
 
         <Modal
@@ -212,8 +236,8 @@ export default function Search() {
               <View style={styles.menuOption}>
                 <Pressable
                   style={styles.menubtt}
-                  onPress={() => console.log("Editar clicado 1")}>
-                  <Text style={styles.menubtttextLight}>Editar</Text>
+                  onPress={() => handleModalType(true)}>
+                  <Text style={styles.menubtttextLight}>{classificarPor}</Text>
                 </Pressable>
               </View>
               <View style={styles.whiteLine} />
@@ -234,8 +258,8 @@ export default function Search() {
               <View style={styles.menuOption}>
                 <Pressable
                   style={styles.menubtt}
-                  onPress={() => console.log("Editar clicado 3")}>
-                  <Text style={styles.menubtttextLight}>Editar</Text>
+                  onPress={() => handleModalityModalType(true)}>
+                  <Text style={styles.menubtttextLight}>{modalidadeOpcao}</Text>
                 </Pressable>
               </View>
               <View style={styles.whiteLine} />
@@ -246,7 +270,7 @@ export default function Search() {
                 <Pressable
                   style={styles.menubtt}
                   onPress={() => console.log("Editar clicado 4")}>
-                  <Text style={styles.menubtttextLight}>Editar</Text>
+                  <Text style={styles.menubtttextLight}>{tipoEventoOpcao}</Text>
                 </Pressable>
               </View>
               <View style={styles.whiteLine} />
@@ -264,7 +288,34 @@ export default function Search() {
             </Animatable.View>
           </Pressable>
         </Modal>
-        <Navbar id={id} imgProfile={imgProfile}/>
+
+        <Modal isVisible={isModalVisible}>
+          <View style={styles.modalContent}>
+            <View style={styles.modalButtons}>
+              <Pressable style={styles.buttonLow} onPress={() => handleClassificar("Relevante")}>
+                <Text style={styles.buttonText}>Relevantes</Text>
+              </Pressable>
+              <Pressable style={styles.buttonLow} onPress={() => handleClassificar("Recente")}>
+                <Text style={styles.buttonText}>Recentes</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal isVisible={isModalityModalVisible}>
+          <View style={styles.modalContent}>
+            <View style={styles.modalButtons}>
+              <Pressable style={styles.buttonLow} onPress={() => handleModality("Presencial")}>
+                <Text style={styles.buttonText}>Presencial</Text>
+              </Pressable>
+              <Pressable style={styles.buttonLow} onPress={() => handleModality("Online")}>
+                <Text style={styles.buttonText}>Online</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+
+        <Navbar /*id={id} imgProfile={imgProfile}*//>
       </View>
     </KeyboardAvoidingView>
   );
@@ -348,7 +399,6 @@ const styles = StyleSheet.create({
 
   modalBackground: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
     justifyContent: "flex-end",
   },
 
@@ -357,6 +407,9 @@ const styles = StyleSheet.create({
     padding: 16,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
+    width: "112%",
+    right: 20,
+    top: 16,
   },
 
   menubtt: {
@@ -428,11 +481,13 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 16,
     opacity: 0.9,
+    top: 2,
   },
 
   menubtttextLight: {
     color: "rgba(255, 255, 255, 0.5)",
     fontSize: 16,
+    top: 2,
   },
 
   whiteLine: {
@@ -440,5 +495,41 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     marginVertical: 5,
     opacity: 0.8,
+  },
+
+  modalContent: {
+    backgroundColor: "#530478",
+    padding: 22,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    borderColor: "rgba(0, 0, 0, 0.1)",
+  },
+
+  modalText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "inter",
+    marginBottom: 32,
+  },
+
+  modalButtons: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
+  },
+
+  buttonLow: {
+    backgroundColor: "#7E3CA7",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginHorizontal: 10,
+  },
+
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "inter",
   },
 });

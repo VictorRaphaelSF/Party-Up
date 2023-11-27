@@ -119,14 +119,16 @@ const styles = StyleSheet.create({
   },
 
   option: {
+    maxWidth: 350,
+    width: 300,
     display: "flex",
     marginVertical: 14,
     borderBottomWidth: 1,
     borderBottomColor: "#FFF",
-    paddingLeft: 30,
     paddingVertical: 20,
-    margin: -20,
+    justifyContent: "center",
     alignItems: "center",
+    alignSelf: "center"
   },
 
   optionText: {
