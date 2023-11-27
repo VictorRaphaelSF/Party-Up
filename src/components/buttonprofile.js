@@ -12,18 +12,17 @@ import {
 
 import { useNavigation } from "@react-navigation/native";
 
-export default function Buttonprofile(props) {
+export default function Buttonprofile({id,imgProfile}) {
   const navigation = useNavigation();
-
   const handleUserImagePress = () => {
-    navigation.navigate("telaprofile",{id : props.id, imgProfile : props.imgProfile});
+    navigation.navigate("telaprofile",{id : id, imgProfile : imgProfile});
   };
 
   return (
     <View style={styles.topUser}>
       <Pressable onPress={handleUserImagePress}>
         <Image
-          source={`data:image/png;base64,${props.imgProfile}`}
+          source={`data:image/png;base64,${imgProfile}`}
           style={styles.userImage}
         />
       </Pressable>

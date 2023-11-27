@@ -21,8 +21,8 @@ import Destaquebar from "../components/destaquebar";
 
 export default function Telaprincipal() {
   const [eventsData, setEventsData] = useState([]);
-  // const [imgProfile, setImgProfile] = useState("");
-  const { params } = useRoute();
+  const [imgProfile, setImgProfile] = useState("");
+
   const navigation = useNavigation();
 
   const eventImages = [
@@ -39,7 +39,6 @@ export default function Telaprincipal() {
   const route = useRoute();
   const { id } = route.params;
   const { userImage } = route.params;
-  
   useEffect(() => {
     setImgProfile(userImage)
     axios

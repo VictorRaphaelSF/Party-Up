@@ -40,16 +40,18 @@ export default function Login({ navigation }) {
 			axios.post('http://localhost:3003/loginUser', dataLogin)
 				.then(response => {
 					// Lidar com a resposta do servidor, se necessário
+					console.log(response);
 					if (response.data.validateLogin) {
-						navigation.navigate('telaprincipal',{id: response.data.id, imgProfile: response.data.results[0].User_image});
+						navigation.navigate('telaprincipal',{id: response.data.id, userImage: response.data.userImage});
 					}
 					else {
 						console.log('Email ou senha inválido!')
 					}
-					console.log(response);
+
 				})
 				.catch(error => {
 					// Lidar com erros, se houver algum
+					console.log(error);
 					setMsgError({
 						msg: error.response.data.msg,
 						status: true
