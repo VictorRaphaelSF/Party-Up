@@ -39,27 +39,27 @@ export default function Search() {
   const [eventResult, setEventResult] = useState(false);
 
 
-  // const route = useRoute();
-  // const { id } = route.params;
-  // const { imgProfile } = route.params;
-  // console.log(id);
+  const route = useRoute();
+  const { id } = route.params;
+  const { imgProfile } = route.params;
+  console.log(id);
 
-  // useEffect(() => {
-  //   const loadSearchHistory = async () => {
-  //     try {
-  //       const storedSearchHistory = await AsyncStorage.getItem("searchHistory");
-  //       if (storedSearchHistory !== null) {
-  //         setSearchHistory(JSON.parse(storedSearchHistory));
-  //       }
-  //     } catch (e) {
-  //       console.error("Erro ao carregar histórico de pesquisa:", e);
-  //     }
-  //   };
+  useEffect(() => {
+    const loadSearchHistory = async () => {
+      try {
+        const storedSearchHistory = await AsyncStorage.getItem("searchHistory");
+        if (storedSearchHistory !== null) {
+          setSearchHistory(JSON.parse(storedSearchHistory));
+        }
+      } catch (e) {
+        console.error("Erro ao carregar histórico de pesquisa:", e);
+      }
+    };
 
-  //   loadSearchHistory();
+    loadSearchHistory();
  
     
-  // }, []);
+  }, []);
 
   const handleSearch = () => {
     if (searchTerm.trim() !== "") {
@@ -78,7 +78,7 @@ export default function Search() {
   const handleClearHistory = async () => {
     try {
       await AsyncStorage.removeItem("searchHistory");
-      setSearchHistory([]);
+      setSearchHistory();
     } catch (e) {
       console.error("Erro ao limpar histórico de pesquisa:", e);
     }
@@ -111,42 +111,42 @@ export default function Search() {
   };
 
 
-  console.log(eventData);
+  // console.log(eventData);
   
   
   const pesquisaUser = {
     userSearch_code: userSearch_code
   }
 
-  // useEffect(() => {
-  //   console.log(userSearch_code);
-  //   const delay = 500; // Atraso de 500ms
-  //   let timeoutId;
+  useEffect(() => {
+    console.log(userSearch_code);
+    const delay = 500; // Atraso de 500ms
+    let timeoutId;
   
   
-  //   const pesquisaUser = {
-  //     userSearch_code: userSearch_code,
-  //   };
-  //   console.log("opa");
-  //   axios
-  //     .post('http://localhost:3003/searchEvents', pesquisaUser)
-  //     .then((response) => {
-  //       console.log(response);
-  //       if(response.data.msg){
-  //         setEventResult(false)
-  //         setError(response.data.msg)
+    const pesquisaUser = {
+      userSearch_code: userSearch_code,
+    };
+    console.log("opa");
+    axios
+      .post('http://localhost:3003/searchEvents', pesquisaUser)
+      .then((response) => {
+        console.log(response);
+        if(response.data.msg){
+          setEventResult(false)
+          setError(response.data.msg)
           
-  //       }else{
-  //         setEventResult(true)
-  //         setEventData(response.data.results);
+        }else{
+          setEventResult(true)
+          setEventData(response.data.results);
 
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error('Erro ao enviar os dados para o backend:', error);
+        }
+      })
+      .catch((error) => {
+        console.error('Erro ao enviar os dados para o backend:', error);
         
-  //     });
-  //  }, [userSearch_code]);
+      });
+   }, [userSearch_code]);
 
   return (
     <KeyboardAvoidingView
