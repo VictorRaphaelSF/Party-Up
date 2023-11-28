@@ -52,7 +52,7 @@ export default function Notificações() {
         );
       });
   }, []);
-
+  
   return (
     <View style={styles.container}>
       <Image

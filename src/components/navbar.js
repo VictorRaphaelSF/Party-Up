@@ -2,7 +2,7 @@ import { StyleSheet, View, Pressable, Image } from "react-native";
 import {useNavigation } from "@react-navigation/native";
 import axios from "axios";
 
-export default function Navbar(props) {
+export default function Navbar(props) { 
   const navigation = useNavigation();
 
   const handleButtonHome = () => {
@@ -26,7 +26,7 @@ export default function Navbar(props) {
   };
 
   const handleButtonNotification = () => {
-    navigation.navigate("notificacao", { id : props.id, imgProfile: props.imgProfile });
+    navigation.navigate("notificacoes", { id : props.id, imgProfile: props.imgProfile });
   };
 
   const handleButtonPeople = () => {

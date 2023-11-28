@@ -42,7 +42,7 @@ export default function Evento({ navigation }) {
     }
 
 
-    const likeAnimation = {
+    const dados = {
       Id_user_code: id,
       Id_App_Events_code : idEvento
 
@@ -141,7 +141,7 @@ export default function Evento({ navigation }) {
             <Text style={styles.tagsTexto}>{tags}</Text>
           </View>
 
-          <Navbuttons siteInfo={siteInfo} />
+          <Navbuttons siteInfo={siteInfo} idUser={id} idEvent={idEvento}/>
 
           <Comentbar />
 

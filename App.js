@@ -89,7 +89,7 @@ export default function App() {
           options={{
             headerShown: false,
           }}
-          name="notificacao"
+          name="notificacoes"
           component={Notificacao}
         />
         <Stack.Screen

@@ -16,7 +16,7 @@ import Like from "../assets/images/icons/liked.png"
 import Liked from "../assets/images/icons/like.png"
 
 
-export default function Navbuttons({ siteInfo }) {
+export default function Navbuttons({ props }) {
 	const [buttonVisible, setButtonVisible] = useState(true);
 	const [likeButtonText, setLikeButtonText] = useState("Curtir");
 	const [presenceButtonText, setPresenceButtonText] = useState("Agendar");
@@ -85,6 +85,19 @@ export default function Navbuttons({ siteInfo }) {
 	};
 
 	const handlePresenceButtonPress = () => {
+
+		axios
+		.post('http://localhost:3003/confirmPresence', idUser)
+		.then((response) => {
+		  console.log(response);
+		})
+		.catch((error) => {
+		  console.error(
+			"Erro ao enviar ou retono de dados para o backend:",
+			error
+		  );
+		});
+		
 		setIsPresenceButtonPressed(true);
 		startPresenceAnimation(
 			spinValuePresence,
@@ -104,7 +117,7 @@ export default function Navbuttons({ siteInfo }) {
 	const onShare = async () => {
 		try {
 			const result = await Share.share({
-				message: `Venha conhecer nosso evento!\n${siteInfo}`,
+				message: `Venha conhecer nosso evento!\n${props.siteInfo}`,
 			});
 			if (result.action === Share.sharedAction) {
 				if (result.activityType) {
@@ -332,6 +345,7 @@ export default function Navbuttons({ siteInfo }) {
 	// 		</View>
 	// 	);
 	// }
+}
 
 	const styles = StyleSheet.create({
 		buttonContainer: {
@@ -361,5 +375,4 @@ export default function Navbuttons({ siteInfo }) {
 			width: 65,
 			height: 65,
 		},
-	})
-}
+	});
