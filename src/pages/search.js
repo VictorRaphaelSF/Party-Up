@@ -100,6 +100,10 @@ export default function Search() {
     setModalityModalVisible(true);
   };
 
+  const handleTypeModal = () => {
+    setTypeModalVisible(true);
+  };
+
   const handleClassificar = (opcao) => {
     setModalVisible(false);
     setClassificarPor(opcao);
@@ -108,6 +112,11 @@ export default function Search() {
   const handleModality = (opcao) => {
     setModalityModalVisible(false);
     setModalidadeOpcao(opcao);
+  };
+
+  const handleType = (opcao) => {
+    setTypeModalVisible(false);
+    setTipoEventoOpcao(opcao);
   };
 
 
@@ -120,7 +129,7 @@ export default function Search() {
 
   useEffect(() => {
     console.log(userSearch_code);
-    const delay = 500; // Atraso de 500ms
+    const delay = 500;
     let timeoutId;
   
   
@@ -269,7 +278,7 @@ export default function Search() {
               <View style={styles.menuOption}>
                 <Pressable
                   style={styles.menubtt}
-                  onPress={() => console.log("Editar clicado 4")}>
+                  onPress={() => handleTypeModal(true)}>
                   <Text style={styles.menubtttextLight}>{tipoEventoOpcao}</Text>
                 </Pressable>
               </View>
@@ -289,6 +298,8 @@ export default function Search() {
           </Pressable>
         </Modal>
 
+
+          {/* Abaixo esta os modals dos filtros */}
         <Modal isVisible={isModalVisible}>
           <View style={styles.modalContent}>
             <View style={styles.modalButtons}>
@@ -315,7 +326,20 @@ export default function Search() {
           </View>
         </Modal>
 
-        <Navbar /*id={id} imgProfile={imgProfile}*//>
+        <Modal isVisible={isTypeModalVisible}>
+          <View style={styles.modalContent}>
+            <View style={styles.modalButtons}>
+              <Pressable style={styles.buttonLow} onPress={() => handleType("Publico")}>
+                <Text style={styles.buttonText}>Publico</Text>
+              </Pressable>
+              <Pressable style={styles.buttonLow} onPress={() => handleType("Privado")}>
+                <Text style={styles.buttonText}>Privado</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+
+        <Navbar id={id} imgProfile={imgProfile}/>
       </View>
     </KeyboardAvoidingView>
   );
