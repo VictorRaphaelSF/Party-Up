@@ -168,7 +168,11 @@ export default function Cadevento2() {
       !datainicio ||
       !datafinal ||
       !horainicio ||
-      !horafinal
+      !horafinal ||
+      !searchText ||
+      !eventtype ||
+      !accessType ||
+      !ClassificationType
     ) {
       setErro("Preencha todos os campos obrigatórios.");
       setTimeout(() => {

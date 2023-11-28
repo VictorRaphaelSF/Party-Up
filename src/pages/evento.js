@@ -99,11 +99,6 @@ export default function Evento({ navigation }) {
       .catch((error) => {
         console.error("Erro ao enviar os dados para o backend:", error);
       });
-
-
-      
-      
-    
   }, []);
 
   return (
@@ -168,7 +163,7 @@ export default function Evento({ navigation }) {
           </View>
         </ScrollView>
       </ImageBackground>
-      <Navbar id={id} imgProfile={imgProfile} />
+      <Navbar /*id={id} imgProfile={imgProfile}*/ />
     </View>
   );
 }
