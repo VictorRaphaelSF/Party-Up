@@ -162,11 +162,13 @@ const styles = StyleSheet.create({
     right: 30,
     zIndex: 1,
   },
+
   tagHeader: {
     marginTop: 80,
     maxHeight: windowHeight * 0.8,
     overflow: "scroll",
   },
+
   tagNameContainer: {
     display: "flex",
     flexDirection: "row",
@@ -174,6 +176,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     gap: 5,
   },
+
   tagName: {
     flexDirection: "row",
     alignSelf: "center",
@@ -184,6 +187,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#7d4897",
     color: "#FFF",
   },
+  
   tagTitle: {
     marginTop: 40,
     marginBottom: 15,

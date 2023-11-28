@@ -214,7 +214,7 @@ export default function Search() {
         <ScrollView
         style={{ width: "100%", gap: 16, top: 10, maxHeight: "77%" }}>
         {eventResult ?
-          (<View style={{width: "100%", gap: 8, backgroundColor: "black"}}>
+          (<View style={{width: "100%", gap: 8}}>
 					{
             
 						eventData.map((event,index) => {
