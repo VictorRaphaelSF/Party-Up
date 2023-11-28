@@ -51,11 +51,12 @@ export default function Evento({ navigation }) {
       .post("http://localhost:3003/viewEvent", idEvent)
       .then((response) => {
         console.log(response.data[0]);
+        console.log(response.data[0].Site_contact);
         //nome
         setTitulo(response.data[0].Nm_event);
 
         //image
-        setImgProfile(response.data[0].Event_image);
+        // setImgProfile(response.data[0].Event_image);
 
         //descrição
         setDescricao(response.data[0].desc_event);
@@ -90,6 +91,7 @@ export default function Evento({ navigation }) {
 
         //site
         setSiteInfo(response.data[0].Site_contact);
+        
 
         //tag
         setTags(response.data[0].Tag_event);
@@ -100,6 +102,7 @@ export default function Evento({ navigation }) {
         console.error("Erro ao enviar os dados para o backend:", error);
       });
   }, []);
+  console.log(siteInfo);
 
   return (
     <View style={styles.container}>

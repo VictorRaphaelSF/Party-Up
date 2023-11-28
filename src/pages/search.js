@@ -7,7 +7,7 @@ import {
   Dimensions,
   TextInput,
   KeyboardAvoidingView,
-  Platform,
+  Platform, 
   Text,
   ScrollView,
 } from "react-native";
