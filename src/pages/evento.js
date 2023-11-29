@@ -102,7 +102,7 @@ export default function Evento({ navigation }) {
         console.error("Erro ao enviar os dados para o backend:", error);
       });
   }, []);
-  console.log(siteInfo);
+  console.log(id,"aaaaaaaaaaa");
 
   return (
     <View style={styles.container}>
@@ -141,7 +141,7 @@ export default function Evento({ navigation }) {
             <Text style={styles.tagsTexto}>{tags}</Text>
           </View>
 
-          <Navbuttons siteInfo={siteInfo} idUser={id} idEvent={idEvento}/>
+          <Navbuttons siteInfo={siteInfo} id={id} idEvent={idEvento}/>
 
           <Comentbar />
 

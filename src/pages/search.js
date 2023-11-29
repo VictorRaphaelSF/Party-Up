@@ -44,9 +44,9 @@ export default function Search() {
 
 
   const route = useRoute();
-  // const { id } = route.params;
-  // const { imgProfile } = route.params;
-  // console.log(id);
+  const { id } = route.params;
+  const { imgProfile } = route.params;
+  console.log(id);
 
   // useEffect(() => {
   //   const loadSearchHistory = async () => {
@@ -144,35 +144,36 @@ export default function Search() {
     userSearch_code: userSearch_code
   }
 
-  // useEffect(() => {
-  //   console.log(userSearch_code);
-  //   const delay = 500;
-  //   let timeoutId;
-  
-  
-  //   const pesquisaUser = {
-  //     userSearch_code: userSearch_code,
-  //   };
-  //   console.log("opa");
-  //   axios
-  //     .post('http://localhost:3003/searchEvents', pesquisaUser)
-  //     .then((response) => {
-  //       console.log(response);
-  //       if(response.data.msg){
-  //         setEventResult(false)
-  //         setError(response.data.msg)
-          
-  //       }else{
-  //         setEventResult(true)
-  //         setEventData(response.data.results);
 
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error('Erro ao enviar os dados para o backend:', error);
+  useEffect(() => {
+    console.log(userSearch_code);
+    const delay = 500;
+    let timeoutId;
+  
+  
+    const pesquisaUser = {
+      userSearch_code: userSearch_code,
+    };
+    console.log("opa");
+    axios
+      .post('http://localhost:3003/searchEvents', pesquisaUser)
+      .then((response) => {
+        console.log(response);
+        if(response.data.msg){
+          setEventResult(false)
+          setError(response.data.msg)
+          
+        }else{
+          setEventResult(true)
+          setEventData(response.data.results);
+
+        }
+      })
+      .catch((error) => {
+        console.error('Erro ao enviar os dados para o backend:', error);
         
-  //     });
-  //  }, [userSearch_code]);
+      });
+   }, [userSearch_code]);
 
   return (
     <KeyboardAvoidingView

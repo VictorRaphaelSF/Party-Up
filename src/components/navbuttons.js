@@ -16,7 +16,7 @@ import Like from "../assets/images/icons/liked.png"
 import Liked from "../assets/images/icons/like.png"
 
 
-export default function Navbuttons({ props }) {
+export default function Navbuttons({ siteInfo, id, idEvent }) {
 	const [buttonVisible, setButtonVisible] = useState(true);
 	const [likeButtonText, setLikeButtonText] = useState("Curtir");
 	const [presenceButtonText, setPresenceButtonText] = useState("Agendar");
@@ -41,6 +41,7 @@ export default function Navbuttons({ props }) {
 		outputRange: ["0deg", "360deg"],
 	});
 
+	
 	const startLikeAnimation = () => {
 		Animated.timing(spinValueLike, {
 			toValue: 1,
@@ -84,10 +85,38 @@ export default function Navbuttons({ props }) {
 		startLikeAnimation(spinValueLike, setIsLikeButtonPressed, setLikeImage);
 	};
 
-	const handlePresenceButtonPress = () => {
+		// 	const handleButtonPress = () => {
+	// 		startAnimation(!toggleLikeControll)
+	// 		setToggleLikeControll(!toggleLikeControll)
 
+	// 		axios.post('http://localhost:3003/likeEvent', like)
+	// 			.then((response) => {
+	// 				console.log(response);
+	// 				axios
+	// 					.post('http://localhost:3003/likeCount', like)
+	// 					.then((response) => {
+	// 						console.log(response);
+	// 						setNumCurtida(response.data.numberLikes)
+	// 					}).then(() => {
+	// 						console.log("funfo " + numCurtida);
+	// 					})
+	// 					.catch((error) => {
+	// 						console.error('Erro ao enviar os dados para o backend:', error);
+
+	// 					});
+	// 			})
+	// 			.catch((error) => {
+	// 				console.error('Erro ao enviar os dados para o backend:', error);
+	// 			
+
+	const dados = {
+		eventId_code:idEvent,
+		userId_code: id
+
+	}
+	const handlePresenceButtonPress = () => {
 		axios
-		.post('http://localhost:3003/confirmPresence', idUser)
+		.post('http://localhost:3003/confirmPresence', dados)
 		.then((response) => {
 		  console.log(response);
 		})
@@ -117,7 +146,7 @@ export default function Navbuttons({ props }) {
 	const onShare = async () => {
 		try {
 			const result = await Share.share({
-				message: `Venha conhecer nosso evento!\n${props.siteInfo}`,
+				message: `Venha conhecer nosso evento!\n${siteInfo}`,
 			});
 			if (result.action === Share.sharedAction) {
 				if (result.activityType) {
@@ -132,6 +161,24 @@ export default function Navbuttons({ props }) {
 			Alert.alert(error.message);
 		}
 	};
+
+	const like = {
+		Id_user_code: id,
+		Id_App_Events_code: idEvent
+	}
+
+	useEffect(()=>{
+		axios.post('http://localhost:3003/heartLikeEvent', like)
+		.then((response) => {
+			console.log(response)
+			setToggleLikeControll(response.data.heartLikeEvent)
+			startAnimation(response.data.heartLikeEvent)
+		})
+		.catch((error) => {
+			console.error("Erro ao enviar os dados para o backend:", error);
+		})
+	},[])
+	
 
 	return (
 		<View>
