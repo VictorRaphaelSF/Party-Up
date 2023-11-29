@@ -119,8 +119,12 @@ export default function Cadevento2() {
 
   const route = useRoute();
   const { eventData, id } = route.params;
+
+  //abaixo ja estava comentado
   // const eventData = [];
   // const id = 1;
+
+
   console.log(eventData);
   eventData["Site_contact_code"] = sitectt;
   eventData["instagram_user_code"] = instagram;
@@ -135,9 +139,9 @@ export default function Cadevento2() {
   eventData["Hr_end_code"] = horafinal;
   eventData["Tag_event_code"] = searchText;
 
+  //abaixo ja estava comentado
   // Dt_end_code,
   // Dt_creation_code,
-
   // Status_event_code,
   // Informative_Classification_code,
   // Event_classification_code//,
@@ -148,6 +152,7 @@ export default function Cadevento2() {
   // instagram_user_code//,
 
   const bttCriarEvento = () => {
+    const isLinkValid = validateLinkFormat(sitectt);
     const horaI = new Date("2000-01-01 " + horainicio);
     const horaF = new Date("2000-01-01 " + horafinal);
     const dataInicioFormatada = new Date(
@@ -175,31 +180,41 @@ export default function Cadevento2() {
       !ClassificationType
     ) {
       setErro("Preencha todos os campos obrigatórios.");
-      setTimeout(() => {
-        setErro("");
-      }, 4000);
-    } else if (horaI > horaF) {
-      setErro("Horário inválido.");
-      setTimeout(() => {
-        setErro("");
-      }, 4000);
-    } else if (dataInicioFormatada > dataFinalFormatada) {
-      setErro("A data de início deve ser anterior à data final.");
-      setTimeout(() => {
-        setErro("");
-      }, 4000);
-    } else {
+    setTimeout(() => {
       setErro("");
-      axios
-        .post("http://localhost:3003/cadEvent", eventData)
-        .then((response) => {
-          console.log(response);
-          navigation.navigate("telaprincipal", { id: id });
-        })
-        .catch((error) => {
-          console.error("Erro ao enviar os dados para o backend:", error);
-        });
-    }
+    }, 4000);
+  } else if (horaI > horaF) {
+    setErro("Horário inválido.");
+    setTimeout(() => {
+      setErro("");
+    }, 4000);
+  } else if (dataInicioFormatada > dataFinalFormatada) {
+    setErro("A data de início deve ser anterior à data final.");
+    setTimeout(() => {
+      setErro("");
+    }, 4000);
+  } else if (!isLinkValid) {
+    setErro("Coloque um link válido no 'Site para contato'.");
+    setTimeout(() => {
+      setErro("");
+    }, 4000);
+  } else {
+    setErro("");
+    axios
+      .post("http://localhost:3003/cadEvent", eventData)
+      .then((response) => {
+        console.log(response);
+        navigation.navigate("telaprincipal", { id: id });
+      })
+      .catch((error) => {
+        console.error("Erro ao enviar os dados para o backend:", error);
+      });
+  }
+};
+
+  const validateLinkFormat = (link) => {
+    const linkRegex = /^(https?:\/\/|www\.)\S+$/;
+    return linkRegex.test(link);
   };
 
   const panResponder = useRef(
