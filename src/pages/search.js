@@ -25,6 +25,7 @@ export default function Search() {
   const [isModalVisible, setModalVisible] = useState(false);
   const [isModalityModalVisible, setModalityModalVisible] = useState(false);
   const [isTypeModalVisible, setTypeModalVisible] = useState(false);
+  const [isModalCode, setIsModalCode] = useState(false);
   const [classificarPor, setClassificarPor] = useState("Editar");
   const [modalidadeOpcao, setModalidadeOpcao] = useState("Editar");
   const [tipoEventoOpcao, setTipoEventoOpcao] = useState("Editar");
@@ -38,28 +39,31 @@ export default function Search() {
   const [eventData, setEventData] = useState([]);
   const [eventResult, setEventResult] = useState(false);
 
+  //Variavel que sera guardado o código do evento que o usuário digitou
+  const [codeEvent, setcodeEvent] = useState("");
+
 
   const route = useRoute();
-  const { id } = route.params;
-  const { imgProfile } = route.params;
-  console.log(id);
+  // const { id } = route.params;
+  // const { imgProfile } = route.params;
+  // console.log(id);
 
-  useEffect(() => {
-    const loadSearchHistory = async () => {
-      try {
-        const storedSearchHistory = await AsyncStorage.getItem("searchHistory");
-        if (storedSearchHistory !== null) {
-          setSearchHistory(JSON.parse(storedSearchHistory));
-        }
-      } catch (e) {
-        console.error("Erro ao carregar histórico de pesquisa:", e);
-      }
-    };
+  // useEffect(() => {
+  //   const loadSearchHistory = async () => {
+  //     try {
+  //       const storedSearchHistory = await AsyncStorage.getItem("searchHistory");
+  //       if (storedSearchHistory !== null) {
+  //         setSearchHistory(JSON.parse(storedSearchHistory));
+  //       }
+  //     } catch (e) {
+  //       console.error("Erro ao carregar histórico de pesquisa:", e);
+  //     }
+  //   };
 
-    loadSearchHistory();
+  //   loadSearchHistory();
  
     
-  }, []);
+  // }, []);
 
   const handleSearch = () => {
     if (searchTerm.trim() !== "") {
@@ -84,6 +88,11 @@ export default function Search() {
     }
   };
 
+  const InputNum = (value, setter) => {
+    const numericValue = value.replace(/[^0-9]/g, "");
+    setter(numericValue);
+  };
+  
   const menu = () => {
     setMenuVisible(true);
   };
@@ -104,6 +113,10 @@ export default function Search() {
     setTypeModalVisible(true);
   };
 
+  const handleCodeModal = () => {
+    setIsModalCode(true);
+  };
+
   const handleClassificar = (opcao) => {
     setModalVisible(false);
     setClassificarPor(opcao);
@@ -119,6 +132,10 @@ export default function Search() {
     setTipoEventoOpcao(opcao);
   };
 
+  const handleFilter = () => {
+    console.log("coloque a logica de confirmar os filtros aqui")
+  }
+
 
   // console.log(eventData);
   
@@ -127,35 +144,35 @@ export default function Search() {
     userSearch_code: userSearch_code
   }
 
-  useEffect(() => {
-    console.log(userSearch_code);
-    const delay = 500;
-    let timeoutId;
+  // useEffect(() => {
+  //   console.log(userSearch_code);
+  //   const delay = 500;
+  //   let timeoutId;
   
   
-    const pesquisaUser = {
-      userSearch_code: userSearch_code,
-    };
-    console.log("opa");
-    axios
-      .post('http://localhost:3003/searchEvents', pesquisaUser)
-      .then((response) => {
-        console.log(response);
-        if(response.data.msg){
-          setEventResult(false)
-          setError(response.data.msg)
+  //   const pesquisaUser = {
+  //     userSearch_code: userSearch_code,
+  //   };
+  //   console.log("opa");
+  //   axios
+  //     .post('http://localhost:3003/searchEvents', pesquisaUser)
+  //     .then((response) => {
+  //       console.log(response);
+  //       if(response.data.msg){
+  //         setEventResult(false)
+  //         setError(response.data.msg)
           
-        }else{
-          setEventResult(true)
-          setEventData(response.data.results);
+  //       }else{
+  //         setEventResult(true)
+  //         setEventData(response.data.results);
 
-        }
-      })
-      .catch((error) => {
-        console.error('Erro ao enviar os dados para o backend:', error);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error('Erro ao enviar os dados para o backend:', error);
         
-      });
-   }, [userSearch_code]);
+  //     });
+  //  }, [userSearch_code]);
 
   return (
     <KeyboardAvoidingView
@@ -294,6 +311,11 @@ export default function Search() {
                 </Pressable>
               </View>
               <View style={styles.whiteLine} />
+              <View style={styles.handleBttConfirm}>
+                <Pressable style={styles.buttonFilter} onPress={handleFilter}>
+                <Text style={styles.buttonText}>Confirmar Filtros</Text>
+                </Pressable>
+              </View>
             </Animatable.View>
           </Pressable>
         </Modal>
@@ -332,14 +354,27 @@ export default function Search() {
               <Pressable style={styles.buttonLow} onPress={() => handleType("Publico")}>
                 <Text style={styles.buttonText}>Publico</Text>
               </Pressable>
-              <Pressable style={styles.buttonLow} onPress={() => handleType("Privado")}>
+              <Pressable style={styles.buttonLow} onPress={() => handleCodeModal(true)}>
                 <Text style={styles.buttonText}>Privado</Text>
               </Pressable>
             </View>
           </View>
         </Modal>
 
-        <Navbar id={id} imgProfile={imgProfile}/>
+        <Modal isVisible={isModalCode}>
+          <View style={styles.modalContent}>
+            <TextInput
+                style={styles.codeInput}
+                placeholder="Digite o código do evento"
+                placeholderTextColor="rgba(255, 255, 255, 0.5)"
+                value={codeEvent}
+                onChangeText={(text) => InputNum(text, setcodeEvent)}
+                maxLength={12}
+              />
+          </View>
+        </Modal>
+
+        <Navbar /*id={id} imgProfile={imgProfile}*/ />
       </View>
     </KeyboardAvoidingView>
   );
@@ -386,6 +421,17 @@ const styles = StyleSheet.create({
     outlineWidth: 0,
   },
 
+  codeInput: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    width: "90%",
+    flex: 1,
+    paddingLeft: 10,
+    borderRadius: 5,
+    textAlign: "center",
+    outlineWidth: 0,
+  },
+
   searchIcon: {
     width: 20,
     height: 20,
@@ -405,6 +451,15 @@ const styles = StyleSheet.create({
     height: 18,
     bottom: 7,
     left: 50,
+  },
+
+  buttonFilter: {
+    backgroundColor: "#95003F",
+    paddingVertical: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    top: 12,
   },
 
   bttbarra: {
@@ -429,11 +484,12 @@ const styles = StyleSheet.create({
   menuContainer: {
     backgroundColor: "#470F62",
     padding: 16,
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
-    width: "112%",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20  ,
+    height: 525,
+    width: "111%",
     right: 20,
-    top: 16,
+    top: 0,
   },
 
   menubtt: {
