@@ -176,7 +176,8 @@ export default function Navbuttons({ siteInfo, id, idEvent }) {
 			console.error("Erro ao enviar os dados para o backend:", error);
 		})
 	},[])
-
+  
+	
 	const handleButtonPress = () => {
 		startAnimation(!toggleLikeControll)
 		setToggleLikeControll(!toggleLikeControll)
