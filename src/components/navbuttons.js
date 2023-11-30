@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	StyleSheet,
 	View,
@@ -80,35 +80,12 @@ export default function Navbuttons({ siteInfo, id, idEvent }) {
 		});
 	};
 
-	const handleLikeButtonPress = () => {
-		setIsLikeButtonPressed(true);
-		startLikeAnimation(spinValueLike, setIsLikeButtonPressed, setLikeImage);
-	};
+	// const handleLikeButtonPress = () => {
+	// 	setIsLikeButtonPressed(true);
+	// 	startLikeAnimation(spinValueLike, setIsLikeButtonPressed, setLikeImage);
+	// };
 
-		// 	const handleButtonPress = () => {
-	// 		startAnimation(!toggleLikeControll)
-	// 		setToggleLikeControll(!toggleLikeControll)
-
-	// 		axios.post('http://localhost:3003/likeEvent', like)
-	// 			.then((response) => {
-	// 				console.log(response);
-	// 				axios
-	// 					.post('http://localhost:3003/likeCount', like)
-	// 					.then((response) => {
-	// 						console.log(response);
-	// 						setNumCurtida(response.data.numberLikes)
-	// 					}).then(() => {
-	// 						console.log("funfo " + numCurtida);
-	// 					})
-	// 					.catch((error) => {
-	// 						console.error('Erro ao enviar os dados para o backend:', error);
-
-	// 					});
-	// 			})
-	// 			.catch((error) => {
-	// 				console.error('Erro ao enviar os dados para o backend:', error);
-	// 			
-
+	
 	const dados = {
 		eventId_code:idEvent,
 		userId_code: id
@@ -167,6 +144,27 @@ export default function Navbuttons({ siteInfo, id, idEvent }) {
 		Id_App_Events_code: idEvent
 	}
 
+	const startAnimation = (toggleLike) => {
+		const image = toggleLike ? Like : Liked
+		console.log(toggleLike);
+		Animated.timing(spinValue, {
+			toValue: 1,
+			duration: 100,
+			easing: Easing.linear,
+			useNativeDriver: true,
+		}).start(() => {
+
+			setIsButtonPressed(false);
+			setLikeImage(image);
+			spinValue.setValue(0);
+		});
+	};
+
+	const [toggleLikeControll, setToggleLikeControll] = useState(false)
+	const spinValue = new Animated.Value(0);
+	const [isButtonPressed, setIsButtonPressed] = useState(false);
+	
+
 	useEffect(()=>{
 		axios.post('http://localhost:3003/heartLikeEvent', like)
 		.then((response) => {
@@ -178,7 +176,31 @@ export default function Navbuttons({ siteInfo, id, idEvent }) {
 			console.error("Erro ao enviar os dados para o backend:", error);
 		})
 	},[])
-	
+
+	const handleButtonPress = () => {
+		startAnimation(!toggleLikeControll)
+		setToggleLikeControll(!toggleLikeControll)
+
+		axios.post('http://localhost:3003/likeEvent', like)
+			.then((response) => {
+				console.log(response);
+				axios
+					.post('http://localhost:3003/likeCount', like)
+					.then((response) => {
+						console.log(response);
+						setNumCurtida(response.data.numberLikes)
+					}).then(() => {
+						console.log("funfo " + numCurtida);
+					})
+					.catch((error) => {
+						console.error('Erro ao enviar os dados para o backend:', error);
+
+					});
+			})
+			.catch((error) => {
+				console.error('Erro ao enviar os dados para o backend:', error);
+	})}
+
 
 	return (
 		<View>
@@ -186,7 +208,7 @@ export default function Navbuttons({ siteInfo, id, idEvent }) {
 				<View style={styles.buttonContainer}>
 					<Pressable
 						style={styles.customButton}
-						onPress={handleLikeButtonPress}>
+						onPress={handleButtonPress}>
 						<Animated.Image
 							source={likeImage}
 							style={[
