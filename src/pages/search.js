@@ -42,28 +42,27 @@ export default function Search() {
   //Variavel que sera guardado o código do evento que o usuário digitou
   const [codeEvent, setcodeEvent] = useState("");
 
-
   const route = useRoute();
   const { id } = route.params;
   const { imgProfile } = route.params;
   console.log(id);
 
-  // useEffect(() => {
-  //   const loadSearchHistory = async () => {
-  //     try {
-  //       const storedSearchHistory = await AsyncStorage.getItem("searchHistory");
-  //       if (storedSearchHistory !== null) {
-  //         setSearchHistory(JSON.parse(storedSearchHistory));
-  //       }
-  //     } catch (e) {
-  //       console.error("Erro ao carregar histórico de pesquisa:", e);
-  //     }
-  //   };
+  useEffect(() => {
+    const loadSearchHistory = async () => {
+      try {
+        const storedSearchHistory = await AsyncStorage.getItem("searchHistory");
+        if (storedSearchHistory !== null) {
+          setSearchHistory(JSON.parse(storedSearchHistory));
+        }
+      } catch (e) {
+        console.error("Erro ao carregar histórico de pesquisa:", e);
+      }
+    };
 
-  //   loadSearchHistory();
+    loadSearchHistory();
  
     
-  // }, []);
+  }, []);
 
   const handleSearch = () => {
     if (searchTerm.trim() !== "") {
@@ -136,20 +135,16 @@ export default function Search() {
     console.log("coloque a logica de confirmar os filtros aqui")
   }
 
-
-  // console.log(eventData);
-  
+  // console.log(eventData);  
   
   const pesquisaUser = {
     userSearch_code: userSearch_code
   }
 
-
   useEffect(() => {
     console.log(userSearch_code);
     const delay = 500;
     let timeoutId;
-  
   
     const pesquisaUser = {
       userSearch_code: userSearch_code,
@@ -241,7 +236,6 @@ export default function Search() {
 							)
 						})
 					}
-          
 				  </View>):
           (error && <Text style={styles.searchHistoryItem}>{error}</Text>)}
 				</ScrollView>
@@ -321,7 +315,6 @@ export default function Search() {
           </Pressable>
         </Modal>
 
-
           {/* Abaixo esta os modals dos filtros */}
         <Modal isVisible={isModalVisible}>
           <View style={styles.modalContent}>
@@ -375,7 +368,7 @@ export default function Search() {
           </View>
         </Modal>
 
-        <Navbar /*id={id} imgProfile={imgProfile}*/ />
+        <Navbar id={id} imgProfile={imgProfile} />
       </View>
     </KeyboardAvoidingView>
   );

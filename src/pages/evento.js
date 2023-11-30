@@ -166,7 +166,7 @@ export default function Evento({ navigation }) {
           </View>
         </ScrollView>
       </ImageBackground>
-      <Navbar /*id={id} imgProfile={imgProfile}*/ />
+      <Navbar id={id} imgProfile={imgProfile} />
     </View>
   );
 }
@@ -284,14 +284,14 @@ const styles = StyleSheet.create({
   siteInfoTexto: {
     color: "white",
     fontSize: 16,
-    marginTop: 10,
+    marginTop: 3,
     opacity: 0.5,
   },
 
   tagsContainer: {
     marginVertical: 8,
     position: "absolute",
-    top: windowHeight / 2 + 225,
+    top: windowHeight / 2 + 230,
     left: 15,
     zIndex: 1,
   },

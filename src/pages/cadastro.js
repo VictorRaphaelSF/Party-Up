@@ -25,6 +25,9 @@ export default function Cadastro({ navigation }) {
   const [yearOfBirth, setYearOfBirth] = useState("");
   const [telefone, setTelefone] = useState("");
 
+  //Variavel abaixo para guardar a cidade
+  const [cidade, setCidade] = useState("");
+
   //Linha abaixo somente para validações.
   const [erro, setErro] = useState("");
   const [senhaVisivel, setSenhaVisivel] = useState(false);
@@ -151,7 +154,8 @@ export default function Cadastro({ navigation }) {
       !senha ||
       !confirmarSenha ||
       !telefone ||
-      confirmarSenhaErro
+      !confirmarSenhaErro ||
+      !cidade
     ) {
       setErro("Preencha todos os campos obrigatórios");
       setTimeout(() => {
@@ -367,6 +371,21 @@ export default function Cadastro({ navigation }) {
             onChangeText={(text) => InputNum(text, setTelefone)}
           />
         </View>
+        <View style={styles.textInputContainer}>
+            <Image
+              source={require("../assets/images/icons/Home(g).png")}
+              style={styles.iconuser}
+            />
+            <TextInput
+              style={styles.textInput}
+              placeholder="Cidade atual"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              underlineColorAndroid="transparent"
+              maxLength={100}
+              value={cidade}
+              onChangeText={setCidade}
+            />
+          </View>
       </View>
       <View style={styles.MessageSenhaError}>
         {confirmarSenhaErro && (
@@ -532,5 +551,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 0,
     top: Platform.OS === "web" ? 60 : 50,
+  },
+
+  iconuser: {
+    width: 18,
+    height: 18,
+    marginRight: 14,
   },
 });
