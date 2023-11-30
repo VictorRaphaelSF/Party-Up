@@ -30,7 +30,7 @@ export default function Telaprofile() {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const [name, setName] = useState("");
   const [idade, setIdade] = useState("");
-  const [idEvent, setIdEvent] = useState("");
+  const [idEvents, setIdEvent] = useState([]);
   const [descricao, setDescricao] = useState("");
   const [sair, setSair] = useState(false);
   const [eventImage, setEventImage] = useState(null);
@@ -68,6 +68,7 @@ export default function Telaprofile() {
     axios
       .post("http://localhost:3003/profileUser", idUser)
       .then((response) => {
+        console.log(response);
         console.log(response.data.results);
         console.log(response.data.results[0]);
         setName(response.data.results[0].User_name);
@@ -98,9 +99,15 @@ export default function Telaprofile() {
     axios
       .post("http://localhost:3003/viewEventUser", idUser)
       .then((response) => {
-        setIdEvent(response.data.idEvent);
-        console.log(response.data.results[0].Nm_event);
+        console.log(response);
         setEventData(response.data.results);
+        console.log(eventData);
+
+        response.data.results.forEach(element => {
+          setIdEvent(old => [...old, element.Id_App_Events]);
+        })
+        
+        console.log(response.data.results[0].Nm_event);
       })
       .catch((error) => {
         console.error(
@@ -108,8 +115,12 @@ export default function Telaprofile() {
           error
         );
       });
-    console.log(id);
+    
   }, []);
+
+  useEffect(()=>{
+    console.log(idEvents);
+  },[idEvents])
 
   return (
     <View style={styles.container}>
@@ -190,18 +201,20 @@ export default function Telaprofile() {
       <ScrollView
         style={{ width: "100%", gap: 16, top: 200, maxHeight: "14%" }}>
         <View style={{ width: "100%", gap: 8 }}>
-          {eventData.map((event, index) => {
-            return (
-              <CardEvent
-                descricaoEvento={event.desc_event}
-                idUser={id}
-                Event_image={event.Event_image}
-                Nm_event={event.Nm_event}
-                Id_App_Events={idEvent}
-                key={index}
-              />
-            );
-          })}
+          {
+            eventData.map((event, index) => {
+              return (
+                <CardEvent
+                  descricaoEvento={event.desc_event}
+                  idUser={id}
+                  Event_image={event.Event_image}
+                  Nm_event={event.Nm_event}
+                  Id_App_Events={idEvents[index]}
+                  key={index}
+                />
+              );
+            })
+        }
         </View>
       </ScrollView>
 
