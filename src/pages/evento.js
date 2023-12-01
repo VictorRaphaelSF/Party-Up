@@ -146,6 +146,12 @@ export default function Evento({ navigation }) {
           <Comentbar />
 
           <View style={styles.comentariosContainer}>
+          <Pressable style={styles.bttNewComentario} onPress={bttNewCom}>
+              <Image
+                source={require("../assets/images/icons/bttNewComment.png")}
+                style={styles.bttNewComment}
+                />
+            </Pressable>
             <Image
               source={require("../assets/images/icons/loading.png")}
               style={styles.imagemComentarios}
@@ -228,6 +234,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "inter",
     textAlign: "left",
+    marginLeft: 12,
   },
 
   descricaoTexto: {
@@ -345,7 +352,7 @@ const styles = StyleSheet.create({
 
   comentariosContainer: {
     marginVertical: 8,
-    top: windowHeight / 2 + 85,
+    top: windowHeight / 2 + 25,
     zIndex: 1,
   },
 
@@ -366,11 +373,22 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 
+  bttNewComentario: {
+    alignSelf: "end",
+    marginRight: 18,
+    marginTop: 22,
+  },
+
   imagemComentarios: {
     width: 100,
     height: 100,
     alignSelf: "center",
     marginVertical: 24,
+  },
+
+  bttNewComment: {
+    width: 40,
+    height: 40,
   },
 
   semComentarios: {

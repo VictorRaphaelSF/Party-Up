@@ -19,6 +19,6 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 50,
         resizeMode: "contain",
-        top: 480,
+        top: 450,
       },
 });
