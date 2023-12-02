@@ -222,7 +222,12 @@ export default function Login({ navigation }) {
 		alignItems: "center",
 		borderRadius: 10,
 		bottom: -32,
-	  },
+		elevation: 10,
+		shadowColor: '#000',
+		shadowOffset: { width: 2, height: 6 },
+		shadowOpacity: 0.3,
+		shadowRadius: 5,
+		},
 	
 	  buttonText: {
 		fontSize: 18,

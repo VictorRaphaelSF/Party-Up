@@ -10,6 +10,7 @@ import {
   Platform,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
+import Modal from "react-native-modal";     
 
 import { TextInputMask } from "react-native-masked-text";
 import { cpf, cnpj } from 'cpf-cnpj-validator';
@@ -45,11 +46,28 @@ export default function Cadastro({ navigation }) {
   const [senhaFraca, setSenhaFraca] = useState(false);
   const [mostrarMensagemSenhaFraca, setMostrarMensagemSenhaFraca] =
     useState(false);
+    const [openMenuCid, setOpenMenuCid] = useState(false);
+    const [selectedCid, setSelectedCid] = useState(null);
 
   const InputNum = (value, setter) => {
     const numericValue = value.replace(/[^0-9]/g, "");
     setter(numericValue);
   };
+
+  const openModal = () => {
+    setOpenMenuCid(true);
+  };
+
+  const selectCidade = (cidade) => {
+    setSelectedCid(cidade);
+    setCidade(cidade);
+    closeMenuCid();
+  };
+
+  const closeMenuCid = () => {
+    setOpenMenuCid(false);
+  };
+
 
   const validarIdade = (dataNascimento) => {
     const regex = /^\d{2}\/\d{2}\/\d{4}$/;
@@ -372,20 +390,56 @@ export default function Cadastro({ navigation }) {
           />
         </View>
         <View style={styles.textInputContainer}>
+          
             <Image
               source={require("../assets/images/icons/Home(g).png")}
               style={styles.iconuser}
             />
+            <Pressable onPress={openModal}>
             <TextInput
               style={styles.textInput}
               placeholder="Cidade atual"
               placeholderTextColor="rgba(255, 255, 255, 0.5)"
               underlineColorAndroid="transparent"
-              maxLength={100}
               value={cidade}
-              onChangeText={setCidade}
+              readOnly={false}
             />
+            </Pressable>
           </View>
+
+          <Modal isVisible={openMenuCid}
+          onRequestClose={closeMenuCid}
+          >
+            <View style={styles.modalContent}>
+              <View style={styles.modalButtons}>
+                <Pressable style={styles.buttonLow} onPress={() => selectCidade("Santos")}>
+                  <Text style={styles.buttonText}>Santos</Text>
+                </Pressable>
+                <Pressable style={styles.buttonLow} onPress={() => selectCidade("Praia Grande")}>
+                  <Text style={styles.buttonText}>Praia Grande</Text>
+                </Pressable>
+                <Pressable style={styles.buttonLow} onPress={() => selectCidade("Sâo Vicente")}>
+                  <Text style={styles.buttonText}>São Vicente</Text>
+                </Pressable>
+                <Pressable style={styles.buttonLow} onPress={() => selectCidade("Guarujá")}>
+                  <Text style={styles.buttonText}>Guarujá</Text>
+                </Pressable>
+                <Pressable style={styles.buttonLow} onPress={() => selectCidade("Bertioga")}>
+                  <Text style={styles.buttonText}>Bertioga</Text>
+                </Pressable>
+                <Pressable style={styles.buttonLow} onPress={() => selectCidade("Peruíbe")}>
+                  <Text style={styles.buttonText}>Peruíbe</Text>
+                </Pressable>
+                <Pressable style={styles.buttonLow} onPress={() => selectCidade("Mongaguá")}>
+                  <Text style={styles.buttonText}>Mongaguá</Text>
+                </Pressable>
+                <Pressable style={styles.buttonLow} onPress={() => selectCidade("Itanhaém")}>
+                  <Text style={styles.buttonText}>Itanhaém</Text>
+                </Pressable>
+              </View>
+            </View>
+          </Modal>
+
       </View>
       <View style={styles.MessageSenhaError}>
         {confirmarSenhaErro && (
@@ -435,6 +489,11 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     borderRadius: 10,
     bottom: 75,
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 2, height: 6 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
   },
 
   buttonText: {
@@ -542,20 +601,63 @@ const styles = StyleSheet.create({
   MessageSenhaError: {
     color: "red",
     fontSize: 14,
-    marginTop: 0,
-    top: Platform.OS === "web" ? 40 : 10,
+    alignSelf: "center",
+    bottom: 175,
   },
 
   MessageSenhaError2: {
     color: "red",
     fontSize: 14,
-    marginTop: 0,
-    top: Platform.OS === "web" ? 60 : 50,
+    alignSelf: "center",
+    bottom: 150,
   },
 
   iconuser: {
     width: 18,
     height: 18,
     marginRight: 14,
+  },
+
+  modalContent: {
+    backgroundColor: "#46105e",
+    padding: 22,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    borderColor: "rgba(0, 0, 0, 0.1)",
+  },
+
+  modalText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "inter",
+    marginBottom: 32,
+  },
+
+  modalButtons: {
+    flexDirection: "column",
+    width: "80%",
+  },
+  
+
+  buttonLow: {
+    backgroundColor: "#7E3CA7",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginHorizontal: 10,
+    marginVertical: 12,
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 2, height: 6 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+  },
+
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "inter",
+    alignSelf: "center",
   },
 });

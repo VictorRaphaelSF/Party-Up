@@ -38,6 +38,7 @@ export default function Search() {
   const [searchHistory, setSearchHistory] = useState([]);
   const [eventData, setEventData] = useState([]);
   const [eventResult, setEventResult] = useState(false);
+  const [textoPrivado, setTextoPrivado] = useState("Privado");
 
   //Variavel que sera guardado o código do evento que o usuário digitou
   const [codeEvent, setcodeEvent] = useState("");
@@ -68,7 +69,6 @@ export default function Search() {
     if (searchTerm.trim() !== "") {
       setSearchHistory([...searchHistory, searchTerm]);
 
-
       AsyncStorage.setItem(
         "searchHistory",
         JSON.stringify([...searchHistory, searchTerm])
@@ -76,6 +76,19 @@ export default function Search() {
 
       setReload(reload + 1);
     }
+  };
+
+  const PressEnter = (event) => {
+    if (event.key === 'Enter') {
+      confirmarCode();
+    }
+  };
+
+  const confirmarCode = () => {
+    setTypeModalVisible(false);
+    setIsModalCode(false);
+    setTipoEventoOpcao(textoPrivado);
+    setTextoPrivado
   };
   
   const handleClearHistory = async () => {
@@ -363,6 +376,7 @@ export default function Search() {
                 placeholderTextColor="rgba(255, 255, 255, 0.5)"
                 value={codeEvent}
                 onChangeText={(text) => InputNum(text, setcodeEvent)}
+                onKeyPress={PressEnter}
                 maxLength={12}
               />
           </View>
@@ -483,7 +497,7 @@ const styles = StyleSheet.create({
     height: 525,
     width: "111%",
     right: 20,
-    top: 0,
+    top: 17,
   },
 
   menubtt: {
@@ -492,6 +506,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     right: 22,
     bottom: 13,
+    outlineWidth: 0,
   },
 
   textTitle: {
@@ -571,6 +586,10 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
 
+  menuOption: {
+    outlineWidth: 0,
+  },
+
   modalContent: {
     backgroundColor: "#530478",
     padding: 22,
@@ -599,6 +618,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 10,
     marginHorizontal: 10,
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 2, height: 6 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
   },
 
   buttonText: {
