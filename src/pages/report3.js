@@ -16,10 +16,6 @@ export default function Report3({ navigation }) {
     navigation.navigate("telaprincipal");
   };
 
-  const backbutton = () => {
-    navigation.goBack();
-  };
-
   return (
     <ImageBackground
       source={require("../assets/images/telanexist.png")}
@@ -32,11 +28,9 @@ export default function Report3({ navigation }) {
             source={require("../assets/images/icons/report.png")}
             style={styles.reportlogo}
           />
-
           <Animatable.View animation="fadeInUp">
             <Text style={styles.title}>Problema relatado com sucesso</Text>
           </Animatable.View>
-
           <View style={styles.topic}>
             <Text style={styles.bullet}>•</Text>
             <Text style={styles.topicText}>

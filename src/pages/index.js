@@ -73,11 +73,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     position: "absolute",
     bottom: windowHeight * 0.04,
-    elevation: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 2, height: 6 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
+    boxShadow: '2px 6px 5px rgba(0,0,0,0.3)',
   },
 
   buttonText: {

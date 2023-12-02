@@ -392,7 +392,7 @@ export default function Cadastro({ navigation }) {
         <View style={styles.textInputContainer}>
           
             <Image
-              source={require("../assets/images/icons/Home(g).png")}
+              source={require("../assets/images/icons/home(g).png")}
               style={styles.iconuser}
             />
             <Pressable onPress={openModal}>
@@ -489,11 +489,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     borderRadius: 10,
     bottom: 75,
-    elevation: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 2, height: 6 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
+    boxShadow: '2px 6px 5px rgba(0,0,0,0.3)',
   },
 
   buttonText: {
@@ -647,11 +643,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginHorizontal: 10,
     marginVertical: 12,
-    elevation: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 2, height: 6 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
+    boxShadow: '2px 6px 5px rgba(0,0,0,0.3)',
   },
 
   buttonText: {

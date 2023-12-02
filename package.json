@@ -43,7 +43,6 @@
     "react-native-web": "~0.19.6",
     "react-navigation": "^4.4.4",
     "react-slick": "^0.29.0",
-    "slick-carousel": "^1.8.1",
     "yet": "^0.1.0"
   },
   "devDependencies": {

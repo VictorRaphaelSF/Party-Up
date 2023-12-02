@@ -22,7 +22,6 @@ import Event_progress from "./src/pages/event_progress";
 import Forgotpassword from "./src/pages/forgotpassword";
 import Historicoevent from "./src/pages/historicoevent";
 import Search from "./src/pages/search";
-import Searched from "./src/pages/searched";
 import Notificacao from "./src/pages/notificacoes";
 import Termos from "./src/pages/termos";
 import Telaprincipal from "./src/pages/telaprincipal";
@@ -133,13 +132,6 @@ export default function App() {
           }}
           name="telaprofile"
           component={Telaprofile}
-        />
-        <Stack.Screen
-          options={{
-            headerShown: false,
-          }}
-          name="searched"
-          component={Searched}
         />
         <Stack.Screen
           options={{
