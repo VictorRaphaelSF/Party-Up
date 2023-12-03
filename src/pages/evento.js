@@ -107,7 +107,9 @@ export default function Evento({ navigation }) {
 
 
   const bttNewCom = () => {
-
+    navigation.navigate("comentario", {
+      idEvento: idEvento, id : id
+    });
     
   }
   

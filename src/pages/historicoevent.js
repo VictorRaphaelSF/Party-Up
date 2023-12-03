@@ -12,7 +12,7 @@ import {
 } from "react-native";
 
 import * as Animatable from "react-native-animatable";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import Backbutton from "../components/backbutton";
 import Navbar from "../components/navbar";
 import MenuBar from "../components/menubar";
@@ -25,6 +25,11 @@ export default function Historicoevent() {
   const menu = () => {
     setMenuVisible(true);
   };
+
+  const route = useRoute();
+  const { id } = route.params;
+  const { idEvento } = route.params;
+  const { imgProfile } = route.params;
 
   return (
     <View style={styles.container}>
@@ -58,7 +63,7 @@ export default function Historicoevent() {
         setMenuVisible={setMenuVisible}
         menu={menu}
       />
-      <Navbar id={id} imgProfile={imgProfile} />
+      <Navbar id={id} imgProfile= {imgProfile}/>
     </View>
   );
 }

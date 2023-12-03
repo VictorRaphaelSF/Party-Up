@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -13,7 +13,7 @@ import {
 } from "react-native";
 
 import * as Animatable from "react-native-animatable";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import Backbutton from "../components/backbutton";
 import axios from 'axios';
 
@@ -69,13 +69,20 @@ export default function Comentario() {
 
     const route = useRoute();
   const { id } = route.params;
+  const { idEvento } = route.params;
   console.log(id);
-  const idUser = {
+  const idEvent = {
+    Id_App_Events_code : idEvento
   };
 
+  const comentario = {
+    Id_App_Events_code : idEvento, 
+    idUser_code : id, 
+    commentUser : descComentario
+  }
   useEffect(() => {
     axios
-      .post('url do back', idUser)
+      .post('viewComment', idEvent)
       .then((response) => {
         setProfileImage(response.data.image_url);
       })
@@ -83,24 +90,12 @@ export default function Comentario() {
         console.error('Erro ao enviar ou retono de dados para o backend:', error);
       });
 
-    axios
-      .post('http://localhost:3003/viewEventUser', /*idUser*/)
-      .then((response) => {
-        console.log(response)
-        console.log(response.data.results[0].Nm_event);
-        setEventData(response.data.results);
-      })
-      .catch((error) => {
-        console.error('Erro ao enviar ou retono de dados para o backend:', error);
-      });
   }, []);
 
   const enviarComentario = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('colocar aqui o endereço do comentario no back', {
-        comentario: descComentario,
-      });
+      const response = await axios.post('commentEvent', comentario);
       setComentarios([...comentarios, { perfil: imgProfile, nome: name, comentario: descComentario }]);
       setDescComentario(""); 
       console.log('Comentário enviado com sucesso:', response.data);

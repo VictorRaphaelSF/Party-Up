@@ -30,9 +30,13 @@ export default function Settings() {
 
   const route = useRoute();
 
+
   const [senha, setSenha] = useState("")
   const [deletar, setDeletar] = useState(false)
 
+  const { id } = route.params;
+  const { idEvento } = route.params;
+  const { imgProfile } = route.params;
   return (
     <View style={styles.container}>
       {deletar && <CardDeletar setDeletar={setDeletar} senha={senha} setSenha={setSenha} />}
@@ -57,7 +61,7 @@ export default function Settings() {
           </Icon>
         </Pressable>
       </View>
-      <Navbar />
+      <Navbar id={id} imgProfile={imgProfile} />
     </View>
   );
 }
