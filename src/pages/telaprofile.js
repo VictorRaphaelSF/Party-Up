@@ -100,7 +100,12 @@ export default function Telaprofile() {
       .post("http://localhost:3003/viewEventUser", idUser)
       .then((response) => {
         console.log(response);
-        setEventData(response.data.results);
+        if (!response.data.results) {
+          setEventData([])
+        }
+        else {
+          setEventData(response.data.results)
+        }
         console.log(eventData);
 
         response.data.results.forEach(element => {
@@ -202,6 +207,7 @@ export default function Telaprofile() {
         style={{ width: "100%", gap: 16, top: 200, maxHeight: "14%" }}>
         <View style={{ width: "100%", gap: 8 }}>
           {
+            
             eventData.map((event, index) => {
               return (
                 <CardEvent

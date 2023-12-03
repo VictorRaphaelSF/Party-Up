@@ -39,12 +39,12 @@ export default function Eventoedit2({ navigation }) {
   const animatedValue = useRef(new Animated.Value(0)).current;
 
   const route = useRoute();
-  // const { id } = route.params;
-  // const { idEvento } = route.params;
-  // const { imgProfile } = route.params;
-  const id = 1;
-  const idEvento = 1;
-  const imgProfile = null;
+  const { id } = route.params;
+  const { idEvento } = route.params;
+  const { imgProfile } = route.params;
+  // const id = 1;
+  // const idEvento = 1;
+  // const imgProfile = null;
 
   console.log(typeEvent);
   console.log(modalityEvent);
@@ -294,7 +294,7 @@ export default function Eventoedit2({ navigation }) {
       .post("http://localhost:3003/updateEvent", updateEvent)
       .then((response) => {
         console.log(response);
-        navigation.navigate("evento", { id: id });
+        navigation.navigate("telaprofile", { id: id });
       })
       .catch((error) => {
         console.error("Erro ao enviar os dados para o backend:", error);
@@ -536,10 +536,10 @@ export default function Eventoedit2({ navigation }) {
           <View style={styles.line2} />
 
           <View style={styles.square}>
-            {/* <Image
+            <Image
               source={`data:image/png;base64,${imgProfile}`}
               style={styles.square}
-            /> */}
+            />
 
             <View style={styles.flexRow}>
               {editTitle ? (

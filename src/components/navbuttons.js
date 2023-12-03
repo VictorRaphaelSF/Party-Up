@@ -160,6 +160,7 @@ export default function Navbuttons({ siteInfo, id, idEvent }) {
 		});
 	};
 
+
 	const [toggleLikeControll, setToggleLikeControll] = useState(false)
 	const spinValue = new Animated.Value(0);
 	const [isButtonPressed, setIsButtonPressed] = useState(false);
@@ -168,7 +169,7 @@ export default function Navbuttons({ siteInfo, id, idEvent }) {
 	useEffect(()=>{
 		axios.post('http://localhost:3003/heartLikeEvent', like)
 		.then((response) => {
-			console.log(response)
+			console.log(response) 
 			setToggleLikeControll(response.data.heartLikeEvent)
 			startAnimation(response.data.heartLikeEvent)
 		})
@@ -176,7 +177,8 @@ export default function Navbuttons({ siteInfo, id, idEvent }) {
 			console.error("Erro ao enviar os dados para o backend:", error);
 		})
 	},[])
-  
+
+
 	
 	const handleButtonPress = () => {
 		startAnimation(!toggleLikeControll)
@@ -185,22 +187,24 @@ export default function Navbuttons({ siteInfo, id, idEvent }) {
 		axios.post('http://localhost:3003/likeEvent', like)
 			.then((response) => {
 				console.log(response);
-				axios
-					.post('http://localhost:3003/likeCount', like)
-					.then((response) => {
-						console.log(response);
-						setNumCurtida(response.data.numberLikes)
-					}).then(() => {
-						console.log("funfo " + numCurtida);
-					})
-					.catch((error) => {
-						console.error('Erro ao enviar os dados para o backend:', error);
+				// axios
+				// 	.post('http://localhost:3003/likeCount', like)
+				// 	.then((response) => {
+				// 		console.log(response);
+				// 		setNumCurtida(response.data.numberLikes)
+				// 	}).then(() => {
+				// 		console.log("funfo " + numCurtida);
+				// 	})
+				// 	.catch((error) => {
+				// 		console.error('Erro ao enviar os dados para o backend:', error);
 
-					});
+				// 	});
 			})
 			.catch((error) => {
 				console.error('Erro ao enviar os dados para o backend:', error);
-	})}
+		})
+	// startLikeAnimation(spinValueLike, setIsLikeButtonPressed, setLikeImage);
+}
 
 
 	return (

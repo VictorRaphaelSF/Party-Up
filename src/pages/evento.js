@@ -104,6 +104,14 @@ export default function Evento({ navigation }) {
   }, []);
   console.log(id,"aaaaaaaaaaa");
 
+
+
+  const bttNewCom = () => {
+
+    
+  }
+  
+
   return (
     <View style={styles.container}>
       <ImageBackground

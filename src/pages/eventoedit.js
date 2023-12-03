@@ -140,7 +140,7 @@ export default function Eventoedit({ navigation }) {
   }, []);
 
   const handleButtonEdit = () => {
-    navigation.navigate("eventoedit2");
+    navigation.navigate("eventoedit2",{ id : id, imgProfile: imgProfile, idEvento: idEvento});
   };
 
   const handleExcluir = () => {
@@ -244,10 +244,10 @@ export default function Eventoedit({ navigation }) {
           <View style={styles.line2} />
           <Backbutton />
           <View style={styles.square}>
-            {/* <Image
+            <Image
               source={`data:image/png;base64,${imgProfile}`}
               style={styles.square}
-            /> */}
+            />
             <Text style={styles.titulo}>{titulo}</Text>
           </View>
         </ScrollView>
