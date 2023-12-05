@@ -34,11 +34,11 @@ return (
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.scrollViewContent}
     >
-      {/* {eventosTemporarios.map((item, index) => (
+      {eventosTemporarios.map((item, index) => (
         <View key={index} style={styles.carouselItem}>
           <Image style={styles.carouselImage} source={item} />
         </View>
-      ))} */}
+      ))}
       {eventsData.map((e, index) => (
           <View key={index} style={styles.carouselItem}>
             <Image

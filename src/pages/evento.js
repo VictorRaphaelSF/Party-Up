@@ -29,6 +29,8 @@ export default function Evento({ navigation }) {
   const [horaFim, setHoraFim] = useState("");
   const [siteInfo, setSiteInfo] = useState("");
   const [tags, setTags] = useState("");
+  const [usuariosMarcaramPresenca, setUsuariosMarcaramPresenca] = useState(0);
+  const [usuariosCurtiram, setUsuariosCurtiram] = useState(0);
 
   const route = useRoute();
   const { id } = route.params;
@@ -104,16 +106,12 @@ export default function Evento({ navigation }) {
   }, []);
   console.log(id,"aaaaaaaaaaa");
 
-
-
   const bttNewCom = () => {
     navigation.navigate("comentario", {
       idEvento: idEvento, id : id
     });
-    
   }
   
-
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -123,9 +121,10 @@ export default function Evento({ navigation }) {
         <Backbutton />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.overlay}>
+
             <View style={styles.descricaoContainer}>
               <Text style={styles.descricaoTitulo}>Descrição</Text>
-              <Text style={styles.descricaoTexto}>{descricao}</Text>
+              <Text style={styles.descricaoTexto}>Nam quis nulla. Integer malesuada. In in enim a arcu imperdiet malesuada. Sed vel lectus. Donec odio urna, tempus molestie, porttitor ut, iaculis quis, sem. Phasellus rhoncus. Aenean id metus id velit ullamcorper pulvinar. Vestibulum fermentum tortor id m{descricao}</Text>
             </View>
           </View>
 
@@ -148,10 +147,19 @@ export default function Evento({ navigation }) {
 
           <View style={styles.tagsContainer}>
             <Text style={styles.tagsTitulo}>Tags Relacionadas</Text>
-            <Text style={styles.tagsTexto}>{tags}</Text>
+            <Text style={styles.tagsTexto}>{tags}Rock, Funk</Text>
           </View>
 
           <Navbuttons siteInfo={siteInfo} id={id} idEvent={idEvento}/>
+
+          <View style={styles.usuariosContainer}>
+            <Text style={styles.usuariosTitulo1}>
+              {`${usuariosMarcaramPresenca} Usuários marcaram presença`}
+            </Text>
+            <Text style={styles.usuariosTitulo2}>
+              {`${usuariosCurtiram} Usuários Curtiram`}
+            </Text>
+          </View>
 
           <Comentbar />
 
@@ -182,7 +190,7 @@ export default function Evento({ navigation }) {
           </View>
         </ScrollView>
       </ImageBackground>
-      <Navbar id={id} imgProfile={imgProfile} />
+      <Navbar  id={id} imgProfile={imgProfile}  />
     </View>
   );
 }
@@ -233,7 +241,7 @@ const styles = StyleSheet.create({
   descricaoContainer: {
     marginVertical: 8,
     position: "absolute",
-    top: windowHeight / 2 + -10,
+    top: windowHeight / 2 + 35,
     left: 15,
     zIndex: 1,
   },
@@ -244,7 +252,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "inter",
     textAlign: "left",
-    marginLeft: 12,
+    marginLeft: 0,
   },
 
   descricaoTexto: {
@@ -257,7 +265,7 @@ const styles = StyleSheet.create({
 
   dataContainer: {
     marginVertical: 54,
-    top: windowHeight / 2 + 15 + 10,
+    top: windowHeight / 2 + 15 + 135,
     left: 15,
     zIndex: 1,
   },
@@ -279,14 +287,14 @@ const styles = StyleSheet.create({
   dataTexto2: {
     color: "white",
     fontSize: 16,
-    marginTop: 10,
+    marginTop: 3,
     opacity: 0.5,
   },
 
   siteInfoContainer: {
     marginVertical: 8,
     position: "absolute",
-    top: windowHeight / 2 + 175,
+    top: windowHeight / 2 + 290,
     left: 15,
     zIndex: 1,
   },
@@ -308,7 +316,7 @@ const styles = StyleSheet.create({
   tagsContainer: {
     marginVertical: 8,
     position: "absolute",
-    top: windowHeight / 2 + 230,
+    top: windowHeight / 2 + 340,
     left: 15,
     zIndex: 1,
   },
@@ -327,42 +335,22 @@ const styles = StyleSheet.create({
   tagsTexto: {
     color: "white",
     fontSize: 16,
-    marginTop: 10,
+    marginTop: 3,
     opacity: 0.5,
-  },
-
-  line: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: -530,
-    height: 2,
-    backgroundColor: "white",
-    opacity: 0.6,
   },
 
   line2: {
     position: "absolute",
     left: 0,
     right: 0,
-    bottom: -560,
+    bottom: -650,
     height: 2,
-    opacity: 0.6,
-  },
-
-  line3: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: -790,
-    height: 2,
-    backgroundColor: "white",
     opacity: 0.6,
   },
 
   comentariosContainer: {
     marginVertical: 8,
-    top: windowHeight / 2 + 25,
+    top: windowHeight / 2 + 100,
     zIndex: 1,
   },
 
@@ -386,7 +374,7 @@ const styles = StyleSheet.create({
   bttNewComentario: {
     alignSelf: "end",
     marginRight: 18,
-    marginTop: 22,
+    top: 40,
   },
 
   imagemComentarios: {
@@ -408,5 +396,26 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignSelf: "center",
     opacity: 0.7,
+  },
+
+  usuariosContainer: {
+    marginVertical: 8,
+    position: "absolute",
+    top: 390,
+    left: 15,
+    zIndex: 1,
+  },
+
+  usuariosTitulo1: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "inter",
+    textAlign: "left",
+  },
+
+  usuariosTitulo2: {
+    color: "white",
+    fontSize: 18,
+    marginTop: 10,
   },
 });

@@ -341,6 +341,8 @@ const styles = StyleSheet.create({
   },
 
   titulo: {
+    top: 24,
+    left: 12,
     color: "white",
     fontSize: 14,
     fontWeight: "inter",
@@ -360,12 +362,12 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: -4,
     alignItems: "center",
-  },
-
-  userImage: {
     width: 45,
     height: 45,
     borderRadius: 25,
+  },
+
+  userImage: {
   },
 
   menubtt: {
@@ -383,8 +385,7 @@ const styles = StyleSheet.create({
   },
 
   titulo1: {
-    left: 52,
-    bottom: 33,
+    left: 60,
     color: "white",
     fontSize: 18,
     fontWeight: "inter",

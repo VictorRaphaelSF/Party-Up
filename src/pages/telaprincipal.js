@@ -8,7 +8,6 @@ import {
   Dimensions,
   Text,
   ScrollView,
-  FlatList,
 } from "react-native";
 
 import { useRoute, useNavigation } from "@react-navigation/native";
@@ -16,25 +15,11 @@ import axios from "axios";
 import Navbar from "../components/navbar";
 import Buttonprofile from "../components/buttonprofile";
 import Destaquebar from "../components/destaquebar";
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
 
 export default function Telaprincipal() {
   const [eventsData, setEventsData] = useState([]);
   const [imgProfile, setImgProfile] = useState("");
-
   const navigation = useNavigation();
-
-  const eventImages = [
-    require("../assets/images/Eventos(Temporarios)/EventoM(1).png"),
-    require("../assets/images/Eventos(Temporarios)/EventoM(2).png"),
-    require("../assets/images/Eventos(Temporarios)/EventoM(1).png"),
-    require("../assets/images/Eventos(Temporarios)/EventoM(2).png"),
-    require("../assets/images/Eventos(Temporarios)/EventoM(1).png"),
-    require("../assets/images/Eventos(Temporarios)/EventoM(2).png"),
-    require("../assets/images/Eventos(Temporarios)/EventoM(1).png"),
-    require("../assets/images/Eventos(Temporarios)/EventoM(2).png"),
-  ];
 
   const route = useRoute();
   const { id } = route.params;
@@ -50,9 +35,6 @@ export default function Telaprincipal() {
       .catch ((error) => {
         console.error('Erro ao enviar ou retono de dados para o backend:', error);
     });
-
-
-    
   }, []);
 
   const renderItem = ({ item }) => (
@@ -76,27 +58,27 @@ export default function Telaprincipal() {
 
       <Destaquebar eventsData={eventsData} />
 
-      <View style={styles.eventContainer}>
-        <ScrollView
-          contentContainerStyle={styles.scrollViewContent}
-          showsVerticalScrollIndicator={false}
-          style={styles.scrollView}>
-          {/* {eventImages.map((image, index) => (
-            <Image key={index} source={image} style={styles.backgroundImage} />
-          ))} */}
-          {eventsData.map((e, index) => (
-            <>
+      <View style={styles.eventContainer}> 
+        {eventsData.length === 0 ? (
+          <Text style={styles.noEventsText}>Sem eventos disponíveis</Text>
+        ) : (
+          <ScrollView
+            contentContainerStyle={styles.scrollViewContent}
+            showsVerticalScrollIndicator={false}
+            style={styles.scrollView}
+          >
+            {eventsData.map((event, index) => (
               <Image
-                source={`data:image/png;base64,${e.Event_image}`}
+                key={index}
                 style={styles.backgroundImage}
+                source={event}
               />
-              <Text style={styles.descEvent}>{e.desc_event}</Text>
-            </>
-          ))}
-        </ScrollView>
+            ))}
+          </ScrollView>
+        )}
       </View>
       <Buttonprofile id={id} imgProfile={imgProfile} />
-      <Navbar id={id} imgProfile={imgProfile} />
+      <Navbar id={id} imgProfile={imgProfile}/>
     </View>
   );
 }
@@ -165,7 +147,8 @@ const styles = StyleSheet.create({
 
   scrollView: {
     flex: 1,
-    width: "100%",
+    width: "90%",
+    alignSelf: "center",
   },
 
   scrollViewContent: {
@@ -177,5 +160,13 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 8,
     marginBottom: 10,
+  },
+
+  noEventsText: {
+    fontSize: 20,
+    color: "#FFF",
+    textAlign: "center",
+    top: 120,
+    marginTop: 20,
   },
 });
