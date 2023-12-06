@@ -16,7 +16,7 @@ import Like from "../assets/images/icons/liked.png"
 import Liked from "../assets/images/icons/like.png"
 
 
-export default function Navbuttons({ siteInfo, id, idEvent }) {
+export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCurtida }) {
 	const [buttonVisible, setButtonVisible] = useState(true);
 	const [likeButtonText, setLikeButtonText] = useState("Curtir");
 	const [presenceButtonText, setPresenceButtonText] = useState("Agendar");
@@ -187,18 +187,18 @@ export default function Navbuttons({ siteInfo, id, idEvent }) {
 		axios.post('http://localhost:3003/likeEvent', like)
 			.then((response) => {
 				console.log(response);
-				// axios
-				// 	.post('http://localhost:3003/likeCount', like)
-				// 	.then((response) => {
-				// 		console.log(response);
-				// 		setNumCurtida(response.data.numberLikes)
-				// 	}).then(() => {
-				// 		console.log("funfo " + numCurtida);
-				// 	})
-				// 	.catch((error) => {
-				// 		console.error('Erro ao enviar os dados para o backend:', error);
+				axios
+					.post('http://localhost:3003/likeCount', like)
+					.then((response) => {
+						console.log(response);
+						setNumCurtida(response.data.numberLikes)
+					}).then(() => {
+						console.log("funfo " + numCurtida);
+					})
+					.catch((error) => {
+						console.error('Erro ao enviar os dados para o backend:', error);
 
-				// 	});
+					});
 			})
 			.catch((error) => {
 				console.error('Erro ao enviar os dados para o backend:', error);

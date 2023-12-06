@@ -32,6 +32,9 @@ export default function Evento({ navigation }) {
   const [usuariosMarcaramPresenca, setUsuariosMarcaramPresenca] = useState(0);
   const [usuariosCurtiram, setUsuariosCurtiram] = useState(0);
 
+  const [numCurtida, setNumCurtida] = useState(0);
+
+
   const route = useRoute();
   const { id } = route.params;
   const { idEvento } = route.params;
@@ -49,6 +52,24 @@ export default function Evento({ navigation }) {
       Id_App_Events_code : idEvento
 
     }
+
+    const like = {
+      Id_user_code: id,
+      Id_App_Events_code: idEvento
+    }
+
+    axios
+					.post('http://localhost:3003/likeCount', like)
+					.then((response) => {
+						console.log(response);
+						setNumCurtida(response.data.numberLikes)
+					}).then(() => {
+						console.log("funfo " + numCurtida);
+					})
+					.catch((error) => {
+						console.error('Erro ao enviar os dados para o backend:', error);
+
+    });
     axios
       .post("http://localhost:3003/viewEvent", idEvent)
       .then((response) => {
@@ -124,7 +145,7 @@ export default function Evento({ navigation }) {
 
             <View style={styles.descricaoContainer}>
               <Text style={styles.descricaoTitulo}>Descrição</Text>
-              <Text style={styles.descricaoTexto}>Nam quis nulla. Integer malesuada. In in enim a arcu imperdiet malesuada. Sed vel lectus. Donec odio urna, tempus molestie, porttitor ut, iaculis quis, sem. Phasellus rhoncus. Aenean id metus id velit ullamcorper pulvinar. Vestibulum fermentum tortor id m{descricao}</Text>
+              <Text style={styles.descricaoTexto}>{descricao}</Text>
             </View>
           </View>
 
@@ -147,17 +168,17 @@ export default function Evento({ navigation }) {
 
           <View style={styles.tagsContainer}>
             <Text style={styles.tagsTitulo}>Tags Relacionadas</Text>
-            <Text style={styles.tagsTexto}>{tags}Rock, Funk</Text>
+            <Text style={styles.tagsTexto}>{tags}</Text>
           </View>
 
-          <Navbuttons siteInfo={siteInfo} id={id} idEvent={idEvento}/>
+          <Navbuttons siteInfo={siteInfo} id={id} idEvent={idEvento} numCurtida={numCurtida} setNumCurtida={setNumCurtida}/>
 
           <View style={styles.usuariosContainer}>
             <Text style={styles.usuariosTitulo1}>
               {`${usuariosMarcaramPresenca} Usuários marcaram presença`}
             </Text>
             <Text style={styles.usuariosTitulo2}>
-              {`${usuariosCurtiram} Usuários Curtiram`}
+              {`${numCurtida} Usuários Curtiram`}
             </Text>
           </View>
 
