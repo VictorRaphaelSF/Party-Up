@@ -16,7 +16,7 @@ import Like from "../assets/images/icons/liked.png"
 import Liked from "../assets/images/icons/like.png"
 
 
-export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCurtida }) {
+export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCurtida, numPresence, setNumPresence }) {
 	const [buttonVisible, setButtonVisible] = useState(true);
 	const [likeButtonText, setLikeButtonText] = useState("Curtir");
 	const [presenceButtonText, setPresenceButtonText] = useState("Agendar");
@@ -88,14 +88,26 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 	
 	const dados = {
 		eventId_code:idEvent,
-		userId_code: id
+		userId_code: id,
+		Id_App_Events_code: idEvent
 
 	}
+
 	const handlePresenceButtonPress = () => {
 		axios
 		.post('http://localhost:3003/confirmPresence', dados)
 		.then((response) => {
-		  console.log(response);
+			console.log(response);
+			axios.post('http://localhost:3003/presenceCount', dados)
+				.then((response) => {
+				console.log(response) 
+				// setNumPresence()
+				// console.log("deu cie" + numPresence)
+				
+			})
+		.catch((error) => {
+			console.error("Erro ao enviar os dados para o backend:", error);
+		})
 		})
 		.catch((error) => {
 		  console.error(
@@ -176,8 +188,10 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 		.catch((error) => {
 			console.error("Erro ao enviar os dados para o backend:", error);
 		})
-	},[])
 
+		
+	},[])
+		
 
 	
 	const handleButtonPress = () => {
@@ -203,6 +217,7 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 			.catch((error) => {
 				console.error('Erro ao enviar os dados para o backend:', error);
 		})
+	startLikeAnimation
 	// startLikeAnimation(spinValueLike, setIsLikeButtonPressed, setLikeImage);
 }
 
