@@ -192,7 +192,7 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 		
 	},[])
 		
-
+	
 	
 	const handleButtonPress = () => {
 		startAnimation(!toggleLikeControll)
@@ -216,10 +216,10 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 			})
 			.catch((error) => {
 				console.error('Erro ao enviar os dados para o backend:', error);
-		})
-	startLikeAnimation
+			})
+			startLikeAnimation
 	// startLikeAnimation(spinValueLike, setIsLikeButtonPressed, setLikeImage);
-}
+	}
 
 
 	return (

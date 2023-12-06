@@ -33,6 +33,7 @@ export default function Evento({ navigation }) {
   const [usuariosCurtiram, setUsuariosCurtiram] = useState(0);
 
   const [numCurtida, setNumCurtida] = useState(0);
+  const [numPresence, setNumPresence] = useState(0);
 
 
   const route = useRoute();
@@ -171,7 +172,7 @@ export default function Evento({ navigation }) {
             <Text style={styles.tagsTexto}>{tags}</Text>
           </View>
 
-          <Navbuttons siteInfo={siteInfo} id={id} idEvent={idEvento} numCurtida={numCurtida} setNumCurtida={setNumCurtida}/>
+          <Navbuttons siteInfo={siteInfo} id={id} idEvent={idEvento} numCurtida={numCurtida} setNumCurtida={setNumCurtida} numPresence={numPresence} setNumPresence={setNumPresence}/>
 
           <View style={styles.usuariosContainer}>
             <Text style={styles.usuariosTitulo1}>
