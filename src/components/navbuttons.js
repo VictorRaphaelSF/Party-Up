@@ -10,7 +10,7 @@ import {
 	Platform,
 	Animated,
 	Easing,
-} from "react-native";
+} from "react-native"; 
 import axios from "axios";
 import Like from "../assets/images/icons/liked.png"
 import Liked from "../assets/images/icons/like.png"
@@ -151,11 +151,11 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 		}
 	};
 
-	const like = {
+	const confirmacao = {
 		Id_user_code: id,
 		Id_App_Events_code: idEvent
 	}
-
+	
 	const startAnimation = (toggleLike) => {
 		const image = toggleLike ? Like : Liked
 		console.log(toggleLike);
@@ -179,7 +179,7 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 	
 
 	useEffect(()=>{
-		axios.post('http://localhost:3003/heartLikeEvent', like)
+		axios.post('http://localhost:3003/heartLikeEvent', confirmacao)
 		.then((response) => {
 			console.log(response) 
 			setToggleLikeControll(response.data.heartLikeEvent)
@@ -188,6 +188,17 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 		.catch((error) => {
 			console.error("Erro ao enviar os dados para o backend:", error);
 		})
+
+		axios.post('http://localhost:3003/heartConfirmPresence', confirmacao)
+		.then((response) => {
+			console.log(response) 
+			// heartConfirmPresence
+		})
+		.catch((error) => {
+			console.error("Erro ao enviar os dados para o backend:", error);
+		})
+
+		
 
 		
 	},[])
