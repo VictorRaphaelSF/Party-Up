@@ -171,10 +171,12 @@ export default function Comentario() {
       ))}
 
       <View style={styles.searchBarContainer}>
-        <Image
-          source={require("../assets/images/icons/msgicon.png")}
-          style={styles.icon}
-        />
+        <Pressable onPress={enviarComentario}>
+          <Image
+            source={require("../assets/images/icons/msgicon.png")}
+            style={styles.icon}
+          />
+        </Pressable>
         <TextInput
           style={styles.searchInput}
           placeholder="Comentar"
