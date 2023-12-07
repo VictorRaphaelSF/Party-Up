@@ -160,12 +160,29 @@ export default function Comentario() {
           <Text style={styles.titulo}>{descComentario}</Text>
         </View>
       </View>
+      {
+              comentarios.map((comentario, index) => (
+              <View key={index} style={styles.allContainer}>
+                <View style={styles.topUser}>
+                  <Pressable onPress={handleUserImagePress}>
+                    <Image
+                      source={{ uri: `data:image/png;base64,${comentario.User_image}` }}
+                      style={styles.userImage}
+                    />
+                    <Text style={styles.titulo1}>{comentario.User_name}</Text>
+                  </Pressable>
+                </View>
+                <View styles={styles.nameContainer}>
+                  <Text style={styles.titulo}>{comentario.Info_content}</Text>
+                </View>
+              </View>
+            ))}  
 
 
 
 
 
-      <ScrollView
+      {/* <ScrollView
         style={{ width: "100%", gap: 16, top: 10, maxHeight: "77%" }}>
         {comentarios ?
           (<View style={{width: "100%", gap: 8}}>
@@ -215,7 +232,7 @@ export default function Comentario() {
 					}
 				  </View>):
           (error && <Text style={styles.searchHistoryItem}>{error}</Text>)}
-				</ScrollView>
+				</ScrollView> */}
 
       <View style={styles.searchBarContainer}>
         <Pressable onPress={enviarComentario}>
