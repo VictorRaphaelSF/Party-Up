@@ -101,8 +101,8 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 			axios.post('http://localhost:3003/presenceCount', dados)
 				.then((response) => {
 				console.log(response) 
-				// setNumPresence()
-				// console.log("deu cie" + numPresence)
+				setNumPresence(response.data.numberPresence)
+				console.log("deu cie" + numPresence)
 				
 			})
 		.catch((error) => {

@@ -166,13 +166,20 @@ export default function Cadastro({ navigation }) {
   const Avancar = () => {
     const cpfDigits = cpfCnpj.replace(/\D/g, '');
     const cnpjDigits = cpfCnpj.replace(/\D/g, '');
+
+    console.log("emailValido " + emailValido);
+    console.log("senha "+senha);
+    console.log("confirmarSenha "+confirmarSenha);
+    console.log("telefone "+telefone);
+    console.log("confirmarSenhaErro "+confirmarSenhaErro);
+    console.log("cidade "+cidade);
+    console.log("......");
   
     if (
       !emailValido ||
       !senha ||
       !confirmarSenha ||
-      !telefone ||
-      !confirmarSenhaErro ||
+      !telefone  ||
       !cidade
     ) {
       setErro("Preencha todos os campos obrigatórios");

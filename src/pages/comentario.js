@@ -80,6 +80,10 @@ export default function Comentario() {
     idUser_code : id, 
     commentUser : descComentario
   }
+  console.log(idEvento);
+  console.log(id);
+  console.log(searchTerm);
+  console.log(".....");
   useEffect(() => {
     axios
       .post('viewComment', idEvent)
@@ -94,14 +98,23 @@ export default function Comentario() {
 
   const enviarComentario = async (event) => {
     event.preventDefault();
-    try {
-      const response = await axios.post('commentEvent', comentario);
-      setComentarios([...comentarios, { perfil: imgProfile, nome: name, comentario: descComentario }]);
-      setDescComentario(""); 
-      console.log('Comentário enviado com sucesso:', response.data);
-    } catch (error) {
-      console.error('Erro ao enviar o comentário:', error);
-    }
+    // try {
+    //   const response = await axios.post('commentEvent', comentario);
+    //   setComentarios([...comentarios, { perfil: imgProfile, nome: name, comentario: descComentario }]);
+    //   setDescComentario(""); 
+    //   console.log('Comentário enviado com sucesso:', response.data);
+    // } catch (error) {
+    //   console.error('Erro ao enviar o comentário:', error);
+    // }
+    axios
+    .post('http://localhost:3003/commentEvent', comentario)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.error('Erro ao enviar os dados para o backend:', error);
+
+});
   };
   
   return (

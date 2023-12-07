@@ -65,12 +65,24 @@ export default function Evento({ navigation }) {
 						console.log(response);
 						setNumCurtida(response.data.numberLikes)
 					}).then(() => {
-						console.log("funfo " + numCurtida);
+
 					})
 					.catch((error) => {
 						console.error('Erro ao enviar os dados para o backend:', error);
 
     });
+    axios
+    .post('http://localhost:3003/presenceCount', like)
+    .then((response) => {
+      console.log(response);
+      setNumPresence(response.data.numberPresence)
+    }).then(() => {
+ ;
+    })
+    .catch((error) => {
+      console.error('Erro ao enviar os dados para o backend:', error);
+
+});
     axios
       .post("http://localhost:3003/viewEvent", idEvent)
       .then((response) => {
@@ -176,7 +188,7 @@ export default function Evento({ navigation }) {
 
           <View style={styles.usuariosContainer}>
             <Text style={styles.usuariosTitulo1}>
-              {`${usuariosMarcaramPresenca} Usuários marcaram presença`}
+              {`${numPresence} Usuários marcaram presença`}
             </Text>
             <Text style={styles.usuariosTitulo2}>
               {`${numCurtida} Usuários Curtiram`}
