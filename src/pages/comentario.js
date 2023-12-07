@@ -160,7 +160,7 @@ export default function Comentario() {
           <Text style={styles.titulo}>{descComentario}</Text>
         </View>
       </View>
-      {
+      {comentarios.length!=0 &&
               comentarios.map((comentario, index) => (
               <View key={index} style={styles.allContainer}>
                 <View style={styles.topUser}>
