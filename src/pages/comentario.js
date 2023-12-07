@@ -5,7 +5,7 @@ import {
   Text,
   Pressable,
   Image,
-  Platform,
+  Platform, 
   Dimensions,
   Modal,
   TouchableWithoutFeedback,
@@ -70,7 +70,8 @@ export default function Comentario() {
     const route = useRoute();
   const { id } = route.params;
   const { idEvento } = route.params;
-  console.log(id);
+
+
   const idEvent = {
     Id_App_Events_code : idEvento
   };
@@ -78,23 +79,25 @@ export default function Comentario() {
   const comentario = {
     Id_App_Events_code : idEvento, 
     idUser_code : id, 
-    commentUser : descComentario
+    commentUser : searchTerm
   }
-  console.log(idEvento);
-  console.log(id);
-  console.log(searchTerm);
-  console.log(".....");
+
+ 
   useEffect(() => {
     axios
-      .post('viewComment', idEvent)
+      .post('http://localhost:3003/viewComment', idEvent)
       .then((response) => {
-        setProfileImage(response.data.image_url);
+        console.log(response);
+        setComentarios(response.data.results)
+        
+        // setProfileImage(response.data.image_url);
       })
       .catch((error) => {
         console.error('Erro ao enviar ou retono de dados para o backend:', error);
       });
 
-  }, []);
+  }, [searchTerm]);
+  console.log(comentarios);
 
   const enviarComentario = async (event) => {
     event.preventDefault();
@@ -106,15 +109,20 @@ export default function Comentario() {
     // } catch (error) {
     //   console.error('Erro ao enviar o comentário:', error);
     // }
-    axios
-    .post('http://localhost:3003/commentEvent', comentario)
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.error('Erro ao enviar os dados para o backend:', error);
+    if(searchTerm != ""){
+      axios 
+      .post('http://localhost:3003/commentEvent', comentario)
+      .then((response) => {
+        console.log(response);
+        setSearchTerm("")
+      })
+      .catch((error) => {
+        console.error('Erro ao enviar os dados para o backend:', error);
+  
+      });
 
-});
+    } 
+
   };
   
   return (
@@ -153,22 +161,61 @@ export default function Comentario() {
         </View>
       </View>
 
-      {comentarios.map((comentario, index) => (
-        <View key={index} style={styles.allContainer}>
-          <View style={styles.topUser}>
-            <Pressable onPress={handleUserImagePress}>
-              <Image
-                source={{ uri: `data:image/png;base64,${comentario.perfil}` }}
-                style={styles.userImage}
-              />
-              <Text style={styles.titulo1}>{comentario.nome}</Text>
-            </Pressable>
-          </View>
-          <View styles={styles.nameContainer}>
-            <Text style={styles.titulo}>{comentario.comentario}</Text>
-          </View>
-        </View>
-      ))}
+
+
+
+
+      <ScrollView
+        style={{ width: "100%", gap: 16, top: 10, maxHeight: "77%" }}>
+        {comentarios ?
+          (<View style={{width: "100%", gap: 8}}>
+            {
+              comentarios.map((comentario, index) => (
+              <View key={index} style={styles.allContainer}>
+                <View style={styles.topUser}>
+                  <Pressable onPress={handleUserImagePress}>
+                    <Image
+                      source={{ uri: `data:image/png;base64,${comentario.User_image}` }}
+                      style={styles.userImage}
+                    />
+                    <Text style={styles.titulo1}>{comentario.User_name}</Text>
+                  </Pressable>
+                </View>
+                <View styles={styles.nameContainer}>
+                  <Text style={styles.titulo}>{comentario.Info_content}</Text>
+                </View>
+              </View>
+            ))}  
+
+          </View>):
+          (error &&)
+        
+
+        }
+
+
+
+
+      </ScrollView>
+      
+
+
+
+        <ScrollView
+        style={{ width: "100%", gap: 16, top: 10, maxHeight: "77%" }}>
+        {eventResult ?
+          (<View style={{width: "100%", gap: 8}}>
+					{
+            
+						eventData.map((event,index) => {
+							return (
+								<CardEventUser descricaoEvento={event.desc_event} idUser={id} Event_image={event.Event_image} Nm_event={event.Nm_event} Id_App_Events={event. Id_App_Events} key={index}/>
+							)
+						})
+					}
+				  </View>):
+          (error && <Text style={styles.searchHistoryItem}>{error}</Text>)}
+				</ScrollView>
 
       <View style={styles.searchBarContainer}>
         <Pressable onPress={enviarComentario}>

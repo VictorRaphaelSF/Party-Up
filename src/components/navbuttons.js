@@ -192,7 +192,7 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 		axios.post('http://localhost:3003/heartConfirmPresence', confirmacao)
 		.then((response) => {
 			console.log(response) 
-			// heartConfirmPresence
+
 		})
 		.catch((error) => {
 			console.error("Erro ao enviar os dados para o backend:", error);
@@ -209,11 +209,11 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 		startAnimation(!toggleLikeControll)
 		setToggleLikeControll(!toggleLikeControll)
 
-		axios.post('http://localhost:3003/likeEvent', like)
+		axios.post('http://localhost:3003/likeEvent', confirmacao)
 			.then((response) => {
 				console.log(response);
 				axios
-					.post('http://localhost:3003/likeCount', like)
+					.post('http://localhost:3003/likeCount', confirmacao)
 					.then((response) => {
 						console.log(response);
 						setNumCurtida(response.data.numberLikes)
