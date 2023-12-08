@@ -10,6 +10,7 @@ import {
   Modal,
   TouchableWithoutFeedback,
   TextInput,
+  ScrollView
 } from "react-native";
 
 import * as Animatable from "react-native-animatable";
@@ -120,9 +121,7 @@ export default function Comentario() {
         console.error('Erro ao enviar os dados para o backend:', error);
   
       });
-
     } 
-
   };
   
   return (
@@ -146,23 +145,32 @@ export default function Comentario() {
         <View style={styles.bttbarra}></View>
       </Pressable>
 
-      <View style={styles.allContainer}>
-        <View style={styles.topUser}>
-          <Pressable onPress={handleUserImagePress}>
-            <Image
-              source={`data:image/png;base64,${imgProfile}`}
-              style={styles.userImage}
-            />
-            <Text style={styles.titulo1}>{name}</Text>
-          </Pressable>
+      <ScrollView style={{ width: "100%", gap: 16, top: 10, maxHeight: "77%" }}>
+        <View style={styles.allContainer}>
+          <View style={styles.topUser}>
+            <Pressable onPress={handleUserImagePress}>
+              <Image
+                source={`data:image/png;base64,${imgProfile}`}
+                style={styles.userImage}
+              />
+              <Text style={styles.titulo1}>{name}</Text>
+            </Pressable>
+          </View>
+          <View style={styles.nameContainer}>
+            <Text style={styles.titulo}>{descComentario}</Text>
+          </View>
         </View>
-        <View styles={styles.nameContainer}>
-          <Text style={styles.titulo}>{descComentario}</Text>
-        </View>
-      </View>
-      {comentarios.length!=0 &&
-              comentarios.map((comentario, index) => (
-              <View key={index} style={styles.allContainer}>
+      </ScrollView>
+
+      {/* {comentarios.length !== 0 &&
+        comentarios.map((comentario, index) => (
+          <View
+            key={index}
+            style={[
+              styles.allContainer,
+              { top: windowHeight * 0.212 + index * 100 },
+            ]}
+          >
                 <View style={styles.topUser}>
                   <Pressable onPress={handleUserImagePress}>
                     <Image
@@ -176,11 +184,7 @@ export default function Comentario() {
                   <Text style={styles.titulo}>{comentario.Info_content}</Text>
                 </View>
               </View>
-            ))}  
-
-
-
-
+            ))}   */}
 
       {/* <ScrollView
         style={{ width: "100%", gap: 16, top: 10, maxHeight: "77%" }}>
@@ -206,18 +210,8 @@ export default function Comentario() {
 
           </View>):
           (error &&)
-        
-
         }
-
-
-
-
       </ScrollView>
-      
-
-
-
         <ScrollView
         style={{ width: "100%", gap: 16, top: 10, maxHeight: "77%" }}>
         {eventResult ?
@@ -411,7 +405,6 @@ const styles = StyleSheet.create({
   allContainer: {
     position: 'absolute',
     left: 20,
-    top: windowHeight * 0.212,
     zIndex: 1,
     flexDirection: 'column',
   },
@@ -420,7 +413,7 @@ const styles = StyleSheet.create({
   },
 
   titulo: {
-    top: 24,
+    top: 14,
     left: 12,
     color: "white",
     fontSize: 14,
@@ -437,7 +430,6 @@ const styles = StyleSheet.create({
 
   topUser: {
     flexDirection: "row",
-    position: "absolute",
     bottom: 0,
     left: -4,
     alignItems: "center",

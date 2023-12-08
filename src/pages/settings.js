@@ -30,7 +30,6 @@ export default function Settings() {
 
   const route = useRoute();
 
-
   const [senha, setSenha] = useState("")
   const [deletar, setDeletar] = useState(false)
 

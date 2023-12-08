@@ -38,7 +38,6 @@ export default function Notificações() {
     id : id
   }
 
-
   useEffect(() => {
     axios
       .post('http://localhost:3003/viewNotificacao', idUser)

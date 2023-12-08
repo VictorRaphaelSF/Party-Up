@@ -15,7 +15,9 @@ import * as Animatable from "react-native-animatable";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Backbutton from "../components/backbutton";
 import CardEvent from "../components/cardEvent";
+import MenuBar from "../components/menubar";
 import axios from "axios";
+
 
 export default function Myevent() {
   const navigation = useNavigation();
@@ -23,49 +25,55 @@ export default function Myevent() {
   const [idEvent, setIdEvent] = useState("");
   const [eventData, setEventData] = useState([]);
 
-  const menu = () => {
-    setMenuVisible(true);
-  };
-
   const closeMenu = () => {
     setMenuVisible(false);
   };
 
-  const route = useRoute();
-	const { id } = route.params;
+  const menu = () => {
+    setMenuVisible(true);
+  };
 
-  const idUser = {
-		userId_code: id
-	};
+  // const route = useRoute();
+	// const { id } = route.params;
 
-  useEffect(() => {	
-		axios
-			.post('http://localhost:3003/viewEventUser', idUser)
-			.then((response) => {
-				setIdEvent(response.data.idEvent)
-				console.log(response.data.results[0].Nm_event);
-				setEventData(response.data.results);
+  // const idUser = {
+	// 	userId_code: id
+	// };
+
+  // useEffect(() => {	
+	// 	axios
+	// 		.post('http://localhost:3003/viewEventUser', idUser)
+	// 		.then((response) => {
+	// 			setIdEvent(response.data.idEvent)
+	// 			console.log(response.data.results[0].Nm_event);
+	// 			setEventData(response.data.results);
 	
-			})
-			.catch((error) => {
-				console.error('Erro ao enviar ou retono de dados para o backend:', error);
-			});
-			console.log(id +"user");
+	// 		})
+	// 		.catch((error) => {
+	// 			console.error('Erro ao enviar ou retono de dados para o backend:', error);
+	// 		});
+	// 		console.log(id +"user");
 
-	}, []);
+	// }, []);
 
   console.log(eventData);
   console.log(idEvent + "event");
   return (
     <View style={styles.container}>
-      <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 32, width: "100%" }}>
-        <Backbutton />
+      <Backbutton/>
 
-        <Pressable style={styles.button} onPress={menu}>
+      <Pressable style={styles.button} onPress={menu}>
           <View style={styles.bttbarra} />
           <View style={styles.bttbarra} />
           <View style={styles.bttbarra} />
         </Pressable>
+      
+      <MenuBar
+        isMenuVisible={isMenuVisible}
+        setMenuVisible={setMenuVisible}
+        menu={menu}
+      />
+      <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 32, width: "100%" }}>
       </View>
 
       <View style={styles.header}>
@@ -90,34 +98,6 @@ export default function Myevent() {
 					}
 				</View>
 			</ScrollView>
-
-      <Modal
-        transparent={true}
-        visible={isMenuVisible}
-        onRequestClose={closeMenu}>
-        <Pressable onPress={closeMenu} style={styles.modalBackground}>
-          <Animatable.View
-            style={styles.menuContainer}
-            animation={isMenuVisible ? "slideInUp" : "slideInDown"}
-            duration={500}>
-            <Pressable
-              style={styles.menubtt}
-              onPress={() => console.log("Item 1 clicado")}>
-              <Text style={styles.menubtttext}>Item 1</Text>
-            </Pressable>
-            <Pressable
-              style={styles.menubtt}
-              onPress={() => console.log("Item 2 clicado")}>
-              <Text style={styles.menubtttext}>Item 2</Text>
-            </Pressable>
-            <Pressable
-              style={styles.menubtt}
-              onPress={() => console.log("Item 3 clicado")}>
-              <Text style={styles.menubtttext}>Item 3</Text>
-            </Pressable>
-          </Animatable.View>
-        </Pressable>
-      </Modal>
     </View>
   );
 }
@@ -163,17 +143,22 @@ const styles = StyleSheet.create({
   },
 
   button: {
-		backgroundColor: "transparent",
-		width: 30,
-	},
+    position: "absolute",
+    justifyContent: "center",
+    backgroundColor: "transparent",
+    width: 30,
+    height: 18,
+    right: 20,
+    top: 50,
+  },
 
   bttbarra: {
-		width: "100%",
-		height: 4,
-		backgroundColor: "#FFFFFF",
-		borderRadius: 2,
-		marginVertical: 3.5,
-	},
+    width: 31,
+    height: 4,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 2,
+    marginVertical: 3.5,
+  },
 
   bottomImageContainer: {
     position: "absolute",

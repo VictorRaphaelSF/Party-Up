@@ -29,10 +29,7 @@ export default function Termos() {
   const userData = route.params && route.params.userData ? route.params.userData : {};
   console.log(userData)
 
-
-  
   // const userData = route.params.userData;
-
 
   const acceptTerms = () => {
     axios
@@ -49,7 +46,6 @@ export default function Termos() {
       });
   };
   
-
   return (
     <ImageBackground
       source={require("../assets/images/telap.png")}

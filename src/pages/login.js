@@ -18,7 +18,6 @@ export default function Login({ navigation }) {
   );
 
 	const Entrar = async () => {
-
 		if (!email || !senha) {
 			setEmptyFieldError('Preencha todos os campos.');
 			setTimeout(() => {
