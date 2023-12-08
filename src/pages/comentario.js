@@ -186,7 +186,7 @@ export default function Comentario() {
               </View>
             ))}   */}
 
-      {/* <ScrollView
+      <ScrollView
         style={{ width: "100%", gap: 16, top: 10, maxHeight: "77%" }}>
         {comentarios ?
           (<View style={{width: "100%", gap: 8}}>
@@ -196,7 +196,7 @@ export default function Comentario() {
                 <View style={styles.topUser}>
                   <Pressable onPress={handleUserImagePress}>
                     <Image
-                      source={{ uri: `data:image/png;base64,${comentario.User_image}` }}
+                      source={`data:image/png;base64,${comentario.User_image}`}
                       style={styles.userImage}
                     />
                     <Text style={styles.titulo1}>{comentario.User_name}</Text>
@@ -209,10 +209,10 @@ export default function Comentario() {
             ))}  
 
           </View>):
-          (error &&)
+          (error &&<Text style={styles.searchHistoryItem}>{error}</Text>)
         }
       </ScrollView>
-        <ScrollView
+        {/* <ScrollView
         style={{ width: "100%", gap: 16, top: 10, maxHeight: "77%" }}>
         {eventResult ?
           (<View style={{width: "100%", gap: 8}}>
