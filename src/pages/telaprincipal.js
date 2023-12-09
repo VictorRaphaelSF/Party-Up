@@ -26,15 +26,15 @@ export default function Telaprincipal() {
   const { userImage } = route.params;
   useEffect(() => {
     setImgProfile(userImage)
-    axios
-      .post("http://localhost:3003/viewDestaquesHighlights")
-      .then((e) => {
-        console.log(e);
+    // axios
+    //   .post("http://localhost:3003/viewDestaquesHighlights")
+    //   .then((e) => {
+    //     console.log(e);
 
-      })
-      .catch ((error) => {
-        console.error('Erro ao enviar ou retono de dados para o backend:', error);
-    });
+    //   })
+    //   .catch ((error) => {
+    //     console.error('Erro ao enviar ou retono de dados para o backend:', error);
+    // });
   }, []);
 
   const renderItem = ({ item }) => (

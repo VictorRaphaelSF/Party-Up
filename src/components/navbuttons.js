@@ -42,43 +42,7 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 	});
 
 	
-	const startLikeAnimation = () => {
-		Animated.timing(spinValueLike, {
-			toValue: 1,
-			duration: 100,
-			easing: Easing.linear,
-			useNativeDriver: true,
-		}).start(() => {
-			setIsLikeButtonPressed(false);
-			setLikeImage((prev) =>
-				prev === require("../assets/images/icons/like.png")
-					? require("../assets/images/icons/liked.png")
-					: require("../assets/images/icons/like.png")
-			);
-			spinValueLike.setValue(0);
-			setLikeButtonText((prev) => (prev === "Curtir" ? "Curtido" : "Curtir"));
-		});
-	};
 
-	const startPresenceAnimation = () => {
-		Animated.timing(spinValuePresence, {
-			toValue: 1,
-			duration: 100,
-			easing: Easing.linear,
-			useNativeDriver: true,
-		}).start(() => {
-			setIsPresenceButtonPressed(false);
-			setPresenceImage((prev) =>
-				prev === require("../assets/images/icons/calendar_time.png")
-					? require("../assets/images/icons/calendar_finished.png")
-					: require("../assets/images/icons/calendar_time.png")
-			);
-			spinValuePresence.setValue(0);
-			setPresenceButtonText((prev) =>
-				prev === "Agendar" ? "Agendado" : "Agendar"
-			);
-		});
-	};
 
 	// const handleLikeButtonPress = () => {
 	// 	setIsLikeButtonPressed(true);
@@ -93,36 +57,7 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 
 	}
 
-	const handlePresenceButtonPress = () => {
-		axios
-		.post('http://localhost:3003/confirmPresence', dados)
-		.then((response) => {
-			console.log(response);
-			axios.post('http://localhost:3003/presenceCount', dados)
-				.then((response) => {
-				console.log(response) 
-				setNumPresence(response.data.numberPresence)
-				console.log("deu cie" + numPresence)
-				
-			})
-		.catch((error) => {
-			console.error("Erro ao enviar os dados para o backend:", error);
-		})
-		})
-		.catch((error) => {
-		  console.error(
-			"Erro ao enviar ou retono de dados para o backend:",
-			error
-		  );
-		});
-		
-		setIsPresenceButtonPressed(true);
-		startPresenceAnimation(
-			spinValuePresence,
-			setIsPresenceButtonPressed,
-			setPresenceImage
-		);
-	};
+
 
 	const handleThirdButtonPress = () => {
 		console.log("Terceiro botão pressionado");
@@ -178,6 +113,44 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 	const [isButtonPressed, setIsButtonPressed] = useState(false);
 	
 
+	const startLikeAnimation = () => {
+		Animated.timing(spinValueLike, {
+			toValue: 1,
+			duration: 100,
+			easing: Easing.linear,
+			useNativeDriver: true,
+		}).start(() => {
+			setIsLikeButtonPressed(false);
+			setLikeImage((prev) =>
+				prev === require("../assets/images/icons/like.png")
+					? require("../assets/images/icons/liked.png")
+					: require("../assets/images/icons/like.png")
+			);
+			spinValueLike.setValue(0);
+			setLikeButtonText((prev) => (prev === "Curtir" ? "Curtido" : "Curtir"));
+		});
+	};
+
+	const startPresenceAnimation = () => {
+		Animated.timing(spinValuePresence, {
+			toValue: 1,
+			duration: 100,
+			easing: Easing.linear,
+			useNativeDriver: true,
+		}).start(() => {
+			setIsPresenceButtonPressed(false);
+			setPresenceImage((prev) =>
+				prev === require("../assets/images/icons/calendar_time.png")
+					? require("../assets/images/icons/calendar_finished.png")
+					: require("../assets/images/icons/calendar_time.png")
+			);
+			spinValuePresence.setValue(0);
+			setPresenceButtonText((prev) =>
+				prev === "Agendar" ? "Agendado" : "Agendar"
+			);
+		});
+	};
+
 	useEffect(()=>{
 		axios.post('http://localhost:3003/heartLikeEvent', confirmacao)
 		.then((response) => {
@@ -203,7 +176,7 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 		
 	},[])
 		
-	
+	// handlePresenceButtonPress
 	
 	const handleButtonPress = () => {
 		startAnimation(!toggleLikeControll)
