@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {useNavigation } from "@react-navigation/native";
 import {
 	StyleSheet,
 	View,
@@ -17,6 +18,7 @@ import Liked from "../assets/images/icons/like.png"
 
 
 export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCurtida, numPresence, setNumPresence }) {
+	const navigation = useNavigation();
 	const [buttonVisible, setButtonVisible] = useState(true);
 	const [likeButtonText, setLikeButtonText] = useState("Curtir");
 	const [presenceButtonText, setPresenceButtonText] = useState("Agendar");
@@ -41,9 +43,6 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 		outputRange: ["0deg", "360deg"],
 	});
 
-	
-
-
 	// const handleLikeButtonPress = () => {
 	// 	setIsLikeButtonPressed(true);
 	// 	startLikeAnimation(spinValueLike, setIsLikeButtonPressed, setLikeImage);
@@ -57,10 +56,10 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 
 	}
 
-
-
-	const handleThirdButtonPress = () => {
-		console.log("Terceiro botão pressionado");
+	const bttComentario = () => {
+		navigation.navigate("comentario", {
+			 idEvento: idEvento, id : id
+		  });
 	};
 
 	const handleFourthButtonPress = () => {
@@ -274,12 +273,12 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 
 					<Pressable
 						style={styles.customButton}
-						onPress={handleThirdButtonPress}>
+						onPress={bttComentario}>
 						<Image
-							source={require("../assets/images/icons/locate.png")}
+							source={require("../assets/images/icons/iconcom.png")}
 							style={styles.icon}
 						/>
-						<Text style={styles.buttonTitle}>Localização</Text>
+						<Text style={styles.buttonTitle}>Comentarios</Text>
 					</Pressable>
 
 					<Pressable style={styles.customButton} onPress={onShare}>
@@ -455,8 +454,8 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 			flexDirection: "row",
 			justifyContent: 'space-between',
 			alignItems: 'center',
-			top: 100,
 			left: 0,
+			top: 290,
 			marginHorizontal: 12,
 		},
 

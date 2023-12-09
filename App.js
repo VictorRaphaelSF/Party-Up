@@ -34,7 +34,6 @@ import Tags from "./src/pages/tags";
 import Comentario from "./src/pages/comentario";
 import Myevent from "./src/pages/myevent";
 import Emailvalidation from "./src/pages/emailvalidation";
-import Location from "./src/pages/location";
 
 const Stack = createNativeStackNavigator();
 
@@ -223,13 +222,6 @@ export default function App() {
           }}
           name="emailvalidation"
           component={Emailvalidation}
-        />
-        <Stack.Screen
-          options={{
-            headerShown: false,
-          }}
-          name="location"
-          component={Location}
         />
         <Stack.Screen
           options={{

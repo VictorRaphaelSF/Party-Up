@@ -138,9 +138,7 @@ export default function Comentario() {
 					style={styles.bottomImage}
 				/>
 			</View>
-			<View
-				style={styles.headerOficial}
-			>
+			<View style={styles.headerOficial}>
 				<Pressable style={styles.backButton} onPress={backbutton}>
 					<Image
 						source={require("../assets/images/icons/backicon.png")}
@@ -150,7 +148,6 @@ export default function Comentario() {
 				<View style={styles.header}>
 					<Text style={styles.title}>Comentarios</Text>
 				</View>
-
 
 				<Pressable style={styles.button} onPress={menu}>
 					<View style={styles.bttbarra}></View>
@@ -326,15 +323,7 @@ const styles = StyleSheet.create({
 	header: {
 		flexDirection: "row",
 		alignItems: "center",
-	},
-
-	header1: {
-		flexDirection: "row",
-		alignItems: "center",
-		position: "absolute",
-		top: windowHeight * 0.06,
-		right: 30,
-		zIndex: 1,
+		bottom: 8,
 	},
 
 	title: {
@@ -359,6 +348,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "transparent",
 		width: 30,
 		height: 18,
+		bottom: 8,
 	},
 
 	searchBarContainer: {
@@ -478,7 +468,7 @@ const styles = StyleSheet.create({
 	},
 
 	backButton: {
-
+		bottom: 8,
       },
     
       backIcon: {
@@ -491,7 +481,8 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between", 
 		alignItems: "center", 
 		width: "100%", 
-		marginBottom: 32, 
+		top: 24,
+		marginBottom: 50, 
 		borderBottomWidth: 2, 
 		borderBottomColor: "#fff", 
 		paddingBottom: 12

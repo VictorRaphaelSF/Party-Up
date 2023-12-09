@@ -29,12 +29,9 @@ export default function Evento({ navigation }) {
   const [horaFim, setHoraFim] = useState("");
   const [siteInfo, setSiteInfo] = useState("");
   const [tags, setTags] = useState("");
-  const [usuariosMarcaramPresenca, setUsuariosMarcaramPresenca] = useState(0);
-  const [usuariosCurtiram, setUsuariosCurtiram] = useState(0);
 
   const [numCurtida, setNumCurtida] = useState(0);
   const [numPresence, setNumPresence] = useState(0);
-
 
   const route = useRoute();
   const { id } = route.params;
@@ -154,8 +151,10 @@ export default function Evento({ navigation }) {
         resizeMode="cover">
         <Backbutton />
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.overlay}>
+ 
+        <Navbuttons  siteInfo={siteInfo} id={id} idEvent={idEvento} numCurtida={numCurtida} setNumCurtida={setNumCurtida} numPresence={numPresence} setNumPresence={setNumPresence} />
 
+          <View style={styles.overlay}>
             <View style={styles.descricaoContainer}>
               <Text style={styles.descricaoTitulo}>Descrição</Text>
               <Text style={styles.descricaoTexto}>{descricao}</Text>
@@ -183,8 +182,6 @@ export default function Evento({ navigation }) {
             <Text style={styles.tagsTitulo}>Tags Relacionadas</Text>
             <Text style={styles.tagsTexto}>{tags}</Text>
           </View>
-
-          <Navbuttons siteInfo={siteInfo} id={id} idEvent={idEvento} numCurtida={numCurtida} setNumCurtida={setNumCurtida} numPresence={numPresence} setNumPresence={setNumPresence}/>
 
           <View style={styles.usuariosContainer}>
             <Text style={styles.usuariosTitulo1}>
@@ -224,7 +221,7 @@ export default function Evento({ navigation }) {
           </View>
         </ScrollView>
       </ImageBackground>
-      <Navbar  id={id} imgProfile={imgProfile}  />
+      <Navbar  id={id} imgProfile={imgProfile} />
     </View>
   );
 }
@@ -273,24 +270,25 @@ const styles = StyleSheet.create({
   },
 
   descricaoContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignSelf: "flex-start",
+    marginLeft: 16,
     marginVertical: 8,
-    position: "absolute",
-    top: windowHeight / 2 + 35,
-    left: 15,
+    top: 375,
     zIndex: 1,
   },
 
   descricaoTitulo: {
-    position: "relative",
     color: "white",
     fontSize: 18,
     fontWeight: "inter",
     textAlign: "left",
     marginLeft: 0,
+    marginRight: 0,
   },
 
   descricaoTexto: {
-    position: "relative",
     color: "white",
     fontSize: 16,
     marginTop: 10,
@@ -298,8 +296,10 @@ const styles = StyleSheet.create({
   },
 
   dataContainer: {
+    display: "flex",
+    flexDirection: "column",
     marginVertical: 54,
-    top: windowHeight / 2 + 15 + 135,
+    top: 320,
     left: 15,
     zIndex: 1,
   },
@@ -326,9 +326,10 @@ const styles = StyleSheet.create({
   },
 
   siteInfoContainer: {
-    marginVertical: 8,
-    position: "absolute",
-    top: windowHeight / 2 + 290,
+    display: "flex",
+    flexDirection: "column",
+    marginVertical: 54,
+    top: 220,
     left: 15,
     zIndex: 1,
   },
@@ -348,9 +349,10 @@ const styles = StyleSheet.create({
   },
 
   tagsContainer: {
-    marginVertical: 8,
-    position: "absolute",
-    top: windowHeight / 2 + 340,
+    display: "flex",
+    flexDirection: "column",
+    marginVertical: 54,
+    top: 135,
     left: 15,
     zIndex: 1,
   },
@@ -377,14 +379,14 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     right: 0,
-    bottom: -650,
+    bottom: -250,
     height: 2,
     opacity: 0.6,
   },
 
   comentariosContainer: {
     marginVertical: 8,
-    top: windowHeight / 2 + 100,
+    top:  130,
     zIndex: 1,
   },
 
@@ -408,7 +410,6 @@ const styles = StyleSheet.create({
   bttNewComentario: {
     alignSelf: "end",
     marginRight: 18,
-    top: 40,
   },
 
   imagemComentarios: {
