@@ -602,11 +602,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 10,
     marginHorizontal: 10,
+    justifyContent: "center"
+    
   },
 
   buttonText: {
     color: "white",
     fontSize: 16,
     fontWeight: "inter",
+    textAlign: "center"
   },
 });

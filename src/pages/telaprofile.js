@@ -53,7 +53,7 @@ export default function Telaprofile() {
   const { imgProfile } = route.params;
 
   const idUser = {
-    userId_code: 1,
+    userId_code: id,
   };
 
   // console.log(imgProfile);
@@ -74,6 +74,7 @@ export default function Telaprofile() {
         setName(response.data.results[0].User_name);
         setIdade(response.data.results[0].idade);
         setDescricao(response.data.results[0].User_description);
+        console.log(response.data.results[0].User_image);
         setProfileImage(response.data.results[0].User_image);
       })
       .catch((error) => {
@@ -152,7 +153,7 @@ export default function Telaprofile() {
 
       <View style={styles.innerCircle}>
         <Image
-          source={`data:image/png;base64,${imgProfile}`}
+          source={`data:image/png;base64,${profileImage}`}
           style={{ flex: 1, width: "100%", borderRadius: 105 }}
         />
       </View>
