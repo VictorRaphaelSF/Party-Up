@@ -155,8 +155,10 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 		axios.post('http://localhost:3003/heartLikeEvent', confirmacao)
 		.then((response) => {
 			console.log(response) 
-			setToggleLikeControll(response.data.heartLikeEvent)
-			startAnimation(response.data.heartLikeEvent)
+			if(response.data.heartLikeEvent){
+				setLikeImage(require("../assets/images/icons/liked.png"))
+				setLikeButtonText("Curtido")
+			}
 		})
 		.catch((error) => {
 			console.error("Erro ao enviar os dados para o backend:", error);
@@ -164,8 +166,10 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 
 		axios.post('http://localhost:3003/heartConfirmPresence', confirmacao)
 		.then((response) => {
-			console.log(response) 
-
+			if(response.data.heartConfirmPresence){
+				setPresenceImage(require("../assets/images/icons/calendar_finished.png"))
+				setPresenceButtonText("Agendado")
+			}
 		})
 		.catch((error) => {
 			console.error("Erro ao enviar os dados para o backend:", error);
@@ -176,12 +180,39 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 		
 	},[])
 		
-	// handlePresenceButtonPress
+	const handlePresenceButtonPress = () => {
+		axios
+		.post('http://localhost:3003/confirmPresence', dados)
+		.then((response) => {
+			console.log(response);
+			axios.post('http://localhost:3003/presenceCount', dados)
+				.then((response) => {
+				console.log(response) 
+				setNumPresence(response.data.numberPresence)
+				console.log("deu cie " + numPresence)
+
+			})
+		.catch((error) => {
+			console.error("Erro ao enviar os dados para o backend:", error);
+		})
+		})
+		.catch((error) => {
+		  console.error(
+			"Erro ao enviar ou retono de dados para o backend:",
+			error
+		  );
+		});
+		
+		setIsPresenceButtonPressed(true);
+		startPresenceAnimation(
+			spinValuePresence,
+			setIsPresenceButtonPressed,
+			setPresenceImage
+		);
+	};
 	
 	const handleButtonPress = () => {
-		startAnimation(!toggleLikeControll)
-		setToggleLikeControll(!toggleLikeControll)
-
+	
 		axios.post('http://localhost:3003/likeEvent', confirmacao)
 			.then((response) => {
 				console.log(response);
@@ -201,8 +232,7 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 			.catch((error) => {
 				console.error('Erro ao enviar os dados para o backend:', error);
 			})
-			startLikeAnimation
-	// startLikeAnimation(spinValueLike, setIsLikeButtonPressed, setLikeImage);
+			startLikeAnimation(spinValueLike, setIsLikeButtonPressed, setLikeImage);
 	}
 
 

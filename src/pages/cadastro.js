@@ -157,6 +157,7 @@ export default function Cadastro({ navigation }) {
       cpfCnpj: cpfCnpj,
       dataNas: yearOfBirth,
       telefone: telefone,
+      // :cidade
     };
   } catch (error) {
     console.error("Ocorreu um erro ao criar o objeto userData:", error);

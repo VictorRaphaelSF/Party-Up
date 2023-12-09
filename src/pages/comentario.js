@@ -27,6 +27,7 @@ export default function Comentario() {
   const [name, setName] = useState("");
   const [descComentario, setDescComentario] = useState("");
   const [comentarios, setComentarios] = useState([]);
+  const [error, setError] = useState("");
 
   const menu = () => {
     setMenuVisible(true);
@@ -90,6 +91,7 @@ export default function Comentario() {
       .then((response) => {
         console.log(response);
         setComentarios(response.data.results)
+        setError(response.data.msg)
         
         // setProfileImage(response.data.image_url);
       })
@@ -195,9 +197,10 @@ export default function Comentario() {
               <View key={index} style={styles.allContainer}>
                 <View style={styles.topUser}>
                   <Pressable onPress={handleUserImagePress}>
+                    <View></View>
                     <Image
                       source={`data:image/png;base64,${comentario.User_image}`}
-                      style={styles.userImage}
+                      style={{ flex: 1, width: "100%", borderRadius: 105 }}
                     />
                     <Text style={styles.titulo1}>{comentario.User_name}</Text>
                   </Pressable>
@@ -209,7 +212,7 @@ export default function Comentario() {
             ))}  
 
           </View>):
-          (error &&<Text style={styles.searchHistoryItem}>{error}</Text>)
+          (error && <Text style={styles.searchHistoryItem}>{error}</Text>)
         }
       </ScrollView>
         {/* <ScrollView
@@ -327,6 +330,12 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
 
+  searchHistoryItem: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    marginVertical: 5,
+  },
+
   linha: {
     width: Platform.OS === "web" ? "100%" : "108%",
     height: 1,
@@ -439,6 +448,10 @@ const styles = StyleSheet.create({
   },
 
   userImage: {
+    width: 45,
+    height: 45,
+    borderRadius: 25,
+    backgroundColor: "black",
   },
 
   menubtt: {
