@@ -39,6 +39,9 @@ export default function Search() {
   const [eventData, setEventData] = useState([]);
   const [eventResult, setEventResult] = useState(false);
   const [textoPrivado, setTextoPrivado] = useState("Privado");
+  const [selectedButton, setSelectedButton] = useState(null);
+  const [canType, setCanType] = useState(false);
+
 
   //Variavel que sera guardado o código do evento que o usuário digitou
   const [codeEvent, setcodeEvent] = useState("");
@@ -90,15 +93,7 @@ export default function Search() {
     setTipoEventoOpcao(textoPrivado);
     setTextoPrivado
   };
-  
-  const handleClearHistory = async () => {
-    try {
-      await AsyncStorage.removeItem("searchHistory");
-      setSearchHistory();
-    } catch (e) {
-      console.error("Erro ao limpar histórico de pesquisa:", e);
-    }
-  };
+
 
   const InputNum = (value, setter) => {
     const numericValue = value.replace(/[^0-9]/g, "");
@@ -146,7 +141,20 @@ export default function Search() {
 
   const handleFilter = () => {
     console.log("coloque a logica de confirmar os filtros aqui")
-  }
+  };
+
+  const btnPerfil = () => {
+    console.log("Coloque aqui a lógica para exibir apenas perfis na pesquisa");
+    setSelectedButton("Perfil");
+    setCanType(true);
+  };
+  
+  const btnEvent = () => {
+    console.log("Coloque aqui a lógica para exibir apenas eventos na pesquisa");
+    setSelectedButton("Evento");
+    setCanType(true);
+  };
+  
 
   // console.log(eventData);  
   
@@ -200,15 +208,18 @@ export default function Search() {
           />
           <TextInput
             style={styles.searchInput}
-            placeholder="Pesquisar"
+            placeholder={canType ? `Pesquisar ${selectedButton}` : "Selecione Perfil ou Evento"}
             placeholderTextColor="rgba(255, 255, 255, 0.5)"
             underlineColorAndroid="transparent"
             value={userSearch_code}
             onChangeText={(text) => {
-              setSearchTerm(text);}}
-              
+              if (canType) {
+                setSearchTerm(text);
+              }
+            }}
             onSubmitEditing={handleSearch}
           />
+
           <Pressable style={styles.button} onPress={menu}>
             <View style={styles.bttbarra}></View>
             <View style={styles.bttbarra}></View>
@@ -216,9 +227,15 @@ export default function Search() {
           </Pressable>
         </View>
 
-        <Pressable style={styles.bttView} onPress={handleClearHistory}>
-          <Text style={styles.textView}>Apagar tudo</Text>
+        <View style={styles.btnsSearTwo}>
+        <Pressable style={styles.btnSear} onPress={btnPerfil}>
+          <Text style={styles.btnText}>Perfil</Text>
         </Pressable>
+
+        <Pressable style={styles.btnSear} onPress={btnEvent}>
+          <Text style={styles.btnText}>Evento</Text>
+        </Pressable>
+        </View>
 
         <ScrollView
           style={styles.termsContainer}
@@ -459,6 +476,28 @@ const styles = StyleSheet.create({
     height: 18,
     bottom: 7,
     left: 50,
+  },
+
+  btnsSearTwo: {
+    display: "flex",
+    flexDirection: "row",
+  },
+
+  btnSear: {
+    marginRight: 16,
+    backgroundColor: "#95003F",
+    paddingVertical: 8,
+    paddingHorizontal: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    boxShadow: '2px 6px 5px rgba(0,0,0,0.3)',
+  },
+
+  btnText: {
+    fontSize: 14,
+    color: "#FFFFFF",
+    opacity: 0.9,
   },
 
   buttonFilter: {

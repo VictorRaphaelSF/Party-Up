@@ -221,7 +221,6 @@ export default function Comentario() {
 									</View>
 								</View>
 							))}
-
 					</View>) :
 					(error && <Text style={styles.searchHistoryItem}>{error}</Text>)
 				}
