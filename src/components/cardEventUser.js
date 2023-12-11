@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/core";
 import { Image, Pressable, StyleSheet, Text } from "react-native"
+import axios from "axios";
 
 const CardEventUser = ({descricaoEvento, idUser, Nm_event, Event_image, Id_App_Events}) => {
     const navigation = useNavigation()
@@ -10,6 +11,10 @@ const CardEventUser = ({descricaoEvento, idUser, Nm_event, Event_image, Id_App_E
         <Pressable 
             style={styles.containerEventos} 
             onPress={()=>{
+                axios.post("http://localhost:3003/EventAcess", {
+                Id_user_code: idUser,
+                Id_App_Events_code: Id_App_Events,
+                });
                 navigation.navigate("evento", { idEvento: Id_App_Events, id : idUser, imgProfile: Event_image });
             }}
         >

@@ -208,14 +208,17 @@ export default function Search() {
           />
           <TextInput
             style={styles.searchInput}
-            placeholder={canType ? `Pesquisar ${selectedButton}` : "Selecione Perfil ou Evento"}
+            placeholder={
+              canType
+                ? `Pesquisar ${selectedButton}`
+                : "Selecione Perfil ou Evento"
+            }
             placeholderTextColor="rgba(255, 255, 255, 0.5)"
             underlineColorAndroid="transparent"
             value={userSearch_code}
-            onChangeText={(text) => {
-              if (canType) {
-                setSearchTerm(text);
-              }
+            onChangeText={(e) => {
+              console.log(e);
+              setSearchTerm(e);
             }}
             onSubmitEditing={handleSearch}
           />

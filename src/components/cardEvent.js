@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/core";
 import { Image, Pressable, StyleSheet, Text } from "react-native";
+import axios from "axios";
 
 const CardEvent = ({
   descricaoEvento,

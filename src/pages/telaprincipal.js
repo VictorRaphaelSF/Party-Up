@@ -89,13 +89,20 @@ export default function Telaprincipal() {
           </ScrollView>
         )}
         {eventsData.map((e, index) => (
-          <>
+          <Pressable
+            onPress={() => {
+              axios.post("http://localhost:3003/EventAcess", {
+                Id_user_code: id,
+                Id_App_Events_code: e.Id_App_Events,
+              });
+              navigation.navigate("evento", { idEvento: e.Id_App_Events });
+            }}>
             <Image
               source={`data:image/png;base64,${e.Event_image}`}
               style={styles.backgroundImage}
             />
             <Text style={styles.descEvent}>{e.desc_event}</Text>
-          </>
+          </Pressable>
         ))}
       </View>
       <Buttonprofile id={id} imgProfile={imgProfile} />

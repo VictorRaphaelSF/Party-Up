@@ -140,6 +140,11 @@ export default function Evento({ navigation }) {
         //tag
         setTags(response.data[0].Tag_event);
 
+        //image
+        setBackgroundImage(
+          `data:image/png;base64,${response.data[0].Event_image}`
+        );
+
         //navigation.navigate('telaprincipal',{id: id});
       })
       .catch((error) => {
@@ -157,7 +162,7 @@ export default function Evento({ navigation }) {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={backgroundImage || require("../assets/images/telanexist.png")}
+        source={require("../assets/images/telanexist.png")}
         style={styles.backgroundImage}
         resizeMode="cover">
         <Backbutton />
@@ -259,13 +264,12 @@ export default function Evento({ navigation }) {
 
           <View style={styles.line} />
 
-          <View style={styles.square}>
-            <Image
-              source={`data:image/png;base64,${imgProfile}`}
-              style={styles.square}
-            />
+          <ImageBackground
+            source={backgroundImage}
+            resizeMode="cover"
+            style={styles.square}>
             <Text style={styles.titulo}>{titulo}</Text>
-          </View>
+          </ImageBackground>
         </ScrollView>
       </ImageBackground>
       <Navbar  id={id} imgProfile={imgProfile} />
