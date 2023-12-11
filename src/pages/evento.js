@@ -13,11 +13,12 @@ import {
 } from "react-native";
 import axios from "axios";
 import { ScrollView } from "react-native-gesture-handler";
+import { useRoute } from "@react-navigation/native";
 import Navbar from "../components/navbar";
 import Backbutton from "../components/backbutton";
 import Navbuttons from "../components/navbuttons";
-import { useRoute } from "@react-navigation/native";
 import Comentbar from "../components/comentbar";
+import Avaliacaobar from "../components/avaliacaobar";
 
 export default function Evento({ navigation }) {
   const [backgroundImage, setBackgroundImage] = useState(null);
@@ -32,6 +33,16 @@ export default function Evento({ navigation }) {
 
   const [numCurtida, setNumCurtida] = useState(0);
   const [numPresence, setNumPresence] = useState(0);
+  const [mediaAvaliacao, setMediaAvaliacao] = useState(0);
+  const [avaliacao, setNumAvaliacao] = useState(0);
+  const [avaliacaoEnviada, setAvaliacaoEnviada] = useState(false);
+
+  const btnEnviarAva = () => {
+    if (avaliacaoEnviada) {
+      console.log("Enviando avaliação:", avaliacao);
+      setAvaliacaoEnviada(false);
+    }
+  };
 
   const route = useRoute();
   const { id } = route.params;
@@ -152,7 +163,7 @@ export default function Evento({ navigation }) {
         <Backbutton />
         <ScrollView showsVerticalScrollIndicator={false}>
  
-        <Navbuttons  siteInfo={siteInfo} id={id} idEvent={idEvento} numCurtida={numCurtida} setNumCurtida={setNumCurtida} numPresence={numPresence} setNumPresence={setNumPresence} />
+        <Navbuttons siteInfo={siteInfo} id={id} idEvent={idEvento} numCurtida={numCurtida} setNumCurtida={setNumCurtida} numPresence={numPresence} setNumPresence={setNumPresence} />
 
           <View style={styles.overlay}>
             <View style={styles.descricaoContainer}>
@@ -210,7 +221,43 @@ export default function Evento({ navigation }) {
             </Text>
           </View>
 
-          <View style={styles.line2} />
+          <Avaliacaobar/>
+
+          <View style={styles.avaNumber}>
+            <Text style={styles.numberAvaliar}>
+                {`${mediaAvaliacao}`}
+            </Text>
+          </View>
+
+          <View style={styles.starAva}>
+            {[1, 2, 3, 4, 5].map((num) => (
+              <Pressable
+                key={num}
+                onPress={() => {
+                  setNumAvaliacao(num);
+                  setAvaliacaoEnviada(true); // Passo 2
+                }}>
+                <Image
+                  source={
+                    num <= avaliacao
+                      ? require("../assets/images/icons/starfull.png")
+                      : require("../assets/images/icons/star.png")
+                  }
+                  style={styles.imgStar}
+                />
+              </Pressable>
+            ))}
+          </View>
+
+          {avaliacaoEnviada && (
+            <View style={styles.btnEnviarContainer}>
+              <Pressable style={styles.btnEnviar} onPress={btnEnviarAva}>
+                <Text style={styles.btnTextLow}>Enviar</Text>
+              </Pressable>
+            </View>
+          )}
+
+          <View style={styles.line} />
 
           <View style={styles.square}>
             <Image
@@ -375,11 +422,11 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
 
-  line2: {
+  line: {
     position: "absolute",
     left: 0,
     right: 0,
-    bottom: -250,
+    bottom: -400,
     height: 2,
     opacity: 0.6,
   },
@@ -452,5 +499,51 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 18,
     marginTop: 10,
+  },
+
+  avaNumber: {
+    alignSelf: "center",
+    top: 180,
+  },
+
+  numberAvaliar: {
+    color: "white",
+    fontSize: 50,
+    fontWeight: "inter",
+  },
+
+  starAva: {
+    alignSelf: "center",
+    flexDirection: "row",
+    top: 200,
+  },
+
+  imgStar: {
+    width: 35,
+    height: 35,
+    marginRight: 5,
+    marginLeft: 5,
+  },
+
+  btnEnviarContainer: {
+    alignSelf: "center",
+    top: 225,
+  },
+
+  btnEnviar: {
+    backgroundColor: "#95003F",
+    paddingVertical: 8,
+    paddingHorizontal: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    boxShadow: '2px 6px 5px rgba(0,0,0,0.3)',
+    top: 12,
+  },
+
+  btnTextLow: {
+    fontSize: 14,
+    color: "#FFFFFF",
+    opacity: 0.9,
   },
 });

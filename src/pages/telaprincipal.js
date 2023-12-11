@@ -25,7 +25,7 @@ export default function Telaprincipal() {
   const { id } = route.params;
   const { userImage } = route.params;
   useEffect(() => {
-    setImgProfile(userImage)
+    setImgProfile(userImage);
     // axios
     //   .post("http://localhost:3003/viewDestaquesHighlights")
     //   .then((e) => {
@@ -35,6 +35,18 @@ export default function Telaprincipal() {
     //   .catch ((error) => {
     //     console.error('Erro ao enviar ou retono de dados para o backend:', error);
     // });
+    axios
+      .get("http://localhost:3003/viewAllEvent")
+      .then((response) => {
+        console.log(response);
+        setEventsData(response.data.results);
+      })
+      .catch((error) => {
+        console.error(
+          "Erro ao enviar ou retornar de dados para o backend:",
+          error
+        );
+      });
   }, []);
 
   const renderItem = ({ item }) => (
@@ -58,27 +70,36 @@ export default function Telaprincipal() {
 
       <Destaquebar eventsData={eventsData} />
 
-      <View style={styles.eventContainer}> 
+      <View style={styles.eventContainer}>
         {eventsData.length === 0 ? (
           <Text style={styles.noEventsText}>Sem eventos disponíveis</Text>
         ) : (
           <ScrollView
             contentContainerStyle={styles.scrollViewContent}
             showsVerticalScrollIndicator={false}
-            style={styles.scrollView}
-          >
+            style={styles.scrollView}>
             {eventsData.map((event, index) => (
               <Image
                 key={index}
                 style={styles.backgroundImage}
                 source={event}
+                on
               />
             ))}
           </ScrollView>
         )}
+        {eventsData.map((e, index) => (
+          <>
+            <Image
+              source={`data:image/png;base64,${e.Event_image}`}
+              style={styles.backgroundImage}
+            />
+            <Text style={styles.descEvent}>{e.desc_event}</Text>
+          </>
+        ))}
       </View>
       <Buttonprofile id={id} imgProfile={imgProfile} />
-      <Navbar id={id} imgProfile={imgProfile}/>
+      <Navbar id={id} imgProfile={imgProfile} />
     </View>
   );
 }

@@ -36,6 +36,7 @@ export default function Settings() {
   const { id } = route.params;
   const { idEvento } = route.params;
   const { imgProfile } = route.params;
+  
   return (
     <View style={styles.container}>
       {deletar && <CardDeletar setDeletar={setDeletar} senha={senha} setSenha={setSenha} />}
