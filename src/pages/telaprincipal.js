@@ -75,21 +75,11 @@ export default function Telaprincipal() {
           <Text style={styles.noEventsText}>Sem eventos disponíveis</Text>
         ) : (
           <ScrollView
-            contentContainerStyle={styles.scrollViewContent}
             showsVerticalScrollIndicator={false}
             style={styles.scrollView}>
-            {eventsData.map((event, index) => (
-              <Image
-                key={index}
-                style={styles.backgroundImage}
-                source={event}
-                on
-              />
-            ))}
-          </ScrollView>
-        )}
-        {eventsData.map((e, index) => (
+            {eventsData.map((e, index) => (
           <Pressable
+          style={styles.scrollView}
             onPress={() => {
               axios.post("http://localhost:3003/EventAcess", {
                 Id_user_code: id,
@@ -104,6 +94,9 @@ export default function Telaprincipal() {
             <Text style={styles.descEvent}>{e.desc_event}</Text>
           </Pressable>
         ))}
+          </ScrollView>
+        )}
+        
       </View>
       <Buttonprofile id={id} imgProfile={imgProfile} />
       <Navbar id={id} imgProfile={imgProfile} />
@@ -159,6 +152,7 @@ const styles = StyleSheet.create({
   },
 
   eventContainer: {
+    alignSelf: "center",
     top: 50,
     flex: 1,
     width: "100%",
@@ -166,23 +160,22 @@ const styles = StyleSheet.create({
   },
 
   descEvent: {
-    fontSize: 15,
+    fontSize: 20,
     position: "relative",
     maxWidth: 250,
     bottom: 70,
     color: "#FFF",
+    fontWeight: "semibold",
+    alignSelf: "center",
   },
 
   scrollView: {
     flex: 1,
-    width: "90%",
+    width: "100%",
+    top: 0,
+    maxHeight: 500,
     alignSelf: "center",
     bottom: 50,
-  },
-
-  scrollViewContent: {
-    alignSelf: "center",
-    alignItems: "center",
   },
 
   backgroundImage: {
@@ -191,6 +184,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 10,
     backgroundColor: "black",
+    alignSelf: "center",
   },
 
   noEventsText: {
