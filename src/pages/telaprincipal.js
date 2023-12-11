@@ -177,9 +177,11 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "90%",
     alignSelf: "center",
+    bottom: 50,
   },
 
   scrollViewContent: {
+    alignSelf: "center",
     alignItems: "center",
   },
 
@@ -188,6 +190,7 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 8,
     marginBottom: 10,
+    backgroundColor: "black",
   },
 
   noEventsText: {
