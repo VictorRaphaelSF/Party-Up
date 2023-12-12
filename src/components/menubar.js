@@ -8,10 +8,12 @@ import {
   Platform,
   Modal,
   TouchableWithoutFeedback,
+  
 } from "react-native";
 
 import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
+import { Linking } from "react-native";
 
 export default function MenuBar({ isMenuVisible, setMenuVisible, menu }) {
   const navigation = useNavigation();
@@ -48,9 +50,18 @@ export default function MenuBar({ isMenuVisible, setMenuVisible, menu }) {
   };
 
   const bttDashboard = () => {
-    navigation.navigate("dashboard");
+    const url = "http://localhost:5173/";
+    Linking.openURL(url)
+      .then(() => {
+        console.log(`Aberto com sucesso: ${url}`);
+      })
+      .catch((error) => {
+        console.error("Erro ao abrir o link:", error);
+      });
+  
     setMenuVisible(false);
   };
+
   return (
     <Modal
       transparent={true}

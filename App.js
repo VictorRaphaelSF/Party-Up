@@ -34,6 +34,7 @@ import Tags from "./src/pages/tags";
 import Comentario from "./src/pages/comentario";
 import Myevent from "./src/pages/myevent";
 import Emailvalidation from "./src/pages/emailvalidation";
+import Otherprofile from "./src/pages/otherprofile";
 
 const Stack = createNativeStackNavigator();
 
@@ -54,6 +55,13 @@ export default function App() {
           }}
           name="login"
           component={Login}
+        />
+         <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="otherprofile"
+          component={Otherprofile}
         />
         <Stack.Screen
           options={{

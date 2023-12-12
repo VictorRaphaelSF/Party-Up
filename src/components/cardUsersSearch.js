@@ -4,18 +4,18 @@ import axios from "axios";
 
 const CardUsersSearch = ({descricaoEvento, idUser, Nm_user, User_image, Id_App_Events}) => {
     const navigation = useNavigation()
-    console.log(Id_App_Events);
+
 
     return (
         <Pressable 
             style={styles.containerEventos} 
-            // onPress={()=>{
-            //     axios.post("http://localhost:3003/EventAcess", {
-            //     Id_user_code: idUser,
-            //     Id_App_Events_code: Id_App_Events,
-            //     });
-            //     navigation.navigate("evento", { idEvento: Id_App_Events, id : idUser, imgProfile: User_image });
-            // }}
+            onPress={()=>{
+                axios.post("http://localhost:3003/EventAcess", {
+                Id_user_code: idUser,
+                Id_App_Events_code: Id_App_Events,
+                });
+                navigation.navigate("otherprofile", { idUser : idUser});
+            }}
         >
             <Image
                 source={`data:image/png;base64,${User_image}`}

@@ -15,7 +15,7 @@ import {
 import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
-import axios from "axios";
+import axios from "axios"; 
 import Navbar from "../components/navbar";
 import MenuBar from "../components/menubar";
 import Backbutton from "../components/backbutton";
@@ -29,20 +29,66 @@ export default function Otherprofile() {
   const [name, setName] = useState("");
   const [idade, setIdade] = useState("");
   const [descricao, setDescricao] = useState("");
-  const [eventImage, setEventImage] = useState(null);
+  const [userImage, setUserImage] = useState(null);
   const [eventId, setEventId] = useState(null);
+  const [seguidores, setSeguidores] = useState(0);
+  const [seguindo, setSeguindo] = useState(0);
 
   const menu = () => {
     setMenuVisible(true);
   };
+  
+  const route = useRoute();
+  const { idUser } = route.params;
+  const { idSeguidor } = route.params;
+  console.log(idUser);
+  console.log(idSeguidor);
 
+  const idUsers = {
+    Id_user_follower_code : idSeguidor,
+    Id_user_followed_code : idUser
+  }
+
+  const IdOtherProfile = {
+    Id_user_code: idUser
+  }
   const handleButtonEdit = () => {
-    console.log("Botão edit pressionado");
+    axios
+      .post("http://localhost:3003/follow", idUsers)
+      .then((response) => {
+        console.log(response);
+
+      })
+      .catch((error) => {
+        console.error(
+          "Erro ao enviar ou retono de dados para o backend:",
+          error
+        );
+      }).then(()=>{
+        axios
+        .post("http://localhost:3003/followCount", IdOtherProfile)
+        .then((response) => {
+          console.log(response);
+          setSeguidores(response.data.seguidores)
+          setSeguindo(response.data.seguindo)
+        })
+        .catch((error) => {
+          console.error(
+            "Erro ao enviar ou retono de dados para o backend:",
+            error
+          );
+
+      })
+
+      });
+    
+      
   };
 
-  // const route = useRoute();
-  // const { id } = route.params;
-  // console.log(id);
+
+  const idUsuario = {
+    userId_code: idUser
+  };
   // const idUser = {
   // };
 
@@ -57,7 +103,7 @@ export default function Otherprofile() {
   //     });
 
   //   axios
-  //     .post('http://localhost:3003/viewEventUser', /*idUser*/)
+  //     .post('http://localhost:3003/viewEventUser', /idUser/)
   //     .then((response) => {
   //       console.log(response)
   //       console.log(response.data.results[0].Nm_event);
@@ -68,6 +114,44 @@ export default function Otherprofile() {
   //     });
   // }, []);
 
+  useEffect(() => {
+    axios
+      .post("http://localhost:3003/profileUser", idUsuario)
+      .then((response) => {
+        console.log(response);
+        console.log(response.data.results);
+        console.log(response.data.results[0]);
+        setName(response.data.results[0].User_name);
+        setIdade(response.data.results[0].idade);
+        setDescricao(response.data.results[0].User_description);
+        setUserImage(response.data.results[0].User_image);
+      })
+      .catch((error) => {
+        console.error(
+          "Erro ao enviar ou retono de dados para o backend:",
+          error
+        );
+      });
+
+      axios
+      .post("http://localhost:3003/followCount", IdOtherProfile)
+      .then((response) => {
+        console.log(response);
+        setSeguidores(response.data.seguidores)
+        setSeguindo(response.data.seguindo)
+      })
+      .catch((error) => {
+        console.error(
+          "Erro ao enviar ou retono de dados para o backend:",
+          error
+        );
+      });
+
+  }, []);
+
+
+    
+
   return (
     <View style={styles.container}>
       <Image
@@ -77,15 +161,15 @@ export default function Otherprofile() {
       />
       <Backbutton />
       <View style={styles.innerCircle}>
-        {profileImage && (
+        {userImage && (
           <Image
-            source={{ uri: profileImage }}
+            source={`data:image/png;base64,${userImage}`}
             style={{ flex: 1, width: "100%", borderRadius: 105 }}
           />
         )}
       </View>
 
-      <Pressable style={styles.button} onPress={menu}>
+      {/* <Pressable style={styles.button} onPress={menu}>
         <View style={styles.bttbarra}></View>
         <View style={styles.bttbarra}></View>
         <View style={styles.bttbarra}></View>
@@ -95,16 +179,16 @@ export default function Otherprofile() {
         isMenuVisible={isMenuVisible}
         setMenuVisible={setMenuVisible}
         menu={menu}
-      />
+      /> */}
 
       <View style={styles.titlesContainer}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Seguidores</Text>
-          <Text style={styles.number}>0</Text>
+          <Text style={styles.number}>{seguidores}</Text>
         </View>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Seguindo</Text>
-          <Text style={styles.number}>0</Text>
+          <Text style={styles.number}>{seguindo}</Text>
         </View>
       </View>
 
@@ -130,13 +214,13 @@ export default function Otherprofile() {
         </View>
       </View>
 
-      <Image
+      {/* <Image
         source={require("../assets/images/icons/barralike.png")}
         style={styles.comentariosTituloImage}
-      />
+      /> */}
 
-      <Myeventsbar />
-      <Navbar id={id} imgProfile={profileImage} />
+      {/* <Myeventsbar /> */}
+      {/* <Navbar id={idUser} imgProfile={profileImage} /> */}
     </View>
   );
 }

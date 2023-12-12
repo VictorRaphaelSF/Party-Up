@@ -210,6 +210,8 @@ export default function Search() {
 
   //  }, [userSearch_code]);
 
+ 
+  console.log(searchUserData);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
