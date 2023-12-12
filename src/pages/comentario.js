@@ -76,6 +76,7 @@ export default function Comentario() {
 
 	const idEvent = {
 		Id_App_Events_code: idEvento
+		
 	};
 
 	const comentario = {
@@ -86,8 +87,9 @@ export default function Comentario() {
 
 
 	useEffect(() => {
+		console.log(idEvent);
 		axios
-			.post('http://localhost:3003/viewComment', idEvent)
+			.post('http://localhost:3003/viewComment2', idEvent)
 			.then((response) => {
 				console.log(response);
 				setComentarios(response.data.results)

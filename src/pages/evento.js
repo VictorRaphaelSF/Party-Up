@@ -44,6 +44,7 @@ export default function Evento({ navigation }) {
   const { idEvento } = route.params;
   const { imgProfile } = route.params;
   console.log(id);
+  console.log(idEvento);
 
   const btnEnviarAva = () => {
     axios.post("http://localhost:3003/avaliacaoEvent", {
@@ -72,9 +73,11 @@ export default function Evento({ navigation }) {
       Id_user_code: id,
       Id_App_Events_code: idEvento
     }
+    console.log(id);
+    console.log(idEvento);
 
     axios
-					.post('http://localhost:3003/likeCount', like)
+					.post('http://localhost:3003/likeCount2', like)
 					.then((response) => {
 						console.log(response);
 						setNumCurtida(response.data.numberLikes)
@@ -86,7 +89,7 @@ export default function Evento({ navigation }) {
 
     });
     axios
-    .post('http://localhost:3003/presenceCount', like)
+    .post('http://localhost:3003/presenceCount2', like)
     .then((response) => {
       console.log(response);
       setNumPresence(response.data.numberPresence)

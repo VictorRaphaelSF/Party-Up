@@ -4,8 +4,9 @@ import axios from "axios";
 
 const CardEventUser = ({descricaoEvento, idUser, Nm_event, Event_image, Id_App_Events}) => {
     const navigation = useNavigation()
-    console.log(Id_App_Events);
-
+    
+    console.log(Id_App_Events); 
+    console.log(idUser); 
 
     return (
         <Pressable 

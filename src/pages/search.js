@@ -45,6 +45,7 @@ export default function Search() {
   const [selectedButton, setSelectedButton] = useState(null);
   const [canType, setCanType] = useState(false);
 
+const [temEvento, setTemEvento] = useState(false);
   //Variavel que sera guardado o código do evento que o usuário digitou
   const [codeEvent, setcodeEvent] = useState("");
 
@@ -143,32 +144,38 @@ export default function Search() {
   };
 
   const btnPerfil = () => {
-    axios
-      .post("http://localhost:3003/searchOthersProfiles", {
-        User_name_code: userSearch_code,
-      })
-      .then((response) => {
-        console.log(response);
-        if (response.data.msg) {
-          setUsersResult(false);
-          setError(response.data.msg);
-        } else {
-          setUsersResult(true);
-          setEventResult(false)
-          setSearchUserData(response.data.results);
-        }
-      })
-      .catch((error) => {
-        console.error("Erro ao enviar os dados para o backend:", error);
-      });
-    setSelectedButton("Perfil");
-    setCanType(true);
+    setTemEvento(false)
+        axios
+          .post("http://localhost:3003/searchOthersProfiles", {
+            User_name_code: userSearch_code,
+          })
+          .then((response) => {
+            console.log(response);
+            if (response.data.msg) {
+              setUsersResult(false);
+              setError(response.data.msg);
+            } else {
+              setUsersResult(true);
+              setEventResult(false)
+              setSearchUserData(response.data.results);
+            }
+          })
+          .catch((error) => {
+            console.error("Erro ao enviar os dados para o backend:", error);
+          });
+        setSelectedButton("Perfil");
+        setCanType(true);
+
+      
+
+  };
+  
+  const pesquisaUser = {
+    userSearch_code: userSearch_code,
   };
 
   const btnEvent = () => {
-    const pesquisaUser = {
-      userSearch_code: userSearch_code,
-    };
+    setTemEvento(true)
     axios
       .post("http://localhost:3003/searchEvents", pesquisaUser)
       .then((response) => {
@@ -280,35 +287,43 @@ export default function Search() {
 
         <ScrollView
           style={{ width: "100%", gap: 16, top: 10, maxHeight: "77%" }}>
-          {eventResult ? (
-            <View style={{ width: "100%", gap: 8 }}>
-              {eventData.map((event, index) => {
-                return (
-                  <CardEventUser
-                    descricaoEvento={event.desc_event}
-                    idUser={id}
-                    Event_image={event.Event_image}
-                    Nm_event={event.Nm_event}
-                    Id_App_Events={event.Id_App_Events}
-                    key={index}
-                  />
-                );
-              })}
-            </View>
-          ) : (
-            error && <Text style={styles.searchHistoryItem}>{error}</Text>
-          )}
-          {usersResult
-            ? searchUserData.map((event, index) => {
-                return (
-                  <CardUsersSearch
-                    idUser={id}
-                    User_image={event.User_image}
-                    Nm_user={event.User_name}
-                  />
-                );
-              })
-            : error && <Text style={styles.searchHistoryItem}>{error}</Text>}
+            {
+              temEvento  ? (
+                eventResult ? (
+                  <View style={{ width: "100%", gap: 8 }}>
+                    {eventData.map((event, index) => {
+                      return (
+                        <CardEventUser
+                          descricaoEvento={event.desc_event}
+                          idUser={id}
+                          Event_image={event.Event_image}
+                          Nm_event={event.Nm_event}
+                          Id_App_Events={event.Id_App_Events}
+                          key={index}
+                        />
+                      );
+                    })}
+                  </View>
+                ) : (
+                  error && <Text style={styles.searchHistoryItem}>{error}</Text>
+                )
+
+              ) : (
+                usersResult
+                  ? searchUserData.map((event, index) => {
+                      return (
+                        <CardUsersSearch
+                          idUser={event.Id_user}
+                          idSeguidor= {id}
+                          User_image={event.User_image}
+                          Nm_user={event.User_name}
+                        />
+                      );
+                    })
+                  : error && <Text style={styles.searchHistoryItem}>{error}</Text>
+                
+              )
+            }
         </ScrollView>
 
         <Modal

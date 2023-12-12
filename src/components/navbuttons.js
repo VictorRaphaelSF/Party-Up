@@ -59,7 +59,7 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 
 	const bttComentario = () => {
 		navigation.navigate("comentario", {
-			 idEvento: idEvento, id : id
+			 idEvento: idEvent, id : id
 		  });
 	};
 
@@ -185,7 +185,7 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 		.post('http://localhost:3003/confirmPresence', dados)
 		.then((response) => {
 			console.log(response);
-			axios.post('http://localhost:3003/presenceCount', dados)
+			axios.post('http://localhost:3003/presenceCount2', dados)
 				.then((response) => {
 				console.log(response) 
 				setNumPresence(response.data.numberPresence)
@@ -217,7 +217,7 @@ export default function Navbuttons({ siteInfo, id, idEvent, numCurtida,setNumCur
 			.then((response) => {
 				console.log(response);
 				axios
-					.post('http://localhost:3003/likeCount', confirmacao)
+					.post('http://localhost:3003/likeCount2', confirmacao)
 					.then((response) => {
 						console.log(response);
 						setNumCurtida(response.data.numberLikes)
