@@ -35,6 +35,12 @@ import Comentario from "./src/pages/comentario";
 import Myevent from "./src/pages/myevent";
 import Emailvalidation from "./src/pages/emailvalidation";
 import Otherprofile from "./src/pages/otherprofile";
+import Destaquebar from "./src/components/destaquebar";
+
+// Eventos abaixo são sómente para demonstrar
+import Eventoteste1 from "./src/pages/eventoteste1";
+import Eventoteste2 from "./src/pages/eventoteste2";
+import Eventoteste3 from "./src/pages/eventoteste3";
 
 const Stack = createNativeStackNavigator();
 
@@ -251,6 +257,34 @@ export default function App() {
           }}
           name="acesstermos"
           component={Acesstermos}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="eventoteste1"
+          component={Eventoteste1}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="eventoteste2"
+          component={Eventoteste2}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="eventoteste3"
+          component={Eventoteste3}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="destaquebar"
+          component={Destaquebar}
         />
       </Stack.Navigator>
     </NavigationContainer>

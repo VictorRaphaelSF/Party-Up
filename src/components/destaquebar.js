@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import {
   StyleSheet,
   View,
@@ -9,10 +10,11 @@ import {
   ScrollView,
 } from "react-native";
 
-import { useRoute, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 
-export default function Destaquebar({eventsData}) {
+export default function Destaquebar({ }) {
+  const navigation = useNavigation();
 
     const eventosTemporarios = [
         require("../assets/images/Eventos(Temporarios)/Evento(1).png"),
@@ -22,10 +24,19 @@ export default function Destaquebar({eventsData}) {
         require("../assets/images/Eventos(Temporarios)/Evento(2).png"),
         require("../assets/images/Eventos(Temporarios)/Evento(3).png"),
       ];
-    
-      const renderItem = ({ item }) => (
-        <Image style={styles.carouselImage} source={item} />
-      );
+
+      const btnDestaque1 = () => {
+        navigation.navigate("eventoteste1");
+      };
+
+      const btnDestaque2 = () => {
+        navigation.navigate("eventoteste2");
+      };
+
+      const btnDestaque3 = () => {
+        navigation.navigate("eventoteste3");
+      };
+
 
 return (
     <View style={styles.destaqueBar}>
@@ -34,19 +45,36 @@ return (
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.scrollViewContent}
     >
-      {eventosTemporarios.map((item, index) => (
-        <View key={index} style={styles.carouselItem}>
-          <Image style={styles.carouselImage} source={item} />
+      <Pressable onPress={btnDestaque1} style={styles.btnDestaqueBar}>
+        <View style={styles.carouselItem}>
+          <Image source={require("../assets/images/Eventos(Temporarios)/Evento(1).png")} style={styles.carouselImage} />
         </View>
-      ))}
-      {eventsData.map((e, index) => (
-          <View key={index} style={styles.carouselItem}>
-            <Image
-              source={`data:image/png;base64,${e.Event_image}`}
-              style={styles.carouselImage}
-            />
-          </View>
-      ))}
+      </Pressable>
+      <Pressable onPress={btnDestaque2} style={styles.btnDestaqueBar}>
+        <View style={styles.carouselItem}>
+          <Image source={require("../assets/images/Eventos(Temporarios)/Evento(2).png")} style={styles.carouselImage} />
+        </View>
+      </Pressable>
+      <Pressable onPress={btnDestaque3} style={styles.btnDestaqueBar}>
+        <View style={styles.carouselItem}>
+          <Image source={require("../assets/images/Eventos(Temporarios)/Evento(3).png")} style={styles.carouselImage} />
+        </View>
+      </Pressable>
+      <Pressable onPress={btnDestaque1} style={styles.btnDestaqueBar}>
+        <View style={styles.carouselItem}>
+          <Image source={require("../assets/images/Eventos(Temporarios)/Evento(1).png")} style={styles.carouselImage} />
+        </View>
+      </Pressable>
+      <Pressable onPress={btnDestaque2} style={styles.btnDestaqueBar}>
+        <View style={styles.carouselItem}>
+          <Image source={require("../assets/images/Eventos(Temporarios)/Evento(2).png")} style={styles.carouselImage} />
+        </View>
+      </Pressable>
+      <Pressable onPress={btnDestaque3} style={styles.btnDestaqueBar}>
+        <View style={styles.carouselItem}>
+          <Image source={require("../assets/images/Eventos(Temporarios)/Evento(3).png")} style={styles.carouselImage} />
+        </View>
+      </Pressable>
     </ScrollView>
     </View>
   );
@@ -58,6 +86,11 @@ const styles = StyleSheet.create({
     destaqueBar: {
         top: 30,
       },
+
+      btnDestaqueBar: {
+        display: 'flex',
+        flexDirection: "row",
+      },  
 
       scrollViewContent: {
         left: 12,
