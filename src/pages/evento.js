@@ -37,18 +37,24 @@ export default function Evento({ navigation }) {
   const [avaliacao, setNumAvaliacao] = useState(0);
   const [avaliacaoEnviada, setAvaliacaoEnviada] = useState(false);
 
-  const btnEnviarAva = () => {
-    if (avaliacaoEnviada) {
-      console.log("Enviando avaliação:", avaliacao);
-      setAvaliacaoEnviada(false);
-    }
-  };
+  
 
   const route = useRoute();
   const { id } = route.params;
   const { idEvento } = route.params;
   const { imgProfile } = route.params;
   console.log(id);
+
+  const btnEnviarAva = () => {
+    axios.post("http://localhost:3003/avaliacaoEvent", {
+      Id_user_code: id,
+      id_app_events_code: idEvento,
+      avaliation_User_code: avaliacao
+    })
+    if (avaliacaoEnviada) {
+      setAvaliacaoEnviada(false);
+    }
+  };
 
   useEffect(() => {
     const idEvent ={
