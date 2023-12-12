@@ -20,7 +20,11 @@ import Modal from "react-native-modal";
 import { useRoute } from "@react-navigation/native";
 import axios from "axios";
 import CardEventUser from "../components/cardEventUser";
+<<<<<<< HEAD
 import CardUsersSearch from "../components/CardUsersSearch";
+=======
+import CardUsersSearch from "../components/cardUsersSearch";
+>>>>>>> d568e63d057f376e0706f18627ede3c9e885341a
 
 export default function Search() {
   const [isModalVisible, setModalVisible] = useState(false);
