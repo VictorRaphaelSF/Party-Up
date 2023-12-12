@@ -7,7 +7,7 @@ import {
   Dimensions,
   TextInput,
   KeyboardAvoidingView,
-  Platform, 
+  Platform,
   Text,
   ScrollView,
 } from "react-native";
@@ -16,10 +16,11 @@ import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Navbar from "../components/navbar";
-import Modal from "react-native-modal";                
-import { useRoute } from '@react-navigation/native';
+import Modal from "react-native-modal";
+import { useRoute } from "@react-navigation/native";
 import axios from "axios";
 import CardEventUser from "../components/cardEventUser";
+import CardUsersSearch from "../components/cardUsersSearch";
 
 export default function Search() {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -37,11 +38,12 @@ export default function Search() {
   const [isMenuVisible, setMenuVisible] = useState(false);
   const [searchHistory, setSearchHistory] = useState([]);
   const [eventData, setEventData] = useState([]);
+  const [searchUserData, setSearchUserData] = useState([]);
   const [eventResult, setEventResult] = useState(false);
+  const [usersResult, setUsersResult] = useState(false);
   const [textoPrivado, setTextoPrivado] = useState("Privado");
   const [selectedButton, setSelectedButton] = useState(null);
   const [canType, setCanType] = useState(false);
-
 
   //Variavel que sera guardado o código do evento que o usuário digitou
   const [codeEvent, setcodeEvent] = useState("");
@@ -64,8 +66,6 @@ export default function Search() {
     };
 
     loadSearchHistory();
- 
-    
   }, []);
 
   const handleSearch = () => {
@@ -82,7 +82,7 @@ export default function Search() {
   };
 
   const PressEnter = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       confirmarCode();
     }
   };
@@ -91,15 +91,14 @@ export default function Search() {
     setTypeModalVisible(false);
     setIsModalCode(false);
     setTipoEventoOpcao(textoPrivado);
-    setTextoPrivado
+    setTextoPrivado;
   };
-
 
   const InputNum = (value, setter) => {
     const numericValue = value.replace(/[^0-9]/g, "");
     setter(numericValue);
   };
-  
+
   const menu = () => {
     setMenuVisible(true);
   };
@@ -107,7 +106,7 @@ export default function Search() {
   const closeMenu = () => {
     setMenuVisible(false);
   };
- 
+
   const handleModalType = () => {
     setModalVisible(true);
   };
@@ -140,56 +139,76 @@ export default function Search() {
   };
 
   const handleFilter = () => {
-    console.log("coloque a logica de confirmar os filtros aqui")
+    console.log("coloque a logica de confirmar os filtros aqui");
   };
 
   const btnPerfil = () => {
-    console.log("Coloque aqui a lógica para exibir apenas perfis na pesquisa");
-    setSelectedButton("Perfil");
-    setCanType(true);
-  };
-  
-  const btnEvent = () => {
-    console.log("Coloque aqui a lógica para exibir apenas eventos na pesquisa");
-    setSelectedButton("Evento");
-    setCanType(true);
-  };
-  
-
-  // console.log(eventData);  
-  
-  const pesquisaUser = {
-    userSearch_code: userSearch_code
-  }
-
-  useEffect(() => {
-    console.log(userSearch_code);
-    const delay = 500;
-    let timeoutId;
-  
-    const pesquisaUser = {
-      userSearch_code: userSearch_code,
-    };
-    console.log("opa");
     axios
-      .post('http://localhost:3003/searchEvents', pesquisaUser)
+      .post("http://localhost:3003/searchOthersProfiles", {
+        User_name_code: userSearch_code,
+      })
       .then((response) => {
         console.log(response);
-        if(response.data.msg){
+        if (response.data.msg) {
+          setUsersResult(false);
+          setError(response.data.msg);
+        } else {
+          setUsersResult(true);
           setEventResult(false)
-          setError(response.data.msg)
-          
-        }else{
-          setEventResult(true)
-          setEventData(response.data.results);
-
+          setSearchUserData(response.data.results);
         }
       })
       .catch((error) => {
-        console.error('Erro ao enviar os dados para o backend:', error);
-        
+        console.error("Erro ao enviar os dados para o backend:", error);
       });
-   }, [userSearch_code]);
+    setSelectedButton("Perfil");
+    setCanType(true);
+  };
+
+  const btnEvent = () => {
+    const pesquisaUser = {
+      userSearch_code: userSearch_code,
+    };
+    axios
+      .post("http://localhost:3003/searchEvents", pesquisaUser)
+      .then((response) => {
+        console.log(response);
+        if (response.data.msg) {
+          setEventResult(false);
+          setError(response.data.msg);
+        } else {
+          setEventResult(true);
+          setUsersResult(false)
+          setEventData(response.data.results);
+        }
+      })
+      .catch((error) => {
+        console.error("Erro ao enviar os dados para o backend:", error);
+      });
+    setSelectedButton("Evento");
+    setCanType(true);
+  };
+
+  // console.log(eventData);
+
+  // const pesquisaUser = {
+  //   userSearch_code: userSearch_code
+  // }
+
+  // const PesquisarEvento = () => {
+  //   const pesquisaUser = {
+  //     userSearch_code: userSearch_code,
+  //   };
+  //   console.log("opa");
+
+  // }
+
+  // useEffect(() => {
+  //   console.log(userSearch_code);
+  //   const delay = 500;
+  //   let timeoutId;
+
+  //  }, [userSearch_code]);
 
   return (
     <KeyboardAvoidingView
@@ -231,13 +250,13 @@ export default function Search() {
         </View>
 
         <View style={styles.btnsSearTwo}>
-        <Pressable style={styles.btnSear} onPress={btnPerfil}>
-          <Text style={styles.btnText}>Perfil</Text>
-        </Pressable>
+          <Pressable style={styles.btnSear} onPress={btnPerfil}>
+            <Text style={styles.btnText}>Perfil</Text>
+          </Pressable>
 
-        <Pressable style={styles.btnSear} onPress={btnEvent}>
-          <Text style={styles.btnText}>Evento</Text>
-        </Pressable>
+          <Pressable style={styles.btnSear} onPress={btnEvent}>
+            <Text style={styles.btnText}>Evento</Text>
+          </Pressable>
         </View>
 
         <ScrollView
@@ -258,20 +277,37 @@ export default function Search() {
         </ScrollView>
 
         <ScrollView
-        style={{ width: "100%", gap: 16, top: 10, maxHeight: "77%" }}>
-        {eventResult ?
-          (<View style={{width: "100%", gap: 8}}>
-					{
-            
-						eventData.map((event,index) => {
-							return (
-								<CardEventUser descricaoEvento={event.desc_event} idUser={id} Event_image={event.Event_image} Nm_event={event.Nm_event} Id_App_Events={event. Id_App_Events} key={index}/>
-							)
-						})
-					}
-				  </View>):
-          (error && <Text style={styles.searchHistoryItem}>{error}</Text>)}
-				</ScrollView>
+          style={{ width: "100%", gap: 16, top: 10, maxHeight: "77%" }}>
+          {eventResult ? (
+            <View style={{ width: "100%", gap: 8 }}>
+              {eventData.map((event, index) => {
+                return (
+                  <CardEventUser
+                    descricaoEvento={event.desc_event}
+                    idUser={id}
+                    Event_image={event.Event_image}
+                    Nm_event={event.Nm_event}
+                    Id_App_Events={event.Id_App_Events}
+                    key={index}
+                  />
+                );
+              })}
+            </View>
+          ) : (
+            error && <Text style={styles.searchHistoryItem}>{error}</Text>
+          )}
+          {usersResult
+            ? searchUserData.map((event, index) => {
+                return (
+                  <CardUsersSearch
+                    idUser={id}
+                    User_image={event.User_image}
+                    Nm_user={event.User_name}
+                  />
+                );
+              })
+            : error && <Text style={styles.searchHistoryItem}>{error}</Text>}
+        </ScrollView>
 
         <Modal
           transparent={true}
@@ -341,21 +377,25 @@ export default function Search() {
               <View style={styles.whiteLine} />
               <View style={styles.handleBttConfirm}>
                 <Pressable style={styles.buttonFilter} onPress={handleFilter}>
-                <Text style={styles.buttonText}>Confirmar Filtros</Text>
+                  <Text style={styles.buttonText}>Confirmar Filtros</Text>
                 </Pressable>
               </View>
             </Animatable.View>
           </Pressable>
         </Modal>
 
-          {/* Abaixo esta os modals dos filtros */}
+        {/* Abaixo esta os modals dos filtros */}
         <Modal isVisible={isModalVisible}>
           <View style={styles.modalContent}>
             <View style={styles.modalButtons}>
-              <Pressable style={styles.buttonLow} onPress={() => handleClassificar("Relevante")}>
+              <Pressable
+                style={styles.buttonLow}
+                onPress={() => handleClassificar("Relevante")}>
                 <Text style={styles.buttonText}>Relevantes</Text>
               </Pressable>
-              <Pressable style={styles.buttonLow} onPress={() => handleClassificar("Recente")}>
+              <Pressable
+                style={styles.buttonLow}
+                onPress={() => handleClassificar("Recente")}>
                 <Text style={styles.buttonText}>Recentes</Text>
               </Pressable>
             </View>
@@ -365,10 +405,14 @@ export default function Search() {
         <Modal isVisible={isModalityModalVisible}>
           <View style={styles.modalContent}>
             <View style={styles.modalButtons}>
-              <Pressable style={styles.buttonLow} onPress={() => handleModality("Presencial")}>
+              <Pressable
+                style={styles.buttonLow}
+                onPress={() => handleModality("Presencial")}>
                 <Text style={styles.buttonText}>Presencial</Text>
               </Pressable>
-              <Pressable style={styles.buttonLow} onPress={() => handleModality("Online")}>
+              <Pressable
+                style={styles.buttonLow}
+                onPress={() => handleModality("Online")}>
                 <Text style={styles.buttonText}>Online</Text>
               </Pressable>
             </View>
@@ -378,10 +422,14 @@ export default function Search() {
         <Modal isVisible={isTypeModalVisible}>
           <View style={styles.modalContent}>
             <View style={styles.modalButtons}>
-              <Pressable style={styles.buttonLow} onPress={() => handleType("Publico")}>
+              <Pressable
+                style={styles.buttonLow}
+                onPress={() => handleType("Publico")}>
                 <Text style={styles.buttonText}>Publico</Text>
               </Pressable>
-              <Pressable style={styles.buttonLow} onPress={() => handleCodeModal(true)}>
+              <Pressable
+                style={styles.buttonLow}
+                onPress={() => handleCodeModal(true)}>
                 <Text style={styles.buttonText}>Privado</Text>
               </Pressable>
             </View>
@@ -391,14 +439,14 @@ export default function Search() {
         <Modal isVisible={isModalCode}>
           <View style={styles.modalContent}>
             <TextInput
-                style={styles.codeInput}
-                placeholder="Digite o código do evento"
-                placeholderTextColor="rgba(255, 255, 255, 0.5)"
-                value={codeEvent}
-                onChangeText={(text) => InputNum(text, setcodeEvent)}
-                onKeyPress={PressEnter}
-                maxLength={12}
-              />
+              style={styles.codeInput}
+              placeholder="Digite o código do evento"
+              placeholderTextColor="rgba(255, 255, 255, 0.5)"
+              value={codeEvent}
+              onChangeText={(text) => InputNum(text, setcodeEvent)}
+              onKeyPress={PressEnter}
+              maxLength={12}
+            />
           </View>
         </Modal>
 
@@ -494,7 +542,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
-    boxShadow: '2px 6px 5px rgba(0,0,0,0.3)',
+    boxShadow: "2px 6px 5px rgba(0,0,0,0.3)",
   },
 
   btnText: {
@@ -535,7 +583,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#470F62",
     padding: 16,
     borderTopLeftRadius: 20,
-    borderTopRightRadius: 20  ,
+    borderTopRightRadius: 20,
     height: 525,
     width: "111%",
     right: 20,
@@ -660,7 +708,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 10,
     marginHorizontal: 10,
-    boxShadow: '2px 6px 5px rgba(0,0,0,0.3)',
+    boxShadow: "2px 6px 5px rgba(0,0,0,0.3)",
   },
 
   buttonText: {
