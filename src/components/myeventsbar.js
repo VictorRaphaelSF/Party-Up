@@ -44,8 +44,6 @@ export default function Myeventsbar() {
     }, []);
     console.log(eventData);
 
-   
-
 return (
     <ScrollView
     horizontal

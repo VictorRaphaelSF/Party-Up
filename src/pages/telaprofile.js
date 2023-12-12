@@ -205,25 +205,25 @@ export default function Telaprofile() {
       />
 
       <ScrollView
-        style={{ width: "100%", gap: 16, top: 200, maxHeight: "14%" }}>
-        <View style={{ width: "100%", gap: 8 }}>
-          {
-            
-            eventData.map((event, index) => {
-              return (
-                <CardEvent
-                  descricaoEvento={event.desc_event}
-                  idUser={id}
-                  Event_image={event.Event_image}
-                  Nm_event={event.Nm_event}
-                  Id_App_Events={idEvents[index]}
-                  key={index}
-                />
-              );
-            })
+        horizontal
+        style={{ width: "100%", top: 200, maxHeight: "12%" }}
+        contentContainerStyle={{ flexDirection: "row", gap: 8 }}
+      >
+        {
+          eventData.map((event, index) => {
+            return (
+              <CardEvent
+                idUser={id}
+                Event_image={event.Event_image}
+                // Nm_event={event.Nm_event}
+                Id_App_Events={idEvents[index]} 
+                key={index}
+              />
+            );
+          })
         }
-        </View>
       </ScrollView>
+
 
       {/* <Pressable
         style={styles.eventImagePlaceholder}
@@ -414,29 +414,30 @@ const styles = StyleSheet.create({
     fontWeight: "inter",
   },
 
-  descContainer: {},
-
-  descricao: {
-    bottom: 10,
-    color: "#919191",
-    fontSize: 14,
-    fontWeight: "inter",
-    maxWidth: 350,
-    marginBottom: -80,
-  },
-
   allContainer: {
     position: "absolute",
-    left: 152,
+    alignSelf: "flex-start",
     flexDirection: "row",
-    top: 440,
+    left: 150,
+    top: 430,
   },
 
   allContainerOne: {
     display: "flex",
+    alignSelf: "flex-start",
     right: 2,
-    flexDirection: "row",
-    top: 100,
+    top: 110,
+  },
+
+  descContainer: {
+    bottom: 10,
+    maxWidth: 350,
+  },
+
+  descricao: {
+    color: "#919191",
+    fontSize: 14,
+    fontWeight: "inter",
   },
 
   line: {
@@ -498,5 +499,9 @@ const styles = StyleSheet.create({
     height: 50,
     resizeMode: "contain",
     top: 195,
+  },
+
+  nmEventText: {
+    fontSize: 6,
   },
 });

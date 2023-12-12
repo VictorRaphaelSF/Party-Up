@@ -229,7 +229,10 @@ export default function Eventoedit({ navigation }) {
             </View>
           </Modal>
 
-          <Comentbar />
+          <Image
+              source={require("../assets/images/icons/comentario.png")}
+              style={styles.imagemComentarioBar}
+          />
 
           <View style={styles.comentariosContainer}>
             <Image
@@ -518,6 +521,13 @@ const styles = StyleSheet.create({
     left: 70,
     alignSelf: "center",
     marginTop: 30,
+  },
+
+  imagemComentarioBar: {
+    width: '100%',
+    height: 50,
+    resizeMode: "contain",
+    top: 450,
   },
 
   semComentarios: {

@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/native";
 import { Image, Pressable, StyleSheet, Text } from "react-native";
 import axios from "axios";
 

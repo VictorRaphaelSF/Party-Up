@@ -11,6 +11,7 @@ import {
 	Platform,
 	Animated,
 	Easing,
+	Alert,
 } from "react-native"; 
 import axios from "axios";
 import Like from "../assets/images/icons/liked.png"
